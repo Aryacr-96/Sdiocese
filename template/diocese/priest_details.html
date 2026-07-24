@@ -1,0 +1,822 @@
+{% load static %}
+{% include 'header.html' %} <style>
+        
+        
+        /* priest section - enhanced luxury */
+        .priest-detail-section {
+            padding: 100px 24px;
+            position: relative;
+            overflow: hidden;
+            margin-left: 45px;
+            margin-top: -40px;
+        }
+      
+
+        .apd-profile-card {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            gap: 60px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(0px);
+            padding: 45px 50px;
+            border-radius: 48px;
+            box-shadow: 0 30px 55px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(194, 84, 13, 0.12);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            z-index: 2;
+        }
+        .apd-profile-card:hover {
+            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.12);
+            transform: scale(1.01);
+        }
+        
+        /* image section with gold frame & subtle shine */
+        .apd-img-box {
+            width: 340px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .apd-img-box img {
+            width: 340px;
+            border-radius: 32px;
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.25);
+            transition: all 0.5s;
+            border: 3px solid #fff;
+            outline: 1px solid rgba(194,84,13,0.3);
+            object-fit: contain;
+          
+        }
+        .apd-img-box::after {
+           
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: #dd7e43;
+            color: white;
+            font-size: 26px;
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+            border: 2px solid #fff;
+            transition: 0.3s;
+        }
+        .apd-img-box:hover img {
+            transform: scale(1.02);
+            filter: brightness(1.02);
+        }
+        .apd-img-box:hover::after {
+            transform: scale(1.08) rotate(5deg);
+            background: #dd7e43;
+        }
+
+.pastoral-exp-under-img {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #fff8f0, #fffef8);
+    padding: 16px 18px;
+    border-radius: 24px;
+    border-left: 4px solid #dd7e43;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.pastoral-exp-under-img:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(194,84,13,0.12);
+}
+
+.pastoral-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #dd7e43;
+    border-bottom: 2px dashed #f0dbc8;
+    padding-bottom: 8px;
+}
+
+.pastoral-header i {
+    font-size: 24px;
+    color: #dd7e43;
+}
+
+.pastoral-list p {
+    margin: 10px 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #2c3e44;
+    padding-left: 8px;
+    border-left: 2px solid #f0dbc8;
+}
+
+.pastoral-list strong {
+    color: #dd7e43;
+    font-weight: 700;
+}
+
+@media (max-width: 880px) {
+    .pastoral-exp-under-img {
+        margin-top: 24px;
+    }
+}
+        /* info area - modern & vibrant */
+        .apd-info-content {
+            flex: 1;
+        }
+        .apd-name {
+            font-size: 32px;
+            font-weight: 700;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: #2a4564;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        .apd-header-meta{
+    margin:30px 0 40px;
+    padding:25px 30px;
+    background:linear-gradient(135deg,#fff8f2,#ffffff);
+    border-left:6px solid #dd7e43;
+    border-radius:0 20px 20px 0;
+    box-shadow:0 8px 25px rgba(0,0,0,0.06);
+    position:relative;
+    overflow:hidden;
+}
+
+.apd-header-meta::before{
+    content:'';
+    position:absolute;
+    top:-40px;
+    right:-40px;
+    width:120px;
+    height:120px;
+    background:rgba(194,84,13,0.05);
+    border-radius:50%;
+}
+
+.vicar-title{
+    margin-bottom:15px;
+}
+
+.vicar-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#e76514;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.vicar-badge i{
+    font-size:12px;
+}
+
+.vicar-church{
+    font-size:1.5rem;
+    color:#2a4564; 
+    margin-bottom:12px;
+    font-weight:700;
+    line-height:1.4;
+}
+
+.vicar-description{
+    color:#666;
+    font-size:15px;
+    line-height:1.8;
+    margin:0;
+    max-width:700px;
+}
+        /* details grid - modern cards */
+        .apd-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+        .apd-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 22px;
+            border-radius: 28px;
+            background: #ffffff;
+            border: 1px solid #f0e7db;
+            transition: all 0.3s;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.02);
+        }
+        .apd-detail-item:hover {
+            background: linear-gradient(145deg, #fffbf5, #fff7ef);
+            transform: translateY(-5px);
+            border-color: #c2540d60;
+            box-shadow: 0 18px 28px -12px rgba(0,0,0,0.15);
+        }
+        .apd-detail-item i {
+            font-size: 32px;
+            color: #e76514;
+            min-width: 48px;
+            text-align: center;
+            background: #c2540d10;
+            padding: 10px;
+            border-radius: 40px;
+            transition: 0.2s;
+        }
+        .apd-detail-item:hover i {
+            background: #e76514;
+            color: white;
+            transform: scale(1.05);
+        }
+        .apd-detail-item small {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e76514;
+            display: inline-block;
+            background: #ffede1;
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-bottom: 6px;
+        }
+        .apd-detail-item p {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f3b4c;
+            margin: 4px 0 0;
+            word-break: break-word;
+        }
+
+        /* fancy floating prayer button */
+        .prayer-floating {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e76514;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 10px 20px rgba(194,84,13,0.4);
+            cursor: pointer;
+            z-index: 99;
+            transition: 0.2s;
+            border: none;
+            backdrop-filter: blur(2px);
+        }
+        .prayer-floating:hover {
+            background: #e76514;
+            transform: scale(1.1) rotate(5deg);
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            background: #2a4564;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 5px 12px black(0,0,0,0.2);
+        }
+
+        /* responsive */
+        @media (max-width: 1024px) {
+            .apd-profile-card {
+                gap: 35px;
+                padding: 35px;
+            }
+            .apd-name {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 550px) {
+            .priest-detail-section {
+                padding: 60px 16px;
+            }
+            .apd-profile-card {
+                padding: 20px;
+            }
+            .apd-name {
+                font-size: 2rem;
+            }
+        }
+
+
+           .verse-tooltip {
+        animation: fadeUp 0.2s ease;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(8px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .toast-msg {
+        font-weight: 500;
+        background: #2a4564ee;
+        backdrop-filter: blur(8px);
+        border-radius: 60px;
+        letter-spacing: 0.3px;
+    }
+    .apd-detail-item p {
+        transition: 0.1s;
+    }
+    .vicar-tag {
+        transition: all 0.3s;
+    }
+    .vicar-tag:hover {
+        background: #e76514;
+        color: white;
+    }
+   
+    </style>
+
+
+<section class="priest-detail-section">
+    
+    <div class="apd-profile-card">
+
+        <div class="apd-img-box">
+
+            {% if priest.image %}
+                <img src="{{ priest.image.url }}" 
+                     alt="{{ priest.first_name }} {{ priest.last_name }}">
+            {% else %}
+                <img src="{% static 'images/member2.jpg' %}" alt="Profile">
+            {% endif %}
+
+<!-- Pastoral Experience Section -->
+<div class="pastoral-exp-under-img">
+
+    <div class="pastoral-header">
+        <i class="fas fa-heartbeat"></i>
+        <span>Pastoral Experience</span>
+    </div>
+
+
+    <div class="pastoral-list">
+
+        {% if priest.pastoral_experience %}
+
+            <div class="pastoral-content">
+                {{ priest.pastoral_experience|safe }}
+            </div>
+
+        {% else %}
+
+            <p>No pastoral experience available</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+        </div>
+
+
+        <div class="apd-info-content">
+
+            <h1 class="apd-name">
+                Rev. {{ priest.first_name }} {{ priest.last_name }}
+            </h1>
+
+
+            <div class="apd-header-meta">
+
+                <div class="vicar-title">
+
+                    <span class="vicar-badge">
+
+                        {% if priest.position == 'vicar' %}
+                            <i class="fas fa-church"></i>
+                            VICAR OF
+
+                        {% elif priest.position == 'retired_priest' %}
+                            <i class="fas fa-user-clock"></i>
+                            RETIRED PRIEST
+
+                        {% else %}
+                            <i class="fas fa-graduation-cap"></i>
+                            STUDENT PRIEST
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <h3 class="vicar-church">
+                    {{ priest.pastoral_church|default:"Diocese" }}
+                </h3>
+
+
+                <p class="vicar-description">
+                    {{ priest.description|safe }}
+                </p>
+
+
+            </div>
+
+
+
+            <div class="apd-details-grid">
+
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-church"></i>
+
+                    <div>
+                        <small>Home Parish</small>
+                        <p>
+                            {{ priest.home_parish|default:"Not specified" }}
+                        </p>
+                    </div>
+
+                </div>
+
+
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-hands-praying"></i>
+
+                    <div>
+                        <small>Ordained On</small>
+
+                        <p>
+                            {% if priest.ordained_on %}
+                                {{ priest.ordained_on|date:"d F Y" }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Retirement Date -->
+                {% if priest.retired_on %}
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-calendar-times"></i>
+
+                    <div>
+
+                        <small>Retired On</small>
+
+                        <p>
+                            {{ priest.retired_on|date:"d F Y" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-tint"></i>
+
+                    <div>
+                        <small>Blood Group</small>
+
+                        <p>
+                            {{ priest.blood_group|default:"Not specified" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-mobile-alt"></i>
+
+                    <div>
+                        <small>Phone</small>
+
+                        <p>
+                            {{ priest.phone|default:"Not specified" }}
+                        </p>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="apd-detail-item">
+
+                    <i class="fas fa-location-dot"></i>
+
+                    <div>
+                        <small>Address</small>
+
+                        <p>
+                            {{ priest.address|default:"Not specified" }}
+                        </p>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+<!-- JavaScript enhanced: interactive, dynamic blessings, custom cursor effect? just beautiful -->
+<script>
+    // Prayer floating button interaction
+    const prayerBtn = document.getElementById('floatingPrayerBtn');
+    const toastMsg = document.getElementById('prayerToast');
+    let toastTimeout;
+    function showPrayerToast(message = "🙏 Prayer offered for you! God bless.") {
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastMsg.style.opacity = '1';
+        toastMsg.innerHTML = `<i class="fas fa-praying-hands" style="margin-right:8px;"></i> ${message}`;
+        toastTimeout = setTimeout(() => {
+            toastMsg.style.opacity = '0';
+        }, 2200);
+    }
+    prayerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPrayerToast("✝️ May the Lord bless Rev. Thomas Ramban & his flock. Amen.");
+        // create a little ripple effect on the card
+        const card = document.querySelector('.apd-profile-card');
+        card.style.transform = 'scale(1.01)';
+        setTimeout(() => { card.style.transform = ''; }, 200);
+        // also change the cross floating effect
+        const cross = document.querySelector('.ornament-cross');
+        if(cross) {
+            cross.style.opacity = '0.1';
+            setTimeout(() => { cross.style.opacity = '0.04'; }, 600);
+        }
+    });
+
+    // --- Sidebar logic from original (improved, but with polished event listeners) ---
+    // We need to simulate that header/footer might have those elements, but to prevent errors we create fallback if missing.
+    // However we added dummy toggle and sidebar handling if they exist. But original has references to sidebarToggleBtn etc.
+    // For safety we check existence and replicate functionality without breaking.
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebar = document.getElementById('sidebarPanel');
+        const overlay = document.getElementById('sidebarOverlay');
+        if(toggleBtn && sidebar && overlay) {
+            function openSidebar() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                toggleBtn.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                toggleBtn.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if(sidebar.classList.contains('open')) closeSidebar();
+                else openSidebar();
+            });
+            overlay.addEventListener('click', closeSidebar);
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+            });
+        }
+
+        // Second script: menu-link dropdown (if present)
+        const menuLinks = document.querySelectorAll(".menu-link");
+        if(menuLinks.length) {
+            menuLinks.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    const parentLi = this.parentElement;
+                    if(parentLi && parentLi.classList) {
+                        document.querySelectorAll(".dropdown").forEach(item => {
+                            if(item !== parentLi) item.classList.remove("active");
+                        });
+                        parentLi.classList.toggle("active");
+                    }
+                });
+            });
+        }
+        
+        // extra: interactive background with holy light effect? small!
+        const section = document.querySelector('.priest-detail-section');
+        if(section) {
+            section.addEventListener('mousemove', (e) => {
+                let x = e.clientX / window.innerWidth;
+                let y = e.clientY / window.innerHeight;
+                let gradientShift = `radial-gradient(circle at ${x*100}% ${y*100}%, rgba(245, 240, 228, 0.7), #f8f6f0)`;
+                section.style.background = gradientShift;
+            });
+            section.addEventListener('mouseleave', () => {
+                section.style.background = "radial-gradient(circle at 10% 30%, rgba(245, 240, 228, 0.4), #f8f6f0)";
+            });
+        }
+
+        // Dynamic greeting: change vicar title based on time
+        const vicarSpan = document.querySelector('.vicar-tag');
+        if(vicarSpan) {
+            const hour = new Date().getHours();
+            let greeting = '';
+            if(hour<12) greeting = '🌅 Morning prayer';
+            else if(hour<18) greeting = '☀️ Afternoon blessing';
+            else greeting = '🌙 Evening intercessions';
+            vicarSpan.innerHTML = `<i class="fas fa-cross" style="margin-right:6px;"></i> Vicar • ${greeting}`;
+        }
+        
+        // Hover animation for each detail item: scripture verse pop
+        const detailItems = document.querySelectorAll('.apd-detail-item');
+        const bibleVerses = [
+            "The Lord is my Shepherd • Ps 23", 
+            "I can do all things through Christ • Phil 4:13",
+            "Pray without ceasing • 1 Thess 5:17",
+            "Faith without works is dead • James 2:26",
+            "Let your light shine • Matt 5:16",
+            "Be joyful in hope • Rom 12:12",
+            "Love one another • John 13:34",
+            "Trust in the Lord • Prov 3:5"
+        ];
+        detailItems.forEach((item, idx) => {
+            item.addEventListener('mouseenter', (e) => {
+                const verseText = bibleVerses[idx % bibleVerses.length];
+                const tooltipDiv = document.createElement('div');
+                tooltipDiv.className = 'verse-tooltip';
+                tooltipDiv.innerText = `✨ ${verseText} ✨`;
+                tooltipDiv.style.position = 'absolute';
+                tooltipDiv.style.background = '#2a4564';
+                tooltipDiv.style.color = 'white';
+                tooltipDiv.style.padding = '6px 15px';
+                tooltipDiv.style.borderRadius = '40px';
+                tooltipDiv.style.fontSize = '0.7rem';
+                tooltipDiv.style.fontWeight = '500';
+                tooltipDiv.style.pointerEvents = 'none';
+                tooltipDiv.style.zIndex = '999';
+                tooltipDiv.style.whiteSpace = 'nowrap';
+                tooltipDiv.style.fontFamily = "'Inter', sans-serif";
+                tooltipDiv.style.boxShadow = '0 6px 14px rgba(0,0,0,0.1)';
+                document.body.appendChild(tooltipDiv);
+                const rect = item.getBoundingClientRect();
+                tooltipDiv.style.top = rect.top + window.scrollY - 35 + 'px';
+                tooltipDiv.style.left = rect.left + rect.width/2 - 70 + 'px';
+                item._tooltip = tooltipDiv;
+            });
+            item.addEventListener('mouseleave', () => {
+                if(item._tooltip) {
+                    item._tooltip.remove();
+                    item._tooltip = null;
+                }
+            });
+        });
+        
+        // Add a small holy spirit flame effect on name hover
+        const nameHeading = document.querySelector('.apd-name');
+        if(nameHeading) {
+            nameHeading.addEventListener('mouseenter', () => {
+                nameHeading.style.transition = '0.2s';
+                nameHeading.style.textShadow = '0 0 5px #c2540d60';
+            });
+            nameHeading.addEventListener('mouseleave', () => {
+                nameHeading.style.textShadow = 'none';
+            });
+        }
+        
+        // Update email display / copy feature? extra attraction
+        const emailDiv = document.querySelector('.apd-detail-item .fa-envelope')?.parentElement;
+        if(emailDiv) {
+            const emailP = emailDiv.querySelector('p');
+            if(emailP) {
+                emailP.style.cursor = 'pointer';
+                emailP.title = 'Click to copy email';
+                emailP.addEventListener('click', () => {
+                    let emailText = emailP.innerText.trim();
+                    navigator.clipboard.writeText(emailText).then(() => {
+                        showPrayerToast("📧 Email copied: " + emailText);
+                    }).catch(() => {
+                        alert("Manual copy: " + emailText);
+                    });
+                });
+            }
+        }
+        // same for phone
+        const phoneDiv = document.querySelector('.apd-detail-item .fa-mobile-alt')?.parentElement;
+        if(phoneDiv) {
+            const phoneP = phoneDiv.querySelector('p');
+            if(phoneP) {
+                phoneP.style.cursor = 'pointer';
+                phoneP.addEventListener('click', () => {
+                    let phoneNumber = phoneP.innerText.split(' ')[0];
+                    navigator.clipboard.writeText(phoneNumber).then(() => {
+                        showPrayerToast("📞 Phone number copied");
+                    });
+                });
+            }
+        }
+    });
+    
+    // also fix broken static images: provide fallback
+    window.addEventListener('load', () => {
+        const profileImg = document.querySelector('.apd-img-box img');
+        if(profileImg && profileImg.complete && profileImg.naturalWidth === 0) {
+            profileImg.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop';
+            profileImg.alt = "Father Thomas portrait";
+        }
+    });
+</script>
+
+
+
+<!-- minor style for tooltip & toast -->
+<style>
+ 
+</style>
+</div>
+
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

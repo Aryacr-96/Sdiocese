@@ -1,0 +1,95 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>Prarthanayogam</h2>
+            <p>The Akhila Malankara Prayer Group Association has been constituted to monitor and streamline the prayer and reading habits of congregations in different prayer groups functioning in the various parishes under the Malankara Syrian Orthodox Christian Church.</p>
+            <p>The objective of this group is to ascertain the inculcation of firm faith, love of the church and brotherhood and bring about the spiritual, material and educational upliftment of the people.</p>
+        </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">Vice-President</span>
+                    <h3>Rev. Fr. Manoj N Rajan</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="{% static 'images/member.jpg' %}" alt="Secretary" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary
+</span>
+                    <h3>Mr. M. K. Pappachen</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Nadayathumkara, Kerala</p> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

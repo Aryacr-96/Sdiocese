@@ -1,0 +1,200 @@
+{% load static %}
+{% include 'header.html' %}
+
+<section class="sangam-section">
+    <div class="sangam-container">
+
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>Sunday School</h2>
+            <p>Orthodox Syrian Sunday School Association of the East is a spiritual organization functioning in all the parishes of the Malankara Orthodox Church throughout the world. It takes care of the spiritual nurturing of the children, by bringing them up in the knowledge and fellowship of Jesus Christ and His Church. The classes are conducted for the children. The classes range from Pre-primary to the twelfth (Vedapraveen Diploma).</p>
+            <p>We follow a curriculum, jointly prepared and published by the Oriental Orthodox Churches which is revised from time to time. The Vacation Bible School conducted (OVBS) is a very vibrant wing of the O.S.S.A.E. The movement publish textbooks, devotional materials, song books, songs and animations for the OVBS every year. The headquarters of O.S.S.A.E is located in the complex of the Devalokom Catholicate Aramana, Kottayam.</p>
+        </div>
+
+        <!-- Right: Leaders -->
+        <div class="photo-side">
+
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}"
+                     alt="Vice-President"
+                     class="leader-img">
+
+                <div class="leader-info">
+                    <span class="role-badge">Vice-President</span>
+                    <h3>Rev. Fr. Jins N.B</h3>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="{% static 'images/member.jpg' %}"
+                     alt="General Secretary"
+                     class="leader-img">
+
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mr. Sabin Baby</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- District Table -->
+    <div class="district-table-wrapper">
+
+        <table class="district-table">
+
+            <thead>
+                <tr>
+                    <th>District</th>
+                    <th>Designation</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td class="district-name">Kelakam</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Justin P. Kuriyakose</td>
+                    <td>
+                        <a href="tel:+919946429867" class="phone-link">
+                            +91 9946429867
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="district-name">Kiliyanthara</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Eldho A.K</td>
+                    <td>
+                        <a href="tel:+918943944977" class="phone-link">
+                            +91 8943944977
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" class="district-name">Mananthavady</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Zacharia Cheriyan</td>
+                    <td>
+                        <a href="tel:+918089714620" class="phone-link">
+                            +91 8089714620
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="designation">Co-Ordinator</td>
+                    <td>Mr. Abhilash Mananthavady</td>
+                    <td>---</td>
+                </tr>
+
+                <tr>
+                    <td class="district-name">Meenangadi</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Sanju N. Jose</td>
+                    <td>
+                        <a href="tel:+919946249324" class="phone-link">
+                            +91 9946249324
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" class="district-name">
+                        Sulthan Bathery
+                    </td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Nibin Jacob</td>
+                    <td>
+                        <a href="tel:+919539943773" class="phone-link">
+                            +91 9539943773
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="designation">Co-Ordinator</td>
+                    <td>Miss. Diliya George</td>
+                    <td>
+                        <a href="tel:+919539943773" class="phone-link">
+                            +91 9539943773
+                        </a>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+<!-- Sidebar Script -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<!-- Dropdown Script -->
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+/* PUBLICATIONS SECTION */
+.publications-section{
+    max-width:1400px;
+    margin-left:50px;
+    margin-right:10px;
+    padding:0 20px;
+    margin-top: 60px;
+}
+
+.section-title-publication{
+    text-align:center;
+    margin-bottom:50px;
+
+}
+
+.section-title-publication h2{
+    font-size:32px;
+    font-weight:600;
+    color:#2a4564;
+    position:relative;
+    display:inline-block;   
+}
+.section-title-publication  h2::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-15px;
+    width:70px;
+    height:4px;
+    background:#dd7e43;
+    transform:translateX(-50%);
+    border-radius:20px;
+}
+
+
+/* GRID */
+.publication-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+/* CARD */
+.publication-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.3s ease;
+}
+
+.publication-image{
+    height:260px;
+}
+
+.publication-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.publication-content{
+    padding:12px;
+    text-align:center;
+}
+/* CONTENT */
+
+.publication-content h3{
+    font-size:18px;
+    color:#23395d;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+/* BUTTON */
+.download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    background:#23395d;
+    color:#fff;
+    text-decoration:none;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.download-btn:hover{
+    background:#dd7e43;
+}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+    .publication-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:768px){
+    .publication-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .section-title-publication h2{
+        font-size:32px;
+    }
+}
+
+@media(max-width:500px){
+    .publication-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<section class="publications-section">
+
+    <div class="section-title-publication">
+        <h2>Publications</h2>
+       
+    </div>
+
+    <div class="publication-grid">
+
+        <!-- Publication 1 -->
+        <div class="publication-card">
+            <div class="publication-image">
+                <img src="{% static 'images/publication.jpg' %}" alt="Nirmala Sangeetham">
+            </div>
+
+            <div class="publication-content">
+                <h3>Nirmala Sangeetham</h3>
+
+                <a href="{% static 'pdf/nirmala-sangeetham.pdf' %}"
+                   class="download-btn"
+                   download>
+                    <i class="fas fa-download"></i>
+                    Download
+                </a>
+            </div>
+        </div>
+
+        <!-- Publication 2 -->
+        <div class="publication-card">
+            <div class="publication-image">
+                <img src="{% static 'images/publication.jpg' %}" alt="">
+            </div>
+
+            <div class="publication-content">
+                <h3>Nirmala Sangeetham</h3>
+
+                <a href="{% static '#' %}"
+                   class="download-btn"
+                   download>
+                    <i class="fas fa-download"></i>
+                    Download
+                </a>
+            </div>
+        </div>
+
+        <!-- Publication 3 -->
+        <div class="publication-card">
+            <div class="publication-image">
+                <img src="{% static 'images/publication.jpg' %}" alt="">
+            </div>
+
+            <div class="publication-content">
+                <h3>Nirmala Sangeetham</h3>
+
+                <a href="{% static '#' %}"
+                   class="download-btn"
+                   download>
+                    <i class="fas fa-download"></i>
+                    Download
+                </a>
+            </div>
+        </div>
+
+        <!-- Publication 4 -->
+        <div class="publication-card">
+            <div class="publication-image">
+                <img src="{% static 'images/publication.jpg' %}" alt="">
+            </div>
+
+            <div class="publication-content">
+                <h3>Nirmala Sangeetham</h3>
+
+                <a href="{% static '#' %}"
+                   class="download-btn"
+                   download>
+                    <i class="fas fa-download"></i>
+                    Download
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});
+</script>

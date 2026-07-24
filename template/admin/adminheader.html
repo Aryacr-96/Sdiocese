@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diocese | Dashboard</title>
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans for a ultra-modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="{% static 'style/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+  <!-- Plugins -->
+  <link rel="stylesheet" href="{% static 'style/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style/plugins/jqvmap/jqvmap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style/plugins/daterangepicker/daterangepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'style/plugins/summernote/summernote-bs4.min.css' %}">
+
+  <!-- Theme -->
+  <link rel="stylesheet" href="{% static 'style/dist/css/adminlte.min.css' %}">
+
+  <!-- Extra Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* GLOBAL OVERRIDES */
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      background-color: #f8fafc;
+    }
+
+    /* Top Navbar */
+    .main-header.navbar {
+      border-bottom: 1px solid #f1f5f9 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      padding: 12px 20px;
+    }
+    
+    .navbar-light .navbar-nav .nav-link {
+      color: #64748b;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    
+    .navbar-light .navbar-nav .nav-link:hover {
+      color: #0f172a;
+    }
+
+    /* Sidebar Refinement */
+    .main-sidebar {
+      background-color: #0f172a !important; /* Rich deep navy/slate */
+      box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05) !important;
+      border-right: none !important;
+    }
+
+    .brand-link {
+      border-bottom: 1px solid #1e293b !important;
+      padding: 20px 15px !important;
+      background: transparent !important;
+    }
+
+    .brand-text {
+      font-weight: 700 !important;
+      color: #f8fafc !important;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-image {
+      margin-top: -2px;
+      max-height: 35px;
+    }
+
+    /* Sidebar Navigation Links */
+    .sidebar .nav-sidebar .nav-link {
+      border-radius: 10px;
+      margin-bottom: 6px;
+      padding: 12px 16px;
+      color: #94a3b8 !important;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar .nav-sidebar .nav-link i {
+      color: #64748b;
+      transition: color 0.2s ease;
+    }
+
+    /* Active & Hover Navigation Items */
+    .sidebar .nav-sidebar .nav-link:hover {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+    }
+
+    .sidebar .nav-sidebar .nav-link:hover i {
+      color: #f8fafc;
+    }
+
+    .sidebar .nav-sidebar .nav-item .active {
+      background: linear-gradient(135deg, #4f46e5, #6366f1) !important; /* Premium brand purple/indigo */
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .sidebar .nav-sidebar .nav-item .active i {
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static 'images/manayath logo_white.png' %}" height="50">
+  </div>
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'admin_dashboard' %}" class="nav-link">Dashboard</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    
+    <!-- Logo -->
+    <a href="{% url 'admin_dashboard' %}" class="brand-link">
+      <img src="{% static 'images/manayath logo_white.png' %}" class="brand-image" style="opacity: .9">
+      <span class="brand-text font-weight-light">Admin</span>
+    </a>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+      <nav class="mt-3">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <!-- Dashboard -->
+          <li class="nav-item">
+            <a href="{% url 'admin_dashboard' %}" class="nav-link active">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+          <!-- PEIEST -->
+          <li class="nav-item">
+            <a href="{% url 'admin_priests' %}" class="nav-link">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>Priest</p>
+            </a>
+          </li>
+
+          <!-- PARISH -->
+          <li class="nav-item">
+            <a href="{% url 'admin_parishes' %}" class="nav-link">
+              <i class="fas fa-church"></i>
+              <p>Parish</p>
+            </a>
+          </li>
+
+          <!-- CONTACT -->
+          <li class="nav-item">
+            <a href="{% url 'contactpage' %}" class="nav-link">
+             <i class="fas fa-address-book"></i>
+              <p>Contact</p>
+            </a>
+          </li>
+
+
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Content Section -->
+  {% block content %}{% endblock %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark"></aside>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'style/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'style/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script src="{% static 'style/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'style/plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'style/plugins/sparklines/sparkline.js' %}"></script>
+<script src="{% static 'style/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'style/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<script src="{% static 'style/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'style/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'style/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'style/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'style/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<script src="{% static 'style/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'style/dist/js/adminlte.js' %}"></script>
+<script src="{% static 'style/dist/js/pages/dashboard.js' %}"></script>
+
+</body>
+</html>

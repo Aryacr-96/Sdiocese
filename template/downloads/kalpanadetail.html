@@ -1,0 +1,213 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+.detail-wrapper{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+    display:flex;
+    gap:30px;
+}
+
+/* LEFT CONTENT */
+.detail-main{
+    flex:3;
+}
+
+.page-title{
+    font-size:32px;
+    font-weight:700;
+    color:#23395d;
+    margin-bottom:10px;
+}
+
+.sub-title{
+    color:#777;
+    margin-bottom:25px;
+}
+
+/* LIST ITEMS */
+.download-list{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.06);
+    overflow:hidden;
+}
+
+.download-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    border-bottom:1px solid #eee;
+    transition:0.3s;
+}
+
+.download-item:hover{
+    background:#fff6f1;
+}
+
+.download-item a{
+    text-decoration:none;
+    color:#23395d;
+    font-size:15px;
+}
+
+.download-btn{
+    background:#e76514;
+    color:#fff;
+    padding:6px 14px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:13px;
+    transition:0.3s;
+}
+
+.download-btn:hover{
+    background:#c9500f;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .detail-wrapper{
+        flex-direction:column;
+    }
+}
+</style>
+
+<section class="detail-wrapper">
+
+    <!-- LEFT -->
+    <div class="detail-main">
+
+        <div class="page-title">Kalpana 2026</div>
+        <div class="sub-title">Download official documents, notices and publications</div>
+
+        <div class="download-list">
+
+          <div class="download-item">
+    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
+      Kalpana No. 171 – 2026 Association Electronic Voting – English
+    </a>
+
+    <a class="download-btn"
+       href="{% static 'images/Motors UI (1).pdf' %}"
+       target="_blank">
+        View
+    </a>
+</div>
+            <div class="download-item">
+    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
+       Kalapana No. 171 – 2026 Association Electronic Voting – Malayalam
+    </a>
+
+    <a class="download-btn"
+       href="{% static 'images/Motors UI (1).pdf' %}"
+       target="_blank">
+        View
+    </a>
+</div>
+
+            <div class="download-item">
+    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
+       Kalpana No. 130 H.H Baselios Paulos Perunnal
+    </a>
+
+    <a class="download-btn"
+       href="{% static 'images/Motors UI (1).pdf' %}"
+       target="_blank">
+        View
+    </a>
+</div>
+
+           <div class="download-item">
+    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
+       Kalpana No 150 A  Accounts Kalpana 2026 to All Parishes
+    </a>
+
+    <a class="download-btn"
+       href="{% static 'images/Motors UI (1).pdf' %}"
+       target="_blank">
+        View
+    </a>
+</div>
+
+            <div class="download-item">
+    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
+        Kalpana No 150 Church Accounts Kalpana 2026 to Institutions
+    </a>
+
+    <a class="download-btn"
+       href="{% static 'images/Motors UI (1).pdf' %}"
+       target="_blank">
+        View
+    </a>
+</div>
+
+        </div>
+
+    </div>
+
+   
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>S.J.O.F</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum voluptas minima culpa, eligendi veniam ullam quas, saepe nulla ipsum voluptate enim ratione aperiam sed deserunt quia veritatis? Adipisci voluptatum quo consequatur at quidem. Vel amet ipsam eaque cum, tempore illum at vero eius incidunt! Nesciunt accusamus excepturi tempore minus consectetur inventore illum velit, autem omnis, sunt in saepe? Iure tenetur maxime molestias! At corrupti ipsum quae ex placeat eligendi nostrum voluptatem nihil eum est saepe non repellendus facilis, atque error asperiores tenetur unde quisquam minus aliquam praesentium ut odio recusandae facere! Sed ullam numquam iusto amet, ad tempora sapiente officia.</p>
+        </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mrs. Prof.Rachel Thomas</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+
+          
+        </div>
+
+    </div>
+    <!-- District Table -->
+    <div class="district-table-wrapper">
+
+        <table class="district-table">
+
+            <thead>
+                <tr>
+                    <th>District</th>
+                    <th>Designation</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td class="district-name">Kelakam</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Justin P. Kuriyakose</td>
+                    <td>
+                        <a href="tel:+919946429867" class="phone-link">
+                            +91 9946429867
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="district-name">Kiliyanthara</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Eldho A.K</td>
+                    <td>
+                        <a href="tel:+918943944977" class="phone-link">
+                            +91 8943944977
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" class="district-name">Mananthavady</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Zacharia Cheriyan</td>
+                    <td>
+                        <a href="tel:+918089714620" class="phone-link">
+                            +91 8089714620
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="designation">Co-Ordinator</td>
+                    <td>Mr. Abhilash Mananthavady</td>
+                    <td>---</td>
+                </tr>
+
+                <tr>
+                    <td class="district-name">Meenangadi</td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Sanju N. Jose</td>
+                    <td>
+                        <a href="tel:+919946249324" class="phone-link">
+                            +91 9946249324
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2" class="district-name">
+                        Sulthan Bathery
+                    </td>
+                    <td class="designation">President</td>
+                    <td>Rev. Fr. Nibin Jacob</td>
+                    <td>
+                        <a href="tel:+919539943773" class="phone-link">
+                            +91 9539943773
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="designation">Co-Ordinator</td>
+                    <td>Miss. Diliya George</td>
+                    <td>
+                        <a href="tel:+919539943773" class="phone-link">
+                            +91 9539943773
+                        </a>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

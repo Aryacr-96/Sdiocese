@@ -1,0 +1,684 @@
+/*+++++++++++++++++++++++++++ INDEX ++++++++++++++++++++++++*/
+
+
+/* ======================== RESET ======================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar (Chrome, Edge, Safari) */
+*::-webkit-scrollbar{
+    width:0;
+    height:0;
+}
+
+/* ======================== BODY ======================== */
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    overflow-y:auto;
+    
+    font-family:"Poppins", sans-serif;
+    background:
+        radial-gradient(circle at 70% 40%, #f67423 0%, transparent 40%),
+        linear-gradient(135deg,#f5d2be 100%, #e7a877 100%);
+}
+
+/* ======================== BG GRAPHICS CONTAINER ======================== */
+.bg-graphics-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1; /* Sits at the bottom */
+    pointer-events: none;
+    
+}
+
+/* ======================== CONTAINER ======================== */
+.container{
+    padding:40px 80px;
+    position:relative;
+    z-index:2; /* Sits above background graphics */
+}
+
+/* ======================== NAVBAR ======================== */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+}
+
+/* Logo */
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-title{
+    color:#3D3D3D;;
+    font-size:30px;
+    font-weight:700;
+    margin:0;
+}
+
+/* Center Menu */
+
+
+.nav-links{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height:55px;
+    padding: 8px 10px;
+
+    background: transparent;
+
+    /* border: 3px solid #f67423; */
+    border-radius: 50px;
+
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,.15),
+        0 4px 12px rgba(0,0,0,.2);
+}
+
+/* Main Links */
+.nav-links a{
+    text-decoration: none;
+    color:#3D3D3D;
+    padding: 14px 24px;
+    font-weight: 600;
+    border-radius: 40px;
+    transition: all .3s ease;
+}
+
+/* Active/Hover Effect */
+.nav-links > a:hover,
+.dropdown:hover > a{
+    background: #dd7e43;
+
+
+    color: #fff;
+
+    box-shadow:
+        inset 0 1px 3px rgba(255,255,255,.35),
+        0 0 15px #2a4564;
+}
+
+/* Dropdown Container */
+.dropdown{
+    position: relative;
+}
+
+/* Dropdown Menu */
+.dropdown-menu{
+    position: absolute;
+    top: 120%;
+    left: 0;
+
+    min-width: 280px;
+
+    background: #F7F4EE;
+    border-radius: 15px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.15);
+
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+
+    transition: all .35s ease;
+    z-index: 1000;
+}
+
+/* Dropdown Links */
+.dropdown-menu a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 14px 18px;
+    color:#3D3D3D;
+
+    border-bottom: 1px solid #edf2f7;
+
+    transition: .3s;
+}
+
+.dropdown-menu a:last-child{
+    border-bottom: none;
+}
+
+/* Dropdown Hover */
+.dropdown-menu a:hover{
+    background: #F7F4EE;
+    color: #3D3D3D;
+    padding-left: 25px;
+}
+
+/* Show Dropdown */
+.dropdown:hover .dropdown-menu{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Arrow Animation */
+.arrow{
+    color: #3D3D3D;
+    transition: .3s;
+}
+
+.dropdown-menu a:hover .arrow{
+    transform: translateX(5px);
+}
+/* Mobile */
+@media (max-width: 992px){
+    .nav-links{
+        display:none;
+    }
+}
+
+/* ======================== BUTTON ======================== */
+
+.button,
+.btn{
+    padding:10px 25px;
+    border-radius:25px;
+    border:2px solid #3D3D3D;
+    background:transparent;
+    cursor:pointer;
+    color:#3D3D3D;
+    font-size:15px;
+    margin-right: -10px;
+    transition:0.3s;
+}
+
+.button:hover,
+.btn:hover{
+    background: #dd7e43;
+    color:white;
+    border: #dd7e43;
+}
+
+/* ======================== TOGGLE BUTTON ======================== */
+.sidebar-toggle{
+    position:fixed;
+    right:1.5rem;
+    top:62px;
+    right: 50px;
+    width:44px;
+    height:44px;
+    background:transparent;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:1100;
+    transition:0.25s;
+}
+
+.sidebar-toggle:hover{
+    background:rgba(0,0,0,0.05);
+}
+
+/* Hamburger */
+.toggle-icon{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.toggle-icon span{
+    width:26px;
+    height:2px;
+    background:#333;
+    margin:5px 0;
+    border-radius:4px;
+    transition:0.25s;
+}
+
+/* Toggle animation */
+.sidebar-toggle.active span:nth-child(1){
+    transform:rotate(45deg) translate(5px,5px);
+}
+.sidebar-toggle.active span:nth-child(2){
+    opacity:0;
+}
+.sidebar-toggle.active span:nth-child(3){
+    transform:rotate(-45deg) translate(5px,-5px);
+}
+
+/* ======================== SIDEBAR ======================== */
+.sidebar{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:280px;
+    height:100vh;
+    background:#F7F4EE;
+    box-shadow:-2px 0 12px rgba(0,0,0,0.1);
+    z-index:1050;
+    transition:0.35s;
+    padding:2rem 1.5rem;
+    display:flex;
+    flex-direction:column;
+}
+
+.sidebar.open{
+    right:0;
+}
+
+/* Sidebar scroll */
+.nav-menu-side{
+    flex:1;
+    overflow-y:auto;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+}
+
+/* Hide sidebar scrollbar */
+.nav-menu-side::-webkit-scrollbar{
+    display:none;
+}
+
+/* ======================== SIDEBAR LOGO ======================== */
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:2rem;
+    padding-bottom:1rem;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.logo-circle-side{
+    width:45px;
+    height:45px;
+    background:#f0f0f0;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.sidebar-logo h3{
+    color: #C8A45D;
+    font-weight:600;
+    font-size:1.5rem;
+}
+
+/* ======================== MENU ======================== */
+
+.nav-menu-side{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.dropdown{
+    display:flex;
+    flex-direction:column;
+}
+
+.menu-link{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:15px 18px;
+    border-radius:18px;
+    text-decoration:none;
+    color:#3D3D3D;
+    font-size:17px;
+    font-weight:500;
+    transition:.3s ease;
+}
+
+.menu-link:hover{
+    background:#F3E7D8;
+}
+
+.menu-icon{
+    color:#C8A45D;
+    font-size:18px;
+    width:22px;
+}
+
+.menu-link > .arrow{
+    margin-left:auto;
+    color:#C8A45D;
+    font-size:11px;
+    transition:.3s ease;
+}
+
+/* Active menu like image */
+
+.dropdown.active > .menu-link{
+    background:linear-gradient(135deg,#EA914D,#DD7E43);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(221,126,67,.25);
+}
+
+.dropdown.active > .menu-link .menu-icon,
+.dropdown.active > .menu-link > .arrow{
+    color:#fff;
+}
+
+.dropdown.active > .menu-link > .arrow{
+    transform:rotate(90deg);
+}
+
+/* ================= SUBMENU ================= */
+
+.submenu{
+    max-height:0;
+    overflow:hidden;
+    margin-left:28px;
+    padding-left:18px;
+    border-left:2px solid #E6D8C3;
+    transition:max-height .4s ease;
+}
+
+.dropdown.active .submenu{
+    max-height:1500px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.submenu a{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding:7px 0;
+    color:#555;
+    font-size:14px;
+    line-height:1.5;
+    text-decoration:none;
+    transition:.3s ease;
+}
+
+.submenu a:hover{
+    color:#DD7E43;
+    transform:translateX(4px);
+}
+
+.submenu a .arrow{
+    flex-shrink:0;
+    color:#DD7E43;
+    font-size:8px;
+    margin-top:7px;
+    transform:none !important;
+}
+/* ======================== HERO ======================== */
+.hero{
+    margin-top:100px;
+}
+
+.hero-text{
+    width:50%;
+}
+
+.hero-text h1{
+    font-size:65px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.hero-text h3{
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+.hero-text p{
+    line-height:1.6;
+    max-width:500px;
+}
+
+.hero-buttons{
+    margin-top:30px;
+    display:flex;
+    gap:20px;
+}
+
+/* ======================== RINGS ======================== */
+.ring-container{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.ring{
+    height:10px;
+    width:10px;
+    border-radius:50%;
+    border:2px solid  #dd7e43;
+    background: #dd7e43;
+}
+
+/* ======================== CIRCLES ======================== */
+.circle{
+    position:absolute;
+    border-radius:50%;
+}
+
+.circle1{
+    width:550px;
+    height:550px;
+    right:365px;
+    top:-30px;
+    background:radial-gradient(circle, rgba(230,101,21,0.9) 0%, white 100%);
+    animation:float1 8s infinite ease-in-out;
+}
+
+.circle2{
+    width:900px;
+    height:900px;
+    right:100px;
+    top:-300px;
+    background:radial-gradient(circle, rgba(230,101,21,0.9) 0%, white 100%);
+    animation:float2 10s infinite ease-in-out;
+}
+
+.circle4{
+    width:1700px;
+    height:1300px;
+    right:-270px;
+    top:-400px;
+    background:radial-gradient(circle, rgba(229,92,7,0.9) 0%, white 80%);
+    animation:float3 12s infinite ease-in-out;
+}
+
+/* Animations */
+@keyframes float1{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(20px,-30px);}
+}
+
+@keyframes float2{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(-30px,40px);}
+}
+
+@keyframes float3{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(40px,-20px);}
+}
+
+/* ======================== FOOTER ======================== */
+.footer{
+    position:absolute;
+    bottom:20px;
+    left:80px;
+    display:flex;
+    gap:30px;
+    font-size:14px;
+    color:#3D3D3D;
+    z-index: 3; /* Places footer in front of the circles */
+}
+
+.footer-right{
+    position:absolute;
+    bottom:20px;
+    right:80px;
+    font-size:14px;
+    color:#3D3D3D;
+    z-index: 3; /* Places copyright in front of the circles */
+}
+
+
+/* ========================================================================= */
+/* ======================== RESPONSIVE BREAKPOINT ========================== */
+/* ========================================================================= */
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px 16px;
+    }
+
+    /* Hide standard inline text links, but KEEP the navbar parent open */
+    .nav-links {
+        display: none !important; 
+    }
+
+    /* Bring back and neatly style the Login button on mobile */
+    .navbar .button,
+    .navbar .btn {
+        display: inline-block !important;
+        position: absolute;
+        right: 70px; /* Push it left so it sits cleanly next to the hamburger */
+        top: 16px;
+        padding: 8px 20px;
+        font-size: 14px;
+        z-index: 1200; /* Ensure it stays interactive */
+    }
+
+    /* Correct the absolute alignment of the mobile hamburger icon */
+    .sidebar-toggle {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+    }
+
+    .logo-title {
+        font-size: 22px;
+    }
+
+    /* Sidebar sizing */
+    .sidebar {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Hero structure */
+    .hero {
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-text {
+        width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+
+    .hero-text h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .hero-text p {
+        font-size: 14px;
+        max-width: 100%;
+    }
+
+    /* Hero main action buttons */
+    .hero-buttons {
+        margin-top: 24px;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .hero-buttons .button,
+    .hero-buttons .btn {
+        position: relative;
+        right: auto;
+        top: auto;
+        display: block !important;
+        width: 100%;
+        text-align: center;
+        padding: 14px 25px;
+    }
+
+    /* Background decorative bounds control */
+    .circle1 {
+        width: 250px;
+        height: 250px;
+        right: -50px;
+        top: 50px;
+    }
+
+    .circle2 {
+        width: 400px;
+        height: 400px;
+        right: -150px;
+        top: -100px;
+    }
+
+    .circle4 {
+        display: none;
+    }
+
+    /* Footer stacks */
+    .footer {
+        position: relative;
+        left: 15px;
+        bottom: 0;
+        margin-top: 60px;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: 10px;
+    }
+
+    .footer-right {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        left: 15px;
+        margin-top: 10px;
+        padding-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .hero-text h1 {
+        font-size: 32px;
+    }
+    .navbar .button,
+    .navbar .btn {
+        right: 60px;
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+}

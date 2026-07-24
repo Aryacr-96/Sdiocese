@@ -1,0 +1,287 @@
+{% load static %}
+{% include 'header.html' %}
+<style>
+.church-section { 
+    
+    margin: 0 auto; 
+    margin-left: 70px;
+    margin-right: 35px;
+    margin-top: 60px;
+}
+.church-section-title { 
+     font-size:38px;
+    line-height:1.2;
+    color:#2a4564;
+    margin-bottom:40px;
+    font-family:"Poppins", sans-serif;
+    font-weight:700;
+    position: relative;
+    padding-bottom: 15px;
+    margin-left:530px;
+    }
+.church-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    height: 4px;
+    background: #dd7e43;
+    border-radius: 2px;
+}
+/* --- Grid for 2-in-a-row --- */
+.church-list { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 25px; 
+}
+
+.church-card {
+    display: flex;
+    flex-direction: column; /* Stacks image and info for a better 2-column fit */
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eef;
+    transition: transform 0.3s ease;
+}
+
+.church-card:hover { 
+    transform: translateY(-5px); 
+}
+
+.church-image-box { 
+    height: 220px; 
+    width: 100%; 
+}
+.church-image-box img { 
+    width: 100%; 
+    height: 100%;
+    object-fit: cover; }
+
+.church-info-box { 
+    padding: 20px;
+     flex-grow: 1;
+     }
+
+.header-row { 
+    display: flex;
+     justify-content: space-between;
+      align-items: flex-start;
+       margin-bottom: 10px; 
+    }
+.church-name { 
+    color: #2a4564; 
+    font-size: 1.3rem;
+     margin: 0;
+     }
+
+
+.location-text {
+     color: #666; 
+     font-size: 0.9rem; 
+     margin-bottom: 10px;
+     }
+.vicar-text { 
+    color: #dd7e43;
+     font-weight: 500;
+      font-size: 0.85rem; 
+      margin-bottom: 15px;
+     }
+
+.church-details-row {
+     display: grid; 
+     grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #eee; 
+      padding-top: 12px; 
+      margin-bottom: 15px;
+     }
+.detail-item span { 
+    display: block;
+    font-size: 0.7rem;
+     color: #888;
+      text-transform: uppercase; 
+    }
+.detail-item strong { 
+    color: #333;
+     font-size: 0.9rem; 
+    }
+
+.btn-row {
+    display: flex; 
+    gap: 10px;
+ }
+.btn-main { 
+    background: #2a4564;
+      color: white;
+       padding: 8px 15px;
+        border-radius: 6px;
+         text-decoration: none; 
+         font-size: 0.9rem;
+          font-weight: 600;
+           flex-grow: 1; 
+           text-align: center;
+         }
+.btn-loc { background: #20c997; color: white; padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+
+/* Responsive: 1 column on smaller screens */
+@media(max-width: 992px) {
+    .church-list { grid-template-columns: 1fr; }
+}
+</style>
+<!-- =========================
+     CHURCH DIRECTORY
+========================= -->
+<section class="church-section">
+    <h2 class="church-section-title">Parishes</h2>
+
+    <div class="church-list">
+
+        {% for parish in parishes %}
+        <div class="church-card">
+
+            <div class="church-image-box">
+                {% if parish.image %}
+                    <img src="{{ parish.image.url }}" alt="{{ parish.name }}">
+                {% else %}
+                    <img src="{% static 'images/churchdio.jpeg' %}" alt="{{ parish.name }}">
+                {% endif %}
+            </div>
+
+            <div class="church-info-box">
+
+                <div class="header-row">
+                    <h2 class="church-name">
+                        {{ parish.name }}
+                    </h2>
+                </div>
+
+                <p class="location-text">
+                    <i class="fas fa-location-dot"></i>
+                    {{ parish.location }}
+                </p>
+
+                <p class="vicar-text">
+                    <i class="fas fa-user"></i>
+
+                    {% if parish.vicar %}
+                        {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+                </p>
+
+                {% if parish.assistant_vicar %}
+                <p class="vicar-text">
+                    <i class="fas fa-user-friends"></i>
+
+                    {{ parish.assistant_vicar.first_name }}
+                    {{ parish.assistant_vicar.last_name }}
+                </p>
+                {% endif %}
+
+                <div class="church-details-row">
+
+                    <div class="detail-item">
+                        <span>Established</span>
+                        <strong>{{ parish.established_year }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>District</span>
+                        <strong>{{ parish.district }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Telephone</span>
+                        <strong>{{ parish.phone }}</strong>
+                    </div>
+
+                </div>
+
+                <div class="btn-row">
+
+    {% if parish.slug %}
+        <a href="{% url 'parish_details' parish.slug %}" class="btn-main">
+            View Details →
+        </a>
+    {% else %}
+        <a href="#" class="btn-main">
+            Details Not Available
+        </a>
+    {% endif %}
+
+</div>
+
+            </div>
+
+        </div>
+        {% empty %}
+        <div class="text-center w-100">
+            <h4>No parishes available.</h4>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+</div>
+
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

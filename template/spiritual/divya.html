@@ -1,0 +1,94 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>Divya Bodhanam</h2>
+            <p>The Divyabodhanam is a theological training programme for laity in the Church. It was founded in 1984 by the late HH Baselius Marthoma Mathews I by the initiative of the late Metropolitan Dr. Paulose Mar Gregorios.</p>
+            <p>Divyabodhanam aims to educate people in basic Orthodoxy- its faith and practices, by training people to build up a true Christian life-pattern in the midst of its challenges. It equips people to face the contemporary challenges, ideologies and problems of the time and to respond with a Christian mind filled with deep faith and complete trust in God. It also encourages lay leaders to work in the spiritual organizations of the Church at parish and diocesan levels. It helps Christian parents and families, by which the growing generation shall be properly cared for and nurtured in a true Christian way</p>
+        </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mrs. Prof.Rachel Thomas</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+             <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mrs. Prof.Rachel Thomas</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+          
+        </div>
+
+    </div>
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<style>
+.kalpana-wrapper{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+.kalpana-title{
+    font-size:32px;
+    font-weight:600;
+    color:#2a4564;
+    position:relative;
+    display:inline-block;
+    margin-bottom:50px;
+    margin-left: 510px;
+}
+
+.kalpana-title::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-15px;
+    width:70px;
+    height:4px;
+    background:#e76514;
+    transform:translateX(-50%);
+    border-radius:20px;
+}
+
+
+
+
+/* GRID */
+.kalpana-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+/* CARD */.kalpana-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+    cursor: pointer;
+    background: #fff;
+}
+
+.kalpana-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+.kalpana-card h3{
+    margin:0;
+    font-size:20px;
+    color:#23395d;
+    font-weight:600;
+}
+
+/* BUTTON */
+.kalpana-btn{
+    padding:8px 16px;
+    background:#23395d;
+    color:#fff;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    white-space:nowrap;
+    transition:.3s;
+}
+
+.kalpana-btn:hover{
+    background:#c9500f;
+}
+
+/* TABLET */
+@media(max-width:768px){
+    .kalpana-grid{
+        grid-template-columns:1fr;
+    }
+
+    .kalpana-card{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+}
+</style>
+
+<section class="kalpana-wrapper">
+
+    <div class="kalpana-main">
+
+        <div class="kalpana-title">Kalpana</div>
+
+        <div class="kalpana-grid">
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
+           <h3>Kalpana 2026</h3></a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   

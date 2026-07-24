@@ -1,0 +1,182 @@
+{% load static %}
+{% include 'header.html' %}<style>
+.karunya-intro{
+    margin-left: 40px;
+    margin-right: 1px;
+    display:grid;
+    grid-template-columns:1fr 500px;
+    gap:70px;
+    align-items:start;
+    padding:0 30px;
+    margin-top: 60px;
+}
+
+.section-tag{
+    color: #dd7e43;
+    font-weight:700;
+    letter-spacing:2px;
+    font-size:13px;
+}
+
+.intro-content h2{
+    font-size:32px;
+    color:#23395d;
+    margin:20px 0;
+}
+
+.intro-content p{
+    color:#666;
+    line-height:1.9;
+    margin-bottom:20px;
+    text-align:justify;
+    font-size:13px;
+}
+
+/* Sticky image container */
+.intro-image{
+    position:sticky;
+    top:100px;
+    align-self:start;
+}
+
+.intro-image img{
+    width:100%;
+    border-radius:30px;
+    box-shadow:0 25px 50px rgba(0,0,0,.15);
+    display:block;
+}
+
+@media(max-width:992px){
+    .karunya-intro{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .intro-content h2{
+        font-size:34px;
+    }
+
+    /* Disable sticky on mobile */
+    .intro-image{
+        position:static;
+    }
+}
+</style>
+<section class="karunya-intro">
+
+    <div class="intro-content">
+        <span class="section-tag">ABOUT KARUNYA SPARSHAM</span>
+
+        <h2>Touching Lives Through Compassion</h2>
+
+        <p>
+            Karunya Sparsham is a humanitarian outreach program dedicated to supporting
+            individuals and families facing medical, financial, and social hardships.
+            Inspired by the values of love, mercy, and service, the initiative seeks to
+            bring hope and dignity to those in need.
+        </p>
+
+        <p>
+            Through healthcare assistance, awareness programs, palliative care support,
+            and partnerships with hospitals and charitable organizations, Karunya
+            Sparsham continues to make a meaningful impact in the lives of many.
+        </p>
+         <p>
+            Through healthcare assistance, awareness programs, palliative care support,
+            and partnerships with hospitals and charitable organizations, Karunya
+            Sparsham continues to make a meaningful impact in the lives of many.
+             Through healthcare assistance, awareness programs, palliative care support,
+            and partnerships with hospitals and charitable organizations, Karunya
+            Sparsham continues to make a meaningful impact in the lives of many.
+             Through healthcare assistance, awareness programs, palliative care support,
+            and partnerships with hospitals and charitable organizations, Karunya
+            Sparsham continues to make a meaningful impact in the lives of many.
+        </p>
+         <p>
+            Through healthcare assistance, awareness programs, palliative care support,
+            and partnerships with hospitals and charitable organizations, Karunya
+            Sparsham continues to make a meaningful impact in the lives of many.
+        </p>
+    </div>
+
+    <div class="intro-image">
+        <img src="{% static 'images/churchdio.jpeg' %}" alt="Karunya Sparsham">
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   

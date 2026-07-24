@@ -1,0 +1,242 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+.churchacc-wrapper{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+}
+
+.churchacc-title{
+    font-size:32px;
+    font-weight:700;
+    color:#23395d;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.churchacc-guideline{
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    margin-bottom:35px;
+}
+
+
+.church-title{
+    font-size:32px;
+    font-weight:600;
+    color:#2a4564;
+    position:relative;
+    display:inline-block;
+    margin-bottom:10px;
+    margin-left: 150px;
+}
+.church-title::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-15px;
+    width:70px;
+    height:4px;
+    background:#e76514;
+    transform:translateX(-50%);
+    border-radius:20px;
+}
+
+.churchacc-guideline p{
+    color:#555;
+    line-height:1.8;
+}
+
+.churchacc-guideline ul{
+    padding-left:20px;
+    margin-top:15px;
+}
+
+.churchacc-guideline li{
+    margin-bottom:8px;
+    color:#555;
+}
+
+.churchacc-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    margin-top: 90px;
+}
+.churchacc-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.churchacc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+
+.churchacc-card h3{
+    font-size:18px;
+    color:#23395d;
+    margin-bottom:15px;
+}
+
+.churchacc-btn{
+    display:inline-block;
+    padding:10px 20px;
+    background:#23395d;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.churchacc-btn:hover{
+    background:#c9500f;
+    color:#fff;
+}
+
+@media(max-width:992px){
+    .churchacc-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px){
+    .churchacc-grid{
+        grid-template-columns:1fr;
+    }
+
+    .churchacc-title{
+        font-size:26px;
+    }
+
+    .churchacc-guideline{
+        padding:20px;
+    }
+}
+</style>
+
+<section class="churchacc-wrapper">
+
+    <div class="church-title">
+        Guidelines for Preparing Church Account Manual
+    </div>
+
+    <!-- Manuals Grid -->
+    <div class="churchacc-grid">
+
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+
+
+        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="churchacc-card">
+        <h3>Church Accounts Manuals</h3>
+        </a>
+
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   

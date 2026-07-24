@@ -1,0 +1,113 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>Sushrudhaka Sangam</h2>
+            <dl>
+                <dt>AMOSS is a movement working on the following objectives:</dt>
+                <dd> To give instructions to the altar boys of all parishes in the Malankara Church to make uniformity in the worship of the church and to serve systematically.</dd>
+                <dd> To mould people who have God’s grace, dedication, who follow spiritual & sacramental life, and who have worldly experience to reside as servants in the sacramental service of the holy church.</dd>
+                <dd>To train attendants to practice the holy church’s tradition and ritual service without any alteration and to perform it timely with all its meaning and value and to ordain and make them members of the church’s serving community.</dd>
+            </dl> 
+            <dl>
+                
+                <dt>The diocese ensures to regularly conduct activities under AMOSS to ensure the spiritual and regulated upbringing of all altar boys. Some of the activities are listed below</dt>
+                <dd> Periodical training programmes at the district levels.</dd>
+                <dd>Annual diocese level conferences aiming in the upliftment and encouragement of altar boys. AMOSS of Sulthan Bathery Diocese have units in all the parishes.</dd>
+            </dl>      
+         </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">President</span>
+                    <h3>Mr. John Doe</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="{% static 'images/member.jpg' %}" alt="Secretary" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">Secretary</span>
+                    <h3>Rev. Fr. John N I</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Nadayathumkara, Kerala</p> -->
+                </div>
+            </div>
+
+               <div class="leader-card">
+                
+                <div class="leader-info">
+                    <span class="role-badge"> Diocesan Secretary</span>
+                    <h3>Rev.Fr.John I. Nadayathumkara</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Nadayathumkara, Kerala</p> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

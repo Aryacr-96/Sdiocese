@@ -1,0 +1,145 @@
+{% load static %}
+{% include 'header.html' %}
+<section class="about-section">
+
+    <!-- LEFT IMAGE -->
+
+    <div class="about-image7">
+
+        <img src="{% static 'images/churchdio.jpeg' %}" alt="Church History">
+
+        <div class="about-info">
+            <h3>History of the Diocese</h3>
+            <!-- <p>A Legacy of Faith and Tradition</p> -->
+        </div>
+
+    </div>
+
+    <!-- RIGHT CONTENT -->
+
+    <div class="about-content">
+
+        <h2></h2>
+
+        <div class="history-card">
+            <h3>The church in India and the beginnings of Parishes in Malabar</h3>
+                      <p>
+               We Christians in India are proud of our faith and tradition which have remained alive and vibrant through nearly 2000 years. The ancient church has its beginnings in this part of Malabar only recently.
+
+The 1930s witnessed the exodus of settlers from Travancore – Cochin area to Malabar (Wayanad is a part of it). The hard-working agriculturists from these places left their native lands and settled in the virgin land of the hills and valleys of Wayanad. Unmindful of the vagaries of nature they toiled in the farm lands and occasionally launched for the church bells. They started establishing, worshiping places here and small parishes developed.
+
+St. Thomas Orthodox Church of Malankarakkunnu near Sulthan Bathery was the first church in Wayanad and soon churches started coming up in different centres. At the beginning, Bishop Palouse Mar Sevariose of Cochin and Malabar Diocese rained the churches here. In 1958 the churches of this area came under the jurisdiction of metropolitan of Malabar Diocese Pathros Mar Osthathios, popularly known as Mookkancheril Thirumeni. Then Thomas Mar Themothios Metrapolitha (H.H. Baselios Marthoma Didymos I) took charge of the Malabar Diocese and it is during this period that we saw wide spread growth of parishes and His Grace was our Bishop till the formation of Sulthan Bathery Diocese.
+            </p>
+        </div>
+
+        <div class="history-card">
+            <h3>Formation of Sulthan Bathery Diocese</h3>
+            <p>
+                When the Sulthan Bathery Diocese was constituted by the Church on 28-10-1985, at first the Diocese was under the direct rule of His Holiness the Catholicos of the East, and his nominee Fr. Mathai Noornal became the administrator. The Diocese headquarters started functioning at St. Mary’s Orthodox Cathedral, Sulthan Bathery. With the coming of Kuriakose Mar Clemis Thirumeni on June 14, 1991 we get a Bishop for this Diocese and the parishes here see rapid progress after his coming.
+            </p>
+        </div>
+
+        <div class="history-card">
+            <h3>The Diocese Today</h3>
+            <p>
+                Sulthan Bathery Diocese is spread over two revenue districts of Kerala – Wayanad and eastern parts of Kannur, the Nilgiri Dt. Of Tamil Nadu and Coorg area of Karnataka State. We have over 50 churches. St. Mary’s College, Sulthan Bathery, Kariampadi Eye Hospital, Ulikal Mission Centre, Manathavady St. Mary’s Home, Nirmala Matha Public School are some of the proud institutions of our church in the Diocese. By 1993 the Diocese headquarters moved to its own building at Nirmalagiri (Poomala), Sulthan Bathery. In 1996 construction started for a new Aramana building. Now the Aramana an architecturally distinctive three storeyed building and the Aramana Chapel towering over it – Sulthan Bathery Diocese Centre is the result of the vision and the untiring work of Clemis Thirumeni and the prayers & financial help of all the good minded people of our Diocese and the people outside the diocese all over the world – American Parishes and the Parishes in Muscat, Sharjah, Kuwait, Salalah and other places of gulf countries and some of the parishes outside Kerala in India.
+            </p>
+        </div>
+
+        <div class="history-card">
+            <h3>Aramana and its locale</h3>
+            <p>
+               The Aramana is in Sulthan Bathery a fast-developing town. Bordering the states of Karnataka and Tamil Nadu, and lies on the Calicut – Bangalore Highway. Once the land of adivasis – aborgines – it now is a conglomeration of different cultures. Three hours travel from Calicut on the way to Mysore – Bangalore you reach Sulthan Bathery Diocese headquarters – Nirmalagiri Aramana. The land called Wayanad (the mist covered mountains, the never ending green of the tea, coffee and pepper gardens, the lush forest) is part of Kerala, yet sublimely different from the rest of the State. It is believed that human life existed in Wayanad from pre-historic times. The Edakkal caves at Ambalavayal – 12 kms south of Sulthan Bathery – are clear evidence of Neolithic Civilizations. At the height of 700 meters to 2000 meters above sea level Wayanad has pleasant climate throughout the year. The thick forests here are the home elephants, spotted deer, bison, tiger and exotic varieties of orchids and flora.
+
+People of different communities – Hindus, Muslims, Christians, Adivasis – all live happily here, making this beautiful land of God more beautiful.
+
+In 2009,H.G.Dr. Abraham mar Ephipanios Metropolitan took the charge of Sultan Bathery Diocese.
+
+In 2022, H.G. Dr. Geevarghese mar Barnabas Metropolitan took the charge of Sulthan Bathery Diocese. Presently, there are 48 churches under the Diocese.
+            </p>
+        </div>
+
+       
+
+    </div>
+
+</section>
+
+</div>
+
+
+
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   

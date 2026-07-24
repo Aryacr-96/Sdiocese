@@ -1,0 +1,774 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priest Details · Admin</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* ----- Page Header (Modern) ----- */
+        .content-header-custom {
+            margin-bottom: 1.5rem;
+            background: var(--card-bg);
+            padding: 1.2rem 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .content-header-custom .header-left .breadcrumb-wrap {
+            display: flex;
+            align-items: center;
+        }
+        .content-header-custom .header-left .breadcrumb-wrap .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8rem;
+        }
+        .content-header-custom .header-left .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            color: var(--text-muted);
+        }
+        .content-header-custom .header-left .breadcrumb-wrap .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .content-header-custom .header-left .breadcrumb-wrap .breadcrumb-item a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+        .content-header-custom .header-left .breadcrumb-wrap .breadcrumb-item.active {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .content-header-custom h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+        .content-header-custom h1 i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        .content-header-custom .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-right .position-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .content-header-custom .header-right .position-badge.retired {
+            background: var(--warning-light);
+            color: #b45309;
+        }
+        .content-header-custom .header-right .position-badge.student {
+            background: var(--info-light);
+            color: var(--info);
+        }
+        .content-header-custom .header-right .position-badge i {
+            font-size: 0.7rem;
+        }
+
+        /* ----- Card ----- */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+        .card .card-body {
+            padding: 2rem;
+        }
+
+        /* ----- Priest Image ----- */
+        .priest-image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .priest-image-wrapper .position-badge-large {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+        .priest-image-wrapper .position-badge-large.vicar {
+            background: rgba(37, 99, 235, 0.9);
+        }
+        .priest-image-wrapper .position-badge-large.retired {
+            background: rgba(245, 158, 11, 0.9);
+        }
+        .priest-image-wrapper .position-badge-large.student {
+            background: rgba(8, 145, 178, 0.9);
+        }
+
+        .priest-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 3px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .priest-image:hover {
+            border-color: var(--primary);
+            transform: scale(1.01);
+        }
+        .priest-image-placeholder {
+            width: 100%;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            border: 3px solid var(--border-color);
+            flex-direction: column;
+            gap: 15px;
+            color: var(--primary);
+        }
+        .priest-image-placeholder i {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+        .priest-image-placeholder p {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* ----- Details Table ----- */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .details-table tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        .details-table tr:last-child {
+            border-bottom: none;
+        }
+        .details-table tr:hover {
+            background: #f8fafc;
+        }
+        .details-table th {
+            width: 200px;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: #f8fafc;
+            border: none;
+            white-space: nowrap;
+        }
+        .details-table td {
+            padding: 0.8rem 1rem;
+            color: var(--text-main);
+            border: none;
+            font-weight: 500;
+        }
+        .details-table td .text-muted-light {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .details-table td .empty-value {
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ----- Position Badge Inline ----- */
+        .position-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .position-badge-inline.vicar {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .position-badge-inline.retired {
+            background: var(--warning-light);
+            color: #b45309;
+        }
+        .position-badge-inline.student {
+            background: var(--info-light);
+            color: var(--info);
+        }
+        .position-badge-inline i {
+            font-size: 0.7rem;
+        }
+
+        /* ----- Pastoral Experience ----- */
+        .pastoral-card {
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1.2rem;
+            border-left: 4px solid var(--primary);
+            display: inline-block;
+        }
+        .pastoral-card .pastoral-year {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .pastoral-card .pastoral-details {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        .pastoral-card .pastoral-church {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ----- Action Buttons ----- */
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #ffffff;
+            background: var(--warning);
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-edit:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            color: #ffffff;
+        }
+        .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #ffffff;
+            background: var(--danger);
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+            color: #ffffff;
+        }
+
+        /* Retired On styling */
+        .retired-date {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        .retired-date i {
+            margin-right: 6px;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 992px) {
+            .details-table th {
+                width: 150px;
+                font-size: 0.75rem;
+                padding: 0.6rem 0.8rem;
+            }
+            .details-table td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-left {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            .content-header-custom .header-left .breadcrumb-wrap {
+                order: 2;
+                width: 100%;
+                margin-top: 4px;
+            }
+            .content-header-custom .header-left .breadcrumb-wrap .breadcrumb {
+                font-size: 0.7rem;
+            }
+            .content-header-custom h1 {
+                font-size: 1.2rem;
+            }
+            .content-header-custom .header-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .card .card-body {
+                padding: 1.2rem;
+            }
+            .details-table th {
+                width: 120px;
+                font-size: 0.7rem;
+                padding: 0.5rem 0.6rem;
+                white-space: normal;
+            }
+            .details-table td {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            .priest-image {
+                max-height: 250px;
+            }
+            .priest-image-placeholder {
+                height: 250px;
+            }
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .action-bar .btn-back,
+            .action-bar .btn-edit,
+            .action-bar .btn-delete {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+        @media (max-width: 576px) {
+            .content-header-custom h1 {
+                font-size: 1rem;
+            }
+            .card .card-body {
+                padding: 1rem;
+            }
+            .details-table th {
+                width: 90px;
+                font-size: 0.65rem;
+                padding: 0.4rem 0.5rem;
+            }
+            .details-table td {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .priest-image {
+                max-height: 200px;
+            }
+            .priest-image-placeholder {
+                height: 200px;
+            }
+            .priest-image-placeholder i {
+                font-size: 3rem;
+            }
+            .pastoral-card {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .position-badge-inline {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- ===== CUSTOM PAGE HEADER ===== -->
+        <section class="content-header-custom">
+            <div class="header-row">
+                <div class="header-left">
+                    <h1>
+                        <i class="fas fa-user-pastor"></i>
+                        Priest Details
+                    </h1>
+                    <div class="breadcrumb-wrap">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_dashboard' %}">
+                                    <i class="fas fa-home"></i> Home
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_priests' %}">
+                                    <i class="fas fa-user-pastor"></i> Priests
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <i class="fas fa-eye"></i> {{ priest.first_name }} {{ priest.last_name }}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <span class="position-badge 
+                        {% if priest.position == 'vicar' %}vicar
+                        {% elif priest.position == 'retired_priest' %}retired
+                        {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}student{% endif %}">
+                        <i class="fas 
+                            {% if priest.position == 'vicar' %}fa-church
+                            {% elif priest.position == 'retired_priest' %}fa-user-clock
+                            {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}fa-graduation-cap
+                            {% else %}fa-user{% endif %}">
+                        </i>
+                        {{ priest.get_position_display }}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PRIEST DETAILS ===== -->
+        <section class="content">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row g-4">
+
+                        <!-- Priest Image -->
+                        <div class="col-md-4 text-center">
+                            <div class="priest-image-wrapper">
+                                {% if priest.image %}
+                                    <img src="{{ priest.image.url }}"
+                                         alt="{{ priest.first_name }} {{ priest.last_name }}"
+                                         class="priest-image">
+                                    <span class="position-badge-large 
+                                        {% if priest.position == 'vicar' %}vicar
+                                        {% elif priest.position == 'retired_priest' %}retired
+                                        {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}student{% endif %}">
+                                        <i class="fas 
+                                            {% if priest.position == 'vicar' %}fa-church
+                                            {% elif priest.position == 'retired_priest' %}fa-user-clock
+                                            {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}fa-graduation-cap
+                                            {% else %}fa-user{% endif %}">
+                                        </i>
+                                        {{ priest.get_position_display }}
+                                    </span>
+                                {% else %}
+                                    <div class="priest-image-placeholder">
+                                        <i class="fas fa-user-pastor"></i>
+                                        <p>{{ priest.first_name }} {{ priest.last_name }}</p>
+                                        <span style="font-size:0.8rem; font-weight:400; opacity:0.7;">
+                                            <i class="fas fa-{{ priest.position }}"></i>
+                                            {{ priest.get_position_display }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Priest Details -->
+                        <div class="col-md-8">
+
+                            <table class="details-table">
+                                <tr>
+                                    <th><i class="fas fa-user"></i> First Name</th>
+                                    <td>{{ priest.first_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-user"></i> Last Name</th>
+                                    <td>{{ priest.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-briefcase"></i> Position</th>
+                                    <td>
+                                        <span class="position-badge-inline 
+                                            {% if priest.position == 'vicar' %}vicar
+                                            {% elif priest.position == 'retired_priest' %}retired
+                                            {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}student{% endif %}">
+                                            <i class="fas 
+                                                {% if priest.position == 'vicar' %}fa-church
+                                                {% elif priest.position == 'retired_priest' %}fa-user-clock
+                                                {% elif priest.position == 'student_priest' or priest.position == 'seminary_student' %}fa-graduation-cap
+                                                {% else %}fa-user{% endif %}">
+                                            </i>
+                                            {{ priest.get_position_display }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-home"></i> Home Parish</th>
+                                    <td>{{ priest.home_parish|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-calendar-alt"></i> Ordained On</th>
+                                    <td>{{ priest.ordained_on|date:"d M Y"|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-tint"></i> Blood Group</th>
+                                    <td>{{ priest.blood_group|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <i class="fas fa-calendar-times"></i> Retired On
+                                    </th>
+                                    <td>
+                                        {% if priest.retired_on %}
+                                            <span class="retired-date">
+                                                <i class="fas fa-user-clock"></i>
+                                                {{ priest.retired_on|date:"d M Y" }}
+                                            </span>
+                                        {% else %}
+                                            <span class="empty-value">
+                                                Not specified
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-map-marker-alt"></i> Address</th>
+                                    <td>{{ priest.address|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-phone"></i> Phone</th>
+                                    <td>
+                                        {% if priest.phone %}
+                                            <a href="tel:{{ priest.phone }}" style="color:var(--primary); text-decoration:none; font-weight:500;">
+                                                <i class="fas fa-phone-alt"></i> {{ priest.phone }}
+                                            </a>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-envelope"></i> Email</th>
+                                    <td>
+                                        {% if priest.email %}
+                                            <a href="mailto:{{ priest.email }}" style="color:var(--primary); text-decoration:none; font-weight:500;">
+                                                <i class="fas fa-envelope"></i> {{ priest.email }}
+                                            </a>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                               <tr>
+    <th>
+        <i class="fas fa-church"></i> Pastoral Experience
+    </th>
+
+    <td>
+        {% if priest.pastoral_experience %}
+
+            <div class="pastoral-card">
+
+                <div class="pastoral-details">
+                    <i class="fas fa-file-alt"></i>
+                    {{ priest.pastoral_experience|safe }}
+                </div>
+            </div>
+        {% else %}
+            <span class="empty-value">
+                No pastoral experience recorded
+            </span>
+        {% endif %}
+    </td>
+</tr>
+                                <tr>
+                                    <th><i class="fas fa-align-left"></i> Description</th>
+                                    <td>
+                                        {% if priest.description %}
+                                            {{ priest.description|safe }}
+                                        {% else %}
+                                            <span class="empty-value">No description provided</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Action Buttons -->
+                            <div class="action-bar">
+                                <a href="{% url 'admin_priests' %}" class="btn-back">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Back to Priests
+                                </a>
+                                <a href="{% url 'edit_priest' priest.id %}" class="btn-edit">
+                                    <i class="fas fa-edit"></i>
+                                    Edit Priest
+                                </a>
+                                <!-- <a href="{% url 'delete_priest' priest.id %}" 
+                                   class="btn-delete"
+                                   onclick="return confirm('Are you sure you want to delete {{ priest.first_name }} {{ priest.last_name }}? This action cannot be undone.')">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete Priest
+                                </a> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    {% include 'admin/adminfooter.html' %}
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

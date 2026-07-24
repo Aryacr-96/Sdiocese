@@ -1,0 +1,978 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+{{ form.media }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Add Priest · Diocese</title>
+
+    <!-- Google Font: Plus Jakarta Sans (already in base) -->
+    <!-- Font Awesome 6 (already in base) -->
+    <!-- Bootstrap 5 / AdminLTE (already in base) -->
+
+    <style>
+        /* ========================================
+           ADD PRIEST SPECIFIC STYLES
+           (Compatible with AdminLTE skin)
+        ======================================== */
+        
+        /* Content header styling */
+        .content-header-custom {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom .separator {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom .active-item i {
+            color: #4f46e5;
+        }
+
+        /* Main card */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.25rem 2rem;
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left i {
+            color: #4f46e5;
+        }
+        .card-premium .card-header .badge-new {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-premium .card-header .badge-new i {
+            color: #ffffff;
+        }
+        .card-premium .card-body {
+            padding: 2.2rem 2rem;
+        }
+
+        /* Form groups */
+        .form-group-modern {
+            margin-bottom: 1.6rem;
+        }
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group-modern label i {
+            color: #4f46e5;
+            width: 20px;
+            font-size: 0.9rem;
+        }
+        .form-group-modern label .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Form controls – more modern, rounded */
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: #fafcfd;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            width: 100%;
+        }
+        .form-control-modern:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+            background: #ffffff;
+            outline: none;
+        }
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        select.form-control-modern {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 12px;
+        }
+        textarea.form-control-modern {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Section headings */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin: 2rem 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading-modern i {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* File upload area */
+        .file-upload-area-modern {
+            border: 2px dashed #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #fafcfd;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-upload-area-modern:hover {
+            border-color: #4f46e5;
+            background: #f8faff;
+            transform: translateY(-2px);
+        }
+        .file-upload-area-modern.dragover {
+            border-color: #4f46e5;
+            background: rgba(79, 70, 229, 0.03);
+        }
+        .file-upload-area-modern i {
+            font-size: 2.5rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .file-upload-area-modern p {
+            font-size: 0.95rem;
+            color: #475569;
+            margin: 0;
+            font-weight: 500;
+        }
+        .file-upload-area-modern p strong {
+            color: #4f46e5;
+        }
+        .file-upload-area-modern small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        .file-upload-area-modern input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Error messages */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.8rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+        .errorlist-modern li {
+            padding: 5px 14px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .errorlist-modern li::before {
+            content: "⚠";
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 0.6rem 2.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 3rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-primary-modern:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-modern:active {
+            transform: scale(0.97);
+        }
+
+        /* Card footer */
+        .card-footer-modern {
+            padding: 1.5rem 0 0 0;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Help text */
+        .help-text-modern {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            font-weight: 450;
+        }
+        .help-text-modern i {
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+
+        /* Image preview */
+        .image-preview-modern {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fafcfd;
+            text-align: center;
+        }
+        .image-preview-modern.active {
+            display: block;
+        }
+        .image-preview-modern img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.4rem;
+            }
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer-modern {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-footer-modern .btn-outline-modern,
+            .card-footer-modern .btn-primary-modern {
+                width: 100%;
+                justify-content: center;
+            }
+            .file-upload-area-modern {
+                padding: 1.2rem;
+                min-height: 100px;
+            }
+            .form-control-modern {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .content-header-custom .breadcrumb-custom {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================================
+   PAGE WRAPPER (already in base)
+======================================== -->
+<div class="content-wrapper">
+
+    <!-- ========================================
+       CUSTOM PAGE HEADER WITH ALIGNMENT
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-user-pastor"></i>
+                    Add Priest
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'admin_priests' %}">
+                    <i class="fas fa-user-pastor"></i> Priests
+                </a>
+                <span class="separator">›</span>
+                <span class="active-item">
+                    <i class="fas fa-plus-circle"></i> Add New
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       MAIN CARD
+    ======================================== -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-premium">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-clipboard-list"></i> 
+                                Priest Information — <span class="text-muted font-weight-normal">Complete all required fields</span>
+                            </div>
+                            <span class="badge-new">
+                                <i class="fas fa-plus-circle"></i> New Entry
+                            </span>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <form method="POST" enctype="multipart/form-data" id="priestForm">
+                                {% csrf_token %}
+
+                                <!-- ========================================
+                                   PERSONAL INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-info-circle"></i> Personal Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_first_name">
+                                                <i class="fas fa-user"></i> First Name <span class="required-star">*</span>
+                                            </label>
+                                            <input type="text" name="first_name" id="id_first_name" class="form-control form-control-modern" placeholder="Enter first name" required>
+                                            {% if form.first_name.errors %}
+                                            <ul class="errorlist-modern">{{ form.first_name.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_last_name">
+                                                <i class="fas fa-user"></i> Last Name <span class="required-star">*</span>
+                                            </label>
+                                            <input type="text" name="last_name" id="id_last_name" class="form-control form-control-modern" placeholder="Enter last name" required>
+                                            {% if form.last_name.errors %}
+                                            <ul class="errorlist-modern">{{ form.last_name.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                   <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_home_parish">
+                                                <i class="fas fa-church"></i> Home Parish
+                                            </label>
+                                            <input type="text" name="home_parish" id="id_home_parish" class="form-control form-control-modern" placeholder="Enter home parish">
+                                            {% if form.home_parish.errors %}
+                                            <ul class="errorlist-modern">{{ form.home_parish.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The parish where the priest is based
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_position">
+                                                <i class="fas fa-briefcase"></i> Position <span class="required-star">*</span>
+                                            </label>
+                                            <select name="position" id="id_position" class="form-control-modern" required>
+
+                                                <option value="">-- --</option>
+
+                                                <option value="priest">Priest</option>
+
+                                                <option value="retired_priest">
+                                                    Retired Priest
+                                                </option>
+
+                                                <option value="seminary_student">
+                                                    Seminary Student
+                                                </option>
+
+                                            </select>
+                                            {% if form.position.errors %}
+                                            <ul class="errorlist-modern">{{ form.position.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Select the priest's current position
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                     <!-- Blood Group + Retirement Date -->
+                                <div class="row">
+                                    <!-- Blood Group -->
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_blood_group">
+                                                <i class="fas fa-droplet"></i> Blood Group
+                                            </label>
+                                            <input type="text"
+                                                   name="blood_group"
+                                                   id="id_blood_group"
+                                                   class="form-control form-control-modern"
+                                                   placeholder="e.g., A+, O-">
+                                            {% if form.blood_group.errors %}
+                                            <ul class="errorlist-modern">
+                                                {{ form.blood_group.errors }}
+                                            </ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                For emergency purposes
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_ordained_on">
+                                                <i class="fas fa-cross"></i> Ordained On
+                                            </label>
+                                            <input type="date" name="ordained_on" id="id_ordained_on" class="form-control form-control-modern">
+                                            {% if form.ordained_on.errors %}
+                                            <ul class="errorlist-modern">{{ form.ordained_on.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Date of ordination
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+                                    <!-- Retirement Date -->
+                                    <div class="col-md-6" id="retiredDateField" style="display:none;">
+                                        <div class="form-group-modern">
+                                            <label for="id_retired_on">
+                                                <i class="fas fa-calendar-times"></i>
+                                                Retired On
+                                            </label>
+                                            <input type="date"
+                                                   name="retired_on"
+                                                   id="id_retired_on"
+                                                   class="form-control form-control-modern">
+                                            {% if form.retired_on.errors %}
+                                            <ul class="errorlist-modern">
+                                                {{ form.retired_on.errors }}
+                                            </ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Retirement date of the priest
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CURRENT PASTORAL EXPERIENCE
+                                ======================================== -->
+                                                                
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-church"></i> Pastoral Experience
+                                    <span class="line-spacer"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group-modern">
+                                            {{ form.pastoral_experience }}
+                                            {% if form.pastoral_experience.errors %}
+                                            <ul class="errorlist-modern">
+                                                {{ form.pastoral_experience.errors }}
+                                            </ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Enter priest's pastoral history, appointments, and service details.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                <!-- ========================================
+                                   CONTACT INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-address-book"></i> Contact Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="id_address">
+                                                <i class="fas fa-home"></i> Address
+                                            </label>
+                                            <textarea name="address" id="id_address" class="form-control form-control-modern" rows="3" placeholder="Enter residential or office address"></textarea>
+                                            {% if form.address.errors %}
+                                            <ul class="errorlist-modern">{{ form.address.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Residential or office address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_phone">
+                                                <i class="fas fa-phone"></i> Phone Number
+                                            </label>
+                                            <input type="text" name="phone" id="id_phone" class="form-control form-control-modern" placeholder="e.g., +1234567890">
+                                            {% if form.phone.errors %}
+                                            <ul class="errorlist-modern">{{ form.phone.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Primary contact number
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="id_email">
+                                                <i class="fas fa-envelope"></i> Email Address
+                                            </label>
+                                            <input type="email" name="email" id="id_email" class="form-control form-control-modern" placeholder="priest@example.com">
+                                            {% if form.email.errors %}
+                                            <ul class="errorlist-modern">{{ form.email.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Professional email address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   PHOTO
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-image"></i> Photo
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="id_image">
+                                                <i class="fas fa-image"></i> Priest Photo
+                                            </label>
+                                            <div class="file-upload-area-modern" id="fileDropZone">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <p><strong>Click to upload</strong> or drag and drop</p>
+                                                <small>JPEG, PNG (Max 5MB)</small>
+                                                <input type="file" name="image" id="id_image" accept="image/*">
+                                            </div>
+                                            {% if form.image.errors %}
+                                            <ul class="errorlist-modern">{{ form.image.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Upload a professional photo of the priest
+                                            </div>
+                                            <!-- Image preview container -->
+                                            <div class="image-preview-modern" id="imagePreviewContainer">
+                                                <img id="imagePreview" src="#" alt="Preview" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   DESCRIPTION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-align-left"></i> Description
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            
+                                            {{ form.description }}
+                                            {% if form.description.errors %}
+                                            <ul class="errorlist-modern">
+                                                {{ form.description.errors }}
+                                            </ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CARD FOOTER
+                                ======================================== -->
+                                <div class="card-footer-modern">
+                                    <button type="reset" class="btn-outline-modern">
+                                        <i class="fas fa-undo-alt"></i> Reset
+                                    </button>
+                                    <button type="submit" class="btn-primary-modern">
+                                        <i class="fas fa-save"></i> Save Priest
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- ========================================
+   ADMIN FOOTER (included)
+======================================== -->
+{% include 'admin/adminfooter.html' %}
+
+<!-- ========================================
+   SCRIPTS - IMAGE PREVIEW & FILE UPLOAD
+======================================== -->
+<script>
+    (function() {
+        // ===== IMAGE PREVIEW =====
+        const fileInput = document.querySelector('input[type="file"]');
+        const dropZone = document.getElementById('fileDropZone');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewImage = document.getElementById('imagePreview');
+
+        if (fileInput && dropZone) {
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                    const pTag = dropZone.querySelector('p');
+                    if (pTag) {
+                        pTag.innerHTML = 
+                            `<strong>${fileName}</strong> <span style="color:#94a3b8;font-size:0.85rem;">(${fileSize} MB)</span>`;
+                    }
+                    const icon = dropZone.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-check-circle';
+                        icon.style.color = '#4f46e5';
+                    }
+
+                    // Show image preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (previewImage) {
+                            previewImage.src = e.target.result;
+                        }
+                        if (previewContainer) {
+                            previewContainer.classList.add('active');
+                        }
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    const pTag = dropZone.querySelector('p');
+                    if (pTag) {
+                        pTag.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                    }
+                    const icon = dropZone.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-cloud-upload-alt';
+                        icon.style.color = '';
+                    }
+                    if (previewContainer) {
+                        previewContainer.classList.remove('active');
+                    }
+                    if (previewImage) {
+                        previewImage.src = '#';
+                    }
+                }
+            });
+        }
+
+        // ===== FILE UPLOAD DRAG & DROP =====
+        const fileInputDrop = dropZone?.querySelector('input[type="file"]');
+
+        if (dropZone && fileInputDrop) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('dragover');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('dragover');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    fileInputDrop.files = files;
+                    const event = new Event('change', { bubbles: true });
+                    fileInputDrop.dispatchEvent(event);
+                }
+            }
+        }
+
+        // ===== SLUG AUTO-GENERATION (if slug field exists) =====
+        const firstNameInput = document.getElementById('id_first_name');
+        const lastNameInput = document.getElementById('id_last_name');
+        const slugInput = document.getElementById('id_slug');
+
+        function generateSlug() {
+            if (!slugInput) return;
+            
+            const firstName = firstNameInput ? firstNameInput.value.trim() : '';
+            const lastName = lastNameInput ? lastNameInput.value.trim() : '';
+            
+            if (firstName && lastName) {
+                const baseSlug = `${firstName}-${lastName}`.toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+                slugInput.value = baseSlug;
+            }
+        }
+
+        if (firstNameInput && lastNameInput) {
+            firstNameInput.addEventListener('input', generateSlug);
+            lastNameInput.addEventListener('input', generateSlug);
+        }
+
+    })();
+</script>
+
+<!-- ========================================
+   RETIREMENT DATE TOGGLE
+======================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const positionField = document.getElementById("id_position");
+        const retiredDateField = document.getElementById("retiredDateField");
+        const retiredDateInput = document.getElementById("id_retired_on");
+
+        function checkPosition() {
+            if (positionField.value === "retired_priest") {
+                retiredDateField.style.display = "block";
+                if (retiredDateInput) {
+                    retiredDateInput.required = true;
+                }
+            } else {
+                retiredDateField.style.display = "none";
+                if (retiredDateInput) {
+                    retiredDateInput.required = false;
+                    retiredDateInput.value = "";
+                }
+            }
+        }
+
+        // Run when page loads
+        checkPosition();
+
+        // Run when dropdown changes
+        if (positionField) {
+            positionField.addEventListener("change", checkPosition);
+        }
+    });
+</script>
+
+</body>
+</html>

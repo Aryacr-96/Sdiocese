@@ -1,0 +1,858 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+{{ form.media }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Priest · Diocese</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ========================================
+           EDIT PRIEST – MODERN DESIGN (aligned with Edit Parish)
+        ======================================== */
+
+        /* Content header styling */
+        .content-header-custom {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #f59e0b;
+            font-size: 1.8rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom .separator {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom .active-item i {
+            color: #f59e0b;
+        }
+
+        /* Main card */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.25rem 2rem;
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left i {
+            color: #4f46e5;
+        }
+        .card-premium .card-header .badge-edit {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-premium .card-header .badge-edit i {
+            color: #ffffff;
+        }
+        .card-premium .card-body {
+            padding: 2.2rem 2rem;
+        }
+
+        /* Form groups */
+        .form-group-modern {
+            margin-bottom: 1.6rem;
+        }
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group-modern label i {
+            color: #4f46e5;
+            width: 20px;
+            font-size: 0.9rem;
+        }
+        .form-group-modern label .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Form controls – modern, rounded */
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            width: 100%;
+            background: #ffffff;
+        }
+        .form-control-modern:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+            outline: none;
+        }
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        select.form-control-modern {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 12px;
+            padding-right: 2.5rem;
+            background-color: #ffffff !important;
+        }
+        select.form-control-modern option:checked {
+            background: #4f46e5;
+            color: #fff;
+        }
+        textarea.form-control-modern {
+            min-height: 120px;
+            resize: vertical;
+            background: #ffffff;
+        }
+
+        /* Django form field overrides */
+        .form-control-modern-django {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 0.7rem 1.2rem !important;
+            font-size: 0.9rem !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            width: 100% !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 44px !important;
+            color: #1e293b !important;
+            background: #ffffff !important;
+        }
+        .form-control-modern-django:focus {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08) !important;
+            outline: none !important;
+            background: #ffffff !important;
+        }
+        select.form-control-modern-django {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1.2rem center !important;
+            background-size: 12px !important;
+            padding-right: 2.5rem !important;
+            cursor: pointer !important;
+            background-color: #ffffff !important;
+        }
+        textarea.form-control-modern-django {
+            min-height: 120px !important;
+            resize: vertical !important;
+            background: #ffffff !important;
+        }
+        input.form-control-modern-django {
+            background: #ffffff !important;
+        }
+        input.form-control-modern-django:focus {
+            background: #ffffff !important;
+        }
+
+        /* Section headings */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin: 2rem 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading-modern i {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* Error messages */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.8rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+        .errorlist-modern li {
+            padding: 5px 14px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .errorlist-modern li::before {
+            content: "⚠";
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 0.6rem 2.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 3rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-primary-modern:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-modern:active {
+            transform: scale(0.97);
+        }
+
+        /* Card footer */
+        .card-footer-modern {
+            padding: 1.5rem 0 0 0;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Help text */
+        .help-text-modern {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            font-weight: 450;
+        }
+        .help-text-modern i {
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+
+        /* Current image */
+        .current-image-modern {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            object-fit: cover;
+            margin: 0.5rem 0 0.5rem 0;
+        }
+        .current-image-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #64748b;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.4rem;
+            }
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer-modern {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-footer-modern .btn-outline-modern,
+            .card-footer-modern .btn-primary-modern {
+                width: 100%;
+                justify-content: center;
+            }
+            .form-control-modern {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+            .current-image-modern {
+                max-width: 120px;
+                max-height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            select.form-control-modern-django {
+                padding-right: 2rem !important;
+                background-position: right 0.8rem center !important;
+                background-size: 10px !important;
+            }
+            .current-image-modern {
+                max-width: 100px;
+                max-height: 100px;
+            }
+            .content-header-custom .breadcrumb-custom {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================================
+   PAGE WRAPPER
+======================================== -->
+<div class="content-wrapper">
+
+    <!-- ========================================
+       CUSTOM PAGE HEADER WITH ALIGNMENT
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-user-pastor"></i>
+                    Edit Priest
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'admin_priests' %}">
+                    <i class="fas fa-user-pastor"></i> Priests
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'view_priest' priest.id %}">
+                    <i class="fas fa-eye"></i> {{ priest.first_name }} {{ priest.last_name }}
+                </a>
+                <span class="separator">›</span>
+                <span class="active-item">
+                    <i class="fas fa-edit"></i> Edit
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       MAIN CARD
+    ======================================== -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-premium">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-clipboard-list"></i>
+                                Edit Priest — <span class="text-muted font-weight-normal">{{ priest.first_name }} {{ priest.last_name }}</span>
+                            </div>
+                            <span class="badge-edit">
+                                <i class="fas fa-edit"></i> Edit Mode
+                            </span>
+                        </div>
+                        <div class="card-body">
+
+                            <form method="POST" enctype="multipart/form-data" id="priestForm">
+                                {% csrf_token %}
+
+                                <!-- ========================================
+                                   BASIC INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-info-circle"></i> Basic Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.first_name.id_for_label }}">
+                                                <i class="fas fa-user"></i> First Name <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.first_name }}
+                                            {% if form.first_name.errors %}
+                                            <ul class="errorlist-modern">{{ form.first_name.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.last_name.id_for_label }}">
+                                                <i class="fas fa-user"></i> Last Name <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.last_name }}
+                                            {% if form.last_name.errors %}
+                                            <ul class="errorlist-modern">{{ form.last_name.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.position.id_for_label }}">
+                                                <i class="fas fa-briefcase"></i> Position <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.position }}
+                                            {% if form.position.errors %}
+                                            <ul class="errorlist-modern">{{ form.position.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Select the priest's current position
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.home_parish.id_for_label }}">
+                                                <i class="fas fa-church"></i> Home Parish
+                                            </label>
+                                            {{ form.home_parish }}
+                                            {% if form.home_parish.errors %}
+                                            <ul class="errorlist-modern">{{ form.home_parish.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The parish where the priest is based
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.ordained_on.id_for_label }}">
+                                                <i class="fas fa-cross"></i> Ordained On
+                                            </label>
+                                            {{ form.ordained_on }}
+                                            {% if form.ordained_on.errors %}
+                                            <ul class="errorlist-modern">{{ form.ordained_on.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Date of ordination
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.blood_group.id_for_label }}">
+                                                <i class="fas fa-droplet"></i> Blood Group
+                                            </label>
+                                            {{ form.blood_group }}
+                                            {% if form.blood_group.errors %}
+                                            <ul class="errorlist-modern">{{ form.blood_group.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> For emergency purposes
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Retirement Date (hidden by default, shown for retired_priest) -->
+                                <div class="row" id="retiredDateField" style="display:none;">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.retired_on.id_for_label }}">
+                                                <i class="fas fa-calendar-times"></i> Retired On
+                                            </label>
+                                            {{ form.retired_on }}
+                                            {% if form.retired_on.errors %}
+                                            <ul class="errorlist-modern">{{ form.retired_on.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Retirement date of the priest
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CURRENT PASTORAL EXPERIENCE
+                                ======================================== -->
+                                <!-- CURRENT PASTORAL EXPERIENCE -->
+<div class="section-heading-modern">
+    <i class="fas fa-church"></i> Current Pastoral Experience
+    <span class="line-spacer"></span>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="form-group-modern">
+
+            
+
+            {{ form.pastoral_experience }}
+
+
+            {% if form.pastoral_experience.errors %}
+            <ul class="errorlist-modern">
+                {{ form.pastoral_experience.errors }}
+            </ul>
+            {% endif %}
+
+
+            <div class="help-text-modern">
+                <i class="fas fa-info-circle"></i>
+                Enter priest's pastoral appointments and service history.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+                                <!-- ========================================
+                                   CONTACT INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-address-book"></i> Contact Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.address.id_for_label }}">
+                                                <i class="fas fa-home"></i> Address
+                                            </label>
+                                            {{ form.address }}
+                                            {% if form.address.errors %}
+                                            <ul class="errorlist-modern">{{ form.address.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Residential or office address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.phone.id_for_label }}">
+                                                <i class="fas fa-phone"></i> Phone Number
+                                            </label>
+                                            {{ form.phone }}
+                                            {% if form.phone.errors %}
+                                            <ul class="errorlist-modern">{{ form.phone.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Primary contact number
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.email.id_for_label }}">
+                                                <i class="fas fa-envelope"></i> Email Address
+                                            </label>
+                                            {{ form.email }}
+                                            {% if form.email.errors %}
+                                            <ul class="errorlist-modern">{{ form.email.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Professional email address
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   DESCRIPTION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-align-left"></i> Description
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                           
+                                            {{ form.description }}
+                                            {% if form.description.errors %}
+                                                <ul class="errorlist-modern">
+                                                    {{ form.description.errors }}
+                                                </ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                A brief biography or additional information about the priest.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   IMAGE UPLOAD
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-image"></i> Profile Image
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.image.id_for_label }}">
+                                                <i class="fas fa-image"></i> Priest Photo
+                                            </label>
+
+                                            <!-- Current Image -->
+                                            {% if priest.image %}
+                                                <div class="mb-2">
+                                                    <span class="current-image-label">Current Image:</span>
+                                                    <br>
+                                                    <img src="{{ priest.image.url }}"
+                                                         alt="{{ priest.first_name }} {{ priest.last_name }}"
+                                                         class="current-image-modern">
+                                                </div>
+                                            {% endif %}
+
+                                            {{ form.image }}
+                                            {% if form.image.errors %}
+                                            <ul class="errorlist-modern">{{ form.image.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Upload a new photo or leave empty to keep the current image
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CARD FOOTER
+                                ======================================== -->
+                                <div class="card-footer-modern">
+                                    <a href="{% url 'admin_priests' %}" class="btn-outline-modern">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn-primary-modern">
+                                        <i class="fas fa-save"></i> Update Priest
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- ========================================
+   ADMIN FOOTER
+======================================== -->
+{% include 'admin/adminfooter.html' %}
+
+<!-- ========================================
+   SCRIPTS
+======================================== -->
+<script>
+    (function() {
+        // Add class to Django form fields for consistent styling
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('#priestForm input, #priestForm select, #priestForm textarea').forEach(function(el) {
+                if (!el.closest('.file-upload-area-modern')) {
+                    el.classList.add('form-control-modern-django');
+                }
+            });
+        });
+    })();
+
+    // ========================================
+    // RETIREMENT DATE TOGGLE
+    // ========================================
+    document.addEventListener("DOMContentLoaded", function() {
+        const positionField = document.getElementById("id_position");
+        const retiredDateField = document.getElementById("retiredDateField");
+        const retiredDateInput = document.getElementById("id_retired_on");
+
+        function checkPosition() {
+            if (positionField.value === "retired_priest") {
+                retiredDateField.style.display = "flex";
+                if (retiredDateInput) {
+                    retiredDateInput.required = true;
+                }
+            } else {
+                retiredDateField.style.display = "none";
+                if (retiredDateInput) {
+                    retiredDateInput.required = false;
+                    retiredDateInput.value = "";
+                }
+            }
+        }
+
+        // Run on load and on change
+        if (positionField) {
+            checkPosition();
+            positionField.addEventListener("change", checkPosition);
+        }
+    });
+</script>
+
+</body>
+</html>

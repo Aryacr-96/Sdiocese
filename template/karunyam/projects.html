@@ -1,0 +1,231 @@
+
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+.projects-section{
+    margin-left: 40px;
+    margin-right: 1px;
+    padding:0 30px;
+    margin-top: 60px;
+}
+
+.projects-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.projects-header span{
+    color: #dd7e43;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.projects-header h2{
+    font-size:42px;
+    color:#23395d;
+    margin-top:15px;
+}
+
+.projects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.project-card{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.4s ease;
+}
+
+.project-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.project-image{
+    height:250px;
+    overflow:hidden;
+}
+
+.project-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.project-card:hover .project-image img{
+    transform:scale(1.08);
+}
+
+.project-content{
+    padding:25px;
+}
+
+.project-content h3{
+    color:#23395d;
+    margin-bottom:12px;
+    font-size:22px;
+}
+
+.project-content p{
+    color:#666;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.project-btn{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px 20px;
+    background:#e76514;
+    color:#fff;
+    text-decoration:none;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.project-btn:hover{
+    background:#23395d;
+}
+
+@media(max-width:768px){
+    .projects-header h2{
+        font-size:32px;
+    }
+}
+</style>
+
+<section class="projects-section">
+
+    <div class="projects-header">
+        <span>OUR PROJECTS</span>
+        <h2>Serving Through Compassion</h2>
+    </div>
+
+    <div class="projects-grid">
+
+        <div class="project-card">
+            <div class="project-image">
+                <img src="{% static 'images/college.jpg' %}" alt="">
+            </div>
+            <div class="project-content">
+                <h3>Medical Assistance</h3>
+                <p>
+                    Supporting patients with treatment expenses, medicines,
+                    and healthcare resources during difficult times.
+                </p>
+                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-image">
+                <img src="{% static 'images/school2.jpg' %}" alt="">
+            </div>
+            <div class="project-content">
+                <h3>Palliative Care</h3>
+                <p>
+                    Providing comfort, emotional support, and care services
+                    for those facing serious health conditions.
+                </p>
+                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
+            </div>
+        </div>
+        <div class="project-card">
+            <div class="project-image">
+                <img src="{% static 'images/retreat.webp' %}" alt="">
+            </div>
+            <div class="project-content">
+                <h3>Educational Support</h3>
+                <p>
+                    Helping students through scholarships, educational
+                    materials, and mentorship opportunities.
+                </p>
+                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});
+</script>

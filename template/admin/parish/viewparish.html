@@ -1,0 +1,953 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parish Details · Admin</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* ----- Page Header ----- */
+        .content-header {
+            margin-bottom: 1.5rem;
+            background: var(--card-bg);
+            padding: 1.2rem 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .content-header .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+        .content-header h1 i {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .content-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .content-header .breadcrumb-wrap {
+            display: flex;
+            align-items: center;
+        }
+        .content-header .breadcrumb-wrap .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+        }
+        .content-header .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            color: var(--text-muted);
+        }
+        .content-header .breadcrumb-wrap .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .content-header .breadcrumb-wrap .breadcrumb-item a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+        .content-header .breadcrumb-wrap .breadcrumb-item.active {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ----- Card ----- */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+        .card .card-body {
+            padding: 2rem;
+        }
+
+        /* ----- Parish Image ----- */
+        .parish-image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .parish-image-wrapper .parish-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+        .parish-image-wrapper .parish-badge i {
+            margin-right: 5px;
+        }
+
+        .parish-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            border: 3px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .parish-image:hover {
+            border-color: var(--primary);
+            transform: scale(1.01);
+        }
+        .parish-image-placeholder {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            border: 3px solid var(--border-color);
+            flex-direction: column;
+            gap: 15px;
+            color: var(--primary);
+        }
+        .parish-image-placeholder i {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+        .parish-image-placeholder p {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* ===== MAP UNDER IMAGE ===== */
+        .map-wrapper {
+            margin-top: 1.5rem;
+        }
+        .map-wrapper .map-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .map-wrapper .map-card:hover {
+            box-shadow: var(--shadow-sm);
+        }
+        .map-wrapper .map-card .map-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 0.7rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+        }
+        .map-wrapper .map-card .map-header h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin: 0;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-wrapper .map-card .map-header h6 i {
+            color: #ff4444;
+            font-size: 0.9rem;
+        }
+        .map-wrapper .map-card .map-header .map-badge-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.2rem 0.7rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.55rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        .map-wrapper .map-card .map-header .map-badge-sm i {
+            font-size: 0.6rem;
+            color: #ff4444;
+        }
+        .map-wrapper .map-card .map-body {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        .map-wrapper .map-card .map-body iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .map-wrapper .map-card .map-body .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .map-wrapper .map-card .map-body .map-placeholder i {
+            font-size: 3rem;
+            color: #cbd5e1;
+        }
+        .map-wrapper .map-card .map-body .map-placeholder p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        .map-wrapper .map-card .map-body .map-placeholder .btn-google-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ea4335, #c62828);
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .map-wrapper .map-card .map-body .map-placeholder .btn-google-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4);
+        }
+        .map-wrapper .map-card .map-footer {
+            background: #f8fafc;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .map-wrapper .map-card .map-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .map-wrapper .map-card .map-footer a:hover {
+            color: var(--primary-hover);
+            transform: translateX(2px);
+        }
+        .map-wrapper .map-card .map-footer .map-location {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .map-wrapper .map-card .map-footer .map-location i {
+            color: var(--primary);
+            font-size: 0.6rem;
+        }
+
+        /* ----- Details Table ----- */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .details-table tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        .details-table tr:last-child {
+            border-bottom: none;
+        }
+        .details-table tr:hover {
+            background: #f8fafc;
+        }
+        .details-table th {
+            width: 200px;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: #f8fafc;
+            border: none;
+            white-space: nowrap;
+        }
+        .details-table td {
+            padding: 0.8rem 1rem;
+            color: var(--text-main);
+            border: none;
+            font-weight: 500;
+        }
+        .details-table td .empty-value {
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ----- Vicar & Assistant Vicar Cards ----- */
+        .priest-card {
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1.2rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .priest-card.vicar {
+            border-left: 4px solid var(--primary);
+        }
+        .priest-card.assistant {
+            border-left: 4px solid var(--success);
+        }
+        .priest-card .priest-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .priest-card.assistant .priest-name {
+            color: var(--success);
+        }
+        .priest-card .priest-details {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+        .priest-card .priest-details i {
+            margin-right: 4px;
+        }
+        .priest-card .priest-position-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.15rem 0.7rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-left: 8px;
+        }
+        .priest-card .priest-position-badge.vicar-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .priest-card .priest-position-badge.assistant-badge {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        /* ----- Badges ----- */
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--info-light);
+            color: var(--info);
+        }
+        .location-badge i {
+            color: var(--info);
+        }
+        .families-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--success-light);
+            color: var(--success);
+        }
+        .families-badge i {
+            color: var(--success);
+        }
+
+        /* ----- Action Buttons ----- */
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: var(--text-main);
+            transform: translateY(-1px);
+        }
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #ffffff;
+            background: var(--warning);
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-edit:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            color: #ffffff;
+        }
+        .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.8rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #ffffff;
+            background: var(--danger);
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+            color: #ffffff;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 992px) {
+            .details-table th {
+                width: 150px;
+                font-size: 0.75rem;
+                padding: 0.6rem 0.8rem;
+            }
+            .details-table td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header h1 {
+                font-size: 1.3rem;
+            }
+            .card .card-body {
+                padding: 1.2rem;
+            }
+            .details-table th {
+                width: 120px;
+                font-size: 0.7rem;
+                padding: 0.5rem 0.6rem;
+                white-space: normal;
+            }
+            .details-table td {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            .parish-image {
+                max-height: 250px;
+            }
+            .parish-image-placeholder {
+                height: 250px;
+            }
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .action-bar .btn-back,
+            .action-bar .btn-edit,
+            .action-bar .btn-delete {
+                justify-content: center;
+                width: 100%;
+            }
+            .map-wrapper .map-card .map-body {
+                padding-bottom: 75%;
+            }
+            .map-wrapper .map-card .map-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.5rem 0.8rem;
+            }
+            .map-wrapper .map-card .map-header {
+                padding: 0.5rem 0.8rem;
+            }
+            .map-wrapper .map-card .map-header h6 {
+                font-size: 0.75rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .content-header h1 {
+                font-size: 1.1rem;
+            }
+            .card .card-body {
+                padding: 1rem;
+            }
+            .details-table th {
+                width: 90px;
+                font-size: 0.65rem;
+                padding: 0.4rem 0.5rem;
+            }
+            .details-table td {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.75rem;
+            }
+            .parish-image {
+                max-height: 200px;
+            }
+            .parish-image-placeholder {
+                height: 200px;
+            }
+            .parish-image-placeholder i {
+                font-size: 3rem;
+            }
+            .priest-card {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .location-badge,
+            .families-badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .map-wrapper .map-card .map-body {
+                padding-bottom: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- ===== PAGE HEADER ===== -->
+        <section class="content-header">
+            <div class="header-top">
+                <div class="header-left">
+                    <h1>
+                        <i class="fas fa-church"></i>
+                        Parish Details
+                    </h1>
+                    <span class="subtitle">
+                        <i class="far fa-map"></i>
+                        {{ parish.name }} · {{ parish.district }}
+                    </span>
+                </div>
+                <div class="breadcrumb-wrap">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'admin_dashboard' %}">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'admin_parishes' %}">
+                                <i class="fas fa-church"></i> Parishes
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <i class="fas fa-eye"></i> {{ parish.name }}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PARISH DETAILS ===== -->
+        <section class="content">
+            
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row g-4">
+
+                        <!-- Left Column: Image + Map -->
+                        <div class="col-md-4">
+
+                            <!-- Parish Image -->
+                            <div class="parish-image-wrapper">
+                                {% if parish.image %}
+                                    <img src="{{ parish.image.url }}"
+                                         alt="{{ parish.name }}"
+                                         class="parish-image">
+                                    <span class="parish-badge">
+                                        <i class="fas fa-church"></i>
+                                        {{ parish.district }}
+                                    </span>
+                                {% else %}
+                                    <div class="parish-image-placeholder">
+                                        <i class="fas fa-church"></i>
+                                        <p>{{ parish.name }}</p>
+                                        <span style="font-size:0.8rem; font-weight:400; opacity:0.7;">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{ parish.district }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- ===== GOOGLE MAPS UNDER IMAGE ===== -->
+                            {% if parish.map_url %}
+                            <div class="map-wrapper">
+                                <div class="map-card">
+                                    <!-- Map Header -->
+                                    <div class="map-header">
+                                        <h6>
+                                            <i class="fas fa-map-marked-alt"></i>
+                                            Location Map
+                                        </h6>
+                                    </div>
+                                    
+                                    <!-- Map Footer -->
+                                    <div class="map-footer">
+                                        <a href="{{ parish.get_clean_map_url }}" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Open in Google Maps
+                                        </a>
+                                        <span class="map-location">
+                                            <i class="fas fa-map-pin"></i>
+                                            {{ parish.location|truncatechars:20 }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!-- Right Column: Parish Details -->
+                        <div class="col-md-8">
+
+                            <table class="details-table">
+                                <tr>
+                                    <th><i class="fas fa-tag"></i> Parish Name</th>
+                                    <td>{{ parish.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                                    <td>
+                                        <span class="location-badge">
+                                            <i class="fas fa-location-dot"></i>
+                                            {{ parish.location }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-user-pastor"></i> Vicar</th>
+                                    <td>
+                                        {% if parish.vicar %}
+                                            <div class="priest-card vicar">
+                                                <span class="priest-name">
+                                                    <i class="fas fa-user"></i>
+                                                    {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
+                                                    <span class="priest-position-badge vicar-badge">
+                                                        <i class="fas fa-church"></i> Vicar
+                                                    </span>
+                                                </span>
+                                                <br>
+                                                <span class="priest-details">
+                                                    <i class="fas fa-phone"></i>
+                                                    {{ parish.vicar.phone|default:"N/A" }}
+                                                    {% if parish.vicar.email %}
+                                                        | <i class="fas fa-envelope"></i>
+                                                        {{ parish.vicar.email }}
+                                                    {% endif %}
+                                                    {% if parish.vicar.position %}
+                                                        | <i class="fas fa-briefcase"></i>
+                                                        {{ parish.vicar.get_position_display }}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        {% elif parish.vicar_name %}
+                                            <span style="font-weight:600; color:var(--text-main);">
+                                                <i class="fas fa-user"></i>
+                                                {{ parish.vicar_name }}
+                                            </span>
+                                            <br>
+                                            <span class="text-muted" style="font-size:0.8rem;">
+                                                <i class="fas fa-info-circle"></i> 
+                                                Vicar name from fallback field
+                                            </span>
+                                        {% else %}
+                                            <span class="empty-value">No vicar assigned</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <!-- ===== ASSISTANT VICAR ROW ===== -->
+                                <tr>
+                                    <th>
+                                        <i class="fas fa-user-friends"></i>
+                                        Assistant Vicar
+                                    </th>
+                                    <td>
+                                        {% if parish.assistant_vicar %}
+                                            <div class="priest-card assistant">
+                                                <span class="priest-name">
+                                                    <i class="fas fa-user"></i>
+                                                    {{ parish.assistant_vicar.first_name }}
+                                                    {{ parish.assistant_vicar.last_name }}
+                                                    <span class="priest-position-badge assistant-badge">
+                                                        <i class="fas fa-user-friends"></i>
+                                                        Assistant Vicar
+                                                    </span>
+                                                </span>
+                                                <br>
+                                                <span class="priest-details">
+                                                    <i class="fas fa-phone"></i>
+                                                    {{ parish.assistant_vicar.phone|default:"N/A" }}
+                                                    {% if parish.assistant_vicar.email %}
+                                                        |
+                                                        <i class="fas fa-envelope"></i>
+                                                        {{ parish.assistant_vicar.email }}
+                                                    {% endif %}
+                                                    {% if parish.assistant_vicar.position %}
+                                                        |
+                                                        <i class="fas fa-briefcase"></i>
+                                                        {{ parish.assistant_vicar.get_position_display }}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        {% else %}
+                                            <span class="empty-value">
+                                                No Assistant Vicar Assigned
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-calendar-alt"></i> Established Year</th>
+                                    <td>
+                                        <span class="families-badge">
+                                            <i class="fas fa-calendar"></i>
+                                            {{ parish.established_year }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-city"></i> District</th>
+                                    <td>{{ parish.district }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-phone"></i> Phone</th>
+                                    <td>
+                                        {% if parish.phone %}
+                                            <a href="tel:{{ parish.phone }}" style="color:var(--primary); text-decoration:none; font-weight:500;">
+                                                <i class="fas fa-phone-alt"></i> {{ parish.phone }}
+                                            </a>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-handshake"></i> Trustee</th>
+                                    <td>{{ parish.trustee|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                 <tr>
+                                    <th><i class="fas fa-user"></i> Secretary</th>
+                                    <td>{{ parish.secretary|default:"<span class='empty-value'>Not specified</span>" }}</td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-users"></i> Number of Families</th>
+                                    <td>
+                                        <span class="families-badge">
+                                            <i class="fas fa-users"></i>
+                                            {{ parish.number_of_families }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="fas fa-align-left"></i> Description</th>
+                                    <td>
+                                        {% if parish.description %}
+                                            {{ parish.description|safe }}
+                                        {% else %}
+                                            <span class="empty-value">No description provided</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Action Buttons -->
+                            <div class="action-bar">
+                                <a href="{% url 'admin_parishes' %}" class="btn-back">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Back to Parishes
+                                </a>
+                                <a href="{% url 'edit_parish' parish.id %}" class="btn-edit">
+                                    <i class="fas fa-edit"></i>
+                                    Edit Parish
+                                </a>
+                                <!-- <a href="{% url 'delete_parish' parish.id %}" 
+                                   class="btn-delete">
+            
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete Parish
+                                </a> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    {% include 'admin/adminfooter.html' %}
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

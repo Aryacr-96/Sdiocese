@@ -1,0 +1,109 @@
+{% load static %}
+{% include 'header.html' %}
+    <!-- ================= ABOUT SECTION ================= -->
+
+    <section class="about-section-believe">
+
+        <!-- LEFT IMAGE -->
+        <div class="about-image1">
+
+            <img src="{% static 'images/believe.jpg' %}" alt="Church Image">
+
+           
+
+        </div>
+
+        <!-- RIGHT CONTENT -->
+
+        <div class="about-content-believe">
+
+            <h2>
+                What Do We Believe
+            </h2>
+
+            <p>
+                What do Catholics believe?
+Do you have questions about the Catholic Church?
+                Whether you grew up Catholic and no longer attend a Catholic church, or you’ve never known much about the Catholic faith, you may have questions about what Catholics believe. No worries! Here’s some basic information that will help you understand our Church.
+            </p>
+
+            <p>
+                We are the original Christian Church, which began when Jesus himself when he said to the Apostle Peter, “You are the rock on which I will build my church. The gates of hell will not prevail against it.” Every pope since then has been part of an unbroken line of succession since Peter, the first pope.
+            </p>
+
+            <p>
+               Catholics believe that the Bible is the inspired word of God. From the beginning of Christianity, the Catholic Church defined the canon of Scripture – the books you find in every Christian Bible – and defined what it meant to be a follower of Jesus Christ. Through the centuries, it’s the Catholic Church that preserved the Bible, as well as many other written works, through its monasteries and libraries.
+            </p>
+
+            <p>
+                In the early Church, the Gospel was preached by those who had known Christ, or who had known his Apostles. The Apostles handed on their preaching and writing to all generations through bishops, who continue to preach the truth revealed in the Gospel. This living transmission of the Word of God is called tradition, which is distinct from Scripture, but closely tied to it. Tradition infuses the entire life of the Church, and along with Scripture, comprises the deposit of the Word of God.
+            </p>
+
+            <p>
+               Early in the history of the Church, there was the belief that when Jesus said at the Last Supper, “Take this and eat – this is my body; take this and drink – this is my blood,” he was giving us the gift of his real presence in the form of bread and wine. We call this the Eucharist – a name that comes from the Greek word for thanksgiving. The Catholic Mass is a Eucharistic celebration and a celebration of God’s word in Scriptures.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- Footer -->
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+{% extends 'admin/adminheader.html' %}
+
+{% block content %}
+
+<style>
+/* Page Canvas Wrapper */
+.content-wrapper {
+  background: #f8fafc !important; /* Match base background */
+  padding: 32px 24px;
+}
+
+/* Header Adjustments */
+.content-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+
+/* Modern Card Box */
+.small-box {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+
+/* Interactive Card States */
+.small-box:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.04), 0 8px 12px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Label styling inside */
+.small-box .inner p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Custom Icon Badge (Removes old AdminLTE oversized look) */
+.small-box .icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 18px;
+  background: #f1f5f9;
+  color: #6366f1; /* Dynamic brand accent */
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  opacity: 1 !important;
+  transition: all 0.2s ease;
+}
+
+.small-box:hover .icon {
+  background: #e0e7ff;
+  color: #4f46e5;
+  transform: scale(1.05);
+}
+
+/* Footer Link Styled as CTA Link */
+.small-box-footer {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #4f46e5 !important;
+  background: transparent !important;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.small-box-footer i {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.small-box-footer:hover {
+  color: #3730a3 !important;
+}
+
+.small-box-footer:hover i {
+  transform: translateX(3px); /* Interactive nudge animation */
+}
+
+/* Reset AdminLTE legacy grid overrides */
+.row > div {
+  margin-bottom: 24px;
+}
+</style>
+
+<div class="content-wrapper">
+  
+  <div class="content-header">
+    <div class="container-fluid p-0">
+      <h1>Dashboard</h1>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid p-0">
+      <div class="row">
+
+        <!-- PRIEST CARD -->
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="small-box">
+            <div class="inner">
+              <p>Priests</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-user-tie"></i>
+            </div>
+             <a href="{% url 'admin_priests' %}" class="small-box-footer">
+              More info <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      
+
+        <!-- PARISH CARD -->
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="small-box">
+            <div class="inner">
+              <p>Parish</p>
+            </div>
+           <div class="icon">
+            <i class="fas fa-church"></i>
+          </div>
+            <a href="{% url 'admin_parishes' %}" class="small-box-footer">
+              More info <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+
+          <!-- CONTACT CARD -->     
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="small-box">
+            <div class="inner">
+              <p>Contact</p>
+            </div>
+           <div class="icon">
+              <i class="fas fa-address-book"></i>
+            </div>
+            <a href="{% url 'contactpage' %}" class="small-box-footer">
+              More info <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% load static %}
+{% include 'header.html' %}
+    <section class="about-section-history">
+
+        <div class="about-image3">
+
+            <img src="{% static 'images/church-history.webp' %}" alt="Church Image">
+
+          
+
+        </div>
+
+        <div class="about-content-history">
+
+            <h2>
+                Church History  
+            </h2>
+
+            <div class="history-block first-era">
+                <p>
+                   The Indian Church preserves a cherished tradition that the Apostle Thomas came to India along the ancient trade routes. According to the early Syriac text, The Acts of Thomas, the Apostle travelled to the subcontinent, preached, converted many to Christ and was martyred at Mylapore, near present-day Chennai. It is believed St. Thomas arrived in the year 52 A.D. on the Malabar Coast and established seven and a half churches at Kodungallur, Kollam, Niranam, Nilackal, Kokkamangalam, Kottakkayal, and Palayoor, with a ‘half” church at Thiruvancode. This vibrant Christian community flourished over time carving out its own unique identity within the cultural and caste framework of the region.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                   In the early history of the Malankara Church (Malankara being another name for region particularly around the island of “Maliankara” off the coast of Malabar) Church, the Church’s isolation resulted in a constant struggle to maintain the apostolic faith and continuity of priesthood. This community, fortunately, was sustained at various times in hierarchy and Sacraments by a long-standing relationship with the Syriac Churches of the East. The native Christians of Kerala came to identify themselves with the Syriac Churches so much that they would take on yet another descriptor for themselves” Syrian Christians.” On several occasions, migrants, including priests and bishops, from various parts of the Syriac world would arrive in Malankara and integrate within the existing Christian community. During this time, the Church in India was led by Archdeacons. Whatever the theological and liturgical disposition possessed by the Malankara community, the people themselves remained united until the coming of great European colonial powers, who brought schism for the first time to the Church in India.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                   Each major European power brought to Kerala its respective theological and hierarchical bias. The arrival of Vasco Da Gama and the Portuguese to India also signaled the first contact of Latin Rite Catholicism with Malankara. The heavy-handed tacticsof the Portuguese to bring the alleged “heretic” St. Thomas Christians under the jurisdiction of the Pope of Rome brought the followers of the Orthodox faith together to swear an Oath to stay true to the Apostolic Faith at the Coonan Cross. The leaders of the Church in India also decided to exert their autonomy and laid their hands on Archdeacon Thomas and elevated him as the first Malankara Metropolitan, Marthoma I.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                   Furthermore, the Church in India pursued a formal relationship between Malankara and the Syriac Orthodox Church of Antioch in the mid-17th century. Thus, marked the first split amongst the St. Thomas Christians, between the Orthodox Christians in communion with Antioch, and the community which chose to enter into communion with the Rome. Years later, after the arrival of the English and inspired by Protestant theology, another schism between the Orthodox and a Reformed party within the Church would occur. The product of this became what is known as the Marthoma Syrian Church whose adherents to this day use a modified Syriac-rite liturgy imbued with Reformed theology.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                   In 1912, the Malankara Orthodox Church was granted autocephaly when Baselios Paulose I was elevated as Catholicos of the East, successor to the Apostolic Throne of Saint Thomas, and Primate of the Malankara Orthodox Christians by Patriarch Ignatius Abdul Messiah II. During his consecration, the Patriarch also issued two encyclicals stating that all the authorities and privileges enjoyed by the Patriarch in the Church as its head was given to the Catholicos also. Also, by the consecration of the Catholicos, the Church in India asserted and declared its full autonomy and became a full autocephalous Church. Unfortunately, this led to a schism in the Holy Church, with one side supporting the Catholicos and the other, the Patriarch.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                    This led to decades of litigation between the two sides, and eventually ended up in the presence of the Indian Supreme Court. In September 12, 1958, the Supreme Court of India recognized the validity of the Catholicate and unanimously declared that the Patriarch of Antioch does not have any temporal authority over the Malankara Orthodox Church. Moved by the final judgment of the Supreme Court of India, the patriarchal faction unanimously recommended to the Patriarch Ignatius Yakob III to accept the Catholicos as the head of the Indian church. In December 1958, the Patriarch and the Catholicos subjected to the 1934 constitution of the Malankara Orthodox Church and accepted each other by exchanging letters.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                    The peace in the Holy Church continued without much problem till the demise of the His Holiness Catholicos Baselios Geevarghese II in 1964. At that time, the Malankara Association elected Mar Augen Thimothios as the next Catholicos. The Church extended an official invitation the Patriarch of Antioch for him to preside over the consecration of the new Catholicos. His Holiness the Patriarch accepted the invitation of the Malankara Orthodox Syrian Church and came to India to preside over the consecration of His Holiness Catholicos Baselios Augen I.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                    Unfortunately, in 1975, the Church was again brought into turmoil due to an excommunication from the Patriarch of Antioch of His Holiness Catholicos Baselios Augen, which led to the creation of two factions again.
+                </p>
+            </div>
+
+            <div class="history-block">
+                <p>
+                    By the Grace of God, on July 3, 2017, the Honorable Supreme Court of India offered a verdict for all generations that there is truly one Church in Malankara that is to be administered according to the 1934 Constitution of the Malankara Orthodox Syrian Church. In this verdict, the Holy Church remains hopeful that true peace and unity will be possible, and we all will fulfill the High Priestly Prayer of our Lord, “that they all may be one” (John 17:21)
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   

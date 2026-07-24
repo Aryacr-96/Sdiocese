@@ -1,0 +1,384 @@
+
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+.project-detail{
+    margin-left: 70px;
+    margin-right: 28px;
+    margin-top: 60px;
+}
+
+.project-banner{
+    position:relative;
+    border-radius:30px;
+    overflow:hidden;
+    margin-bottom:50px;
+}
+
+.project-banner img{
+    width:100%;
+    height:500px;
+    object-fit:cover;
+    display:block;
+}
+
+.project-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.75),
+        rgba(0,0,0,.15)
+    );
+    display:flex;
+    align-items:flex-end;
+    padding:50px;
+}
+
+.project-overlay h1{
+    color:#fff;
+    font-size:48px;
+    margin:0;
+}
+
+.project-content{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:50px;
+}
+
+.project-description h2{
+    color:#23395d;
+    margin-bottom:20px;
+}
+
+.project-description p{
+    color:#666;
+    line-height:1.9;
+    margin-bottom:20px;
+    text-align:justify;
+    font-size: 13px;
+}
+
+.project-info{
+    position:sticky;
+    top:100px;
+    padding:0;
+    border-radius:32px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.08),
+        0 8px 25px rgba(231,101,20,.08);
+}
+
+/* Header */
+.project-info-header{
+    background:linear-gradient(135deg,#2a4564,#2a4564);
+    padding:35px 30px;
+    text-align:center;
+    color:#fff;
+}
+
+.project-info-header h3{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+}
+
+.project-info-header p{
+    margin-top:8px;
+    opacity:.9;
+    font-size:14px;
+}
+
+/* Body */
+.project-info-body{
+    padding:25px;
+}
+
+/* Info Cards */
+.info-item{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:18px;
+    margin-bottom:16px;
+    border-radius:20px;
+    background:#fff;
+    border:1px solid #eef2f7;
+    transition:.4s;
+}
+
+.info-item:last-child{
+    margin-bottom:0;
+}
+
+.info-item:hover{
+    transform:translateX(8px);
+    background:#fffaf7;
+    border-color:#2a4564;
+    box-shadow:0 12px 30px rgba(231,101,20,.12);
+}
+
+/* Icon Circle */
+.info-icon{
+    min-width:58px;
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#2a4564,#2a4564);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:22px;
+    box-shadow:0 10px 20px rgba(231,101,20,.25);
+}
+
+/* Text */
+.info-text span{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#2a4564;
+    margin-bottom:5px;
+}
+
+.info-text p{
+    margin:0;
+    color:#23395d;
+    font-size:16px;
+    font-weight:600;
+}
+
+/* Donation Box */
+.support-box{
+    margin-top:25px;
+    padding:25px;
+    text-align:center;
+    background:linear-gradient(135deg,#23395d,#2f4b7a);
+    color:#fff;
+    border-radius:24px;
+}
+
+.support-box h4{
+    margin-bottom:10px;
+    font-size:20px;
+}
+
+.support-box p{
+    font-size:14px;
+    opacity:.9;
+    margin-bottom:18px;
+}
+
+.support-btn{
+    display:inline-block;
+    padding:12px 28px;
+    background:#fff;
+    color:#23395d;
+    text-decoration:none;
+    border-radius:50px;
+    font-weight:700;
+    transition:.3s;
+}
+
+.support-btn:hover{
+    transform:translateY(-3px);
+}
+@media(max-width:992px){
+
+    .project-content{
+        grid-template-columns:1fr;
+    }
+
+    .project-info{
+        position:static;
+    }
+
+    .project-banner img{
+        height:350px;
+    }
+
+    .project-overlay h1{
+        font-size:34px;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<section class="project-detail">
+
+    <div class="project-banner">
+        <img src="{% static 'images/medical.jpg' %}" alt="">
+        <div class="project-overlay">
+            <h1>Medical Assistance Project</h1>
+        </div>
+    </div>
+
+    <div class="project-content">
+
+        <div class="project-description">
+
+            <h2>About This Project</h2>
+
+            <p>
+                The Medical Assistance Project is dedicated to helping
+                underprivileged patients access essential treatments,
+                medicines, surgeries, and healthcare services.
+                Through donor support and partnerships with healthcare
+                institutions, Karunya Sparsham has been able to assist
+                numerous families facing financial hardship during medical
+                emergencies.
+            </p>
+
+            <p>
+                Through donor support and partnerships with healthcare
+                institutions, Karunya Sparsham has been able to assist
+                numerous families facing financial hardship during medical
+                emergencies.
+                Through donor support and partnerships with healthcare
+                institutions, Karunya Sparsham has been able to assist
+                numerous families facing financial hardship during medical
+                emergencies.
+            </p>
+
+            <p>
+                This initiative focuses on providing compassionate care,
+                raising awareness, and ensuring that healthcare support
+                reaches those who need it most.
+                Through donor support and partnerships with healthcare
+                institutions, Karunya Sparsham has been able to assist
+                numerous families facing financial hardship during medical
+                emergencies.
+            </p>
+
+        </div>
+
+     <div class="project-info">
+
+    <div class="project-info-header">
+        <h3>Project Details</h3>
+        <p>Making a difference through compassion</p>
+    </div>
+
+    <div class="project-info-body">
+
+        <div class="info-item">
+            <div class="info-icon">🏥</div>
+            <div class="info-text">
+                <span>Category</span>
+                <p>Healthcare Support</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">👨‍👩‍👧‍👦</div>
+            <div class="info-text">
+                <span>Beneficiaries</span>
+                <p>500+ Families</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">📍</div>
+            <div class="info-text">
+                <span>Location</span>
+                <p>Kerala, India</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">🟢</div>
+            <div class="info-text">
+                <span>Status</span>
+                <p>Ongoing</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+   
+
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>

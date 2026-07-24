@@ -1,0 +1,182 @@
+
+{% load static %}
+{% include 'header.html' %}
+    <!-- ================= ABOUT SECTION ================= -->
+
+    <section class="about-section-catholicate">
+
+        <!-- LEFT IMAGE -->
+        <div class="about-image2">
+
+            <img src="{% static 'images/priest.jpg' %}" alt="Church Image">
+
+            <div class="about-info-catholicate">
+                <h3>
+                    His Holiness Baselios Marthoma Mathews III
+                </h3>
+
+                <p>
+                    Catholicos of the East & Malankara Metropolitan
+                </p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT CONTENT -->
+
+        <div class="about-content-catholicate">
+
+            <h2>
+                Catholicos of the East & Malankara Metropolitan
+            </h2>
+
+            <p>
+                His Holiness Baselios Marthoma Mathews III, the 92nd Primate on the Apostolic Throne of St. Thomas, was enthroned as the Catholicos of the East and Malankara Metropolitan, the Supreme Head of the Malankara Orthodox Syrian Church of India, on 15th October 2021.
+            </p>
+
+            <p>
+                Born on 12th February 1949 to Mr. Cherian Anthrayos of the Mattathil family, His Holiness hails from the St. Peters Church in Vazhoor. His academic journey began with Bachelors in Chemistry from Kerala University, followed by theological studies. After earning his GST degree from the Orthodox Seminary in Kottayam, he pursued Bachelors in divinity at Serampore University.
+                His Holiness further expanded his theological expertise with advanced studies at the Theological Academy in Leningrad, Russia, and at the Oriental Institute in Rome, where he obtained both his MTh and PhD.
+            </p>
+
+            <p>
+                Ordained as a deacon in 1976 and a priest in 1978 by His Holiness Baselios Marthoma Mathews I, His Holiness’ spiritual journey continued to rise, as he was elevated as Episcopa in 1991 and Metropolitan in 1993. He served as a faculty member at the Orthodox Theological Seminary, Kottayam.
+            </p>
+
+            <p>
+                Beyond his scholarly and ecclesiastical roles, His Holiness is also known for his philanthropic endeavors, especially in uplifting the economically disadvantaged, with a particular focus on empowering women. His initiatives have created employment opportunities for women from marginalized communities, reflecting his deep concern for social justice and equity. In addition, His Holiness served the Holy Episcopal Synod as its secretary, further contributing to the administration of the Church.
+            </p>
+
+            <p>
+                With his unwavering faith and commitment to both the spiritual and social well-being of his community, His Holiness Baselios Marthoma Mathews III continues to lead the Malankara Orthodox Syrian Church with wisdom, compassion, and a heart dedicated to service.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ================= NEW PHOTO GALLERY SECTION ================= -->
+
+    <section class="gallery-section">
+        
+        <h3 class="gallery-heading">Former Catholicoi</h3>
+
+        <div class="gallery-grid">
+            
+            <!-- Gallery Item 1 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 1">
+                <div class="gallery-overlay">
+                    <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 2">
+                <div class="gallery-overlay">
+                    <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 3">
+                <div class="gallery-overlay">
+                   <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 4">
+                <div class="gallery-overlay">
+                    <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 5 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 5">
+                <div class="gallery-overlay">
+                   <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 6 -->
+            <div class="gallery-card">
+                <img src="{% static 'images/priest.jpg' %}" alt="Gallery Image 6">
+                <div class="gallery-overlay">
+                   <h4>Lorem ipsum dolor</h4>
+                    <p>Beyond his scholarly and ecclesiastical</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+{% include 'footer.html' %}
+<!-- Footer -->
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+
+</body>
+</html>

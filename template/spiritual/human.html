@@ -1,0 +1,94 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>Ministry of Human Empowerment</h2>
+            <p>MOHE is a Department of Malankara Orthodox Syrian Church. It aims to explore ,enlighten and empower the human potential of the society through various awareness campaigns. The main thrust of this Ministry is Family Empowerment.</p>
+            <p>In an era of privatization, globalization and urbanization, the lifestyle of human kind has changed tremendously. Technology has made the geography a history. This incredible progress of the society has not just pumped in the comfort and luxury and made mankind techno savvy but ipso facto to all revolving evil in the universe. The de facto of today’s degrading human standard is due to the erosion of values, disintegration of families, drug addiction, gay and lesbian issues, Satan worship etc. In order to improve the life style, modus operandi of living need to be rectified with deep rooted Christian values, moral policing, righteous and fruitful life. The Ministry of Human Empowerment (MOHE) through its various projects endeavors to empower and enrich our families. The MOHE is neither a governmental organization nor religious group, spiritual organization /association but a distinct department of Malankara Orthodox Church.</p>
+        </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mrs. Prof.Rachel Thomas</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+             <div class="leader-card">
+                <img src="{% static 'images/member2.jpg' %}" alt="President" class="leader-img">
+                <div class="leader-info">
+                    <span class="role-badge">General Secretary</span>
+                    <h3>Mrs. Prof.Rachel Thomas</h3>
+                    <!-- <p style="font-size: 0.8rem; margin: 5px 0 0 0;">Wayanad, Kerala</p> -->
+                </div>
+            </div>
+          
+        </div>
+
+    </div>
+</section>
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+.schools-section{
+     margin-left: 50px;
+    margin-right: 10px;
+    padding:0 20px;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    margin-top: 60px;
+}
+
+/* HEADER */
+.schools-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.schools-header span{
+    display:inline-block;
+    padding:6px 16px;
+    background:rgba(255, 140, 0, 0.12);
+    color:#ff6a00;
+    font-weight:600;
+    letter-spacing:1.5px;
+    font-size:12px;
+    border-radius:999px;
+}
+
+.schools-header h2{
+    color:#1f2a44;
+    font-size:40px;
+    margin-top:14px;
+    font-weight:800;
+    letter-spacing:-0.5px;
+}
+
+/* GRID */
+.schools-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:24px;
+}
+
+/* CARD */
+.school-card{
+    background:#ffffff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:all .35s ease;
+    position:relative;
+    border:1px solid rgba(0,0,0,0.04);
+}
+
+.school-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+/* IMAGE */
+.school-image{
+    height:220px;
+    overflow:hidden;
+}
+
+.school-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .5s ease;
+}
+
+.school-card:hover img{
+    transform:scale(1.08);
+}
+
+/* CONTENT */
+.school-content{
+    padding:20px;
+}
+
+.school-content h3{
+    color:#1f2a44;
+    font-size:20px;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.school-content p{
+    color:#6b7280;
+    line-height:1.6;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+/* BUTTON */
+.school-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 18px;
+    background:linear-gradient(135deg,#ff6a00,#ff944d);
+    color:#fff;
+    text-decoration:none;
+    border-radius:999px;
+    font-weight:600;
+    font-size:13px;
+    transition:all .3s ease;
+    box-shadow:0 8px 18px rgba(255,106,0,.25);
+}
+
+.school-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(255,106,0,.35);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .schools-header h2{
+        font-size:28px;
+    }
+
+    .schools-section{
+        margin:70px auto;
+    }
+}
+</style>
+
+<section class="schools-section">
+
+    <div class="schools-header">
+        <span>EDUCATIONAL INSTITUTIONS</span>
+        <h2>Our Schools</h2>
+    </div>
+
+    <div class="schools-grid">
+
+        <div class="school-card">
+            <div class="school-image">
+                <img src="{% static 'images/school1.jpg' %}">
+            </div>
+
+            <div class="school-content">
+                <h3>St. Joseph's School</h3>
+                <p>
+                    Providing quality education with moral and spiritual values.
+                </p>
+
+                 <a href="{% url 'school_detail' %}" class="school-btn">
+                    View Details
+                </a>
+            </div>
+        </div>
+
+        <div class="school-card">
+            <div class="school-image">
+                <img src="{% static 'images/school1.jpg' %}">
+            </div>
+
+            <div class="school-content">
+                <h3>St. Joseph's School</h3>
+                <p>
+                    Providing quality education with moral and spiritual values.
+                </p>
+
+                 <a href="{% url 'school_detail' %}" class="school-btn">
+                    View Details
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});
+</script>

@@ -1,0 +1,353 @@
+{% load static %}
+{% include 'header.html' %}
+<style>
+    .church-detail-section{
+        margin-top: 60px;
+    }
+    .church-overview{
+    display:grid;
+    grid-template-columns:450px 1fr;
+    gap:40px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    margin-bottom:40px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+  
+}
+
+.church-overview-image{
+    overflow:hidden;
+    border-radius:15px;
+}
+
+.church-overview-image img{
+    width:100%;
+    height:100%;
+    min-height:450px;
+    object-fit:cover;
+    display:block;
+}
+
+.church-overview-content h1{
+    color:#2a4564; 
+    font-size:32px;
+    margin-bottom:15px;
+}
+
+.church-location{
+    color:#666;
+    font-size:17px;
+    margin-bottom:25px;
+}
+
+.church-location i{
+    color:#dd7e43;
+}
+
+.church-overview-content h2{
+    color:#2a4564; 
+    margin-bottom:20px;
+    position:relative;
+}
+
+.church-overview-content h2::after{
+    content:'';
+    width:70px;
+    height:3px;
+    background:#dd7e43;
+    display:block;
+    margin-top:10px;
+}
+
+.church-overview-content p{
+    color:#555;
+    line-height:1.9;
+    margin-bottom:15px;
+    font-size: 13px;
+}
+
+@media(max-width:992px){
+
+    .church-overview{
+        grid-template-columns:1fr;
+    }
+
+    .church-overview-image img{
+        min-height:300px;
+    }
+
+    .church-overview-content h1{
+        font-size:28px;
+    }
+}
+    .church-detail-section{
+    padding:40px;
+    margin-left:70px;
+    margin-right:26px;
+    background:#f8fafc;
+}
+/* --- Church Info Cards (Grid) --- */
+.church-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.church-info-card {
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.church-info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    border-color: #dd7e43;
+}
+
+.church-info-card i {
+    font-size: 28px;
+    color: #dd7e43;
+    background: rgba(231, 101, 20, 0.1);
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.church-info-card:hover i {
+    background: #dd7e43;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.church-info-card h3 {
+    font-size: 15px;
+    color: #2a4564;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.church-info-card p {
+    font-weight: 600;
+    color: #555;
+    margin: 0;
+    font-size: 13px;
+}
+
+/* --- Content Card --- */
+.church-content-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border-left: 5px solid #dd7e43;; /* Adds a nice accent strip */
+}
+
+.church-content-card h2 {
+    color: #2a4564;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+iframe{
+    border-radius:15px;
+}
+
+@media(max-width:992px){
+
+    .church-detail-section{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .church-banner{
+        height:300px;
+    }
+
+    .church-header h1{
+        font-size:28px;
+    }
+}
+</style><section class="church-detail-section">
+
+    <div class="church-overview">
+
+        <!-- Church Image -->
+        <div class="church-overview-image">
+
+            {% if parish.image %}
+                <img src="{{ parish.image.url }}" alt="{{ parish.name }}">
+            {% else %}
+                <img src="{% static 'images/churchdio.jpeg' %}" alt="{{ parish.name }}">
+            {% endif %}
+
+        </div>
+
+        <!-- Church Details -->
+        <div class="church-overview-content">
+
+            <h1>{{ parish.name }}</h1>
+
+            <p class="church-location">
+                <i class="fas fa-location-dot"></i>
+                {{ parish.location }}
+            </p>
+
+            <h2>Church History</h2>
+
+            <div class="church-description">
+                {{ parish.description|safe }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Information Cards -->
+    <div class="church-info-grid">
+
+        <div class="church-info-card">
+            <i class="fas fa-user-tie"></i>
+            <h3>Vicar</h3>
+            <p>
+                {% if parish.vicar %}
+                    {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
+                {% else %}
+                    Not Assigned
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="church-info-card">
+            <i class="fas fa-user-friends"></i>
+            <h3>Assistant Vicar</h3>
+            <p>
+                {% if parish.assistant_vicar %}
+                    {{ parish.assistant_vicar.first_name }}
+                    {{ parish.assistant_vicar.last_name }}
+                {% else %}
+                    Not Assigned
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="church-info-card">
+            <i class="fas fa-users"></i>
+            <h3>Trustee</h3>
+            <p>{{ parish.trustee }}</p>
+        </div>
+        <div class="church-info-card">
+            <i class="fas fa-users"></i>
+            <h3>Secretary</h3>
+            <p>{{ parish.secretary }}</p>
+        </div>
+        <div class="church-info-card">
+            <i class="fas fa-house-user"></i>
+            <h3>Families</h3>
+            <p>{{ parish.number_of_families }}</p>
+        </div>
+
+        <div class="church-info-card">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Established</h3>
+            <p>{{ parish.established_year }}</p>
+        </div>
+
+        <div class="church-info-card">
+            <i class="fas fa-phone"></i>
+            <h3>Phone</h3>
+            <p>{{ parish.phone }}</p>
+        </div>
+
+    </div>
+
+    <!-- Google Map -->
+    {% if parish.map_url %}
+    <div class="church-content-card">
+
+        <h2 class="mb-3">
+            <i class="fas fa-map-marker-alt"></i>
+            Church Location
+        </h2>
+
+        <iframe
+            src="{{ parish.map_url }}"
+            width="100%"
+            height="450"
+            style="border:0; border-radius:12px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+
+    </div>
+    {% endif %}
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

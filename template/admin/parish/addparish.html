@@ -1,0 +1,1345 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Add Parish · Diocese</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ========================================
+           ADD PARISH SPECIFIC STYLES
+        ======================================== */
+        
+        /* Page header area */
+        .page-header-modern {
+            padding: 1.8rem 0 0.8rem 0;
+            border-bottom: 1px solid #e9edf4;
+            margin-bottom: 2rem;
+        }
+        .page-header-modern h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .page-header-modern h2 i {
+            color: #4f46e5;
+            font-size: 2rem;
+        }
+        .page-header-modern .breadcrumb-modern {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .page-header-modern .breadcrumb-modern a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .page-header-modern .breadcrumb-modern a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main card */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.25rem 2rem;
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left i {
+            color: #4f46e5;
+        }
+        .card-premium .card-header .badge-new {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-premium .card-header .badge-new i {
+            color: #ffffff;
+        }
+        .card-premium .card-body {
+            padding: 2.2rem 2rem;
+        }
+
+        /* Form groups */
+        .form-group-modern {
+            margin-bottom: 1.6rem;
+        }
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group-modern label i {
+            color: #4f46e5;
+            width: 20px;
+            font-size: 0.9rem;
+        }
+        .form-group-modern label .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Form controls */
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            width: 100%;
+            background: #ffffff;
+        }
+        .form-control-modern:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+            outline: none;
+        }
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        /* Django form field overrides - NO BACKGROUND COLOR */
+        .form-control-modern-django {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 0.7rem 1.2rem !important;
+            font-size: 0.9rem !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            width: 100% !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 44px !important;
+            color: #1e293b !important;
+            background: #ffffff !important;
+        }
+        .form-control-modern-django:focus {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08) !important;
+            outline: none !important;
+            background: #ffffff !important;
+        }
+        
+        /* Select dropdown styling - NO BACKGROUND COLOR */
+        select.form-control-modern-django {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1.2rem center !important;
+            background-size: 12px !important;
+            padding-right: 2.5rem !important;
+            cursor: pointer !important;
+            background-color: #ffffff !important;
+        }
+        select.form-control-modern-django option:checked {
+            background: #4f46e5 !important;
+            color: #fff !important;
+        }
+        
+        /* Textarea styling - NO BACKGROUND COLOR */
+        textarea.form-control-modern-django {
+            min-height: 120px !important;
+            resize: vertical !important;
+            background: #ffffff !important;
+        }
+        textarea.form-control-modern-django:focus {
+            background: #ffffff !important;
+        }
+        
+        /* Input styling - NO BACKGROUND COLOR */
+        input.form-control-modern-django {
+            background: #ffffff !important;
+        }
+        input.form-control-modern-django:focus {
+            background: #ffffff !important;
+        }
+
+        /* Section headings */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin: 2rem 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading-modern i {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* File upload area */
+        .file-upload-area-modern {
+            border: 2px dashed #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-upload-area-modern:hover {
+            border-color: #4f46e5;
+            background: #fafafa;
+            transform: translateY(-2px);
+        }
+        .file-upload-area-modern.dragover {
+            border-color: #4f46e5;
+            background: rgba(79, 70, 229, 0.03);
+        }
+        .file-upload-area-modern i {
+            font-size: 2.5rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .file-upload-area-modern p {
+            font-size: 0.95rem;
+            color: #475569;
+            margin: 0;
+            font-weight: 500;
+        }
+        .file-upload-area-modern p strong {
+            color: #4f46e5;
+        }
+        .file-upload-area-modern small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        .file-upload-area-modern input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Error messages */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.8rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+        .errorlist-modern li {
+            padding: 5px 14px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .errorlist-modern li::before {
+            content: "⚠";
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 0.6rem 2.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 3rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary-modern:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-modern:active {
+            transform: scale(0.97);
+        }
+
+        /* Card footer */
+        .card-footer-modern {
+            padding: 1.5rem 0 0 0;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Help text */
+        .help-text-modern {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            font-weight: 450;
+        }
+        .help-text-modern i {
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+
+        /* Image preview */
+        .image-preview-modern {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            background: #ffffff;
+            text-align: center;
+        }
+        .image-preview-modern.active {
+            display: block;
+        }
+        .image-preview-modern img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Map preview */
+        .map-preview-modern {
+            margin-top: 0.8rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #e2e8f0;
+            background: #ffffff;
+            min-height: 200px;
+            transition: all 0.2s ease;
+        }
+        .map-preview-modern iframe {
+            width: 100%;
+            height: 280px;
+            border: none;
+            display: block;
+        }
+        .map-preview-modern .map-placeholder {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            color: #94a3b8;
+            background: #ffffff;
+        }
+        .map-preview-modern .map-placeholder i {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+        }
+        .map-preview-modern .map-placeholder p {
+            font-weight: 500;
+            margin: 0;
+            color: #64748b;
+        }
+        .map-preview-modern .map-error {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            background: #fef2f2;
+            color: #ef4444;
+            padding: 20px;
+            text-align: center;
+        }
+        .map-preview-modern .map-error i {
+            font-size: 2rem;
+        }
+        .map-preview-modern .map-link-button {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            background: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .map-preview-modern .map-link-button i {
+            font-size: 2.5rem;
+            color: #4f46e5;
+        }
+        .map-preview-modern .map-link-button .btn-map-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #fff;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-preview-modern .map-link-button .btn-map-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            color: #fff;
+        }
+
+        /* Content header styling */
+        .content-header-custom {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom .separator {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ========================================
+           CKEDITOR FIX - COMPLETE OVERRIDE
+        ======================================== */
+        
+        /* Hide the description label completely */
+        label[for="id_description"] {
+            display: none !important;
+        }
+
+        /* Remove extra spacing from the description field container */
+        .form-group-modern:has(#id_description) {
+            margin-bottom: 0.5rem !important;
+            padding-top: 0 !important;
+        }
+
+        /* CKEditor wrapper styling */
+        .django-ckeditor-widget {
+            display: block !important;
+            width: 100% !important;
+            margin-top: 0 !important;
+        }
+
+        /* CKEditor main container */
+        .cke_chrome {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            margin-top: 4px !important;
+            transition: all 0.2s ease !important;
+            width: 100% !important;
+        }
+
+        .cke_chrome:focus-within {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08) !important;
+        }
+
+        /* CKEditor toolbar */
+        .cke_top {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #eef2f6 !important;
+            padding: 8px 12px !important;
+        }
+
+        /* CKEditor content area */
+        .cke_contents {
+            min-height: 200px !important;
+        }
+
+        /* CKEditor bottom bar */
+        .cke_bottom {
+            background: #f8fafc !important;
+            border-top: 1px solid #eef2f6 !important;
+            padding: 6px 12px !important;
+        }
+
+        /* CKEditor iframe */
+        .cke_contents iframe {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Remove any extra margins from CKEditor */
+        .cke_reset {
+            margin: 0 !important;
+        }
+
+        /* Ensure the help text has proper spacing */
+        .help-text-modern.description-help {
+            margin-top: 10px !important;
+            padding-top: 4px !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.4rem;
+            }
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer-modern {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-footer-modern .btn-outline-modern,
+            .card-footer-modern .btn-primary-modern {
+                width: 100%;
+                justify-content: center;
+            }
+            .file-upload-area-modern {
+                padding: 1.2rem;
+                min-height: 100px;
+            }
+            .form-control-modern {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+            .map-preview-modern iframe,
+            .map-preview-modern .map-placeholder,
+            .map-preview-modern .map-error,
+            .map-preview-modern .map-link-button {
+                height: 200px;
+            }
+            .cke_contents {
+                min-height: 150px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            select.form-control-modern-django {
+                padding-right: 2rem !important;
+                background-position: right 0.8rem center !important;
+                background-size: 10px !important;
+            }
+            .content-header-custom .breadcrumb-custom {
+                font-size: 0.8rem;
+            }
+            .cke_contents {
+                min-height: 120px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================================
+   PAGE WRAPPER (already in base)
+======================================== -->
+<div class="content-wrapper">
+
+    <!-- ========================================
+       CUSTOM PAGE HEADER WITH ALIGNMENT
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-church"></i>
+                    Add Parish
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'admin_parishes' %}">
+                    <i class="fas fa-church"></i> Parishes
+                </a>
+                <span class="separator">›</span>
+                <span class="active-item">
+                    <i class="fas fa-plus-circle"></i> Add New
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       MAIN CARD
+    ======================================== -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-premium">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-clipboard-list"></i> 
+                                Parish Information — <span class="text-muted font-weight-normal">Complete all required fields</span>
+                            </div>
+                            <span class="badge-new">
+                                <i class="fas fa-plus-circle"></i> New Entry
+                            </span>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <form method="POST" enctype="multipart/form-data" id="parishForm">
+                                {% csrf_token %}
+
+                                <!-- ========================================
+                                   BASIC INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-info-circle"></i> Basic Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.name.id_for_label }}">
+                                                <i class="fas fa-tag"></i> Parish Name <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.name }}
+                                            {% if form.name.errors %}
+                                            <ul class="errorlist-modern">{{ form.name.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.location.id_for_label }}">
+                                                <i class="fas fa-location-dot"></i> Location <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.location }}
+                                            {% if form.location.errors %}
+                                            <ul class="errorlist-modern">{{ form.location.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The physical address or area of the parish
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.vicar.id_for_label }}">
+                                               <i class="fas fa-user"></i> Select Vicar
+                                            </label>
+                                            {{ form.vicar }}
+                                            {% if form.vicar.errors %}
+                                            <ul class="errorlist-modern">{{ form.vicar.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Select the vicar from the list
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.assistant_vicar.id_for_label }}">
+                                                <i class="fas fa-user-friends"></i> Select Assistant Vicar
+                                            </label>
+                                            {{ form.assistant_vicar }}
+                                            {% if form.assistant_vicar.errors %}
+                                            <ul class="errorlist-modern">{{ form.assistant_vicar.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Select assistant vicar
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.established_year.id_for_label }}">
+                                                <i class="fas fa-calendar"></i> Established Year <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.established_year }}
+                                            {% if form.established_year.errors %}
+                                            <ul class="errorlist-modern">{{ form.established_year.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The year the parish was established
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.district.id_for_label }}">
+                                                <i class="fas fa-city"></i> District <span class="required-star">*</span>
+                                            </label>
+                                            {{ form.district }}
+                                            {% if form.district.errors %}
+                                            <ul class="errorlist-modern">{{ form.district.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The district where the parish is located
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CONTACT INFORMATION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-address-book"></i> Contact Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.phone.id_for_label }}">
+                                                <i class="fas fa-phone"></i> Phone Number
+                                            </label>
+                                            {{ form.phone }}
+                                            {% if form.phone.errors %}
+                                            <ul class="errorlist-modern">{{ form.phone.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Primary contact number for the parish
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.trustee.id_for_label }}">
+                                                <i class="fas fa-handshake"></i> Trustee
+                                            </label>
+                                            {{ form.trustee }}
+                                            {% if form.trustee.errors %}
+                                            <ul class="errorlist-modern">{{ form.trustee.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The trustee or caretaker of the parish
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.secretary.id_for_label }}">
+                                                <i class="fas fa-user"></i> Secretary
+                                            </label>
+                                            {{ form.secretary }}
+                                            {% if form.secretary.errors %}
+                                            <ul class="errorlist-modern">{{ form.secretary.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> The Secretary of the parish
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.number_of_families.id_for_label }}">
+                                                <i class="fas fa-people-group"></i> Number of Families
+                                            </label>
+                                            {{ form.number_of_families }}
+                                            {% if form.number_of_families.errors %}
+                                            <ul class="errorlist-modern">{{ form.number_of_families.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Total number of families registered
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   DESCRIPTION - FIXED WITH CKEDITOR
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-align-left"></i> Description
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern" style="margin-bottom: 0.5rem; padding-top: 0;">
+                                            <!-- IMPORTANT: form.media must be here -->
+                                            {{ form.media }}
+                                            {{ form.description }}
+                                            {% if form.description.errors %}
+                                            <ul class="errorlist-modern">
+                                                {{ form.description.errors }}
+                                            </ul>
+                                            {% endif %}
+                                            <div class="help-text-modern description-help">
+                                                <i class="fas fa-info-circle"></i> 
+                                                A brief description or history of the parish.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   IMAGE UPLOAD
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-image"></i> Parish Image
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.image.id_for_label }}">
+                                                <i class="fas fa-image"></i> Parish Image
+                                            </label>
+                                            <div class="file-upload-area-modern" id="fileDropZone">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <p><strong>Click to upload</strong> or drag and drop</p>
+                                                <small>JPEG, PNG, GIF (Max 5MB)</small>
+                                                {{ form.image }}
+                                            </div>
+                                            {% if form.image.errors %}
+                                            <ul class="errorlist-modern">{{ form.image.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Upload a photo of the church or parish (optional)
+                                            </div>
+                                            <!-- Image preview container -->
+                                            <div class="image-preview-modern" id="imagePreviewContainer">
+                                                <img id="imagePreview" src="#" alt="Preview" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   GOOGLE MAPS
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-map-marked-alt"></i> Google Maps Location
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.map_url.id_for_label }}">
+                                                <i class="fas fa-map-marked-alt"></i> Google Maps URL
+                                            </label>
+                                            {{ form.map_url }}
+                                            {% if form.map_url.errors %}
+                                            <ul class="errorlist-modern">{{ form.map_url.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> 
+                                                Go to Google Maps, search for the parish, click "Share", and paste the link here.
+                                                <br>
+                                                <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                                                The <code>pb</code> parameter will be automatically removed to prevent errors.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   CARD FOOTER
+                                ======================================== -->
+                                <div class="card-footer-modern">
+                                    <a href="{% url 'admin_parishes' %}" class="btn-outline-modern">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn-primary-modern">
+                                        <i class="fas fa-save"></i> Save Parish
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- ========================================
+   ADMIN FOOTER (included)
+======================================== -->
+{% include 'admin/adminfooter.html' %}
+
+<!-- ========================================
+   SCRIPTS
+======================================== -->
+<script>
+    (function() {
+        // Add class to Django form fields for consistent styling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add class to all Django form fields
+            document.querySelectorAll('#parishForm input, #parishForm select, #parishForm textarea').forEach(function(el) {
+                if (!el.closest('.file-upload-area-modern')) {
+                    el.classList.add('form-control-modern-django');
+                }
+            });
+        });
+
+        const vicarSelect = document.getElementById('id_vicar');
+        const assistantVicarSelect = document.getElementById('id_assistant_vicar');
+
+        function updateAssistantVicarDropdown(excludeVicarId) {
+            if (!assistantVicarSelect) return;
+            
+            // Store current selected value
+            const currentValue = assistantVicarSelect.value;
+            
+            // Clear existing options except the first one
+            while (assistantVicarSelect.options.length > 1) {
+                assistantVicarSelect.remove(1);
+            }
+            
+            // Get all priests from the vicar select
+            const vicarOptions = vicarSelect ? vicarSelect.options : [];
+            let hasOptions = false;
+            
+            for (let option of vicarOptions) {
+                if (option.value && option.value !== excludeVicarId) {
+                    const opt = document.createElement('option');
+                    opt.value = option.value;
+                    opt.text = option.text;
+                    assistantVicarSelect.appendChild(opt);
+                    hasOptions = true;
+                }
+            }
+            
+            if (!hasOptions) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.text = '-- No assistant vicars available --';
+                opt.disabled = true;
+                assistantVicarSelect.appendChild(opt);
+            }
+            
+            // Restore selection if still available
+            if (currentValue && assistantVicarSelect.querySelector(`option[value="${currentValue}"]`)) {
+                assistantVicarSelect.value = currentValue;
+            } else {
+                assistantVicarSelect.value = '';
+            }
+        }
+
+        if (vicarSelect) {
+            vicarSelect.addEventListener('change', function() {
+                const selectedValue = this.value;
+                updateAssistantVicarDropdown(selectedValue);
+            });
+            
+            // Initial update
+            setTimeout(function() {
+                updateAssistantVicarDropdown(vicarSelect.value);
+            }, 100);
+        }
+
+        // ===== MAP PREVIEW =====
+        const mapUrlInput = document.getElementById('id_map_url');
+        const mapPreview = document.getElementById('mapPreview');
+
+        function updateMapPreview() {
+            const url = mapUrlInput ? mapUrlInput.value.trim() : '';
+            
+            if (!url) {
+                if (mapPreview) {
+                    mapPreview.innerHTML = `
+                        <div class="map-placeholder">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Enter a Google Maps URL to preview</p>
+                            <small class="text-muted">The map will appear here</small>
+                        </div>
+                    `;
+                }
+                return;
+            }
+            
+            if (!mapPreview) return;
+            
+            // Check if it's a valid Google Maps URL
+            const isValidGoogleMaps = (
+                url.includes('google.com/maps') || 
+                url.includes('maps.app.goo.gl') || 
+                url.includes('goo.gl/maps') ||
+                url.includes('embed/v1/')
+            );
+            
+            if (!isValidGoogleMaps) {
+                mapPreview.innerHTML = `
+                    <div class="map-error">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><strong>Invalid Google Maps URL</strong></p>
+                        <p class="small">Please enter a valid Google Maps share link.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Clean the URL - remove pb parameter
+            let cleanUrl = url;
+            if (cleanUrl.includes('?pb=')) {
+                cleanUrl = cleanUrl.split('?pb=')[0];
+            } else if (cleanUrl.includes('&pb=')) {
+                cleanUrl = cleanUrl.split('&pb=')[0];
+            }
+            cleanUrl = cleanUrl.replace(/[&?]+$/, '');
+            
+            // Check if it's a shortened URL
+            if (cleanUrl.includes('maps.app.goo.gl') || cleanUrl.includes('goo.gl/maps')) {
+                mapPreview.innerHTML = `
+                    <div class="map-link-button">
+                        <i class="fas fa-external-link-alt"></i>
+                        <p><strong>Google Maps Shortened URL</strong></p>
+                        <p class="small text-muted">Shortened URLs cannot be embedded directly.</p>
+                        <a href="${cleanUrl}" target="_blank" class="btn-map-modern">
+                            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
+                        </a>
+                        <p class="small text-muted">
+                            <i class="fas fa-lightbulb" style="color:#f59e0b;"></i>
+                            Tip: Use "Share" → "Embed a map" for an embeddable URL.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // For regular Google Maps URLs, add output=embed for iframe
+            let embedUrl = cleanUrl;
+            if (embedUrl.includes('google.com/maps')) {
+                if (embedUrl.includes('?')) {
+                    embedUrl += '&output=embed';
+                } else {
+                    embedUrl += '?output=embed';
+                }
+            }
+            
+            // Display the iframe
+            mapPreview.innerHTML = `
+                <iframe
+                    src="${embedUrl}"
+                    width="100%"
+                    height="280"
+                    style="border:0;border-radius:8px;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+            `;
+        }
+
+        // Update preview on input
+        if (mapUrlInput) {
+            mapUrlInput.addEventListener('input', updateMapPreview);
+            mapUrlInput.addEventListener('change', updateMapPreview);
+            
+            // Initial preview
+            setTimeout(updateMapPreview, 500);
+        }
+
+        // ===== IMAGE PREVIEW =====
+        const fileInput = document.querySelector('#id_image');
+        const dropZone = document.getElementById('fileDropZone');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const previewImage = document.getElementById('imagePreview');
+
+        if (fileInput && dropZone) {
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                    const pTag = dropZone.querySelector('p');
+                    if (pTag) {
+                        pTag.innerHTML = 
+                            `<strong>${fileName}</strong> <span style="color:#94a3b8;font-size:0.85rem;">(${fileSize} MB)</span>`;
+                    }
+                    const icon = dropZone.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-check-circle';
+                        icon.style.color = '#4f46e5';
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (previewImage) {
+                            previewImage.src = e.target.result;
+                        }
+                        if (previewContainer) {
+                            previewContainer.classList.add('active');
+                        }
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    const pTag = dropZone.querySelector('p');
+                    if (pTag) {
+                        pTag.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                    }
+                    const icon = dropZone.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-cloud-upload-alt';
+                        icon.style.color = '';
+                    }
+                    if (previewContainer) {
+                        previewContainer.classList.remove('active');
+                    }
+                    if (previewImage) {
+                        previewImage.src = '#';
+                    }
+                }
+            });
+        }
+
+        // ===== FILE UPLOAD DRAG & DROP =====
+        const fileInputDrop = dropZone?.querySelector('input[type="file"]');
+
+        if (dropZone && fileInputDrop) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('dragover');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('dragover');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    fileInputDrop.files = files;
+                    const event = new Event('change', { bubbles: true });
+                    fileInputDrop.dispatchEvent(event);
+                }
+            }
+        }
+
+    })();
+
+    // ========================================
+    // HIDE DESCRIPTION LABEL - With Delay
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hide the description label with a slight delay to ensure DOM is ready
+        setTimeout(function() {
+            const descLabel = document.querySelector('label[for="id_description"]');
+            if (descLabel) {
+                descLabel.style.display = 'none';
+            }
+            
+            // Also hide any parent label wrapper
+            const descField = document.getElementById('id_description');
+            if (descField) {
+                let parent = descField.parentElement;
+                if (parent && parent.tagName === 'LABEL') {
+                    parent.style.display = 'none';
+                }
+            }
+            
+            // Force CKEditor to initialize if it hasn't already
+            if (typeof CKEDITOR !== 'undefined' && !CKEDITOR.instances['id_description']) {
+                CKEDITOR.replace('id_description', {
+                    height: 250,
+                    width: '100%'
+                });
+            }
+        }, 200);
+    });
+</script>
+
+</body>
+</html>

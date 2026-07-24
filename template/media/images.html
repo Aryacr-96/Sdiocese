@@ -1,0 +1,178 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>.gallery-section{
+    max-width:1270px;
+    margin-top: 60px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+.gallery-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.gallery-header h2{
+    font-size:42px;
+    color:#23395d;
+    margin-bottom:10px;
+}
+
+.gallery-header p{
+    color:#6b7280;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:25px;
+}
+
+.gallery-item{
+    overflow:hidden;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.gallery-item img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+    display:block;
+    transition:.5s ease;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.08);
+}
+
+/* Tablet */
+@media(max-width:992px){
+    .gallery-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+/* Mobile */
+@media(max-width:576px){
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-item img{
+        height:220px;
+    }
+}</style>
+<section class="gallery-section">
+
+    <div class="gallery-header">
+        <h2>Photo Gallery</h2>
+        <p>Moments from our events and activities</p>
+    </div>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item">
+            <img src="{% static 'images/education.jpg' %}" alt="">
+        </div>
+
+        <div class="gallery-item">
+            <img src="{% static 'images/college.jpg' %}" alt="">
+        </div>
+
+        <div class="gallery-item">
+            <img src="{% static 'images/medical.jpg' %}" alt="">
+        </div>
+
+        <div class="gallery-item">
+            <img src="{% static 'images/school2.jpg' %}" alt="">
+        </div>
+
+        <div class="gallery-item">
+            <img src="{% static 'images/publication.jpg' %}" alt="">
+        </div>
+
+        <div class="gallery-item">
+            <img src="{% static 'images/retreat.webp' %}" alt="">
+        </div>
+
+    </div>
+
+</section>
+</div>
+{% include 'footer.html' %}
+
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
+</body>
+</html>   
