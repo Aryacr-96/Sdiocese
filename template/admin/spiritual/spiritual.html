@@ -633,7 +633,6 @@
                         <tr>
                             <th>Category</th>
                             <th>Office Bearers</th>
-                            <th>Content Preview</th>
                             <th>Slug</th>
                             <th>Actions</th>
                         </tr>
@@ -655,16 +654,16 @@
                                 </span>
                                 {% endwith %}
                             </td>
-                            <td>
-                                <div class="content-preview">
+                            
+                                <!-- <div class="content-preview">
                                     {% if spiritual.content %}
                                         <i class="fas fa-align-left"></i>
                                         {{ spiritual.content|striptags|truncatechars:80 }}
                                     {% else %}
                                         <span class="text-muted">No content</span>
                                     {% endif %}
-                                </div>
-                            </td>
+                                </div> -->
+                            
                             <td>
                                 <code class="text-muted" style="font-size: 0.7rem;">
                                     <i class="fas fa-link"></i>
@@ -673,6 +672,11 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
+                                     <a href="{% url 'view_spiritual' spiritual.id %}"
+                                               class="action-btn view"
+                                               title="View Priest">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
                                     <a href="{% url 'edit_spiritual' spiritual.id %}" class="action-btn edit">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>

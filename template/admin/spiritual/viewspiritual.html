@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parish Details · Admin</title>
+    <title>Spiritual Details · Admin</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Bootstrap 5 -->
@@ -156,210 +156,32 @@
             padding: 2rem;
         }
 
-        /* ----- Parish Image ----- */
-        .parish-image-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        .parish-image-wrapper .parish-badge {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            white-space: nowrap;
-        }
-        .parish-image-wrapper .parish-badge i {
-            margin-right: 5px;
-        }
-
-        .parish-image {
-            width: 100%;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: var(--radius-md);
-            border: 3px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-        .parish-image:hover {
-            border-color: var(--primary);
-            transform: scale(1.01);
-        }
-        .parish-image-placeholder {
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-light);
-            border-radius: var(--radius-md);
-            border: 3px solid var(--border-color);
-            flex-direction: column;
-            gap: 15px;
-            color: var(--primary);
-        }
-        .parish-image-placeholder i {
-            font-size: 5rem;
-            opacity: 0.5;
-        }
-        .parish-image-placeholder p {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        /* ===== MAP UNDER IMAGE ===== */
-        .map-wrapper {
-            margin-top: 1.5rem;
-        }
-        .map-wrapper .map-card {
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .map-wrapper .map-card:hover {
-            box-shadow: var(--shadow-sm);
-        }
-        .map-wrapper .map-card .map-header {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 0.7rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--primary);
-        }
-        .map-wrapper .map-card .map-header h6 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin: 0;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .map-wrapper .map-card .map-header h6 i {
-            color: #ff4444;
-            font-size: 0.9rem;
-        }
-        .map-wrapper .map-card .map-header .map-badge-sm {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 0.2rem 0.7rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.55rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-        }
-        .map-wrapper .map-card .map-header .map-badge-sm i {
-            font-size: 0.6rem;
-            color: #ff4444;
-        }
-        .map-wrapper .map-card .map-body {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            background: #f8f9fa;
-        }
-        .map-wrapper .map-card .map-body iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .map-wrapper .map-card .map-body .map-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-        .map-wrapper .map-card .map-body .map-placeholder i {
-            font-size: 3rem;
-            color: #cbd5e1;
-        }
-        .map-wrapper .map-card .map-body .map-placeholder p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin: 0;
-        }
-        .map-wrapper .map-card .map-body .map-placeholder .btn-google-sm {
+        /* ----- Badges ----- */
+        .stat-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 0.4rem 1.2rem;
+            padding: 0.3rem 1rem;
             border-radius: var(--radius-pill);
-            font-weight: 600;
             font-size: 0.75rem;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ea4335, #c62828);
-            border: none;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            font-weight: 600;
+            margin: 2px;
         }
-        .map-wrapper .map-card .map-body .map-placeholder .btn-google-sm:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4);
-        }
-        .map-wrapper .map-card .map-footer {
-            background: #f8fafc;
-            padding: 0.5rem 1rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-        .map-wrapper .map-card .map-footer a {
+        .stat-badge.blue {
+            background: var(--primary-light);
             color: var(--primary);
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
         }
-        .map-wrapper .map-card .map-footer a:hover {
-            color: var(--primary-hover);
-            transform: translateX(2px);
+        .stat-badge.purple {
+            background: #f3e8ff;
+            color: #7c3aed;
         }
-        .map-wrapper .map-card .map-footer .map-location {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        .stat-badge.green {
+            background: var(--success-light);
+            color: var(--success);
         }
-        .map-wrapper .map-card .map-footer .map-location i {
-            color: var(--primary);
-            font-size: 0.6rem;
+        .stat-badge.orange {
+            background: var(--warning-light);
+            color: #b45309;
         }
 
         /* ----- Details Table ----- */
@@ -402,84 +224,171 @@
             font-weight: 400;
         }
 
-        /* ----- Vicar & Assistant Vicar Cards ----- */
-        .priest-card {
+        /* ----- Office Bearers List ----- */
+        .bearers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .bearer-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
             background: #f8fafc;
+            padding: 10px 16px;
             border-radius: var(--radius-md);
-            padding: 0.8rem 1.2rem;
-            display: inline-block;
-            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
-        .priest-card.vicar {
-            border-left: 4px solid var(--primary);
+        .bearer-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
         }
-        .priest-card.assistant {
-            border-left: 4px solid var(--success);
+        .bearer-item .bearer-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
         }
-        .priest-card .priest-name {
-            font-weight: 700;
+        .bearer-item .bearer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .bearer-item .bearer-avatar i {
+            font-size: 18px;
             color: var(--primary);
         }
-        .priest-card.assistant .priest-name {
-            color: var(--success);
+        .bearer-item .bearer-info {
+            flex: 1;
         }
-        .priest-card .priest-details {
+        .bearer-item .bearer-info .bearer-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .bearer-item .bearer-info .bearer-designation {
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 400;
-            font-size: 0.85rem;
         }
-        .priest-card .priest-details i {
+        .bearer-item .bearer-info .bearer-designation i {
+            color: var(--primary);
             margin-right: 4px;
         }
-        .priest-card .priest-position-badge {
+        .bearer-item .bearer-info .bearer-phone {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .bearer-item .bearer-info .bearer-phone a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .bearer-item .bearer-info .bearer-phone a:hover {
+            text-decoration: underline;
+        }
+        .designation-badge-sm {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 0.15rem 0.7rem;
+            padding: 2px 10px;
             border-radius: var(--radius-pill);
             font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.03em;
-            margin-left: 8px;
+            margin-left: 6px;
         }
-        .priest-card .priest-position-badge.vicar-badge {
-            background: var(--primary-light);
-            color: var(--primary);
+        .designation-badge-sm.president {
+            background: #dbeafe;
+            color: #1d4ed8;
         }
-        .priest-card .priest-position-badge.assistant-badge {
-            background: var(--success-light);
-            color: var(--success);
+        .designation-badge-sm.coordinator {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .designation-badge-sm.default {
+            background: #f1f5f9;
+            color: #475569;
         }
 
-        /* ----- Badges ----- */
-        .location-badge {
+        /* ----- Coordinator Badge ----- */
+        .coordinator-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 0.3rem 1rem;
+            gap: 4px;
+            padding: 4px 12px;
             border-radius: var(--radius-pill);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            background: var(--info-light);
-            color: var(--info);
+            background: #ede9fe;
+            color: #7c3aed;
+            border: 1px solid #c4b5fd;
         }
-        .location-badge i {
-            color: var(--info);
+        .coordinator-badge i {
+            color: #7c3aed;
         }
-        .families-badge {
+
+        /* ----- Coordinators Table ----- */
+        .coordinators-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+        .coordinators-table thead {
+            background: #f8fafc;
+        }
+        .coordinators-table thead th {
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .coordinators-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s ease;
+        }
+        .coordinators-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        .coordinators-table tbody td {
+            padding: 10px 14px;
+            vertical-align: middle;
+        }
+        .coordinators-table .district-name {
+            font-weight: 600;
+        }
+        .coordinators-table .phone-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .coordinators-table .phone-link:hover {
+            text-decoration: underline;
+        }
+        .coordinators-table .no-phone {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .coordinators-table .coordinator-avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 0.3rem 1rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--success-light);
-            color: var(--success);
-        }
-        .families-badge i {
-            color: var(--success);
+            justify-content: center;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         /* ----- Action Buttons ----- */
@@ -553,6 +462,157 @@
             color: #ffffff;
         }
 
+        /* ----- Section Titles ----- */
+        .section-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: var(--primary);
+        }
+        .section-title .section-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* ----- Empty State ----- */
+        .empty-state-sm {
+            padding: 30px 20px;
+            text-align: center;
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border-color);
+        }
+        .empty-state-sm i {
+            font-size: 2rem;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+        }
+        .empty-state-sm p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* ===== DELETE MODAL ===== */
+        .modal-content {
+            border-radius: var(--radius-lg);
+            border: none;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+        }
+        .modal-header {
+            border-bottom: 2px solid var(--danger-light);
+            padding: 1.2rem 1.5rem;
+        }
+        .modal-header .modal-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-header .modal-title i {
+            color: var(--danger);
+        }
+        .modal-header .btn-close {
+            transition: all 0.2s ease;
+        }
+        .modal-header .btn-close:hover {
+            transform: rotate(90deg);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        .modal-body .delete-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--danger-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        .modal-body .delete-icon-wrapper i {
+            font-size: 2rem;
+            color: var(--danger);
+        }
+        .modal-body h5 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+        }
+        .modal-body .category-name-display {
+            font-weight: 700;
+            color: var(--danger);
+            background: var(--danger-light);
+            padding: 0.2rem 0.8rem;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+        }
+        .modal-body p {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        .modal-body .warning-text {
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .modal-body .info-text {
+            color: #2563eb;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            gap: 10px;
+        }
+        .modal-footer .btn {
+            border-radius: var(--radius-pill);
+            padding: 0.5rem 1.8rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+        .modal-footer .btn-secondary {
+            background: #e2e8f0;
+            border: none;
+            color: var(--text-main);
+        }
+        .modal-footer .btn-secondary:hover {
+            background: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        .modal-footer .btn-danger {
+            background: var(--danger);
+            border: none;
+            color: #ffffff;
+        }
+        .modal-footer .btn-danger:hover {
+            background: var(--danger-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+        .modal-footer .btn-danger i {
+            margin-right: 6px;
+        }
+
         /* ----- Responsive ----- */
         @media (max-width: 992px) {
             .details-table th {
@@ -590,11 +650,12 @@
                 padding: 0.5rem 0.6rem;
                 font-size: 0.8rem;
             }
-            .parish-image {
-                max-height: 250px;
+            .bearer-item {
+                padding: 8px 12px;
             }
-            .parish-image-placeholder {
-                height: 250px;
+            .bearer-item .bearer-avatar {
+                width: 36px;
+                height: 36px;
             }
             .action-bar {
                 flex-direction: column;
@@ -606,19 +667,12 @@
                 justify-content: center;
                 width: 100%;
             }
-            .map-wrapper .map-card .map-body {
-                padding-bottom: 75%;
-            }
-            .map-wrapper .map-card .map-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0.5rem 0.8rem;
-            }
-            .map-wrapper .map-card .map-header {
-                padding: 0.5rem 0.8rem;
-            }
-            .map-wrapper .map-card .map-header h6 {
+            .coordinators-table {
                 font-size: 0.75rem;
+            }
+            .coordinators-table thead th,
+            .coordinators-table tbody td {
+                padding: 6px 10px;
             }
         }
         @media (max-width: 576px) {
@@ -637,26 +691,35 @@
                 padding: 0.4rem 0.5rem;
                 font-size: 0.75rem;
             }
-            .parish-image {
-                max-height: 200px;
+            .bearer-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
             }
-            .parish-image-placeholder {
-                height: 200px;
+            .bearer-item .bearer-avatar {
+                width: 48px;
+                height: 48px;
             }
-            .parish-image-placeholder i {
-                font-size: 3rem;
+            .section-title {
+                font-size: 0.95rem;
             }
-            .priest-card {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
+            .coordinators-table {
+                font-size: 0.7rem;
             }
-            .location-badge,
-            .families-badge {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.7rem;
+            .coordinators-table thead th,
+            .coordinators-table tbody td {
+                padding: 4px 6px;
             }
-            .map-wrapper .map-card .map-body {
-                padding-bottom: 100%;
+            .modal-body .delete-icon-wrapper {
+                width: 55px;
+                height: 55px;
+            }
+            .modal-body .delete-icon-wrapper i {
+                font-size: 1.5rem;
+            }
+            .modal-footer .btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 1.2rem;
             }
         }
     </style>
@@ -671,12 +734,12 @@
             <div class="header-top">
                 <div class="header-left">
                     <h1>
-                        <i class="fas fa-church"></i>
-                        Parish Details
+                        <i class="fas fa-cross"></i>
+                        Spiritual Details
                     </h1>
                     <span class="subtitle">
-                        <i class="far fa-map"></i>
-                        {{ parish.name }} · {{ parish.district }}
+                        <i class="far fa-folder-open"></i>
+                        {{ spiritual.category_title }}
                     </span>
                 </div>
                 <div class="breadcrumb-wrap">
@@ -687,256 +750,200 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{% url 'admin_parishes' %}">
-                                <i class="fas fa-church"></i> Parishes
+                            <a href="{% url 'spiritual' %}">
+                                <i class="fas fa-cross"></i> Spiritual
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <i class="fas fa-eye"></i> {{ parish.name }}
+                            <i class="fas fa-eye"></i> {{ spiritual.category_title }}
                         </li>
                     </ol>
                 </div>
             </div>
         </section>
 
-        <!-- ===== PARISH DETAILS ===== -->
+        <!-- ===== SPIRITUAL DETAILS ===== -->
         <section class="content">
             
             <div class="card">
                 <div class="card-body">
 
-                    <div class="row g-4">
-
-                        <!-- Left Column: Image + Map -->
-                        <div class="col-md-4">
-
-                            <!-- Parish Image -->
-                            <div class="parish-image-wrapper">
-                                {% if parish.image %}
-                                    <img src="{{ parish.image.url }}"
-                                         alt="{{ parish.name }}"
-                                         class="parish-image">
-                                    <span class="parish-badge">
-                                        <i class="fas fa-church"></i>
-                                        {{ parish.district }}
-                                    </span>
-                                {% else %}
-                                    <div class="parish-image-placeholder">
-                                        <i class="fas fa-church"></i>
-                                        <p>{{ parish.name }}</p>
-                                        <span style="font-size:0.8rem; font-weight:400; opacity:0.7;">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                            {{ parish.district }}
-                                        </span>
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            <!-- ===== GOOGLE MAPS UNDER IMAGE ===== -->
-                            {% if parish.map_url %}
-                            <div class="map-wrapper">
-                                <div class="map-card">
-                                    <!-- Map Header -->
-                                    <div class="map-header">
-                                        <h6>
-                                            <i class="fas fa-map-marked-alt"></i>
-                                            Location Map
-                                        </h6>
-                                    </div>
-                                    
-                                    <!-- Map Footer -->
-                                    <div class="map-footer">
-                                        <a href="{{ parish.get_clean_map_url }}" target="_blank">
-                                            <i class="fas fa-external-link-alt"></i> Open in Google Maps
-                                        </a>
-                                        <span class="map-location">
-                                            <i class="fas fa-map-pin"></i>
-                                            {{ parish.location|truncatechars:20 }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-
-                        </div>
-
-                        <!-- Right Column: Parish Details -->
-                        <div class="col-md-8">
-
+                    <!-- Right Column: Details Table -->
+                    <div class="row">
+                        <div class="col-12">
                             <table class="details-table">
                                 <tr>
-                                    <th><i class="fas fa-tag"></i> Parish Name</th>
-                                    <td>{{ parish.name }}</td>
+                                    <th><i class="fas fa-tag"></i> Category Title</th>
+                                    <td>{{ spiritual.category_title }}</td>
                                 </tr>
                                 <tr>
-                                    <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                                    <th><i class="fas fa-cross"></i> Content</th>
                                     <td>
-                                        <span class="location-badge">
-                                            <i class="fas fa-location-dot"></i>
-                                            {{ parish.location }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-user-pastor"></i> Vicar</th>
-                                    <td>
-                                        {% if parish.vicar %}
-                                            <div class="priest-card vicar">
-                                                <span class="priest-name">
-                                                    <i class="fas fa-user"></i>
-                                                    {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
-                                                    <span class="priest-position-badge vicar-badge">
-                                                        <i class="fas fa-church"></i> Vicar
-                                                    </span>
-                                                </span>
-                                                <br>
-                                                <span class="priest-details">
-                                                    <i class="fas fa-phone"></i>
-                                                    {{ parish.vicar.phone|default:"N/A" }}
-                                                    {% if parish.vicar.email %}
-                                                        | <i class="fas fa-envelope"></i>
-                                                        {{ parish.vicar.email }}
-                                                    {% endif %}
-                                                    {% if parish.vicar.position %}
-                                                        | <i class="fas fa-briefcase"></i>
-                                                        {{ parish.vicar.get_position_display }}
-                                                    {% endif %}
-                                                </span>
-                                            </div>
-                                        {% elif parish.vicar_name %}
-                                            <span style="font-weight:600; color:var(--text-main);">
-                                                <i class="fas fa-user"></i>
-                                                {{ parish.vicar_name }}
-                                            </span>
-                                            <br>
-                                            <span class="text-muted" style="font-size:0.8rem;">
-                                                <i class="fas fa-info-circle"></i> 
-                                                Vicar name from fallback field
-                                            </span>
+                                        {% if spiritual.content %}
+                                            {{ spiritual.content|safe }}
                                         {% else %}
-                                            <span class="empty-value">No vicar assigned</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <!-- ===== ASSISTANT VICAR ROW ===== -->
-                                <tr>
-                                    <th>
-                                        <i class="fas fa-user-friends"></i>
-                                        Assistant Vicar
-                                    </th>
-                                    <td>
-                                        {% if parish.assistant_vicar %}
-                                            <div class="priest-card assistant">
-                                                <span class="priest-name">
-                                                    <i class="fas fa-user"></i>
-                                                    {{ parish.assistant_vicar.first_name }}
-                                                    {{ parish.assistant_vicar.last_name }}
-                                                    <span class="priest-position-badge assistant-badge">
-                                                        <i class="fas fa-user-friends"></i>
-                                                        Assistant Vicar
-                                                    </span>
-                                                </span>
-                                                <br>
-                                                <span class="priest-details">
-                                                    <i class="fas fa-phone"></i>
-                                                    {{ parish.assistant_vicar.phone|default:"N/A" }}
-                                                    {% if parish.assistant_vicar.email %}
-                                                        |
-                                                        <i class="fas fa-envelope"></i>
-                                                        {{ parish.assistant_vicar.email }}
-                                                    {% endif %}
-                                                    {% if parish.assistant_vicar.position %}
-                                                        |
-                                                        <i class="fas fa-briefcase"></i>
-                                                        {{ parish.assistant_vicar.get_position_display }}
-                                                    {% endif %}
-                                                </span>
-                                            </div>
-                                        {% else %}
-                                            <span class="empty-value">
-                                                No Assistant Vicar Assigned
-                                            </span>
+                                            <span class="empty-value">No content provided</span>
                                         {% endif %}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><i class="fas fa-calendar-alt"></i> Established Year</th>
+                                    <th><i class="fas fa-link"></i> Slug</th>
                                     <td>
-                                        <span class="families-badge">
-                                            <i class="fas fa-calendar"></i>
-                                            {{ parish.established_year }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-city"></i> District</th>
-                                    <td>{{ parish.district }}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-phone"></i> Phone</th>
-                                    <td>
-                                        {% if parish.phone %}
-                                            <a href="tel:{{ parish.phone }}" style="color:var(--primary); text-decoration:none; font-weight:500;">
-                                                <i class="fas fa-phone-alt"></i> {{ parish.phone }}
-                                            </a>
-                                        {% else %}
-                                            <span class="empty-value">Not specified</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-handshake"></i> Trustee</th>
-                                    <td>{{ parish.trustee|default:"<span class='empty-value'>Not specified</span>" }}</td>
-                                </tr>
-                                 <tr>
-                                    <th><i class="fas fa-user"></i> Secretary</th>
-                                    <td>{{ parish.secretary|default:"<span class='empty-value'>Not specified</span>" }}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-users"></i> Number of Families</th>
-                                    <td>
-                                        <span class="families-badge">
-                                            <i class="fas fa-users"></i>
-                                            {{ parish.number_of_families }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><i class="fas fa-align-left"></i> Description</th>
-                                    <td>
-                                        {% if parish.description %}
-                                            {{ parish.description|safe }}
-                                        {% else %}
-                                            <span class="empty-value">No description provided</span>
-                                        {% endif %}
+                                        <code style="background:#f1f5f9; padding:0.2rem 0.6rem; border-radius:4px; font-size:0.85rem;">
+                                            {{ spiritual.slug }}
+                                        </code>
                                     </td>
                                 </tr>
                             </table>
 
                             <!-- Action Buttons -->
                             <div class="action-bar">
-                                <a href="{% url 'admin_parishes' %}" class="btn-back">
+                                <a href="{% url 'spiritual' %}" class="btn-back">
                                     <i class="fas fa-arrow-left"></i>
-                                    Back to Parishes
+                                    Back to Spiritual
                                 </a>
-                                <a href="{% url 'edit_parish' parish.id %}" class="btn-edit">
+                                <a href="{% url 'edit_spiritual' spiritual.id %}" class="btn-edit">
                                     <i class="fas fa-edit"></i>
-                                    Edit Parish
+                                    Edit Spiritual
                                 </a>
-                                <!-- <a href="{% url 'delete_parish' parish.id %}" 
-                                   class="btn-delete">
-            
+                                <a href="#" class="btn-delete" 
+                                   data-bs-toggle="modal" 
+                                   data-bs-target="#deleteModal"
+                                   data-spiritual-id="{{ spiritual.id }}"
+                                   data-spiritual-name="{{ spiritual.category_title }}"
+                                   data-bearer-count="{{ officebearers_count }}">
                                     <i class="fas fa-trash-alt"></i>
-                                    Delete Parish
-                                </a> -->
+                                    Delete Spiritual
+                                </a>
                             </div>
-
                         </div>
-
                     </div>
 
                 </div>
             </div>
+
+            <!-- ===== OFFICE BEARERS SECTION ===== -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="section-title">
+                        <i class="fas fa-user-tie"></i>
+                        Office Bearers
+                        <span class="section-badge">{{ officebearers_count }}</span>
+                    </div>
+
+                    {% if officebearers %}
+                        <div class="bearers-list">
+                            {% for bearer in officebearers %}
+                            <div class="bearer-item">
+                                <div class="bearer-avatar">
+                                    {% if bearer.image %}
+                                        <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}">
+                                    {% else %}
+                                        <i class="fas fa-user"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="bearer-info">
+                                    <div>
+                                        <span class="bearer-name">{{ bearer.name }}</span>
+                                        {% if bearer.designation %}
+                                            <span class="designation-badge-sm 
+                                                {% if 'President' in bearer.designation.name %}president
+                                                {% elif 'Co-Ordinator' in bearer.designation.name or 'Coordinator' in bearer.designation.name %}coordinator
+                                                {% else %}default{% endif %}">
+                                                <i class="fas fa-briefcase"></i>
+                                                {{ bearer.designation.name }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="bearer-designation">
+                                        {% if bearer.district %}
+                                            <i class="fas fa-map-pin"></i> {{ bearer.district }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="bearer-phone">
+                                        <i class="fas fa-phone"></i>
+                                        <a href="tel:{{ bearer.phone }}">{{ bearer.phone }}</a>
+                                        {% if bearer.email %}
+                                            | <i class="fas fa-envelope"></i>
+                                            <a href="mailto:{{ bearer.email }}">{{ bearer.email }}</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-state-sm">
+                            <i class="fas fa-user-tie"></i>
+                            <p>No office bearers assigned to this spiritual category.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- ===== COORDINATORS TABLE ===== -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="section-title">
+                        <i class="fas fa-user-cog"></i>
+                        District Coordinators
+                        <span class="section-badge" style="background:#f3e8ff; color:#7c3aed;">{{ coordinators_count }}</span>
+                    </div>
+
+                    {% if coordinators %}
+                        <table class="coordinators-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>District</th>
+                                    <th>Designation</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for coordinator in coordinators %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td class="district-name">
+                                        <i class="fas fa-map-pin" style="color:var(--primary);"></i>
+                                        {{ coordinator.district }}
+                                    </td>
+                                    <td>
+                                        <span class="coordinator-badge">
+                                            <i class="fas fa-user-cog"></i>
+                                            {{ coordinator.designation.name }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="coordinator-avatar-sm">
+                                            {{ coordinator.name|slice:":1"|upper }}
+                                        </span>
+                                        {{ coordinator.name }}
+                                    </td>
+                                    <td>
+                                        {% if coordinator.phone %}
+                                            <a href="tel:{{ coordinator.phone }}" class="phone-link">
+                                                <i class="fas fa-phone" style="color:var(--success);"></i>
+                                                {{ coordinator.phone }}
+                                            </a>
+                                        {% else %}
+                                            <span class="no-phone">---</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="empty-state-sm">
+                            <i class="fas fa-user-cog"></i>
+                            <p>No district coordinators assigned to this spiritual category.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
         </section>
 
     </div>
@@ -945,8 +952,89 @@
 
 </div>
 
+<!-- ===== DELETE CONFIRMATION MODAL ===== -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="delete-icon-wrapper">
+                    <i class="fas fa-cross"></i>
+                </div>
+                <h5>Are you sure you want to delete</h5>
+                <h5 class="category-name-display" id="modalCategoryName">Category Name</h5>
+                <p class="mt-3">
+                    This action cannot be undone.
+                </p>
+                <p id="bearerWarning" class="warning-text" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    This category has <span id="bearerCountDisplay">0</span> office bearer(s) associated with it.
+                    They will be <strong>unlinked</strong> from this category but NOT deleted.
+                </p>
+                <p class="info-text">
+                    <i class="fas fa-info-circle"></i>
+                    Office bearers will remain in the system and can be assigned to other categories.
+                </p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <form id="deleteForm" method="POST" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Yes, Delete Category
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<!-- ===== MODAL SCRIPT ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteModal = document.getElementById('deleteModal');
+    const modalCategoryName = document.getElementById('modalCategoryName');
+    const deleteForm = document.getElementById('deleteForm');
+    const bearerWarning = document.getElementById('bearerWarning');
+    const bearerCountDisplay = document.getElementById('bearerCountDisplay');
+    
+    // When the modal is about to be shown
+    deleteModal.addEventListener('show.bs.modal', function(event) {
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        
+        // Extract data attributes
+        const spiritualId = button.getAttribute('data-spiritual-id');
+        const spiritualName = button.getAttribute('data-spiritual-name');
+        const bearerCount = button.getAttribute('data-bearer-count') || 0;
+        
+        // Update the modal content
+        modalCategoryName.textContent = spiritualName;
+        
+        // Show warning if there are office bearers
+        if (parseInt(bearerCount) > 0) {
+            bearerWarning.style.display = 'block';
+            bearerCountDisplay.textContent = bearerCount;
+        } else {
+            bearerWarning.style.display = 'none';
+        }
+        
+        // Update the form action URL - using delete_spiritual URL
+        deleteForm.action = "{% url 'delete_spiritual' 0 %}".replace('0', spiritualId);
+    });
+});
 </script>
 
 </body>

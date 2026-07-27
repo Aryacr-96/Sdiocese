@@ -5423,14 +5423,13 @@ transition:.3s;
 transform:translateY(-5px);
 }
 
-.leader-img{
-width:90px;
-height:90px;
-border-radius:50%;
-object-fit:contain;
-border:4px solid #e76514;
+.leader-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 0;
+    object-fit: contain;
+    
 }
-
 .leader-info{
 flex:1;
 }

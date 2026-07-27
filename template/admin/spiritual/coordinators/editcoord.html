@@ -6,13 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Office Bearer · Diocese</title>
+    <title>Edit Coordinator · Diocese</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* ========================================
-           ADD OFFICE BEARER STYLES
+           EDIT COORDINATOR STYLES
         ======================================== */
         
         * {
@@ -51,14 +51,14 @@
         .page-header .header-left .icon-circle {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 20px;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
         }
 
         .page-header .header-left h1 {
@@ -110,14 +110,14 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
         }
 
         .btn-success {
@@ -129,6 +129,17 @@
         .btn-success:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         }
 
         /* ===== MAIN CARD ===== */
@@ -153,18 +164,26 @@
         }
 
         .card-header-modern i {
-            color: #6366f1;
+            color: #f59e0b;
             font-size: 20px;
         }
 
         .card-header-modern .header-badge {
             margin-left: auto;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
             padding: 4px 16px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-header-modern .header-badge i {
+            color: white;
+            font-size: 12px;
         }
 
         .card-body {
@@ -190,14 +209,14 @@
         }
 
         .form-group label .label-icon {
-            color: #6366f1;
+            color: #f59e0b;
             margin-right: 6px;
             width: 16px;
         }
 
         .form-control {
             width: 100%;
-            padding: 8px 8px;
+            padding: 12px 16px;
             border: 1.5px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
@@ -209,8 +228,8 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.08);
         }
 
         .form-control.error {
@@ -225,6 +244,11 @@
             color: #94a3b8;
         }
 
+        .form-control:disabled {
+            background: #f1f5f9;
+            cursor: not-allowed;
+        }
+
         .form-hint {
             font-size: 12px;
             color: #94a3b8;
@@ -233,7 +257,7 @@
 
         .form-hint i {
             margin-right: 4px;
-            color: #6366f1;
+            color: #f59e0b;
         }
 
         .error-message {
@@ -251,8 +275,8 @@
 
         /* ===== INFO BOX ===== */
         .info-box {
-            background: linear-gradient(135deg, #eff6ff, #eef2ff);
-            border: 1px solid #c7d2fe;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1px solid #fcd34d;
             border-radius: 16px;
             padding: 18px 24px;
             margin-bottom: 28px;
@@ -264,7 +288,7 @@
         .info-box .info-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -281,101 +305,61 @@
         .info-box .info-content h4 {
             font-size: 14px;
             font-weight: 700;
-            color: #1e40af;
+            color: #92400e;
             margin: 0 0 4px 0;
         }
 
         .info-box .info-content p {
             font-size: 13px;
-            color: #3b82f6;
+            color: #78350f;
             margin: 0;
             line-height: 1.5;
         }
 
-        /* ===== IMAGE UPLOAD ===== */
-        .file-upload-wrapper {
-            position: relative;
-            border: 2px dashed #e2e8f0;
-            border-radius: 14px;
-            padding: 20px;
-            text-align: center;
-            background: #fafafa;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            min-height: 80px;
+        /* ===== COORDINATOR AVATAR ===== */
+        .coordinator-avatar-wrapper {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-        }
-
-        .file-upload-wrapper:hover {
-            border-color: #6366f1;
-            background: #f8fafc;
-        }
-
-        .file-upload-wrapper.dragover {
-            border-color: #6366f1;
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .file-upload-wrapper i {
-            font-size: 28px;
-            color: #94a3b8;
-            margin-bottom: 6px;
-        }
-
-        .file-upload-wrapper .file-text {
-            font-size: 14px;
-            color: #475569;
-            font-weight: 500;
-        }
-
-        .file-upload-wrapper .file-text strong {
-            color: #6366f1;
-        }
-
-        .file-upload-wrapper .file-hint {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
-        .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Image preview */
-        .image-preview-container {
-            margin-top: 14px;
-            display: none;
-            padding: 12px;
+            gap: 16px;
+            padding: 12px 16px;
             background: #f8fafc;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
-            text-align: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
         }
 
-        .image-preview-container.show {
-            display: block;
+        .coordinator-avatar-wrapper .avatar-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
         }
 
-        .image-preview-container img {
-            max-width: 150px;
-            max-height: 150px;
-            border-radius: 12px;
-            object-fit: cover;
+        .coordinator-avatar-wrapper .avatar-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
             border: 2px solid #e2e8f0;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
         }
 
-        .image-preview-container .file-name {
-            display: block;
-            font-size: 12px;
+        .coordinator-avatar-wrapper .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .coordinator-avatar-wrapper .avatar-info {
+            font-size: 13px;
             color: #64748b;
-            margin-top: 6px;
         }
 
         /* ===== FORM ACTIONS ===== */
@@ -436,13 +420,10 @@
                 justify-content: center;
             }
 
-            .file-upload-wrapper {
-                padding: 16px;
-                min-height: 70px;
-            }
-
-            .file-upload-wrapper i {
-                font-size: 24px;
+            .coordinator-avatar-wrapper {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
         }
 
@@ -477,11 +458,6 @@
             .info-box .info-content p {
                 font-size: 12px;
             }
-
-            .image-preview-container img {
-                max-width: 120px;
-                max-height: 120px;
-            }
         }
     </style>
 </head>
@@ -493,17 +469,17 @@
     <div class="page-header">
         <div class="header-left">
             <div class="icon-circle">
-                <i class="fas fa-user-tie"></i>
+                <i class="fas fa-user-edit"></i>
             </div>
             <div>
                 <h1>
-                    Add Office Bearer
-                    <small>Create a new office bearer profile</small>
+                    Edit Coordinator
+                    <small>Update coordinator profile information</small>
                 </h1>
             </div>
         </div>
         <div class="header-actions">
-            <a href="{% url 'officebearer' %}" class="btn btn-secondary">
+            <a href="{% url 'coordinator_list' %}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
@@ -512,10 +488,10 @@
     <!-- ===== MAIN CARD ===== -->
     <div class="main-card">
         <div class="card-header-modern">
-            <i class="fas fa-user-plus"></i>
-            Office Bearer Details
+            <i class="fas fa-user-edit"></i>
+            Edit Coordinator: {{ coordinator.name }}
             <span class="header-badge">
-                <i class="fas fa-plus-circle"></i> New
+                <i class="fas fa-edit"></i> Edit Mode
             </span>
         </div>
 
@@ -526,16 +502,36 @@
                     <i class="fas fa-info"></i>
                 </div>
                 <div class="info-content">
-                    <h4>How to assign to Spiritual Categories</h4>
+                    <h4>Editing Coordinator</h4>
                     <p>
-                        After creating this office bearer, go to the Spiritual category page 
-                        to assign them to one or more spiritual categories.
+                        Update the details below. Changes will be reflected in the spiritual 
+                        category this coordinator is assigned to.
                     </p>
                 </div>
             </div>
 
-            <form method="POST" enctype="multipart/form-data" id="officeBearerForm">
+            <form method="POST" id="coordinatorForm">
                 {% csrf_token %}
+
+                <!-- SPIRITUAL CATEGORY -->
+                <div class="form-group">
+                    <label for="{{ form.spiritual.id_for_label }}">
+                        <i class="fas fa-church label-icon"></i>
+                        Spiritual Category
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.spiritual }}
+                    {% if form.spiritual.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.spiritual.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Select the spiritual category this coordinator manages
+                    </div>
+                </div>
 
                 <!-- NAME -->
                 <div class="form-group">
@@ -553,33 +549,45 @@
                     {% endif %}
                 </div>
 
-                <!-- DESIGNATION - With Dropdown -->
-<div class="form-group">
-    <label for="{{ form.designation.id_for_label }}">
-        <i class="fas fa-briefcase label-icon"></i>
-        Designation
-        <span class="required">*</span>
-    </label>
-    <select name="designation" id="id_designation" class="form-control" required>
-        <option value="">-- Select Designation --</option>
-        {% for designation in designations %}
-            <option value="{{ designation.id }}" 
-                {% if form.designation.value == designation.id %}selected{% endif %}>
-                {{ designation.name }}
-            </option>
-        {% endfor %}
-    </select>
-    {% if form.designation.errors %}
-        <div class="error-message">
-            <i class="fas fa-exclamation-circle"></i>
-            {{ form.designation.errors|join:", " }}
-        </div>
-    {% endif %}
-    <div class="form-hint">
-        <i class="fas fa-info-circle"></i>
-        Select an official designation for this office bearer
-    </div>
-</div>
+                <!-- DESIGNATION -->
+                <div class="form-group">
+                    <label for="{{ form.designation.id_for_label }}">
+                        <i class="fas fa-briefcase label-icon"></i>
+                        Designation
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.designation }}
+                    {% if form.designation.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.designation.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Select an official designation for this coordinator
+                    </div>
+                </div>
+
+                <!-- DISTRICT -->
+                <div class="form-group">
+                    <label for="{{ form.district.id_for_label }}">
+                        <i class="fas fa-map-marker-alt label-icon"></i>
+                        District
+                        <span class="required">*</span>
+                    </label>
+                    {{ form.district }}
+                    {% if form.district.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ form.district.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Enter the district where this coordinator serves
+                    </div>
+                </div>
 
                 <!-- PHONE -->
                 <div class="form-group">
@@ -601,81 +609,13 @@
                     </div>
                 </div>
 
-                <!-- EMAIL -->
-                <div class="form-group">
-                    <label for="{{ form.email.id_for_label }}">
-                        <i class="fas fa-envelope label-icon"></i>
-                        Email Address
-                    </label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i>
-                            {{ form.email.errors|join:", " }}
-                        </div>
-                    {% endif %}
-                    <div class="form-hint">
-                        <i class="fas fa-info-circle"></i>
-                        Optional - used for contact purposes
-                    </div>
-                </div>
-
-                <!-- DISTRICT -->
-                <div class="form-group">
-                    <label for="{{ form.district.id_for_label }}">
-                        <i class="fas fa-map-marker-alt label-icon"></i>
-                        District
-                    </label>
-                    {{ form.district }}
-                    {% if form.district.errors %}
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i>
-                            {{ form.district.errors|join:", " }}
-                        </div>
-                    {% endif %}
-                    <div class="form-hint">
-                        <i class="fas fa-info-circle"></i>
-                        Optional - specify the district
-                    </div>
-                </div>
-
-                <!-- IMAGE -->
-                <div class="form-group">
-                    <label for="{{ form.image.id_for_label }}">
-                        <i class="fas fa-image label-icon"></i>
-                        Profile Photo
-                    </label>
-                    
-                    <div class="file-upload-wrapper" id="fileDropZone">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span class="file-text">
-                            <strong>Click to upload</strong> or drag and drop
-                        </span>
-                        <span class="file-hint">PNG, JPG, GIF up to 5MB</span>
-                        {{ form.image }}
-                    </div>
-
-                    {% if form.image.errors %}
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i>
-                            {{ form.image.errors|join:", " }}
-                        </div>
-                    {% endif %}
-
-                    <!-- Image preview -->
-                    <div class="image-preview-container" id="imagePreviewContainer">
-                        <img id="imagePreview" src="#" alt="Preview">
-                        <span class="file-name" id="fileName">No file selected</span>
-                    </div>
-                </div>
-
-                <!-- FORM ACTIONS -->
+                <!-- ===== FORM ACTIONS ===== -->
                 <div class="form-actions">
-                    <a href="{% url 'officebearer' %}" class="btn btn-secondary">
+                    <a href="{% url 'coordinator_list' %}" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Save Office Bearer
+                        <i class="fas fa-save"></i> Update Coordinator
                     </button>
                 </div>
             </form>
@@ -694,94 +634,6 @@
             }
         });
 
-        // ===== IMAGE PREVIEW =====
-        const imageInput = document.querySelector('input[type="file"]');
-        const previewContainer = document.getElementById('imagePreviewContainer');
-        const previewImage = document.getElementById('imagePreview');
-        const fileName = document.getElementById('fileName');
-        const dropZone = document.getElementById('fileDropZone');
-
-        if (imageInput) {
-            imageInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        previewImage.src = event.target.result;
-                        previewContainer.classList.add('show');
-                        fileName.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
-                    }
-                    reader.readAsDataURL(file);
-                    
-                    // Update drop zone text
-                    const fileText = dropZone.querySelector('.file-text');
-                    if (fileText) {
-                        fileText.innerHTML = '<strong>' + file.name + '</strong> (selected)';
-                    }
-                    const icon = dropZone.querySelector('i');
-                    if (icon) {
-                        icon.className = 'fas fa-check-circle';
-                        icon.style.color = '#22c55e';
-                    }
-                } else {
-                    previewContainer.classList.remove('show');
-                    previewImage.src = '#';
-                    fileName.textContent = 'No file selected';
-                    
-                    const fileText = dropZone.querySelector('.file-text');
-                    if (fileText) {
-                        fileText.innerHTML = '<strong>Click to upload</strong> or drag and drop';
-                    }
-                    const icon = dropZone.querySelector('i');
-                    if (icon) {
-                        icon.className = 'fas fa-cloud-upload-alt';
-                        icon.style.color = '';
-                    }
-                }
-            });
-        }
-
-        // ===== DRAG & DROP =====
-        if (dropZone) {
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropZone.addEventListener(eventName, preventDefaults, false);
-                document.body.addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropZone.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropZone.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight() {
-                dropZone.classList.add('dragover');
-            }
-
-            function unhighlight() {
-                dropZone.classList.remove('dragover');
-            }
-
-            dropZone.addEventListener('drop', handleDrop, false);
-
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                if (files.length > 0 && imageInput) {
-                    imageInput.files = files;
-                    const event = new Event('change', { bubbles: true });
-                    imageInput.dispatchEvent(event);
-                }
-            }
-        }
-
         // ===== REQUIRED FIELD INDICATORS =====
         document.querySelectorAll('.form-group').forEach(function(group) {
             const input = group.querySelector('input, select, textarea');
@@ -794,6 +646,14 @@
                     star.textContent = '*';
                     label.appendChild(star);
                 }
+            }
+        });
+
+        // ===== PREVENT ENTER KEY SUBMIT =====
+        const form = document.getElementById('coordinatorForm');
+        form.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
             }
         });
     });

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, Officebearer, Priest, Parish, Spiritual
+from .models import Contact, Coordinator, Designation, Officebearer, Priest, Parish, Spiritual
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
@@ -245,14 +245,17 @@ class SpiritualForm(forms.ModelForm):
                 raise forms.ValidationError("A spiritual category with this title already exists.")
         return title
 
+# forms.py
 
-# ============================================
-# OFFICE BEARER FORM
-# ============================================
+from django import forms
+from .models import Officebearer
+
+
 class OfficebearerForm(forms.ModelForm):
     """
     Form for creating/editing Office Bearers (used in office bearer management)
     """
+    
     class Meta:
         model = Officebearer
         fields = ['name', 'designation', 'image', 'phone', 'email', 'district']
@@ -261,9 +264,9 @@ class OfficebearerForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter full name'
             }),
-            'designation': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter designation'
+            # ✅ Changed from TextInput to Select
+            'designation': forms.Select(attrs={
+                'class': 'form-control'
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -287,7 +290,18 @@ class OfficebearerForm(forms.ModelForm):
         phone = self.cleaned_data.get('phone')
         if phone and not phone.isdigit():
             raise forms.ValidationError("Phone number must contain only digits.")
+        if phone and len(phone) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
         return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set the queryset for designation dropdown
+        from .models import Designation
+        self.fields['designation'].queryset = Designation.objects.all().order_by('name')
+        self.fields['designation'].empty_label = "-- Select Designation --"
+        self.fields['designation'].required = False
+        self.fields['designation'].help_text = "Select an official designation for this office bearer"
 
 
 # ============================================
@@ -399,3 +413,58 @@ NewOfficeBearerFormSet = modelformset_factory(
     can_delete=False,
     can_order=False,
 )
+
+
+class DesignationForm(forms.ModelForm):
+
+    class Meta:
+        model = Designation
+        fields = ['name']
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter designation name'
+            }),
+        }
+
+
+
+# ============================================
+# COORDINATOR FORM (With FK to Designation)
+# ============================================
+class CoordinatorForm(forms.ModelForm):
+    """
+    Form for creating/editing Coordinators with designation dropdown
+    """
+    # ✅ Designation as ModelChoiceField (Dropdown)
+    designation = forms.ModelChoiceField(
+        queryset=Designation.objects.all().order_by('name'),
+        empty_label="-- Select Designation --",
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        }),
+        help_text="Select an official designation for this coordinator"
+    )
+    
+    class Meta:
+        model = Coordinator
+        fields = ['spiritual', 'name', 'designation', 'district', 'phone']
+        widgets = {
+            'spiritual': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter coordinator name'
+            }),
+            'district': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter district'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter 10-digit phone number'
+            }),
+        }

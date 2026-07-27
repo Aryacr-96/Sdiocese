@@ -253,11 +253,15 @@ class Officebearer(models.Model):
         max_length=150,
         help_text="Full name of the office bearer"
     )
-    
-    designation = models.CharField(
-        max_length=150,
+    designation = models.ForeignKey(
+        'Designation',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='officebearers',
         help_text="Designation/position of the office bearer"
     )
+    
     
     image = models.ImageField(
         upload_to="officebearers/",
@@ -438,3 +442,80 @@ class SpiritualOfficeBearer(models.Model):
             'district': self.officebearer.district,
             'image': self.officebearer.image.url if self.officebearer.image else None,
         }
+
+
+
+# ============================================
+# SPIRITUAL COORDINATOR
+# ============================================
+class Coordinator(models.Model):
+    """
+    Model to store coordinator information.
+    Each coordinator belongs to one spiritual category (ForeignKey).
+    """
+    # FK to Spiritual
+    spiritual = models.ForeignKey(
+        Spiritual,
+        on_delete=models.CASCADE,
+        related_name='coordinators',
+        help_text="Spiritual category this coordinator belongs to"
+    )
+    
+    name = models.CharField(
+        max_length=150,
+        help_text="Coordinator name"
+    )
+    
+    # ✅ FK to Designation (Dropdown support)
+    designation = models.ForeignKey(
+        'Designation',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='coordinators',
+        help_text="Coordinator designation/position"
+    )
+    
+    district = models.CharField(
+        max_length=100,
+        help_text="Coordinator district"
+    )
+    
+    phone = models.CharField(
+        max_length=10,
+        help_text="10 digit phone number"
+    )
+    
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="Date and time when this record was created"
+    )
+    
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        help_text="Date and time when this record was last updated"
+    )
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = "Coordinator"
+        verbose_name_plural = "Coordinators"
+
+    def __str__(self):
+        designation_name = self.designation.name if self.designation else "No Designation"
+        return f"{self.name} - {designation_name}"
+
+    
+
+
+
+class Designation(models.Model):
+    name = models.CharField(
+        max_length=150,
+        unique=True,
+        help_text="Designation name"
+    )
+
+
+
+        

@@ -1,0 +1,149 @@
+{% load static %}
+{% include 'header.html' %}
+
+<section class="sangam-section">
+    <div class="sangam-container">
+        
+        <!-- Left: Description -->
+        <div class="text-side">
+            <h2>{{ spiritual.category_title }}</h2>
+            <p>{{ spiritual.content|safe }}</p>
+        </div>
+
+        <!-- Right: Profile Photos Column -->
+        <div class="photo-side">
+            {% if officebearers %}
+                {% for bearer in officebearers %}
+                <div class="leader-card">
+                    {% if bearer.image %}
+                        <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}" class="leader-img">
+                    {% else %}
+                        <img src="{% static 'images/default-avatar.png' %}" alt="{{ bearer.name }}" class="leader-img">
+                    {% endif %}
+                    <div class="leader-info">
+                        <!-- ✅ FIXED: Show designation name properly -->
+                        <span class="role-badge">
+                            {% if bearer.designation %}
+                                {{ bearer.designation.name }}
+                            {% else %}
+                                No Designation
+                            {% endif %}
+                        </span>
+                        <h3>{{ bearer.name }}</h3>
+                        {% if bearer.district %}
+                            <p style="font-size: 0.8rem; margin: 5px 0 0 0;">{{ bearer.district }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="color: #64748b;">No office bearers assigned to this category.</p>
+            {% endif %}
+        </div>
+    </div><!-- ===== DISTRICT TABLE ===== -->
+{% if spiritual.coordinators.all %}
+<div class="district-table-wrapper">
+    <table class="district-table">
+        <thead>
+            <tr>
+                <th>District</th>
+                <th>Designation</th>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coordinator in spiritual.coordinators.all %}
+            <tr>
+                <td class="district-name">
+                    <i class="fas fa-map-pin"></i>
+                    {{ coordinator.district }}
+                </td>
+                <td class="designation">
+                    <span class="designation-badge 
+                        {% if 'President' in coordinator.designation.name %}president
+                        {% elif 'Co-Ordinator' in coordinator.designation.name or 'Coordinator' in coordinator.designation.name %}coordinator
+                        {% else %}default{% endif %}">
+                        <!-- ✅ FIXED: Use .name instead of the object -->
+                        {{ coordinator.designation.name }}
+                    </span>
+                </td>
+                <td>{{ coordinator.name }}</td>
+                <td>
+                    {% if coordinator.phone %}
+                        <a href="tel:{{ coordinator.phone }}" class="phone-link">
+                            <i class="fas fa-phone"></i>
+                            {{ coordinator.phone }}
+                        </a>
+                    {% else %}
+                        <span class="no-phone">---</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<!-- <div class="empty-coordinators">
+    <i class="fas fa-user-cog"></i>
+    No district coordinators assigned to this spiritual category.
+</div> -->
+{% endif %}
+</section>
+</div>
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+
+{% include 'footer.html' %}

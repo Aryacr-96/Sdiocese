@@ -46,7 +46,7 @@ urlpatterns = [
         
     # SPIRITUAL ORGANIZATIONS
 
-
+    
     path('vaidika/',views.vaidika,name='vaidika'),
     path('sundayschool/',views.sundayschool,name='sundayschool'),
     path('vanitha/',views.vanitha,name='vanitha'),
@@ -133,8 +133,13 @@ urlpatterns = [
     path('admin/spiritual/', views.spiritual_list, name='spiritual'),
     path('admin/spiritual/add/', views.add_spiritual, name='add_spiritual'),
     path('admin/spiritual/edit/<int:id>/', views.edit_spiritual, name='edit_spiritual'),
+     path('admin/spiritual/view/<int:id>/', views.view_spiritual, name='view_spiritual'),
     path('admin/spiritual/delete/<int:id>/', views.delete_spiritual, name='delete_spiritual'),
     path('admin/spiritual/detail/<int:id>/', views.spiritual_detail, name='spiritual_detail'),
+
+
+    path('spiritual/<slug:slug>/', views.spiritual_detail, name='spiritual_detail'),  # Changed from id to slug
+
     
     # OFFICE BEARER ADMIN
     path('admin/officebearer/', views.officebearer_list, name='officebearer'),
@@ -143,7 +148,33 @@ urlpatterns = [
     path('admin/officebearer/delete/<int:id>/', views.delete_officebearer, name='delete_officebearer'),
     path('admin/officebearer/detail/<int:id>/', views.officebearer_detail, name='officebearer_detail'),
 
+
+
+    #DESIGNATION
+    path('designation/',views.designation_list,name='designation'),
+    path('designation/add/',views.add_designation,name='add_designation'),
+
+    path(
+        'designation/edit/<int:id>/',
+        views.edit_designation,
+        name='edit_designation'
+    ),
+
+    path(
+        'designation/delete/<int:id>/',
+        views.delete_designation,
+        name='delete_designation'
+    ),
+
+    #COORDINATORS
+    path('coordinators/', views.coordinator_list, name='coordinator_list'),
+    path('coordinators/add/', views.add_coordinator, name='add_coordinator'),
+    path('coordinators/edit/<int:id>/', views.edit_coordinator, name='edit_coordinator'),
+    path('coordinators/delete/<int:id>/', views.delete_coordinator, name='delete_coordinator'),
+    # path('coordinators/detail/<int:id>/', views.coordinator_detail, name='coordinator_detail'),
     # API ENDPOINT FOR SEARCH (Optional)
     # path('api/officebearers/search/', views.search_officebearers, name='search_officebearers'),
+    #COORDINATORS
+    
 
 ]

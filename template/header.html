@@ -112,28 +112,23 @@
             </div> -->
 
             <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-                    <i class="fa-regular fa-heart menu-icon"></i>Spiritual Organisations
-                    <span class="arrow">▸</span>
-                </a>
+    <a href="javascript:void(0)" class="menu-link">
+        <i class="fa-regular fa-heart menu-icon"></i>Spiritual Organisations
+        <span class="arrow">▸</span>
+    </a>
 
-                <div class="submenu">
-                    <a href="{% url 'vaidika' %}">   <span class="arrow">▸</span>Vidhika Sangam</a>
-                    <a href="{% url 'sundayschool' %}">   <span class="arrow">▸</span>Sunday School</a>
-                    <a href="{% url 'vanitha' %}">  <span class="arrow">▸</span>Martha Mariyam Vanitha Organisations Samajam</a>
-                    <a href="{% url 'prarthana' %}"> <span class="arrow">▸</span>Prarthanayogam</a>
-                    <a href="{% url 'mgocsm' %}">  <span class="arrow">▸</span>M.G.O.C.S.M</a>
-                    <a href="{% url 'baskiyoma' %}">  <span class="arrow">▸</span>Barskiyomo Association</a>
-                    <a href="{% url 'ocym' %}">   <span class="arrow">▸</span>OCYM</a>
-                    <a href="{% url 'sushrushaka' %}">  <span class="arrow">▸</span>Sushrushaka Sangam</a>
-                    <a href="{% url 'balika' %}"><span class="arrow">▸</span>Balika Bala Samajam</a>
-                    <a href="{% url 'human' %}"> <span class="arrow">▸</span>Human Empowerment</a>
-                    <a href="{% url 'divya' %}"> <span class="arrow">▸</span>Divya Bodhanam</a>
-                    <a href="{% url 'suvishesham' %}"> <span class="arrow">▸</span>Suvishesha Sangam</a>
-                    <a href="{% url 'sdof' %}">  <span class="arrow">▸</span>SDOF</a>
-                    <a href="{% url 'sjof' %}">  <span class="arrow">▸</span>SJOF</a>
-                </div>
-            </div>
+    <div class="submenu">
+        {% for spiritual in spirituals %}
+            <a href="{% url 'spiritual_detail' spiritual.slug %}">
+                <span class="arrow">▸</span>{{ spiritual.category_title }}
+            </a>
+        {% empty %}
+            <a href="javascript:void(0)" style="color: #94a3b8; cursor: default;">
+                <span class="arrow">▸</span>No spiritual categories available
+            </a>
+        {% endfor %}
+    </div>
+</div>
 
             <div class="dropdown">
                 <a href="javascript:void(0)" class="menu-link">

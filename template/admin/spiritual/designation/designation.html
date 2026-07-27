@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Bearers · Admin</title>
+    <title>Designations · Admin</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Bootstrap 5 -->
@@ -130,7 +130,7 @@
             margin: 0;
         }
         .content-header h1 i {
-            color: var(--primary);
+            color: var(--success);
             font-size: 1.4rem;
         }
         .content-header .header-stats {
@@ -140,12 +140,12 @@
             flex-wrap: wrap;
         }
         .content-header .header-stats .stat-badge {
-            background: var(--primary-light);
+            background: var(--success-light);
             padding: 0.3rem 1rem;
             border-radius: var(--radius-pill);
             font-size: 0.75rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--success);
             display: flex;
             align-items: center;
             gap: 6px;
@@ -178,115 +178,6 @@
         }
         .btn-primary-custom i {
             font-size: 0.85rem;
-        }
-
-        /* ===== FILTER SECTION ===== */
-        .filter-section {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .filter-wrapper .filter-form {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-end;
-            gap: 16px;
-        }
-
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-end;
-            gap: 16px;
-            width: 100%;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .filter-group label i {
-            margin-right: 6px;
-            color: var(--primary);
-        }
-
-        .filter-select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1.5px solid var(--border-color);
-            border-radius: var(--radius-md);
-            font-size: 0.85rem;
-            background: white;
-            color: var(--text-main);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 36px;
-        }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
-        }
-
-        .filter-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-actions .btn-filter {
-            padding: 10px 18px;
-            font-size: 0.8rem;
-            border-radius: var(--radius-pill);
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-
-        .filter-actions .btn-filter-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .filter-actions .btn-filter-primary:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        .filter-actions .btn-filter-secondary {
-            background: #f1f5f9;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-        }
-
-        .filter-actions .btn-filter-secondary:hover {
-            background: #e2e8f0;
         }
 
         /* Card */
@@ -342,113 +233,35 @@
             border: none;
         }
 
-        /* Image */
-        .bearer-image-wrapper {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f1f5f9;
-            transition: all 0.3s ease;
-        }
-
-        .bearer-image-wrapper:hover {
-            border-color: var(--primary);
-            transform: scale(1.08);
-        }
-
-        .bearer-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .bearer-image-wrapper .no-image {
-            font-size: 1.5rem;
-            color: #94a3b8;
-        }
-
         /* Designation Badge */
         .designation-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
             border-radius: var(--radius-pill);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 600;
             background: var(--success-light);
             color: var(--success);
-            border: 1px solid #a5d6a7;
         }
-
         .designation-badge i {
-            font-size: 0.65rem;
+            font-size: 0.9rem;
         }
 
-        /* Spiritual Category Badges */
-        .spiritual-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .spiritual-badge {
+        /* Office Bearers Count */
+        .bearer-count {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 0.2rem 0.7rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.65rem;
-            font-weight: 600;
-            background: var(--primary-light);
-            color: var(--primary);
-            max-width: 150px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .spiritual-badge i {
-            font-size: 0.6rem;
-        }
-        .spiritual-badge.more {
+            font-size: 0.7rem;
+            color: var(--text-muted);
             background: #f1f5f9;
-            color: var(--text-muted);
+            padding: 0.15rem 0.7rem;
+            border-radius: var(--radius-pill);
         }
-
-        /* Contact Info */
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .contact-info .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        .contact-info .contact-item i {
-            width: 14px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .contact-info .contact-item a {
-            color: var(--text-main);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .contact-info .contact-item a:hover {
-            color: var(--primary);
-        }
-        .contact-info .contact-item .no-data {
-            color: #cbd5e1;
-            font-style: italic;
-            font-size: 0.7rem;
+        .bearer-count i {
+            font-size: 0.6rem;
         }
 
         /* Action Buttons */
@@ -590,7 +403,7 @@
             color: var(--text-main);
             text-align: center;
         }
-        .modal-body .bearer-name-display {
+        .modal-body .designation-name-display {
             font-weight: 700;
             color: var(--danger);
             background: var(--danger-light);
@@ -679,22 +492,6 @@
                 font-size: 0.65rem;
                 padding: 0.2rem 0.7rem;
             }
-            
-            .filter-section {
-                padding: 1rem;
-            }
-            .filter-group {
-                min-width: 100%;
-            }
-            .filter-actions {
-                width: 100%;
-                justify-content: stretch;
-            }
-            .filter-actions .btn-filter {
-                flex: 1;
-                justify-content: center;
-            }
-            
             .table tbody td {
                 padding: 0.6rem 0.7rem;
             }
@@ -714,14 +511,9 @@
                 text-align: center;
                 padding: 0.6rem 0.8rem;
             }
-            .bearer-image-wrapper {
-                width: 40px;
-                height: 40px;
-            }
-            .spiritual-badge {
-                font-size: 0.6rem;
-                padding: 0.15rem 0.6rem;
-                max-width: 120px;
+            .designation-badge {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.8rem;
             }
             .modal-body .delete-icon-wrapper {
                 width: 55px;
@@ -746,24 +538,9 @@
                 padding: 0.5rem 0.6rem;
                 font-size: 0.7rem;
             }
-            .spiritual-badge {
-                font-size: 0.55rem;
-                padding: 0.1rem 0.5rem;
-                max-width: 80px;
-            }
             .designation-badge {
-                font-size: 0.6rem;
-                padding: 3px 10px;
-            }
-            .contact-info .contact-item {
                 font-size: 0.65rem;
-            }
-            .bearer-image-wrapper {
-                width: 35px;
-                height: 35px;
-            }
-            .bearer-image-wrapper .no-image {
-                font-size: 1rem;
+                padding: 0.2rem 0.6rem;
             }
             .modal-footer .btn {
                 font-size: 0.75rem;
@@ -776,145 +553,94 @@
 
 <div class="content-wrapper">
 
-    <!-- ===== PAGE HEADER ===== -->
     <section class="content-header">
         <div class="header-left">
             <h1>
-                <i class="fas fa-user-tie"></i>
-                Office Bearers
+                <i class="fas fa-briefcase"></i>
+                Designations
             </h1>
             <div class="breadcrumb-wrap">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="{% url 'admin_dashboard' %}">
-                            <i class="fas fa-home"></i> Home
+                            <i class="fas fa-home"></i>
+                            Home
                         </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <i class="fas fa-user-tie"></i> Office Bearers
+                        <i class="fas fa-briefcase"></i>
+                        Designations
                     </li>
                 </ol>
             </div>
         </div>
+
         <div class="header-stats">
             <span class="stat-badge">
-                <i class="fas fa-users"></i>
-                {{ officebearers|length }}
+                <i class="fas fa-tag"></i>
+                {{ designations|length }}
             </span>
-            <a href="{% url 'add_officebearer' %}" class="btn-primary-custom">
-                <i class="fas fa-plus-circle"></i> Add Office Bearer
+            <a href="{% url 'add_designation' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add Designation
             </a>
         </div>
     </section>
 
-    <!-- ===== FILTER SECTION (NEW) ===== -->
-  
-
-    <!-- ===== TABLE SECTION ===== -->
     <section class="content">
         <div class="card">
             <div class="card-body">
-                {% if officebearers %}
+                {% if designations %}
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Designation</th>
-                            <th>Spiritual Categories</th>
-                            <th>Contact</th>
-                            <th>District</th>
+                            <th>#</th>
+                            <th>Designation Name</th>
+                            <th>Office Bearers</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for bearer in officebearers %}
+                        {% for designation in designations %}
                         <tr>
                             <td>
-                                <div class="bearer-image-wrapper">
-                                    {% if bearer.image and bearer.image.url %}
-                                        <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}" 
-                                             onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-user no-image\'></i>';">
-                                    {% else %}
-                                        <i class="fas fa-user no-image"></i>
-                                    {% endif %}
-                                </div>
+                                <span class="fw-bold text-muted">{{ forloop.counter }}</span>
                             </td>
                             <td>
-                                <div class="fw-bold">{{ bearer.name }}</div>
+                                <span class="designation-badge">
+                                    <i class="fas fa-briefcase"></i>
+                                    {{ designation.name }}
+                                </span>
                             </td>
-                            <!-- ✅ UPDATED: Designation with proper display -->
                             <td>
-                                {% if bearer.designation %}
-                                    <span class="designation-badge">
-                                        <i class="fas fa-briefcase"></i>
-                                        {{ bearer.designation.name }}
+                                <span class="bearer-count">
+                                    <i class="fas fa-user-tie"></i>
+                                    {{ designation.officebearer_set.count }} office bearer{{ designation.officebearer_set.count|pluralize }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if designation.officebearer_set.count > 0 %}
+                                    <span class="badge bg-success bg-opacity-10 text-success" style="font-weight: 600; padding: 0.3rem 0.8rem; border-radius: var(--radius-pill);">
+                                        <i class="fas fa-check-circle"></i> Active
                                     </span>
                                 {% else %}
-                                    <span class="text-muted" style="font-size: 0.75rem;">
-                                        <i class="fas fa-minus-circle"></i> No Designation
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary" style="font-weight: 600; padding: 0.3rem 0.8rem; border-radius: var(--radius-pill);">
+                                        <i class="fas fa-clock"></i> No Bearers
                                     </span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div class="spiritual-badges">
-                                    {% with categories=bearer.spiritual_categories.all %}
-                                        {% if categories %}
-                                            {% for category in categories|slice:":3" %}
-                                                <span class="spiritual-badge" title="{{ category.category_title }}">
-                                                    <i class="fas fa-church"></i>
-                                                    {{ category.category_title|truncatechars:20 }}
-                                                </span>
-                                            {% endfor %}
-                                            {% if categories|length > 3 %}
-                                                <span class="spiritual-badge more" title="And {{ categories|length|add:"-3" }} more">
-                                                    +{{ categories|length|add:"-3" }}
-                                                </span>
-                                            {% endif %}
-                                        {% else %}
-                                            <span class="text-muted" style="font-size: 0.7rem;">
-                                                <i class="fas fa-minus-circle"></i> Not assigned
-                                            </span>
-                                        {% endif %}
-                                    {% endwith %}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="contact-info">
-                                    <div class="contact-item">
-                                        <i class="fas fa-phone"></i>
-                                        <a href="tel:{{ bearer.phone }}">{{ bearer.phone }}</a>
-                                    </div>
-                                    {% if bearer.email %}
-                                    <div class="contact-item">
-                                        <i class="fas fa-envelope"></i>
-                                        <a href="mailto:{{ bearer.email }}">{{ bearer.email }}</a>
-                                    </div>
-                                    {% else %}
-                                    <div class="contact-item">
-                                        <i class="fas fa-envelope"></i>
-                                        <span class="no-data">No email</span>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </td>
-                            <td>
-                                {% if bearer.district %}
-                                    {{ bearer.district }}
-                                {% else %}
-                                    <span class="no-data">-</span>
                                 {% endif %}
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{% url 'edit_officebearer' bearer.id %}" class="action-btn edit">
+                                    <a href="{% url 'edit_designation' designation.id %}" class="action-btn edit">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
                                     <a href="#" class="action-btn delete" 
                                        data-bs-toggle="modal" 
                                        data-bs-target="#deleteModal"
-                                       data-bearer-id="{{ bearer.id }}"
-                                       data-bearer-name="{{ bearer.name }}">
+                                       data-designation-id="{{ designation.id }}"
+                                       data-designation-name="{{ designation.name }}"
+                                       data-bearer-count="{{ designation.officebearer_set.count }}">
                                         <i class="fas fa-trash"></i> Delete
                                     </a>
                                 </div>
@@ -927,33 +653,23 @@
                 <div class="table-footer">
                     <span class="info-text">
                         <i class="fas fa-info-circle"></i>
-                        Showing {{ officebearers|length }} office bearer(s)
+                        Showing {{ designations|length }} designation(s)
                     </span>
-                    {% if selected_designation_id %}
                     <span class="info-text">
-                        <i class="fas fa-briefcase"></i>
-                        Filtered by: <strong>{{ selected_designation_name|default:"Selected" }}</strong>
-                    </span>
-                    {% endif %}
-                    <span class="info-text">
-                        <i class="fas fa-church"></i>
-                        Linked to {{ total_categories|default:0 }} spiritual categories
+                        <i class="fas fa-user-tie"></i>
+                        Across {{ total_bearers|default:0 }} office bearer(s)
                     </span>
                 </div>
                 {% else %}
                 <div class="empty-state">
-                    <i class="fas fa-user-tie"></i>
-                    <h5>No Office Bearers Found</h5>
+                    <i class="fas fa-briefcase"></i>
+                    <h5>No Designations Found</h5>
                     <p>
-                        {% if selected_designation_id %}
-                            No office bearers found with the selected designation.
-                            <a href="{% url 'officebearer' %}" style="color: var(--primary);">Clear filter</a> to see all.
-                        {% else %}
-                            Start by adding office bearers. Each office bearer can be assigned to multiple spiritual categories.
-                        {% endif %}
+                        Start by adding designations. Each designation can be assigned to multiple office bearers.
                     </p>
-                    <a href="{% url 'add_officebearer' %}" class="btn-primary-custom">
-                        <i class="fas fa-plus"></i> Add Office Bearer
+                    <a href="{% url 'add_designation' %}" class="btn-primary-custom">
+                        <i class="fas fa-plus"></i>
+                        Add Designation
                     </a>
                 </div>
                 {% endif %}
@@ -978,15 +694,21 @@
             </div>
             <div class="modal-body text-center">
                 <div class="delete-icon-wrapper">
-                    <i class="fas fa-user-tie"></i>
+                    <i class="fas fa-briefcase"></i>
                 </div>
                 <h5>Are you sure you want to delete</h5>
-                <h5 class="bearer-name-display" id="modalBearerName">Office Bearer Name</h5>
-                <p class="mt-3">This action cannot be undone. All data associated with this office bearer will be permanently removed.</p>
+                <h5 class="designation-name-display" id="modalDesignationName">Designation Name</h5>
+                <p class="mt-3">This action cannot be undone. All data associated with this designation will be permanently removed.</p>
                 <p class="text-danger mt-2" style="font-size: 0.85rem;">
                     <i class="fas fa-exclamation-circle"></i>
-                    Note: This will also remove this office bearer from all spiritual categories.
+                    Note: This will also remove this designation from all office bearers.
                 </p>
+                <div id="bearerWarning" class="mt-2" style="display: none;">
+                    <span class="badge bg-danger" style="padding: 0.4rem 1rem; font-size: 0.75rem;">
+                        <i class="fas fa-users"></i>
+                        This designation has <span id="bearerCount">0</span> office bearer(s) assigned
+                    </span>
+                </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -995,7 +717,7 @@
                 <form id="deleteForm" method="POST" action="">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash-alt"></i> Yes, Delete Office Bearer
+                        <i class="fas fa-trash-alt"></i> Yes, Delete Designation
                     </button>
                 </form>
             </div>
@@ -1011,16 +733,34 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const deleteModal = document.getElementById('deleteModal');
-    const modalBearerName = document.getElementById('modalBearerName');
+    const modalDesignationName = document.getElementById('modalDesignationName');
     const deleteForm = document.getElementById('deleteForm');
+    const bearerWarning = document.getElementById('bearerWarning');
+    const bearerCount = document.getElementById('bearerCount');
     
+    // When the modal is about to be shown
     deleteModal.addEventListener('show.bs.modal', function(event) {
+        // Button that triggered the modal
         const button = event.relatedTarget;
-        const bearerId = button.getAttribute('data-bearer-id');
-        const bearerName = button.getAttribute('data-bearer-name');
         
-        modalBearerName.textContent = bearerName;
-        deleteForm.action = "{% url 'delete_officebearer' 0 %}".replace('0', bearerId);
+        // Extract data attributes
+        const designationId = button.getAttribute('data-designation-id');
+        const designationName = button.getAttribute('data-designation-name');
+        const bearerCountValue = button.getAttribute('data-bearer-count');
+        
+        // Update the modal content
+        modalDesignationName.textContent = designationName;
+        
+        // Show warning if there are bearers assigned
+        if (parseInt(bearerCountValue) > 0) {
+            bearerWarning.style.display = 'block';
+            bearerCount.textContent = bearerCountValue;
+        } else {
+            bearerWarning.style.display = 'none';
+        }
+        
+        // Update the form action URL
+        deleteForm.action = "{% url 'delete_designation' 0 %}".replace('0', designationId);
     });
 });
 </script>
