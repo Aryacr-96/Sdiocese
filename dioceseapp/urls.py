@@ -126,4 +126,24 @@ urlpatterns = [
     path('admin/contact/<int:id>/', views.contactview, name='contactview'),
     path('admin/contact/delete/<int:id>/', views.contactdelete, name='contactdelete'),
 
+
+    # SPIRITUAL ADMIN
+
+    # SPIRITUAL ADMIN
+    path('admin/spiritual/', views.spiritual_list, name='spiritual'),
+    path('admin/spiritual/add/', views.add_spiritual, name='add_spiritual'),
+    path('admin/spiritual/edit/<int:id>/', views.edit_spiritual, name='edit_spiritual'),
+    path('admin/spiritual/delete/<int:id>/', views.delete_spiritual, name='delete_spiritual'),
+    path('admin/spiritual/detail/<int:id>/', views.spiritual_detail, name='spiritual_detail'),
+    
+    # OFFICE BEARER ADMIN
+    path('admin/officebearer/', views.officebearer_list, name='officebearer'),
+    path('admin/officebearer/add/', views.add_officebearer, name='add_officebearer'),
+    path('admin/officebearer/edit/<int:id>/', views.edit_officebearer, name='edit_officebearer'),
+    path('admin/officebearer/delete/<int:id>/', views.delete_officebearer, name='delete_officebearer'),
+    path('admin/officebearer/detail/<int:id>/', views.officebearer_detail, name='officebearer_detail'),
+
+    # API ENDPOINT FOR SEARCH (Optional)
+    # path('api/officebearers/search/', views.search_officebearers, name='search_officebearers'),
+
 ]

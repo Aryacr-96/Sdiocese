@@ -1,0 +1,83 @@
+{% load static %}
+
+{% include 'admin/adminheader.html' %}
+
+
+<div class="content-wrapper">
+
+
+<section class="content-header text-center">
+
+<h1>
+Delete Spiritual Category
+</h1>
+
+</section>
+
+
+
+<section class="content">
+
+
+<div class="card">
+
+
+<div class="card-body text-center">
+
+
+<h4>
+
+Are you sure you want to delete
+
+<br>
+
+<strong>
+{{ spiritual.name }}
+</strong>
+
+?
+
+</h4>
+
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<button class="btn btn-danger">
+
+<i class="fas fa-trash"></i>
+
+Yes Delete
+
+</button>
+
+
+
+<a href="{% url 'admin_spirituals' %}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+{% include 'admin/adminfooter.html' %}

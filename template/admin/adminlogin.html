@@ -2,96 +2,447 @@
 {% load static %}
 <html lang="en">
 <head>
-	<title>Login </title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{% static 'style/images/maryland/favicon.webp' %}"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/bootstrap/css/bootstrap.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/fonts/iconic/css/material-design-iconic-font.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/animate/animate.css' %}">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/css-hamburgers/hamburgers.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/animsition/css/animsition.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/select2/select2.min.css' %}">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/vendor/daterangepicker/daterangepicker.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'style/login/css/main.css' %}">
-<!--===============================================================================================-->
+    <title>Admin Login · Diocese</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'style/images/maryland/favicon.webp' %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* ========================================
+           LOGIN PAGE STYLES
+        ======================================== */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* ===== LOGIN CARD ===== */
+        .login-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 48px 40px 40px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+        }
+
+        /* ===== LOGO ===== */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo img {
+            max-height: 60px;
+            margin-bottom: 12px;
+        }
+
+        .login-logo h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+
+        .login-logo p {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-group label i {
+            color: #6366f1;
+            margin-right: 6px;
+            width: 16px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .input-wrapper .form-control {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .input-wrapper .form-control:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+        }
+
+        .input-wrapper .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .input-wrapper .form-control.error {
+            border-color: #ef4444;
+        }
+
+        .input-wrapper .form-control.error:focus {
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+        }
+
+        /* Toggle password visibility */
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #6366f1;
+        }
+
+        /* ===== REMEMBER ME ===== */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #6366f1;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .forgot-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6366f1;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-link:hover {
+            color: #4f46e5;
+            text-decoration: underline;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login i {
+            font-size: 18px;
+        }
+
+        /* ===== MESSAGES / ALERTS ===== */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert-danger i {
+            font-size: 18px;
+            color: #dc2626;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #86efac;
+        }
+
+        .alert-success i {
+            font-size: 18px;
+            color: #16a34a;
+        }
+
+        /* ===== FOOTER ===== */
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .login-footer span {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px 28px;
+            }
+
+            .login-logo h1 {
+                font-size: 20px;
+            }
+
+            .login-logo img {
+                max-height: 50px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-login {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .input-wrapper .form-control {
+                padding: 12px 14px 12px 40px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .login-card {
+                padding: 24px 16px 20px;
+            }
+
+            .login-logo h1 {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 bg-black">
-				<form action="{% url 'admin' %}" method="post" class="contact_form" enctype="multipart/form-data">
-					{% csrf_token %}
 
-					<span class="login100-form-title p-b-26">
-						Admin Login
-					</span>
-					
-					{% if messages %}
-					<div class="alert alert-danger" role="alert">
-						{% for message in messages %}
-							{{ message }}
-						{% endfor %}
-					</div>
-				{% endif %}
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input style="height: 30px;" type="text" id="username" name="username" class="contact_input" placeholder="Username" required="required">
-						
-					</div>
+<div class="login-container">
+    <div class="login-card">
+        
+        <!-- Logo -->
+        <div class="login-logo">
+            <img src="{% static 'images/manayath logo_white.png' %}" alt="Logo">
+            <h1>Admin Login</h1>
+            <p>Sign in to manage your diocese</p>
+        </div>
 
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
-						<input style="height: 30px;" type="password" id="password" name="password" class="contact_input" placeholder="Password" required="required">
-					</div>
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}danger{% endif %}">
+                    <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" type="submit">
-								Login
-							</button>
-						</div>
-					</div>
+        <!-- Login Form -->
+        <form method="post" action="{% url 'admin' %}">
+            {% csrf_token %}
 
-					
-				</form>
-			</div>
-		</div>
-	</div>
-	
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user"></i> Username
+                </label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           class="form-control" 
+                           placeholder="Enter your username" 
+                           required 
+                           autofocus>
+                </div>
+            </div>
 
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="{% static 'style/login/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/login/vendor/animsition/js/animsition.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/login/vendor/bootstrap/js/popper.jsv' %}"></script>
-	<script src="{% static 'style/login/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/style/login/vendor/select2/select2.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'style/login/login/vendor/daterangepicker/daterangepicker.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/login/vendor/countdowntime/countdowntime.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'style/login/js/main.js' %}"></script>
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           class="form-control" 
+                           placeholder="Enter your password" 
+                           required>
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+          
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </button>
+
+        </form>
+
+        
+    </div>
+</div>
+
+<!-- ========================================
+   SCRIPTS
+======================================== -->
+<script>
+    // ===== TOGGLE PASSWORD VISIBILITY =====
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.className = 'fas fa-eye';
+        }
+    }
+
+    // ===== AUTO-FOCUS ON USERNAME FIELD =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.getElementById('username');
+        if (usernameInput) {
+            usernameInput.focus();
+        }
+    });
+
+    // ===== REMOVE ALERT ON CLICK =====
+    document.querySelectorAll('.alert').forEach(function(alert) {
+        alert.addEventListener('click', function() {
+            this.style.display = 'none';
+        });
+    });
+</script>
 
 </body>
 </html>

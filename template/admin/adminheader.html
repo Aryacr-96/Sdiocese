@@ -111,6 +111,46 @@
     .sidebar .nav-sidebar .nav-item .active i {
       color: #ffffff !important;
     }
+
+    /* Logout link styling */
+    .sidebar .nav-sidebar .nav-link.logout-link {
+      color: #fca5a5 !important;
+    }
+
+    .sidebar .nav-sidebar .nav-link.logout-link:hover {
+      color: #f87171 !important;
+      background-color: rgba(248, 113, 113, 0.1) !important;
+    }
+
+    .sidebar .nav-sidebar .nav-link.logout-link i {
+      color: #f87171 !important;
+    }
+
+    .sidebar .nav-sidebar .nav-link.logout-link:hover i {
+      color: #f87171 !important;
+    }
+
+    /* Logout button in navbar */
+    .navbar .nav-link.logout-nav {
+      color: #ef4444 !important;
+      font-weight: 600 !important;
+    }
+
+    .navbar .nav-link.logout-nav:hover {
+      color: #dc2626 !important;
+      background: #fef2f2 !important;
+      border-radius: 8px;
+    }
+
+    .navbar .nav-link.logout-nav i {
+      color: #ef4444 !important;
+    }
+
+    /* Divider in sidebar */
+    .sidebar-divider {
+      margin: 12px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
   </style>
 </head>
 
@@ -139,6 +179,13 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
+      <!-- Logout Button in Navbar -->
+      <li class="nav-item">
+        <a href="{% url 'logoutadmin' %}" class="nav-link logout-nav">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="d-none d-sm-inline-block">Logout</span>
+        </a>
+      </li>
     </ul>
   </nav>
 
@@ -164,7 +211,7 @@
             </a>
           </li>
 
-          <!-- PEIEST -->
+          <!-- PRIEST -->
           <li class="nav-item">
             <a href="{% url 'admin_priests' %}" class="nav-link">
               <i class="nav-icon fas fa-user-tie"></i>
@@ -180,14 +227,40 @@
             </a>
           </li>
 
+          <!-- OFFICE BEARER -->
+          <li class="nav-item">
+            <a href="{% url 'officebearer' %}" class="nav-link">
+              <i class="fas fa-user-tie"></i>
+              <p>Office Bearers</p>
+            </a>
+          </li>
+
+          <!-- SPIRITUAL -->
+          <li class="nav-item">
+            <a href="{% url 'spiritual' %}" class="nav-link">
+              <i class="fas fa-cross"></i>
+              <p>Spiritual</p>
+            </a>
+          </li>
+
           <!-- CONTACT -->
           <li class="nav-item">
             <a href="{% url 'contactpage' %}" class="nav-link">
-             <i class="fas fa-address-book"></i>
+              <i class="fas fa-address-book"></i>
               <p>Contact</p>
             </a>
           </li>
 
+          <!-- Divider -->
+          <li class="sidebar-divider"></li>
+
+          <!-- LOGOUT -->
+          <li class="nav-item">
+            <a href="{% url 'logoutadmin' %}" class="nav-link logout-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
+            </a>
+          </li>
 
         </ul>
       </nav>

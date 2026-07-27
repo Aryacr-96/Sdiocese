@@ -5,8 +5,10 @@ from django.contrib import messages
 # ADD THESE IMPORTS:
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import never_cache
-from .forms import adminform 
-
+from .forms import OfficebearerForm, SpiritualForm, adminform 
+from .forms import (SpiritualForm,
+    OfficebearerFormSet
+)
 
 def index(request):
     return render(request,'index.html')
@@ -232,7 +234,7 @@ def contact(request):
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.views.decorators.cache import never_cache
-from .models import Priest,Parish
+from .models import Officebearer, Priest,Parish, Spiritual
 from .forms import PriestForm,ParishForm
 
 
@@ -582,31 +584,23 @@ from .forms import ContactForm
 
 # Contact List
 def contactpage(request):
-
     if request.method == "POST":
         form = ContactForm(request.POST)
-
         if form.is_valid():
             form.save()
-
             messages.success(
                 request,
                 "Your prayer request has been submitted successfully."
             )
-
             return redirect('contactpage')
 
     else:
         form = ContactForm()
-
-
     contacts = Contact.objects.all().order_by('-created_at')
-
     context = {
         'form': form,
         'contacts': contacts
     }
-
     return render(request, 'admin/contact/contact.html', context)
 
 
@@ -622,12 +616,311 @@ def contactview(request, id):
 # Contact Delete
 def contactdelete(request, id):
     contact = get_object_or_404(Contact, id=id)
-
     if request.method == "POST":
         contact.delete()
         return redirect('contact')
-
     context = {
         'contact': contact
     }
     return render(request, 'admin/contact/contactdelete.html', context)
+
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.db import transaction
+from django.http import JsonResponse
+from .models import Spiritual, Officebearer, SpiritualOfficeBearer
+from .forms import (
+    SpiritualForm, 
+    OfficebearerForm, 
+    NewOfficeBearerForm,
+    SpiritualOfficeBearerFormSet
+)
+
+# ============================================
+# SPIRITUAL VIEWS
+# ============================================
+
+def spiritual_list(request):
+    """Display list of all spiritual categories"""
+    spirituals = Spiritual.objects.all().order_by('-created_at')
+    total_bearers = SpiritualOfficeBearer.objects.count()
+    
+    return render(request, 'admin/spiritual/spiritual.html', {
+        'spirituals': spirituals,
+        'total_bearers': total_bearers
+    })
+
+def spiritual_detail(request, id):
+    """Display details of a specific spiritual category"""
+    spiritual = get_object_or_404(Spiritual, id=id)
+    officebearers = spiritual.officebearers.all()
+    
+    return render(request, 'admin/spiritual/spiritual_detail.html', {
+        'spiritual': spiritual,
+        'officebearers': officebearers
+    })
+
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.db import transaction
+from .models import Spiritual, Officebearer, SpiritualOfficeBearer
+from .forms import SpiritualForm
+
+def add_spiritual(request):
+    if request.method == "POST":
+        form = SpiritualForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            spiritual = form.save()
+            
+            # Handle selected existing office bearers
+            selected_bearers = request.POST.getlist('selected_bearers')
+            for ob_id in selected_bearers:
+                if ob_id:
+                    try:
+                        officebearer = Officebearer.objects.get(id=ob_id)
+                        SpiritualOfficeBearer.objects.create(
+                            spiritual=spiritual,
+                            officebearer=officebearer
+                        )
+                    except Officebearer.DoesNotExist:
+                        pass
+            
+            # Handle new office bearers with images
+            new_names = request.POST.getlist('new_officebearer_name[]')
+            new_designations = request.POST.getlist('new_officebearer_designation[]')
+            new_phones = request.POST.getlist('new_officebearer_phone[]')
+            new_emails = request.POST.getlist('new_officebearer_email[]')
+            new_districts = request.POST.getlist('new_officebearer_district[]')
+            
+            # IMPORTANT: Get the image files - they come as a list of files
+            new_images = request.FILES.getlist('new_officebearer_image[]')
+            
+            for i in range(len(new_names)):
+                name = new_names[i].strip()
+                if name:  # Only create if name is provided
+                    # Create office bearer
+                    officebearer = Officebearer(
+                        name=name,
+                        designation=new_designations[i].strip() if i < len(new_designations) else '',
+                        phone=new_phones[i].strip() if i < len(new_phones) else '',
+                        email=new_emails[i].strip() if i < len(new_emails) else '',
+                        district=new_districts[i].strip() if i < len(new_districts) else '',
+                    )
+                    
+                    # Handle image for this office bearer
+                    # The images are in the same order as the names
+                    if i < len(new_images) and new_images[i]:
+                        officebearer.image = new_images[i]
+                    
+                    # Save the office bearer with image
+                    officebearer.save()
+                    
+                    # Create the association
+                    SpiritualOfficeBearer.objects.create(
+                        spiritual=spiritual,
+                        officebearer=officebearer
+                    )
+            
+            messages.success(request, "Spiritual category added successfully!")
+            return redirect('spiritual')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = SpiritualForm()
+    
+    existing_bearers = Officebearer.objects.all().order_by('name')
+    selected_bearers = []
+    
+    return render(request, 'admin/spiritual/addspiritual.html', {
+        'form': form,
+        'existing_bearers': existing_bearers,
+        'selected_bearers': selected_bearers,
+        'editing': False
+    })
+
+def edit_spiritual(request, id):
+    spiritual = get_object_or_404(Spiritual, id=id)
+    
+    if request.method == "POST":
+        form = SpiritualForm(request.POST, request.FILES, instance=spiritual)
+        
+        if form.is_valid():
+            spiritual = form.save()
+            
+            # Clear existing associations
+            SpiritualOfficeBearer.objects.filter(spiritual=spiritual).delete()
+            
+            # Handle selected existing office bearers
+            selected_bearers = request.POST.getlist('selected_bearers')
+            for ob_id in selected_bearers:
+                if ob_id:
+                    try:
+                        officebearer = Officebearer.objects.get(id=ob_id)
+                        SpiritualOfficeBearer.objects.create(
+                            spiritual=spiritual,
+                            officebearer=officebearer
+                        )
+                    except Officebearer.DoesNotExist:
+                        pass
+            
+            # Handle new office bearers with images
+            new_names = request.POST.getlist('new_officebearer_name[]')
+            new_designations = request.POST.getlist('new_officebearer_designation[]')
+            new_phones = request.POST.getlist('new_officebearer_phone[]')
+            new_emails = request.POST.getlist('new_officebearer_email[]')
+            new_districts = request.POST.getlist('new_officebearer_district[]')
+            new_images = request.FILES.getlist('new_officebearer_image[]')
+            
+            for i in range(len(new_names)):
+                name = new_names[i].strip()
+                if name:
+                    officebearer = Officebearer(
+                        name=name,
+                        designation=new_designations[i].strip() if i < len(new_designations) else '',
+                        phone=new_phones[i].strip() if i < len(new_phones) else '',
+                        email=new_emails[i].strip() if i < len(new_emails) else '',
+                        district=new_districts[i].strip() if i < len(new_districts) else '',
+                    )
+                    
+                    # Handle image for this office bearer
+                    if i < len(new_images) and new_images[i]:
+                        officebearer.image = new_images[i]
+                    
+                    officebearer.save()
+                    
+                    SpiritualOfficeBearer.objects.create(
+                        spiritual=spiritual,
+                        officebearer=officebearer
+                    )
+            
+            messages.success(request, "Spiritual category updated successfully!")
+            return redirect('spiritual')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = SpiritualForm(instance=spiritual)
+    
+    existing_bearers = Officebearer.objects.all().order_by('name')
+    selected_bearers = spiritual.officebearers.values_list('id', flat=True)
+    
+    return render(request, 'admin/spiritual/addspiritual.html', {
+        'form': form,
+        'existing_bearers': existing_bearers,
+        'selected_bearers': selected_bearers,
+        'editing': True,
+        'spiritual': spiritual
+    })
+
+def delete_spiritual(request, id):
+    """Delete a spiritual category"""
+    spiritual = get_object_or_404(Spiritual, id=id)
+    
+    if request.method == "POST":
+        category_title = spiritual.category_title
+        spiritual.delete()
+        messages.success(request, f"'{category_title}' has been deleted successfully.")
+        return redirect('spiritual')
+    
+    return render(request, 'admin/spiritual/delete_spiritual.html', {
+        'spiritual': spiritual
+    })
+
+
+# ============================================
+# OFFICE BEARER VIEWS
+# ============================================
+
+def officebearer_list(request):
+    """Display list of all office bearers"""
+    officebearers = Officebearer.objects.all().order_by('-created_at')
+    return render(request, 'admin/spiritual/officebearer/officebearer.html', {
+        'officebearers': officebearers
+    })
+
+def add_officebearer(request):
+    """Add a new office bearer"""
+    if request.method == "POST":
+        form = OfficebearerForm(request.POST, request.FILES)
+        if form.is_valid():
+            officebearer = form.save()
+            messages.success(request, f"Office bearer '{officebearer.name}' added successfully!")
+            return redirect('officebearer')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = OfficebearerForm()
+    
+    return render(request, 'admin/spiritual/officebearer/addoffice.html', {
+        'form': form
+    })
+
+def edit_officebearer(request, id):
+    """Edit an existing office bearer"""
+    officebearer = get_object_or_404(Officebearer, id=id)
+    
+    if request.method == "POST":
+        form = OfficebearerForm(request.POST, request.FILES, instance=officebearer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Office bearer '{officebearer.name}' updated successfully!")
+            return redirect('officebearer')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = OfficebearerForm(instance=officebearer)
+    
+    return render(request, 'admin/spiritual/officebearer/editoffice.html', {
+        'form': form,
+        'officebearer': officebearer
+    })
+
+def delete_officebearer(request, id):
+    """Delete an office bearer"""
+    officebearer = get_object_or_404(Officebearer, id=id)
+    
+    if request.method == "POST":
+        name = officebearer.name
+        officebearer.delete()
+        messages.success(request, f"Office bearer '{name}' has been deleted successfully.")
+        return redirect('officebearer')
+    
+    return render(request, 'admin/spiritual/officebearer/deleteoffice.html', {
+        'officebearer': officebearer
+    })
+
+def officebearer_detail(request, id):
+    """Display details of a specific office bearer"""
+    officebearer = get_object_or_404(Officebearer, id=id)
+    spiritual_categories = officebearer.spiritual_categories.all()
+    
+    return render(request, 'admin/spiritual/officebearer/officebearer_detail.html', {
+        'officebearer': officebearer,
+        'spiritual_categories': spiritual_categories
+    })
+
+
+# ============================================
+# API VIEWS (Optional - for AJAX search)
+# ============================================
+
+# def search_officebearers(request):
+#     """API endpoint to search office bearers by name"""
+#     query = request.GET.get('q', '')
+#     if query:
+#         officebearers = Officebearer.objects.filter(
+#             name__icontains=query
+#         )[:10]
+#         data = [{
+#             'id': ob.id,
+#             'name': ob.name,
+#             'designation': ob.designation,
+#             'phone': ob.phone,
+#             'email': ob.email,
+#             'district': ob.district,
+#             'image': ob.image.url if ob.image else None
+#         } for ob in officebearers]
+#         return JsonResponse(data, safe=False)
+#     return JsonResponse([], safe=False)
