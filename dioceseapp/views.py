@@ -5,7 +5,7 @@ from django.contrib import messages
 # ADD THESE IMPORTS:
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import never_cache
-from .forms import OfficebearerForm, SpiritualForm, adminform 
+from .forms import CategoryForm, OfficebearerForm, SpiritualForm, adminform 
 from .forms import (SpiritualForm,
     OfficebearerFormSet
 )
@@ -142,13 +142,35 @@ def sjof(request):
 
 # KARUNYA SPARSAM
 
-
 def karunyam(request):
-    return render(request,'karunyam/karunyam.html')
+    about = Karunyasparsham.objects.filter(content_type='about').first()
+    projects = Karunyasparsham.objects.filter(content_type='project')
+
+    context = {
+        'about': about,
+        'projects': projects,
+    }
+    return render(request, 'karunyam/karunyam.html', context)
+from .models import Karunyasparsham
+
 def projects(request):
-    return render(request,'karunyam/projects.html')
-def projects_detail(request):
-    return render(request,'karunyam/projectsdetail.html')
+    projects = Karunyasparsham.objects.filter(content_type='project')
+
+    return render(request, 'karunyam/projects.html', {
+        'projects': projects,
+    })
+from django.shortcuts import get_object_or_404
+
+def projects_detail(request, slug):
+    project = get_object_or_404(
+        Karunyasparsham,
+        slug=slug,
+        content_type='project'
+    )
+
+    return render(request, 'karunyam/projectsdetail.html', {
+        'project': project,
+    })
 
 
 
@@ -171,31 +193,162 @@ def retreat_detail(request):
 
 # MEDIA
 
+from django.shortcuts import render
+from dioceseapp.models import Publication
 
 def publications(request):
-    return render(request,'media/publications.html')
+    # Get all publications ordered by upload date (newest first)
+    publications = Publication.objects.all().order_by('-uploaded_at')
+    
+    return render(request, 'media/publications.html', {
+        'publications': publications,
+        'total_publications': publications.count(),
+    })
 def images(request):
-    return render(request,'media/images.html')
+    """Public gallery view showing only images"""
+    # Get only image type gallery items
+    items = Gallery.objects.filter(media_type='image').order_by('-created_at')
+    
+    # Pagination - 12 items per page
+    paginator = Paginator(items, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'items': page_obj,
+        'total_items': items.count(),
+    }
+    return render(request, 'media/images.html', context)
+
 def videos(request):
-    return render(request,'media/videos.html')
+    """Public video gallery view showing only videos"""
+    # Get only video type gallery items
+    items = Gallery.objects.filter(media_type='video').order_by('-created_at')
+    
+    # Pagination - 9 items per page
+    paginator = Paginator(items, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'items': page_obj,
+        'total_items': items.count(),
+    }
+    return render(request, 'media/videos.html', context)
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from django.db.models import Q
+from .models import Event
+import calendar as cal_module
+
+
 def calendar(request):
-    return render(request,'media/calendar.html')
+    now = timezone.now()
+    year = request.GET.get('year', now.year)
+    month = request.GET.get('month', now.month)
+    
+    try:
+        year = int(year)
+        month = int(month)
+    except ValueError:
+        year = now.year
+        month = now.month
+    
+    # Get all events for this month
+    events = Event.objects.filter(
+        event_date__year=year,
+        event_date__month=month
+    ).order_by('event_date', 'event_time')
+    
+    # Create events dictionary for JavaScript with full event details
+    events_dict = {}
+    for event in events:
+        date_key = event.event_date.strftime('%Y-%m-%d')
+        event_data = {
+            'title': event.title,
+            'time': event.event_time.strftime('%I:%M %p'),
+            'location': event.location,
+            'id': event.id,
+            'description': event.description[:100] if event.description else '',
+        }
+        if date_key in events_dict:
+            events_dict[date_key].append(event_data)
+        else:
+            events_dict[date_key] = [event_data]
+    
+    # Calendar data
+    cal = cal_module.monthcalendar(year, month)
+    month_name = cal_module.month_name[month]
+    month_names = list(cal_module.month_name)[1:]
+    year_range = range(2000, 2031)
+    
+    context = {
+        'calendar': cal,
+        'month': month,
+        'year': year,
+        'month_name': month_name,
+        'month_names': month_names,
+        'year_range': year_range,
+        'events_dict': events_dict,
+        'events_count': events.count(),
+        'now': now,
+    }
+    return render(request, 'media/calendar.html', context)
+
+# Public: Event detail (using ID)
+
 def events(request):
-    return render(request,'media/events.html')
+    now = timezone.now()
+    events = Event.objects.filter(
+        Q(event_date__gt=now.date()) | 
+        (Q(event_date=now.date()) & Q(event_time__gt=now.time()))
+    ).order_by('event_date', 'event_time')
+    
+    # Get all events for counting
+    total_events = Event.objects.count()
+    upcoming_count = events.count()
+    
+    context = {
+        'events': events,
+        'total_events': total_events,
+        'upcoming_count': upcoming_count,
+        'now': now,
+    }
+    return render(request, 'media/events.html', context)
 
 
 # DOWNLOADS
 
 def kalpana(request):
-    return render(request,'downloads/kalpana.html')
-def kalpanadetail(request):
-    return render(request,'downloads/kalpanadetail.html')
+    """Display all Kalpana entries"""
+    kalpanas = Kalpana.objects.all().order_by('-created_at')
+    return render(request, 'downloads/kalpana.html', {
+        'kalpanas': kalpanas
+    })
+
+def kalpanadetail(request, slug):
+    """Display details of a specific Kalpana"""
+    kalpana = get_object_or_404(Kalpana, slug=slug)
+    files = kalpana.files.all().order_by('-uploaded_at')
+    return render(request, 'downloads/kalpanadetail.html', {
+        'kalpana': kalpana,
+        'files': files
+    })
 def guideline(request):
     return render(request,'downloads/guidelines.html')
 def prayerbook(request):
-    return render(request,'downloads/prayerbooks.html')
-
-
+    """Public view for prayer books"""
+    books = PrayerBook.objects.all().order_by('title')
+    
+    paginator = Paginator(books, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'books': page_obj,
+        'total_books': books.count(),
+    }
+    return render(request, 'downloads/prayerbooks.html', context)
 
 
 # CONTACT
@@ -1083,38 +1236,26 @@ def add_designation(request):
 
 
 def edit_designation(request, id):
-
     designation = get_object_or_404(
         Designation,
         id=id
     )
-
-
     if request.method == "POST":
-
         form = DesignationForm(
             request.POST,
             instance=designation
         )
-
         if form.is_valid():
-
             form.save()
-
             messages.success(
                 request,
                 "Designation updated successfully!"
             )
-
-            return redirect('designation')
-
+        return redirect('designation')
     else:
-
         form = DesignationForm(
             instance=designation
         )
-
-
     return render(
         request,
         'admin/spiritual/designation/editdesignation.html',
@@ -1123,31 +1264,20 @@ def edit_designation(request, id):
             'designation':designation
         }
     )
-
-
-
 def delete_designation(request,id):
 
     designation = get_object_or_404(
         Designation,
         id=id
     )
-
-
     if request.method=="POST":
-
         name = designation.name
-
         designation.delete()
-
         messages.success(
             request,
             f"Designation '{name}' deleted successfully!"
         )
-
         return redirect('designation')
-
-
     return render(
         request,
         'admin/designation/deletedesignation.html',
@@ -1155,9 +1285,6 @@ def delete_designation(request,id):
             'designation':designation
         }
     )
-
-
-
 # views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -1256,14 +1383,1050 @@ def delete_coordinator(request, id):
         'coordinator': coordinator
     })
 
+#KARUNYA SPARSHAM
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.http import JsonResponse
+from django.utils.text import slugify  # <-- ADD THIS IMPORT
+from django.contrib.auth.decorators import login_required
+from .models import Karunyasparsham, Category
+from .forms import KarunyasparshamForm
 
-# def coordinator_detail(request, id):
-#     """Display details of a specific coordinator"""
-#     coordinator = get_object_or_404(
-#         Coordinator.objects.select_related('spiritual', 'designation'), 
-#         id=id
-#     )
+@login_required
+def karunyasparsham_list(request):
+    """List all karunyasparsham entries"""
+    about_entries = Karunyasparsham.objects.filter(content_type='about')
+    project_entries = Karunyasparsham.objects.filter(content_type='project')
     
-#     return render(request, 'admin/spiritual/coordinators/coord.html', {
-#         'coordinator': coordinator,
-#     })
+    context = {
+        'about_entries': about_entries,
+        'project_entries': project_entries,
+        'all_entries': Karunyasparsham.objects.all(),
+        'has_about': about_entries.exists(),
+        'total_count': Karunyasparsham.objects.count(),
+        'about_count': about_entries.count(),
+        'project_count': project_entries.count(),
+    }
+    return render(request, 'admin/karunyam/karunyam.html', context)
+
+@login_required
+def karunyasparsham_create(request):
+    """Create new karunyasparsham entry"""
+    about_exists = Karunyasparsham.objects.filter(content_type='about').exists()
+    
+    if request.method == 'POST':
+        form = KarunyasparshamForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            content_type = form.cleaned_data.get('content_type')
+            
+            # Check if trying to create about when it already exists
+            if content_type == 'about' and about_exists:
+                messages.error(request, 'About section already exists! You can only have one About section. Please edit the existing one.')
+                return render(request, 'admin/karunyam/addkarunyam.html', {
+                    'form': form,
+                    'about_exists': about_exists,
+                    'is_edit': False
+                })
+            
+            # Save the instance
+            instance = form.save()
+            
+            messages.success(request, f'{content_type.capitalize()} entry created successfully!')
+            return redirect('karunyasparsham_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = KarunyasparshamForm()
+    
+    return render(request, 'admin/karunyam/addkarunyam.html', {
+        'form': form,
+        'about_exists': about_exists,
+        'is_edit': False
+    })
+
+@login_required
+def karunyasparsham_edit(request, pk):
+    """Edit existing karunyasparsham entry"""
+    entry = get_object_or_404(Karunyasparsham, pk=pk)
+    about_exists = Karunyasparsham.objects.filter(content_type='about').exclude(pk=pk).exists()
+    
+    if request.method == 'POST':
+        form = KarunyasparshamForm(request.POST, request.FILES, instance=entry)
+        
+        if form.is_valid():
+            content_type = form.cleaned_data.get('content_type')
+            
+            # Check if trying to change project to about when about already exists
+            if content_type == 'about' and about_exists and entry.content_type != 'about':
+                messages.error(request, 'About section already exists! You cannot create another one.')
+                return render(request, 'admin/karunyam/addkarunyam.html', {
+                    'form': form,
+                    'entry': entry,
+                    'about_exists': about_exists,
+                    'is_edit': True
+                })
+            
+            # Save the instance
+            instance = form.save()
+            
+            messages.success(request, f'{content_type.capitalize()} entry updated successfully!')
+            return redirect('karunyasparsham_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = KarunyasparshamForm(instance=entry)
+    
+    return render(request, 'admin/karunyam/addkarunyam.html', {
+        'form': form,
+        'entry': entry,
+        'about_exists': about_exists,
+        'is_edit': True
+    })
+
+@login_required
+def karunyasparsham_delete(request, pk):
+    entry = get_object_or_404(Karunyasparsham, pk=pk)
+
+    if request.method == "POST":
+        entry.delete()
+        messages.success(request, "Entry deleted successfully!")
+        return redirect("karunyasparsham_list")
+
+    return redirect("karunyasparsham_list")
+def view_karunyam(request, pk):
+    """View karunyam entry detail by primary key"""
+    entry = get_object_or_404(Karunyasparsham, pk=pk)
+    return render(request, 'admin/karunyam/viewkarunyam.html', {'entry': entry})
+@login_required
+def karunyasparsham_detail(request, slug):
+    """View detail by slug"""
+    entry = get_object_or_404(Karunyasparsham, slug=slug)
+    return render(request, 'admin/karunyam/viewkarunyam.html', {'entry': entry})
+
+@login_required
+def karunyasparsham_detail_pk(request, pk):
+    """View detail by pk (fallback)"""
+    entry = get_object_or_404(Karunyasparsham, pk=pk)
+    return render(request, 'admin/karunyam/viewkarunyam.html', {'entry': entry})
+
+@login_required
+def get_existing_about(request):
+    """Check if about section exists"""
+    about_exists = Karunyasparsham.objects.filter(content_type='about').exists()
+    about_entries = Karunyasparsham.objects.filter(content_type='about').values('id', 'about_title')
+    
+    return JsonResponse({
+        'about_exists': about_exists,
+        'about_entries': list(about_entries)
+    })
+
+@login_required
+def get_about_options(request):
+    """Get about options for dropdown"""
+    options = Karunyasparsham.objects.filter(content_type='about')
+    options_list = [{'id': opt.id, 'title': opt.about_title} for opt in options]
+    
+    return JsonResponse({'options': options_list})
+
+@login_required
+def get_project_options(request):
+    """Get project options for dropdown"""
+    options = Karunyasparsham.objects.filter(content_type='project')
+    options_list = [{'id': opt.id, 'title': opt.project_title} for opt in options]
+    
+    return JsonResponse({'options': options_list})
+
+@login_required
+def toggle_status(request, pk):
+    """Toggle active status of an entry"""
+    entry = get_object_or_404(Karunyasparsham, pk=pk)
+    
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        if status in ['inactive', 'completed', 'processing']:
+            entry.active = status
+            entry.save()
+            messages.success(request, f'Status updated to {entry.get_active_display()}')
+        
+    return redirect('karunyasparsham_list')
+
+
+#KARUNYAM CATEGORY
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import JsonResponse
+from .models import Category
+from .forms import CategoryForm
+
+# List View with Search (No Pagination)
+def category_list(request):
+    categories = Category.objects.all()
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        categories = categories.filter(
+            Q(name__icontains=search_query) |
+            Q(slug__icontains=search_query)
+        )
+    
+    context = {
+        'categories': categories,  # Make sure this is 'categories'
+        'search_query': search_query,
+        'total_count': categories.count(),
+    }
+    return render(request, 'admin/karunyam/category/category.html', context)
+
+# Create View
+@login_required
+def category_create(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            category = form.save()
+            messages.success(request, f'Category "{category.name}" created successfully!')
+            return redirect('category_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CategoryForm()
+    
+    return render(request, 'admin/karunyam/category/addcategory.html', {
+        'form': form,
+        'title': 'Create Category',
+        'button_text': 'Create Category'
+    })
+
+
+
+
+
+# Update View
+# Update View
+@login_required
+def category_update(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            # Handle image removal
+            if request.POST.get('remove_image') == 'true':
+                if category.image:
+                    category.image.delete(save=False)
+                    category.image = None
+            category = form.save()
+            messages.success(request, f'Category "{category.name}" updated successfully!')
+            # This will go to /category_id/ (e.g., /2/)
+            return redirect('category_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CategoryForm(instance=category)
+    
+    return render(request, 'admin/karunyam/category/editcategory.html', {
+        'form': form,
+        'category': category,
+        'title': 'Update Category',
+        'button_text': 'Update Category'
+    })
+
+# Delete View
+@login_required
+def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    
+    if request.method == 'POST':
+        category_name = category.name
+        # Delete the image file from storage
+        if category.image:
+            category.image.delete(save=False)
+        category.delete()
+        messages.success(request, f'Category "{category_name}" deleted successfully!')
+        return redirect('category_list')
+    
+    return render(request, 'admin/karunyam/category/deletecategory.html', {'category': category})
+
+# Bulk Delete View
+@login_required
+def category_bulk_delete(request):
+    if request.method == 'POST':
+        category_ids = request.POST.getlist('category_ids')
+        if category_ids:
+            categories = Category.objects.filter(id__in=category_ids)
+            count = categories.count()
+            # Delete images
+            for category in categories:
+                if category.image:
+                    category.image.delete(save=False)
+            categories.delete()
+            messages.success(request, f'{count} categories deleted successfully!')
+        else:
+            messages.warning(request, 'No categories selected for deletion.')
+    
+    return redirect('category_list')
+
+# API-like View to get category data in JSON
+def category_api(request):
+    categories = Category.objects.all().values('id', 'name', 'slug', 'image')
+    return JsonResponse(list(categories), safe=False)
+
+
+# def category_detail_by_slug(request, slug):
+#     category = get_object_or_404(Category, slug=slug)
+#     return render(request, 'admin/karunyam/category/category.html', {'category': category})
+
+
+#PUBLICATIONS
+from django.shortcuts import render, redirect
+from .forms import PublicationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from .models import Publication
+from .forms import PublicationForm
+
+# ========================================
+# CREATE PUBLICATION
+# ========================================
+@login_required
+def add_publication(request):
+    if request.method == "POST":
+        form = PublicationForm(request.POST, request.FILES)
+        if form.is_valid():
+            publication = form.save()
+            messages.success(request, f'Publication "{publication.title}" added successfully!')
+            return redirect('publication_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = PublicationForm()
+
+    return render(request, "admin/publications/addpublications.html", {
+        "form": form
+    })
+
+# ========================================
+# LIST PUBLICATIONS
+# ========================================
+@login_required
+def publication_list(request):
+    publications = Publication.objects.all()
+    
+    # Search functionality
+    search_query = request.GET.get('search', '')
+    if search_query:
+        publications = publications.filter(title__icontains=search_query)
+    
+    # Pagination
+    paginator = Paginator(publications, 10)  # Show 10 publications per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, "admin/publications/publications.html", {
+        "publications": page_obj,
+        "search_query": search_query,
+    })
+
+# ========================================
+# EDIT PUBLICATION
+# ========================================
+@login_required
+def edit_publication(request, pk):
+    publication = get_object_or_404(Publication, pk=pk)
+    
+    if request.method == "POST":
+        form = PublicationForm(request.POST, request.FILES, instance=publication)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Publication "{publication.title}" updated successfully!')
+            return redirect('publication_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = PublicationForm(instance=publication)
+    
+    return render(request, "admin/publications/editpublications.html", {
+        "form": form,
+        "publication": publication
+    })
+
+# ========================================
+# DELETE PUBLICATION
+# ========================================
+@login_required
+def delete_publication(request, pk):
+    publication = get_object_or_404(Publication, pk=pk)
+    
+    if request.method == "POST":
+        title = publication.title
+        publication.delete()
+        messages.success(request, f'Publication "{title}" deleted successfully!')
+        return redirect('publication_list')
+    
+    return render(request, "admin/publications/deletepublications.html", {
+        "publication": publication
+    })
+
+# ========================================
+# VIEW PUBLICATION DETAIL
+# ========================================
+@login_required
+def view_publication(request, pk):
+    publication = get_object_or_404(Publication, pk=pk)
+    return render(request, "admin/publications/viewpublications.html", {
+        "publication": publication
+    })
+
+
+
+#GALLERY
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from .models import Gallery
+from .forms import GalleryForm
+
+# ========================================
+# PUBLIC VIEWS
+# ========================================
+
+def admin_gallery_list(request):
+    """Display all active gallery items"""
+    gallery_items = Gallery.objects.filter(is_active=True)
+    
+    # Optional: Filter by media type
+    media_type = request.GET.get('type')
+    if media_type in ['image', 'video']:
+        gallery_items = gallery_items.filter(media_type=media_type)
+    
+    # Pagination
+    paginator = Paginator(gallery_items, 12)  # 12 items per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'gallery_items': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+        'media_type': media_type,
+        'total_items': gallery_items.count(),
+    }
+    return render(request, 'admin/gallery/gallery.html', context)
+
+def gallery_detail(request, slug):
+    """Display a single gallery item"""
+    gallery_item = get_object_or_404(Gallery, slug=slug, is_active=True)
+    
+    # Get previous and next items
+    previous = Gallery.objects.filter(
+        is_active=True, 
+        order__lt=gallery_item.order
+    ).order_by('-order').first()
+    
+    next_item = Gallery.objects.filter(
+        is_active=True, 
+        order__gt=gallery_item.order
+    ).order_by('order').first()
+    
+    context = {
+        'item': gallery_item,
+        'previous': previous,
+        'next': next_item,
+    }
+    return render(request, 'admin/gallery/gallery_detail.html', context)
+
+# ========================================
+# ADMIN VIEWS
+# ========================================
+# views.py@staff_member_required
+def admin_gallery_list(request):
+    """Admin view to list all gallery items"""
+    gallery_items = Gallery.objects.all().order_by('-created_at')
+    
+    # Search functionality
+    search_query = request.GET.get('search', '')
+    if search_query:
+        gallery_items = gallery_items.filter(
+            Q(title__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+    
+    # Filter by media type
+    media_type = request.GET.get('type')
+    if media_type in ['image', 'video']:
+        gallery_items = gallery_items.filter(media_type=media_type)
+    
+    paginator = Paginator(gallery_items, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'gallery_items': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+        'search_query': search_query,
+        'media_type': media_type,
+        'total_items': gallery_items.count(),
+    }
+    return render(request, 'admin/gallery/gallery.html', context)
+
+
+@staff_member_required
+def admin_gallery_add(request):
+    if request.method == 'POST':
+        form = GalleryForm(request.POST, request.FILES)
+        if form.is_valid():
+            gallery_item = form.save()
+            messages.success(request, f'Gallery item "{gallery_item.title}" added successfully!')
+            return redirect('admin_gallery_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = GalleryForm()
+    
+    context = {
+        'form': form,
+        'is_edit': False,
+    }
+    return render(request, 'admin/gallery/addgallery.html', context)
+
+
+@staff_member_required
+def admin_gallery_edit(request, pk):
+    gallery_item = get_object_or_404(Gallery, pk=pk)
+    
+    if request.method == 'POST':
+        form = GalleryForm(request.POST, request.FILES, instance=gallery_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Gallery item "{gallery_item.title}" updated successfully!')
+            return redirect('admin_gallery_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = GalleryForm(instance=gallery_item)
+    
+    context = {
+        'form': form,
+        'gallery_item': gallery_item,
+        'is_edit': True,
+    }
+    return render(request, 'admin/gallery/editgallery.html', context)
+
+
+@staff_member_required
+def admin_gallery_delete(request, pk):
+    gallery_item = get_object_or_404(Gallery, pk=pk)
+    
+    if request.method == 'POST':
+        title = gallery_item.title
+        gallery_item.delete()
+        messages.success(request, f'Gallery item "{title}" deleted successfully!')
+        return redirect('admin_gallery_list')
+    
+    context = {
+        'gallery_item': gallery_item,
+    }
+    return render(request, 'admin/gallery/deletegallery.html', context)
+
+
+
+#PRAYER BOOKS
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
+from .models import PrayerBook
+from .forms import PrayerBookForm
+@staff_member_required
+def admin_prayerbook_list(request):
+    """Admin view to list all prayer books"""
+    prayer_books = PrayerBook.objects.all().order_by('title')
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        prayer_books = prayer_books.filter(title__icontains=search_query)
+    
+    paginator = Paginator(prayer_books, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'prayer_books': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+        'search_query': search_query,
+        'total_items': prayer_books.count(),
+    }
+    # IMPORTANT: Use the admin template, not the frontend template
+    return render(request, 'admin/prayerbooks/prayerbook_list.html', context)
+
+@staff_member_required
+def admin_prayerbook_add(request):
+    """Add a new prayer book"""
+    if request.method == 'POST':
+        form = PrayerBookForm(request.POST, request.FILES)
+        if form.is_valid():
+            prayer_book = form.save()
+            messages.success(request, f'Prayer book "{prayer_book.title}" added successfully!')
+            return redirect('admin_prayerbook_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = PrayerBookForm()
+    
+    context = {
+        'form': form,
+        'is_edit': False,
+        'title': 'Add Prayer Book',
+    }
+    return render(request, 'admin/prayerbooks/addprayer.html', context)
+
+@staff_member_required
+def admin_prayerbook_edit(request, pk):
+    """Edit a prayer book"""
+    prayer_book = get_object_or_404(PrayerBook, pk=pk)
+    
+    if request.method == 'POST':
+        form = PrayerBookForm(request.POST, request.FILES, instance=prayer_book)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Prayer book "{prayer_book.title}" updated successfully!')
+            return redirect('admin_prayerbook_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = PrayerBookForm(instance=prayer_book)
+    
+    context = {
+        'form': form,
+        'prayer_book': prayer_book,
+        'is_edit': True,
+        'title': 'Edit Prayer Book',
+    }
+    return render(request, 'admin/prayerbooks/editprayer.html', context)
+
+@staff_member_required
+def admin_prayerbook_delete(request, pk):
+    """Delete a prayer book"""
+    prayer_book = get_object_or_404(PrayerBook, pk=pk)
+    
+    if request.method == 'POST':
+        title = prayer_book.title
+        prayer_book.delete()
+        messages.success(request, f'Prayer book "{title}" deleted successfully!')
+        return redirect('admin_prayerbook_list')
+    
+    context = {
+        'prayer_book': prayer_book,
+    }
+    return render(request, 'admin/prayerbooks/deleteprayerbook.html', context)
+
+
+
+#KALPANA
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Kalpana, KalpanaFile
+from .forms import KalpanaForm, KalpanaFileForm, KalpanaUpdateForm
+
+
+def kalpana_list(request):
+    """List all Kalpana (Admin)"""
+    kalpanas = Kalpana.objects.all().order_by('-created_at')
+    return render(request, 'admin/kalpana/kalpana.html', {
+        'kalpanas': kalpanas,
+        'total_count': kalpanas.count()
+    })
+
+def kalpana_create(request):
+    """Create new Kalpana with multiple descriptions and files"""
+    if request.method == 'POST':
+        form = KalpanaForm(request.POST)
+        
+        if form.is_valid():
+            kalpana = form.save()
+            
+            # Get all descriptions
+            descriptions = request.POST.getlist('descriptions[]')
+            
+            # Get all files (all files from all descriptions)
+            files = request.FILES.getlist('files')
+            
+            file_count = 0
+            # For each description, create a KalpanaFile
+            for index, desc in enumerate(descriptions):
+                if desc.strip():
+                    # Check if we have a file for this description index
+                    if index < len(files):
+                        kalpana_file = KalpanaFile(
+                            kalpana=kalpana,
+                            file=files[index],
+                            description=desc,
+                            file_name=files[index].name
+                        )
+                        kalpana_file.save()
+                        file_count += 1
+                    else:
+                        # No file for this description
+                        kalpana_file = KalpanaFile(
+                            kalpana=kalpana,
+                            description=desc,
+                            file_name="No file"
+                        )
+                        kalpana_file.save()
+            
+            # If there are extra files (more files than descriptions)
+            # Create files without descriptions
+            for i in range(len(descriptions), len(files)):
+                kalpana_file = KalpanaFile(
+                    kalpana=kalpana,
+                    file=files[i],
+                    file_name=files[i].name,
+                    description="Additional file"
+                )
+                kalpana_file.save()
+                file_count += 1
+            
+            messages.success(request, f'Kalpana "{kalpana.title}" created successfully with {file_count} file(s)!')
+            return redirect('kalpana_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+            return render(request, 'admin/kalpana/addkalpana.html', {
+                'form': form,
+                'is_edit': False,
+                'action': 'Create',
+                'button_text': 'Create Kalpana',
+                'kalpana': None
+            })
+    else:
+        # GET request - show empty form
+        form = KalpanaForm()
+        return render(request, 'admin/kalpana/addkalpana.html', {
+            'form': form,
+            'is_edit': False,
+            'action': 'Create',
+            'button_text': 'Create Kalpana',
+            'kalpana': None
+        })
+
+def kalpana_update(request, slug):
+    """Update existing Kalpana"""
+    kalpana = get_object_or_404(Kalpana, slug=slug)
+    existing_files = kalpana.files.all()
+    
+    if request.method == 'POST':
+        form = KalpanaUpdateForm(request.POST, instance=kalpana)
+        
+        if form.is_valid():
+            kalpana = form.save()
+            
+            # Handle removed files
+            removed_files = request.POST.getlist('removed_files[]')
+            if removed_files:
+                KalpanaFile.objects.filter(id__in=removed_files, kalpana=kalpana).delete()
+            
+            # Update existing file descriptions
+            for file in existing_files:
+                new_description = request.POST.get(f'file_description_{file.id}', '')
+                new_file_name = request.POST.get(f'file_name_{file.id}', '')
+                if new_description != file.description or new_file_name != file.file_name:
+                    file.description = new_description
+                    file.file_name = new_file_name or file.file.name
+                    file.save()
+            
+            # Handle new files
+            files = request.FILES.getlist('files[]')
+            file_descriptions = request.POST.getlist('file_descriptions[]')
+            
+            for index, file in enumerate(files):
+                if file:
+                    description = file_descriptions[index] if index < len(file_descriptions) else ''
+                    KalpanaFile.objects.create(
+                        kalpana=kalpana,
+                        file=file,
+                        file_name=file.name,
+                        description=description
+                    )
+            
+            messages.success(request, f'Kalpana "{kalpana.title}" updated successfully!')
+            return redirect('kalpana_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = KalpanaUpdateForm(instance=kalpana)
+    
+    return render(request, 'admin/kalpana/editkalpana.html', {
+        'form': form,
+        'is_edit': True,
+        'action': 'Update',
+        'button_text': 'Update Kalpana',
+        'kalpana': kalpana,
+        'existing_files': existing_files
+    })
+
+
+def kalpana_delete(request, slug):
+    """Delete Kalpana"""
+    kalpana = get_object_or_404(Kalpana, slug=slug)
+    
+    if request.method == 'POST':
+        title = kalpana.title
+        kalpana.files.all().delete()
+        kalpana.delete()
+        messages.success(request, f'Kalpana "{title}" deleted successfully!')
+        return redirect('kalpana_list')
+    
+    return render(request, 'admin/kalpana/deletekalpana.html', {'kalpana': kalpana})
+
+
+def kalpana_delete_file(request, file_id):
+    """Delete a specific file"""
+    file_obj = get_object_or_404(KalpanaFile, id=file_id)
+    kalpana_slug = file_obj.kalpana.slug
+    
+    if request.method == 'POST':
+        file_obj.delete()
+        messages.success(request, 'File removed successfully!')
+    
+    return redirect('kalpana_update', slug=kalpana_slug)
+
+
+# EVENTSfrom django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.utils import timezone
+from .models import Event
+from .forms import EventForm
+
+# Admin: List all events
+@staff_member_required
+def event_list(request):
+    events = Event.objects.all().order_by('-created_at')
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        events = events.filter(
+            Q(title__icontains=search_query) | 
+            Q(description__icontains=search_query) | 
+            Q(location__icontains=search_query)
+        )
+    
+    filter_status = request.GET.get('filter', '')
+    now = timezone.now()
+    if filter_status == 'upcoming':
+        events = events.filter(
+            Q(event_date__gt=now.date()) | 
+            (Q(event_date=now.date()) & Q(event_time__gt=now.time()))
+        )
+    elif filter_status == 'past':
+        events = events.filter(
+            Q(event_date__lt=now.date()) | 
+            (Q(event_date=now.date()) & Q(event_time__lt=now.time()))
+        )
+    elif filter_status == 'today':
+        events = events.filter(event_date=now.date())
+    
+    paginator = Paginator(events, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'events': page_obj,
+        'search_query': search_query,
+        'filter_status': filter_status,
+        'total_items': Event.objects.count(),
+        'upcoming_count': Event.objects.filter(
+            Q(event_date__gt=now.date()) | 
+            (Q(event_date=now.date()) & Q(event_time__gt=now.time()))
+        ).count(),
+        'past_count': Event.objects.filter(
+            Q(event_date__lt=now.date()) | 
+            (Q(event_date=now.date()) & Q(event_time__lt=now.time()))
+        ).count(),
+    }
+    return render(request, 'admin/events/events.html', context)
+
+# Admin: Add event
+@staff_member_required
+def event_add(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            event = form.save()
+            messages.success(request, f'Event "{event.title}" created successfully!')
+            return redirect('event_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = EventForm()
+    
+    context = {
+        'form': form,
+        'event': None,
+    }
+    return render(request, 'admin/events/addevents.html', context)
+
+# Admin: Edit event
+@staff_member_required
+def event_edit(request):
+    event_id = request.GET.get('id')
+    if not event_id:
+        messages.error(request, 'No event specified for editing.')
+        return redirect('event_list')
+    
+    event = get_object_or_404(Event, pk=event_id)
+    
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Event "{event.title}" updated successfully!')
+            return redirect('event_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = EventForm(instance=event)
+    
+    context = {
+        'form': form,
+        'event': event,
+    }
+    return render(request, 'admin/events/editevents.html', context)
+
+# Admin: Delete event
+@staff_member_required
+def event_delete(request):
+    if request.method == 'POST':
+        event_id = request.POST.get('id')
+        if not event_id:
+            messages.error(request, 'No event specified for deletion.')
+            return redirect('event_list')
+        
+        event = get_object_or_404(Event, pk=event_id)
+        event_title = event.title
+        event.delete()
+        messages.success(request, f'Event "{event_title}" deleted successfully!')
+        return redirect('event_list')
+    
+    # If GET request, redirect to list
+    return redirect('event_list')
+
+
+#DOWNLOADS
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
+from django.db.models import Q
+from .models import Download
+from .forms import DownloadForm
+
+# ==================== PUBLIC VIEWS ====================
+# views.py (updated)
+
+def downloads(request):
+    """Public downloads page"""
+    # The context processor already provides downloads data
+    # But we can still use it in the view
+    context = {
+        # 'downloads', 'church_account_manual', etc. are already in context
+        # We can add page-specific data here
+        'page_title': 'Downloads',
+        'additional_info': 'Download our resources and documents',
+    }
+    return render(request, 'media/downloads.html', context)
+
+# ==================== ADMIN VIEWS ====================
+
+@staff_member_required
+def admin_download_list(request):
+    """Admin: List all downloads"""
+    downloads = Download.objects.all().order_by('document_type')
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        downloads = downloads.filter(
+            Q(document_type__icontains=search_query) |
+            Q(file__icontains=search_query)
+        )
+    
+    paginator = Paginator(downloads, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'downloads': page_obj,
+        'search_query': search_query,
+        'total_items': Download.objects.count(),
+    }
+    return render(request, 'admin/downloads/downloads.html', context)
+
+@staff_member_required
+def admin_download_add(request):
+    """Admin: Add new download"""
+    if request.method == 'POST':
+        form = DownloadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Download added successfully!')
+            return redirect('admin_download_list')  # ← NO namespace
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = DownloadForm()
+    
+    context = {
+        'form': form,
+        'is_edit': False,
+        'title': 'Add New Download',
+        'download': None,
+    }
+    return render(request, 'admin/downloads/adddownloads.html', context)
+
+@staff_member_required
+def admin_download_edit(request, pk):
+    """Admin: Edit download"""
+    download = get_object_or_404(Download, pk=pk)
+    
+    if request.method == 'POST':
+        form = DownloadForm(request.POST, request.FILES, instance=download)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Download updated successfully!')
+            return redirect('admin_download_list')  # ← NO namespace
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = DownloadForm(instance=download)
+    
+    context = {
+        'form': form,
+        'is_edit': True,
+        'title': 'Edit Download',
+        'download': download,
+    }
+    return render(request, 'admin/downloads/editdownloads.html', context)
+
+@staff_member_required
+def admin_download_delete(request, pk):
+    """Admin: Delete download"""
+    download = get_object_or_404(Download, pk=pk)
+    
+    if request.method == 'POST':
+        download.delete()
+        messages.success(request, 'Download deleted successfully!')
+        return redirect('admin_download_list')  # ← NO namespace
+    
+    context = {'download': download}
+    return render(request, 'admin/download_confirm_delete.html', context)

@@ -214,13 +214,15 @@
     }
 }
 </style>
-
 <section class="project-detail">
 
     <div class="project-banner">
-        <img src="{% static 'images/medical.jpg' %}" alt="">
+        {% if project.image %}
+            <img src="{{ project.image.url }}" alt="{{ project.heading }}">
+        {% endif %}
+
         <div class="project-overlay">
-            <h1>Medical Assistance Project</h1>
+            <h1>{{ project.heading }}</h1>
         </div>
     </div>
 
@@ -228,85 +230,50 @@
 
         <div class="project-description">
 
-            <h2>About This Project</h2>
+            <h2>{{ project.title }}</h2>
 
-            <p>
-                The Medical Assistance Project is dedicated to helping
-                underprivileged patients access essential treatments,
-                medicines, surgeries, and healthcare services.
-                Through donor support and partnerships with healthcare
-                institutions, Karunya Sparsham has been able to assist
-                numerous families facing financial hardship during medical
-                emergencies.
-            </p>
-
-            <p>
-                Through donor support and partnerships with healthcare
-                institutions, Karunya Sparsham has been able to assist
-                numerous families facing financial hardship during medical
-                emergencies.
-                Through donor support and partnerships with healthcare
-                institutions, Karunya Sparsham has been able to assist
-                numerous families facing financial hardship during medical
-                emergencies.
-            </p>
-
-            <p>
-                This initiative focuses on providing compassionate care,
-                raising awareness, and ensuring that healthcare support
-                reaches those who need it most.
-                Through donor support and partnerships with healthcare
-                institutions, Karunya Sparsham has been able to assist
-                numerous families facing financial hardship during medical
-                emergencies.
-            </p>
+            {{ project.content|safe }}
 
         </div>
 
-     <div class="project-info">
+        <div class="project-info">
 
-    <div class="project-info-header">
-        <h3>Project Details</h3>
-        <p>Making a difference through compassion</p>
+            <div class="project-info-header">
+                <h3>Project Details</h3>
+                <p>Making a difference through compassion</p>
+            </div>
+
+            <div class="project-info-body">
+
+                <div class="info-item">
+                    <div class="info-icon">🏥</div>
+                    <div class="info-text">
+                        <span>Category</span>
+                        <p>{{ project.category|default:"Healthcare Support" }}</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <span>Location</span>
+                        <p>{{ project.location|default:"Kerala, India" }}</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">🟢</div>
+                    <div class="info-text">
+                        <span>Status</span>
+                        <p>{{ project.status|default:"Ongoing" }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="project-info-body">
-
-        <div class="info-item">
-            <div class="info-icon">🏥</div>
-            <div class="info-text">
-                <span>Category</span>
-                <p>Healthcare Support</p>
-            </div>
-        </div>
-
-        <div class="info-item">
-            <div class="info-icon">👨‍👩‍👧‍👦</div>
-            <div class="info-text">
-                <span>Beneficiaries</span>
-                <p>500+ Families</p>
-            </div>
-        </div>
-
-        <div class="info-item">
-            <div class="info-icon">📍</div>
-            <div class="info-text">
-                <span>Location</span>
-                <p>Kerala, India</p>
-            </div>
-        </div>
-
-        <div class="info-item">
-            <div class="info-icon">🟢</div>
-            <div class="info-text">
-                <span>Status</span>
-                <p>Ongoing</p>
-            </div>
-        </div>
-    </div>
-
-</div>
-   
 
 </section>
 </div>

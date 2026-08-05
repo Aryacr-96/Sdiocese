@@ -1,178 +1,611 @@
 {% load static %}
 {% include 'header.html' %}
 
-<style>.gallery-section{
-    max-width:1270px;
+<style>
+.gallery-section {
+    max-width: 1270px;
     margin-top: 60px;
-    margin:30px auto;
-    padding:0 20px;
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
-.gallery-header{
-    text-align:center;
-    margin-bottom:40px;
+.gallery-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.gallery-header h2{
-    font-size:42px;
-    color:#23395d;
-    margin-bottom:10px;
+.gallery-header h2 {
+    font-size: 42px;
+    color: #23395d;
+    margin-bottom: 10px;
 }
 
-.gallery-header p{
-    color:#6b7280;
+.gallery-header p {
+    color: #6b7280;
 }
 
-.gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:25px;
+.gallery-stats {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 0.3rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 10px;
 }
 
-.gallery-item{
-    overflow:hidden;
-    border-radius:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
 }
 
-.gallery-item img{
-    width:100%;
-    height:280px;
-    object-fit:cover;
-    display:block;
-    transition:.5s ease;
+.gallery-item {
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    background: #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.gallery-item:hover img{
-    transform:scale(1.08);
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item .image-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: .5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+.gallery-item .image-info {
+    padding: 15px 20px 20px;
+}
+
+.gallery-item .image-info h4 {
+    font-size: 16px;
+    color: #23395d;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.gallery-item .image-info p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Lightbox / Popup */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox-overlay.active {
+    display: flex;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-content img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+}
+
+.lightbox-info {
+    padding: 20px 25px 25px;
+    background: #fff;
+}
+
+.lightbox-info h3 {
+    font-size: 20px;
+    color: #23395d;
+    margin-bottom: 5px;
+}
+
+.lightbox-info p {
+    font-size: 15px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.lightbox-close:hover {
+    background: #e76514;
+    transform: rotate(90deg);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.lightbox-nav:hover {
+    background: #e76514;
+}
+
+.lightbox-nav.prev {
+    left: 15px;
+}
+
+.lightbox-nav.next {
+    right: 15px;
+}
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
+    z-index: 10;
+}
+
+.empty-gallery {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+.empty-gallery i {
+    font-size: 60px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.empty-gallery h3 {
+    font-size: 24px;
+    color: #23395d;
+    margin-bottom: 5px;
+}
+
+.empty-gallery p {
+    color: #6b7280;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+.loading-spinner i {
+    font-size: 40px;
+    color: #e76514;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Pagination */
+.gallery-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.gallery-pagination .page-link {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #23395d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gallery-pagination .page-link:hover {
+    background: #e76514;
+    color: #fff;
+}
+
+.gallery-pagination .page-link.active {
+    background: #e76514;
+    color: #fff;
+}
+
+.gallery-pagination .page-info {
+    color: #6b7280;
+    font-weight: 500;
+    padding: 8px 16px;
 }
 
 /* Tablet */
-@media(max-width:992px){
-    .gallery-grid{
-        grid-template-columns:repeat(2,1fr);
+@media (max-width: 992px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 /* Mobile */
-@media(max-width:576px){
-    .gallery-grid{
-        grid-template-columns:1fr;
+@media (max-width: 576px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
     }
 
-    .gallery-item img{
-        height:220px;
+    .gallery-item img {
+        height: 220px;
     }
-}</style>
+
+    .lightbox-overlay {
+        padding: 15px;
+    }
+
+    .lightbox-content img {
+        max-height: 50vh;
+    }
+
+    .lightbox-info h3 {
+        font-size: 17px;
+    }
+
+    .lightbox-info p {
+        font-size: 14px;
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .lightbox-close {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+        top: 10px;
+        right: 12px;
+    }
+}
+</style>
+
 <section class="gallery-section">
 
     <div class="gallery-header">
         <h2>Photo Gallery</h2>
         <p>Moments from our events and activities</p>
+        <!-- {% if total_items %}
+            <span class="gallery-stats">
+                <i class="fas fa-images"></i> {{ total_items }} images
+            </span>
+        {% endif %} -->
     </div>
 
-    <div class="gallery-grid">
-
-        <div class="gallery-item">
-            <img src="{% static 'images/education.jpg' %}" alt="">
-        </div>
-
-        <div class="gallery-item">
-            <img src="{% static 'images/college.jpg' %}" alt="">
-        </div>
-
-        <div class="gallery-item">
-            <img src="{% static 'images/medical.jpg' %}" alt="">
-        </div>
-
-        <div class="gallery-item">
-            <img src="{% static 'images/school2.jpg' %}" alt="">
-        </div>
-
-        <div class="gallery-item">
-            <img src="{% static 'images/publication.jpg' %}" alt="">
-        </div>
-
-        <div class="gallery-item">
-            <img src="{% static 'images/retreat.webp' %}" alt="">
-        </div>
-
+    <div class="gallery-grid" id="galleryGrid">
+        {% if items %}
+            {% for item in items %}
+                {% if item.media_type == 'image' and item.image %}
+                <div class="gallery-item" 
+                     data-title="{{ item.title }}"
+                     data-description="{{ item.description|default:'No description available.' }}"
+                     data-image="{{ item.image.url }}"
+                     data-index="{{ forloop.counter0 }}">
+                    <div class="image-wrapper">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy">
+                    </div>
+                    <div class="image-info">
+                        <h4>{{ item.title }}</h4>
+                        <p>{{ item.description|default:'No description available.'|truncatechars:60 }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="empty-gallery">
+                <i class="fas fa-images"></i>
+                <h3>No images found</h3>
+                <p>Check back later for new gallery content.</p>
+            </div>
+        {% endif %}
     </div>
+
+    <!-- Pagination -->
+    {% if items.has_other_pages %}
+    <div class="gallery-pagination">
+        {% if items.has_previous %}
+            <a href="?page={{ items.previous_page_number }}" class="page-link">
+                <i class="fas fa-chevron-left"></i> Previous
+            </a>
+        {% endif %}
+
+        {% for num in items.paginator.page_range %}
+            {% if items.number == num %}
+                <span class="page-link active">{{ num }}</span>
+            {% elif num > items.number|add:'-3' and num < items.number|add:'3' %}
+                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if items.has_next %}
+            <a href="?page={{ items.next_page_number }}" class="page-link">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
 
 </section>
 </div>
+<!-- Lightbox Popup -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-nav prev" id="lightboxPrev">&#10094;</button>
+        <button class="lightbox-nav next" id="lightboxNext">&#10095;</button>
+        <img id="lightboxImage" src="" alt="">
+        <div class="lightbox-info">
+            <h3 id="lightboxTitle"></h3>
+            <p id="lightboxDescription"></p>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+    </div>
+</div>
+
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
 <script>
-const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== LIGHTBOX FUNCTIONALITY =====
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxDescription = document.getElementById('lightboxDescription');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    
+    let currentIndex = 0;
+    const items = [];
 
-function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
-
-overlay.addEventListener('click', closeSidebar);
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-</script>
-
-<script>
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
-
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
-            }
-        });
-
-        dropdown.classList.toggle("active");
-    });
-});
-</script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
-
-window.addEventListener('scroll', () => {
-    historyBlocks.forEach(block => {
-        const rect = block.getBoundingClientRect();
+    // Build items array from gallery
+    galleryItems.forEach((item, index) => {
+        const title = item.getAttribute('data-title') || 'Untitled';
+        const description = item.getAttribute('data-description') || '';
+        const image = item.getAttribute('data-image') || '';
+        items.push({ title, description, image, element: item });
         
-        // This check defines the "active" zone (the center of your screen)
-        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+        // Click event to open lightbox
+        item.addEventListener('click', function() {
+            currentIndex = index;
+            openLightbox(index);
+        });
+    });
 
-        if (isMiddle) {
-            // Change to active color while scrolling
-            block.style.setProperty('--line-color', '#e76514');
-        } else {
-            // Reset to inactive color when not scrolling over this block
-            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+    function openLightbox(index) {
+        const item = items[index];
+        if (!item) return;
+        
+        lightboxImage.src = item.image;
+        lightboxImage.alt = item.title;
+        lightboxTitle.textContent = item.title;
+        lightboxDescription.textContent = item.description;
+        lightboxCounter.textContent = `${index + 1} / ${items.length}`;
+        lightboxOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightboxOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        openLightbox(currentIndex);
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % items.length;
+        openLightbox(currentIndex);
+    }
+
+    // Close button
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    // Previous button
+    lightboxPrev.addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevImage();
+    });
+
+    // Next button
+    lightboxNext.addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextImage();
+    });
+
+    // Click overlay to close
+    lightboxOverlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
         }
     });
-});</script>
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!lightboxOverlay.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+            closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+            prevImage();
+        } else if (e.key === 'ArrowRight') {
+            nextImage();
+        }
+    });
+
+    // ===== SIDEBAR TOGGLE (using event delegation) =====
+    function initSidebar() {
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebar = document.getElementById('sidebarPanel');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function openSidebar() {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('active');
+            if (toggleBtn) toggleBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+            if (toggleBtn) toggleBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (toggleBtn) {
+            toggleBtn.removeEventListener('click', openSidebar);
+            toggleBtn.removeEventListener('click', closeSidebar);
+            
+            toggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (sidebar && sidebar.classList.contains('open')) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            });
+        }
+
+        if (overlay) {
+            overlay.removeEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+    }
+
+    initSidebar();
+    setTimeout(initSidebar, 100);
+
+    // ===== DROPDOWN MENU =====
+    document.querySelectorAll(".menu-link").forEach(function(link) {
+        link.addEventListener("click", function() {
+            const dropdown = this.parentElement;
+            document.querySelectorAll(".dropdown").forEach(function(item) {
+                if (item !== dropdown) {
+                    item.classList.remove("active");
+                }
+            });
+            dropdown.classList.toggle("active");
+        });
+    });
+
+    // ===== HISTORY BLOCKS SCROLL ANIMATION =====
+    const historyBlocks = document.querySelectorAll('.history-block');
+
+    window.addEventListener('scroll', function() {
+        historyBlocks.forEach(function(block) {
+            const rect = block.getBoundingClientRect();
+            const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+            if (isMiddle) {
+                block.style.setProperty('--line-color', '#e76514');
+            } else {
+                block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+            }
+        });
+    });
+});
+</script>
+
 </body>
-</html>   
+</html>

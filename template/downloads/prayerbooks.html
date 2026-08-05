@@ -109,48 +109,77 @@
 
 <section class="prayer-wrapper">
 
-    <!-- TITLE -->
     <div class="prayer-title">
         Church Prayer Books
+        <!-- {% if total_books %}
+            <br><span><i class="fas fa-book"></i> {{ total_books }} books available</span>
+        {% endif %} -->
     </div>
 
-    <!-- GRID START -->
     <div class="prayer-grid">
-
-        <!-- CARD 1 -->
-       <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-       <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-       <h3>Morning Prayer Book</h3></a>
-
-        <!-- CARD 2 -->
-        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-        <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-        <h3>Morning Prayer Book</h3></a>
-
-        <!-- CARD 3 -->
-        <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-        <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-        <h3>Morning Prayer Book</h3></a>
-
-        <!-- CARD 4 -->
-         <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-        <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-        <h3>Morning Prayer Book</h3></a>
-
-        <!-- CARD 5 -->
-         <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-        <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-        <h3>Morning Prayer Book</h3></a>
-
-        <!-- CARD 6 -->
-       <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank" class="prayer-card">
-        <img src="{% static 'images/publication.jpg' %}" alt="Prayer Book">
-        <h3>Morning Prayer Book</h3></a>
-
-
-
+        {% if books %}
+            {% for book in books %}
+                <a href="{{ book.file.url }}" target="_blank" class="prayer-card" download>
+                    {% if book.image %}
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}" loading="lazy">
+                    {% else %}
+                        <img src="{% static 'images/default-book.jpg' %}" alt="{{ book.title }}" loading="lazy">
+                    {% endif %}
+                    <div class="card-content">
+                        <h3>{{ book.title }}</h3>
+                        
+                        <!-- {% if book.file %}
+                            {% with ext=book.get_file_extension %}
+                                <span class="file-type {% if ext == 'pdf' %}pdf{% elif ext == 'doc' or ext == 'docx' %}word{% elif ext == 'xls' or ext == 'xlsx' %}excel{% else %}other{% endif %}">
+                                    <i class="fas {% if ext == 'pdf' %}fa-file-pdf{% elif ext == 'doc' or ext == 'docx' %}fa-file-word{% elif ext == 'xls' or ext == 'xlsx' %}fa-file-excel{% else %}fa-file{% endif %}"></i>
+                                    {{ ext|upper }}
+                                </span>
+                            {% endwith %} -->
+                            
+                            <!-- <span class="download-btn">
+                                <i class="fas fa-download"></i> Download
+                            </span> -->
+                        {% else %}
+                            <span class="no-file">
+                                <i class="fas fa-file"></i> No file available
+                            </span>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="empty-prayer">
+                <i class="fas fa-book-open"></i>
+                <h3>No prayer books found</h3>
+                <p>Check back later for new prayer resources.</p>
+            </div>
+        {% endif %}
     </div>
-    <!-- GRID END -->
+
+    <!-- Pagination -->
+    {% if books.has_other_pages %}
+    <div class="prayer-pagination">
+        {% if books.has_previous %}
+            <a href="?page={{ books.previous_page_number }}" class="page-link">
+                <i class="fas fa-chevron-left"></i> Previous
+            </a>
+        {% endif %}
+
+        {% for num in books.paginator.page_range %}
+            {% if books.number == num %}
+                <span class="page-link active">{{ num }}</span>
+            {% elif num > books.number|add:'-3' and num < books.number|add:'3' %}
+                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_page_number }}" class="page-link">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
 
 </section>
 </div>

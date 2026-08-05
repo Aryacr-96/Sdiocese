@@ -1,0 +1,1206 @@
+{% include 'admin/adminheader.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if entry %}Edit{% else %}Add{% endif %} Karunyasparsham</title>
+
+    <!-- Google Font: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CKEditor -->
+    {{ form.media }}
+
+    <style>
+        /* ========================================
+           KARUNYASPARSHAM SPECIFIC STYLES
+           (Matches Add Priest style)
+        ======================================== */
+        
+        /* Content header styling */
+        .content-header-custom {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom .separator {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .content-header-custom .breadcrumb-custom .active-item i {
+            color: #4f46e5;
+        }
+
+        /* Main card */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.25rem 2rem;
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-premium .card-header .header-left i {
+            color: #4f46e5;
+        }
+        .card-premium .card-header .badge-new {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-premium .card-header .badge-new i {
+            color: #ffffff;
+        }
+        .card-premium .card-body {
+            padding: 2.2rem 2rem;
+        }
+
+        /* Form groups */
+        .form-group-modern {
+            margin-bottom: 1.6rem;
+        }
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group-modern label i {
+            color: #4f46e5;
+            width: 20px;
+            font-size: 0.9rem;
+        }
+        .form-group-modern label .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Form controls */
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: #fafcfd;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            width: 100%;
+        }
+        .form-control-modern:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+            background: #ffffff;
+            outline: none;
+        }
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        select.form-control-modern {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.2rem center;
+            background-size: 12px;
+        }
+        textarea.form-control-modern {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Section headings */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin: 2rem 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading-modern i {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* Panel styles */
+        .panel-modern {
+            display: none;
+            padding: 1.5rem 0;
+            border-top: 2px solid #eef2f6;
+            margin-top: 1.2rem;
+        }
+        .panel-modern.active {
+            display: block !important;
+        }
+
+        .panel-indicator {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .panel-indicator.about {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .panel-indicator.project {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        /* File upload area */
+        .file-upload-area-modern {
+            border: 2px dashed #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #fafcfd;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .file-upload-area-modern:hover {
+            border-color: #4f46e5;
+            background: #f8faff;
+            transform: translateY(-2px);
+        }
+        .file-upload-area-modern.dragover {
+            border-color: #4f46e5;
+            background: rgba(79, 70, 229, 0.03);
+        }
+        .file-upload-area-modern i {
+            font-size: 2.5rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .file-upload-area-modern p {
+            font-size: 0.95rem;
+            color: #475569;
+            margin: 0;
+            font-weight: 500;
+        }
+        .file-upload-area-modern p strong {
+            color: #4f46e5;
+        }
+        .file-upload-area-modern small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+        .file-upload-area-modern input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Image preview */
+        .image-preview-modern {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fafcfd;
+            text-align: center;
+        }
+        .image-preview-modern.active {
+            display: block;
+        }
+        .image-preview-modern img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .current-image-modern {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            background: #f8fafc;
+            text-align: center;
+        }
+        .current-image-modern img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        .current-image-modern .label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.4rem;
+        }
+
+        /* Error messages */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.8rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+        .errorlist-modern li {
+            padding: 5px 14px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .errorlist-modern li::before {
+            content: "⚠";
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 0.6rem 2.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 3rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-primary-modern:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-modern:active {
+            transform: scale(0.97);
+        }
+
+        .btn-danger-modern {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 2.2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-danger-modern:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.35);
+            color: #ffffff;
+        }
+
+        /* Card footer */
+        .card-footer-modern {
+            padding: 1.5rem 0 0 0;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Help text */
+        .help-text-modern {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            font-weight: 450;
+        }
+        .help-text-modern i {
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+
+        /* Alerts */
+        .alert-modern {
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert-modern.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .alert-modern.error {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        .alert-modern.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .alert-modern.info {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        /* CKEditor */
+        .cke_chrome {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            margin-top: 4px !important;
+        }
+        .cke_contents {
+            min-height: 220px !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.4rem;
+            }
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer-modern {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-footer-modern .btn-outline-modern,
+            .card-footer-modern .btn-primary-modern,
+            .card-footer-modern .btn-danger-modern {
+                width: 100%;
+                justify-content: center;
+            }
+            .file-upload-area-modern {
+                padding: 1.2rem;
+                min-height: 100px;
+            }
+            .form-control-modern {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .content-header-custom .breadcrumb-custom {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================================
+   PAGE WRAPPER
+======================================== -->
+<div class="content-wrapper">
+
+    <!-- ========================================
+       CUSTOM PAGE HEADER WITH ALIGNMENT
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-hands-praying"></i>
+                    {% if entry %}Edit{% else %}Add{% endif %} Karunyasparsham
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'karunyasparsham_list' %}">
+                    <i class="fas fa-list"></i> Karunyasparsham
+                </a>
+                <span class="separator">›</span>
+                <span class="active-item">
+                    <i class="fas fa-{% if entry %}edit{% else %}plus-circle{% endif %}"></i>
+                    {% if entry %}Edit{% else %}Add New{% endif %}
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       MAIN CARD
+    ======================================== -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-premium">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-clipboard-list"></i> 
+                                Karunyasparsham Information — <span class="text-muted font-weight-normal">Complete all required fields</span>
+                            </div>
+                            <span class="badge-new">
+                                <i class="fas fa-{% if entry %}edit{% else %}plus-circle{% endif %}"></i>
+                                {% if entry %}Edit Mode{% else %}New Entry{% endif %}
+                            </span>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <!-- Messages -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert-modern {{ message.tags }}">
+                                        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <form method="POST" enctype="multipart/form-data" id="karunyasparshamForm">
+                                {% csrf_token %}
+
+                                <!-- ========================================
+                                   CONTENT TYPE SELECTION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-tag"></i> Content Type
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group-modern">
+                                            <label for="contentTypeSelect">
+                                                <i class="fas fa-tag"></i> Content Type <span class="required-star">*</span>
+                                            </label>
+                                            
+                                            {% if entry and entry.content_type == 'about' %}
+                                                <input type="hidden" name="content_type" value="about" id="contentTypeSelect">
+                                                <input type="text" class="form-control-modern" value="📄 About Section (Editing)" disabled style="background: #f1f5f9; color: #4f46e5; font-weight: 600; font-size: 0.95rem;">
+                                                <div class="help-text-modern">
+                                                    <i class="fas fa-info-circle"></i>
+                                                    You are editing the About section. Content type cannot be changed.
+                                                </div>
+                                            {% else %}
+                                                {{ form.content_type }}
+                                                {% if about_exists %}
+                                                    <div class="help-text-modern" style="color: #ef4444; margin-top: 0.5rem;">
+                                                        <i class="fas fa-exclamation-circle"></i>
+                                                        <strong>Note:</strong> About section already exists! You can only add Projects.
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                            
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Choose <strong>"About"</strong> for the about section (only one allowed) or <strong>"Project"</strong> for individual projects
+                                            </div>
+                                            {% if form.content_type.errors %}
+                                                <ul class="errorlist-modern">{{ form.content_type.errors }}</ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   ABOUT PANEL
+                                ======================================== -->
+                                <div id="aboutPanel" class="panel-modern">
+                                    <div class="panel-indicator about">
+                                        <i class="fas fa-info-circle"></i> About Section
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_about_title">
+                                                    <i class="fas fa-heading"></i> About Title <span class="required-star">*</span>
+                                                </label>
+                                                <input type="text" name="about_title" id="id_about_title"
+                                                       class="form-control-modern"
+                                                       placeholder="Enter about title"
+                                                       value="{{ form.about_title.value|default:'' }}">
+                                                {% if form.about_title.errors %}
+                                                    <ul class="errorlist-modern">{{ form.about_title.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_about_image">
+                                                    <i class="fas fa-image"></i> About Image
+                                                </label>
+                                                <div class="file-upload-area-modern" id="aboutDropZone">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <p><strong>Click to upload</strong> or drag and drop</p>
+                                                    <small>JPEG, PNG, GIF (Max 5MB)</small>
+                                                    <input type="file" name="about_image" id="id_about_image" accept="image/*">
+                                                </div>
+                                                <div class="image-preview-modern" id="aboutImagePreview">
+                                                    <img id="aboutPreviewImg" src="#" alt="Preview" />
+                                                </div>
+                                                {% if entry and entry.about_image %}
+                                                    <div class="current-image-modern">
+                                                        <img src="{{ entry.about_image.url }}" alt="Current About Image">
+                                                        <div class="label">Current image</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if form.about_image.errors %}
+                                                    <ul class="errorlist-modern">{{ form.about_image.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_about_content">
+                                                    <i class="fas fa-align-left"></i> About Content <span class="required-star">*</span>
+                                                </label>
+                                                {{ form.about_content }}
+                                                {% if form.about_content.errors %}
+                                                    <ul class="errorlist-modern">{{ form.about_content.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <input type="hidden" name="active" value="processing">
+                                    <input type="hidden" name="category" value="">
+                                </div>
+
+                                <!-- ========================================
+                                   PROJECT PANEL
+                                ======================================== -->
+                                <div id="projectPanel" class="panel-modern">
+                                    <div class="panel-indicator project">
+                                        <i class="fas fa-project-diagram"></i> Project Section
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_project_title">
+                                                    <i class="fas fa-heading"></i> Project Title <span class="required-star">*</span>
+                                                </label>
+                                                <input type="text" name="project_title" id="id_project_title"
+                                                       class="form-control-modern"
+                                                       placeholder="Enter project title"
+                                                       value="{{ form.project_title.value|default:'' }}">
+                                                {% if form.project_title.errors %}
+                                                    <ul class="errorlist-modern">{{ form.project_title.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_project_image">
+                                                    <i class="fas fa-image"></i> Project Image
+                                                </label>
+                                                <div class="file-upload-area-modern" id="projectDropZone">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <p><strong>Click to upload</strong> or drag and drop</p>
+                                                    <small>JPEG, PNG, GIF (Max 5MB)</small>
+                                                    <input type="file" name="project_image" id="id_project_image" accept="image/*">
+                                                </div>
+                                                <div class="image-preview-modern" id="projectImagePreview">
+                                                    <img id="projectPreviewImg" src="#" alt="Preview" />
+                                                </div>
+                                                {% if entry and entry.project_image %}
+                                                    <div class="current-image-modern">
+                                                        <img src="{{ entry.project_image.url }}" alt="Current Project Image">
+                                                        <div class="label">Current image</div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if form.project_image.errors %}
+                                                    <ul class="errorlist-modern">{{ form.project_image.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_project_description">
+                                                    <i class="fas fa-align-left"></i> Project Description
+                                                </label>
+                                                <textarea name="project_description" id="id_project_description"
+                                                          class="form-control-modern"
+                                                          rows="5"
+                                                          placeholder="Enter project description">{{ form.project_description.value|default:'' }}</textarea>
+                                                {% if form.project_description.errors %}
+                                                    <ul class="errorlist-modern">{{ form.project_description.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_project_content">
+                                                    <i class="fas fa-align-left"></i> Project Content <span class="required-star">*</span>
+                                                </label>
+                                                {{ form.project_content }}
+                                                {% if form.project_content.errors %}
+                                                    <ul class="errorlist-modern">{{ form.project_content.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group-modern">
+                                                <label for="id_project_location">
+                                                    <i class="fas fa-location-dot"></i> Project Location <span class="required-star">*</span>
+                                                </label>
+                                                <input type="text" name="project_location" id="id_project_location"
+                                                       class="form-control-modern"
+                                                       placeholder="Enter project location"
+                                                       value="{{ form.project_location.value|default:'' }}">
+                                                {% if form.project_location.errors %}
+                                                    <ul class="errorlist-modern">{{ form.project_location.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group-modern">
+                                                <label for="id_active">
+                                                    <i class="fas fa-circle"></i> Status <span class="required-star">*</span>
+                                                </label>
+                                                {{ form.active }}
+                                                {% if form.active.errors %}
+                                                    <ul class="errorlist-modern">{{ form.active.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group-modern">
+                                                <label for="id_category">
+                                                    <i class="fas fa-tags"></i> Category
+                                                </label>
+                                                {{ form.category }}
+                                                {% if form.category.errors %}
+                                                    <ul class="errorlist-modern">{{ form.category.errors }}</ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Slug -->
+                                <input type="hidden" name="slug" value="{% if entry %}{{ entry.slug }}{% endif %}">
+
+                                <!-- ========================================
+                                   CARD FOOTER
+                                ======================================== -->
+                                <div class="card-footer-modern">
+                                    <a href="{% url 'karunyasparsham_list' %}" class="btn-outline-modern">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                    {% if entry %}
+                                        <a href="{% url 'karunyasparsham_delete' entry.pk %}" class="btn-danger-modern">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    {% endif %}
+                                    <button type="submit" class="btn-primary-modern">
+                                        <i class="fas fa-save"></i>
+                                        {% if entry %}Update{% else %}Save{% endif %} Entry
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- ========================================
+   ADMIN FOOTER
+======================================== -->
+{% include 'admin/adminfooter.html' %}
+
+<!-- ========================================
+   SCRIPTS
+======================================== -->
+<script>
+    (function() {
+        'use strict';
+
+        console.log('🚀 Karunyasparsham form loaded');
+
+        // ========================================
+        // PANEL TOGGLING
+        // ========================================
+        function togglePanels(type) {
+            console.log('🔄 Toggling panel:', type);
+
+            var aboutPanel = document.getElementById('aboutPanel');
+            var projectPanel = document.getElementById('projectPanel');
+
+            if (!aboutPanel || !projectPanel) {
+                console.error('❌ Panels not found');
+                return;
+            }
+
+            aboutPanel.classList.remove('active');
+            aboutPanel.style.display = 'none';
+            projectPanel.classList.remove('active');
+            projectPanel.style.display = 'none';
+
+            if (type === 'about') {
+                aboutPanel.classList.add('active');
+                aboutPanel.style.display = 'block';
+                console.log('✅ About panel shown');
+            } else if (type === 'project') {
+                projectPanel.classList.add('active');
+                projectPanel.style.display = 'block';
+                console.log('✅ Project panel shown');
+            } else {
+                projectPanel.classList.add('active');
+                projectPanel.style.display = 'block';
+                console.log('⚠️ Defaulting to project panel');
+            }
+        }
+
+        // ========================================
+        // INITIAL SETUP
+        // ========================================
+        var contentTypeSelect = document.getElementById('contentTypeSelect');
+        var initialType = 'project';
+
+        if (contentTypeSelect) {
+            if (contentTypeSelect.type === 'hidden') {
+                initialType = contentTypeSelect.value || 'project';
+            } else {
+                initialType = contentTypeSelect.value || 'project';
+                if (!contentTypeSelect.value) {
+                    contentTypeSelect.value = 'project';
+                }
+            }
+        }
+
+        console.log('📋 Initial type:', initialType);
+        togglePanels(initialType);
+
+        // ========================================
+        // CHANGE EVENT
+        // ========================================
+        if (contentTypeSelect && contentTypeSelect.type !== 'hidden') {
+            contentTypeSelect.addEventListener('change', function() {
+                var selectedValue = this.value;
+                console.log('🔄 Selection changed to:', selectedValue);
+
+                var aboutExists = {% if about_exists %}true{% else %}false{% endif %};
+                var isEditingAbout = {% if entry and entry.content_type == 'about' %}true{% else %}false{% endif %};
+
+                if (selectedValue === 'about' && aboutExists && !isEditingAbout) {
+                    alert('❌ About section already exists! You can only have one About section.');
+                    this.value = 'project';
+                    togglePanels('project');
+                    return;
+                }
+
+                togglePanels(selectedValue);
+            });
+        }
+
+        // ========================================
+        // IMAGE PREVIEW
+        // ========================================
+        function setupImagePreview(inputId, previewId, imgId) {
+            var input = document.getElementById(inputId);
+            var preview = document.getElementById(previewId);
+            var img = document.getElementById(imgId);
+
+            if (!input || !preview || !img) {
+                console.warn('⚠️ Image preview elements not found for:', inputId);
+                return;
+            }
+
+            input.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        img.src = e.target.result;
+                        preview.classList.add('active');
+                        preview.style.display = 'block';
+                        console.log('✅ Image preview loaded for:', inputId);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                } else {
+                    preview.classList.remove('active');
+                    preview.style.display = 'none';
+                    img.src = '#';
+                }
+            });
+        }
+
+        setupImagePreview('id_about_image', 'aboutImagePreview', 'aboutPreviewImg');
+        setupImagePreview('id_project_image', 'projectImagePreview', 'projectPreviewImg');
+
+        // ========================================
+        // FILE UPLOAD DRAG & DROP
+        // ========================================
+        function setupDragDrop(dropZoneId, inputId) {
+            var dropZone = document.getElementById(dropZoneId);
+            var fileInput = document.getElementById(inputId);
+
+            if (!dropZone || !fileInput) {
+                console.warn('⚠️ Drag drop elements not found for:', dropZoneId);
+                return;
+            }
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('dragover');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('dragover');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                var dt = e.dataTransfer;
+                var files = dt.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    var event = new Event('change', { bubbles: true });
+                    fileInput.dispatchEvent(event);
+                }
+            }
+        }
+
+        setupDragDrop('aboutDropZone', 'id_about_image');
+        setupDragDrop('projectDropZone', 'id_project_image');
+
+        // ========================================
+        // CKEDITOR FIX
+        // ========================================
+        if (typeof CKEDITOR !== 'undefined') {
+            setTimeout(function() {
+                try {
+                    for (var name in CKEDITOR.instances) {
+                        var editor = CKEDITOR.instances[name];
+                        if (editor) {
+                            editor.config.removePlugins = 'exportpdf,clipboard';
+                            console.log('✅ CKEditor fixed for:', name);
+                        }
+                    }
+                } catch(e) {
+                    console.log('CKEditor fix applied');
+                }
+            }, 500);
+        }
+
+        // ========================================
+        // FORM VALIDATION
+        // ========================================
+        var form = document.getElementById('karunyasparshamForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                var contentType = contentTypeSelect ? contentTypeSelect.value : 'project';
+
+                if (contentType === 'about') {
+                    var aboutTitle = document.getElementById('id_about_title');
+                    if (!aboutTitle || !aboutTitle.value.trim()) {
+                        alert('❌ Please enter an About Title');
+                        if (aboutTitle) {
+                            aboutTitle.focus();
+                            aboutTitle.classList.add('is-invalid');
+                        }
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (typeof CKEDITOR !== 'undefined') {
+                        for (var name in CKEDITOR.instances) {
+                            var editor = CKEDITOR.instances[name];
+                            if (editor && editor.name === 'about_content') {
+                                var data = editor.getData();
+                                if (!data || data.trim() === '' || data.trim() === '<p>&nbsp;</p>') {
+                                    alert('❌ Please enter About Content');
+                                    editor.focus();
+                                    e.preventDefault();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                } else if (contentType === 'project') {
+                    var projectTitle = document.getElementById('id_project_title');
+                    if (!projectTitle || !projectTitle.value.trim()) {
+                        alert('❌ Please enter a Project Title');
+                        if (projectTitle) {
+                            projectTitle.focus();
+                            projectTitle.classList.add('is-invalid');
+                        }
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    var projectLocation = document.getElementById('id_project_location');
+                    if (!projectLocation || !projectLocation.value.trim()) {
+                        alert('❌ Please enter a Project Location');
+                        if (projectLocation) {
+                            projectLocation.focus();
+                            projectLocation.classList.add('is-invalid');
+                        }
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (typeof CKEDITOR !== 'undefined') {
+                        for (var name in CKEDITOR.instances) {
+                            var editor = CKEDITOR.instances[name];
+                            if (editor && editor.name === 'project_content') {
+                                var data = editor.getData();
+                                if (!data || data.trim() === '' || data.trim() === '<p>&nbsp;</p>') {
+                                    alert('❌ Please enter Project Content');
+                                    editor.focus();
+                                    e.preventDefault();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                console.log('✅ Form validation passed');
+                return true;
+            });
+        }
+
+        // ========================================
+        // REAL-TIME VALIDATION CLEAR
+        // ========================================
+        document.querySelectorAll('.form-control-modern').forEach(function(input) {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('is-invalid')) {
+                    this.classList.remove('is-invalid');
+                }
+            });
+        });
+
+        console.log('✅ Karunyasparsham form ready');
+
+        window.togglePanels = togglePanels;
+
+    })();
+</script>
+
+</body>
+</html>

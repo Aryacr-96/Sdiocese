@@ -38,8 +38,8 @@
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
             --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
             --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
-            --radius-lg: 16px;
-            --radius-md: 10px;
+            --radius-lg: 20px;
+            --radius-md: 12px;
             --radius-pill: 9999px;
         }
 
@@ -53,7 +53,7 @@
             background-color: var(--bg-main);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -63,24 +63,25 @@
             min-height: 100vh;
         }
 
+        /* ----- EXPANDED CONTENT WRAPPER ----- */
         .content-wrapper {
             flex: 1;
-            max-width: 1200px;
-            margin: 1.5rem auto;
-            padding: 0 1.5rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
             width: 100%;
         }
 
-        /* Page Header */
+        /* ----- Page Header (Expanded) ----- */
         .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
             background: var(--card-bg);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem 2rem;
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
@@ -88,7 +89,7 @@
         .content-header .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: wrap;
         }
         .content-header .header-left .breadcrumb-wrap {
@@ -99,7 +100,7 @@
             background: transparent;
             padding: 0;
             margin: 0;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
         .content-header .header-left .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
             content: "›";
@@ -121,66 +122,66 @@
         .content-header h1 {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--text-main);
             letter-spacing: -0.02em;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin: 0;
         }
         .content-header h1 i {
             color: var(--success);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
         }
         .content-header .header-stats {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             align-items: center;
             flex-wrap: wrap;
         }
         .content-header .header-stats .stat-badge {
             background: var(--success-light);
-            padding: 0.3rem 1rem;
+            padding: 0.4rem 1.2rem;
             border-radius: var(--radius-pill);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--success);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .content-header .header-stats .stat-badge i {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .btn-primary-custom {
             background: var(--primary);
             border: none;
             border-radius: var(--radius-pill);
-            padding: 0.5rem 1.5rem;
+            padding: 0.6rem 2rem;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #ffffff;
             transition: all 0.2s ease;
             box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
             cursor: pointer;
         }
         .btn-primary-custom:hover {
             background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
             color: #ffffff;
         }
         .btn-primary-custom i {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
-        /* Card */
+        /* ----- Card (Expanded) ----- */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
@@ -197,10 +198,10 @@
             overflow-x: auto;
         }
 
-        /* Table */
+        /* ----- Table (Expanded) ----- */
         .table {
             margin-bottom: 0;
-            font-size: 0.82rem;
+            font-size: 0.9rem;
         }
         .table thead {
             background: #f8fafc;
@@ -209,11 +210,11 @@
         .table thead th {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            padding: 0.7rem 1rem;
+            padding: 1rem 1.5rem;
             border: none;
             white-space: nowrap;
         }
@@ -228,55 +229,74 @@
             background: #f8fafc;
         }
         .table tbody td {
-            padding: 0.7rem 1rem;
+            padding: 1rem 1.5rem;
             vertical-align: middle;
             border: none;
         }
 
-        /* Designation Badge */
+        /* ----- Designation Badge (Expanded) ----- */
         .designation-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.4rem 1.2rem;
+            gap: 10px;
+            padding: 0.5rem 1.4rem;
             border-radius: var(--radius-pill);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
             background: var(--success-light);
             color: var(--success);
         }
         .designation-badge i {
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
-        /* Office Bearers Count */
+        /* ----- Office Bearers Count (Expanded) ----- */
         .bearer-count {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.7rem;
+            gap: 6px;
+            font-size: 0.8rem;
             color: var(--text-muted);
             background: #f1f5f9;
-            padding: 0.15rem 0.7rem;
+            padding: 0.25rem 0.9rem;
             border-radius: var(--radius-pill);
         }
         .bearer-count i {
-            font-size: 0.6rem;
+            font-size: 0.7rem;
         }
 
-        /* Action Buttons */
+        /* ----- Status Badge (Expanded) ----- */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-badge.active {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        .status-badge.inactive {
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
+
+        /* ----- Action Buttons (Expanded) ----- */
         .action-buttons {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
         }
         .action-btn {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 0.3rem 0.7rem;
+            gap: 6px;
+            padding: 0.4rem 1rem;
             border-radius: var(--radius-pill);
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
@@ -284,7 +304,7 @@
             cursor: pointer;
         }
         .action-btn i {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
         .action-btn.view {
             background: var(--info-light);
@@ -293,7 +313,7 @@
         .action-btn.view:hover {
             background: #0891b2;
             color: #ffffff;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
         .action-btn.edit {
             background: var(--warning-light);
@@ -302,7 +322,7 @@
         .action-btn.edit:hover {
             background: #b45309;
             color: #ffffff;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
         .action-btn.delete {
             background: var(--danger-light);
@@ -311,35 +331,35 @@
         .action-btn.delete:hover {
             background: var(--danger);
             color: #ffffff;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
-        /* Empty State */
+        /* ----- Empty State (Expanded) ----- */
         .empty-state {
-            padding: 3rem 1.5rem;
+            padding: 4rem 2rem;
             text-align: center;
         }
         .empty-state i {
-            font-size: 3rem;
+            font-size: 4rem;
             color: #cbd5e1;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         .empty-state h5 {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: var(--text-main);
         }
         .empty-state p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            max-width: 400px;
-            margin: 0.5rem auto 1.2rem;
+            font-size: 1rem;
+            max-width: 450px;
+            margin: 0.5rem auto 1.5rem;
         }
 
-        /* Table Footer */
+        /* ----- Table Footer (Expanded) ----- */
         .table-footer {
-            padding: 0.7rem 1rem;
+            padding: 1rem 1.5rem;
             background: #f8fafc;
             border-top: 1px solid var(--border-color);
             display: flex;
@@ -349,11 +369,11 @@
             gap: 0.5rem;
         }
         .table-footer .info-text {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        /* ===== DELETE MODAL ===== */
+        /* ===== DELETE MODAL (Expanded) ===== */
         .modal-content {
             border-radius: var(--radius-lg);
             border: none;
@@ -361,15 +381,15 @@
         }
         .modal-header {
             border-bottom: 2px solid var(--danger-light);
-            padding: 1.2rem 1.5rem;
+            padding: 1.5rem 2rem;
         }
         .modal-header .modal-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .modal-header .modal-title i {
             color: var(--danger);
@@ -381,20 +401,20 @@
             transform: rotate(90deg);
         }
         .modal-body {
-            padding: 1.5rem;
+            padding: 2rem;
         }
         .modal-body .delete-icon-wrapper {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: var(--danger-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.2rem;
         }
         .modal-body .delete-icon-wrapper i {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--danger);
         }
         .modal-body h5 {
@@ -402,31 +422,47 @@
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
+            font-size: 1.1rem;
         }
         .modal-body .designation-name-display {
             font-weight: 700;
             color: var(--danger);
             background: var(--danger-light);
-            padding: 0.2rem 0.8rem;
+            padding: 0.3rem 1rem;
             border-radius: var(--radius-pill);
             display: inline-block;
+            font-size: 1.1rem;
         }
         .modal-body p {
             color: var(--text-muted);
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 0;
+        }
+        .modal-body .warning-text {
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .modal-body .badge-warning-custom {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            background: var(--danger-light);
+            color: var(--danger);
+            font-size: 0.85rem;
+            font-weight: 600;
         }
         .modal-footer {
             border-top: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
-            gap: 10px;
+            padding: 1.2rem 2rem;
+            gap: 12px;
         }
         .modal-footer .btn {
             border-radius: var(--radius-pill);
-            padding: 0.5rem 1.8rem;
+            padding: 0.6rem 2rem;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
         }
         .modal-footer .btn-secondary {
@@ -452,12 +488,16 @@
             margin-right: 6px;
         }
 
-        /* Responsive */
+        /* ----- Responsive ----- */
         @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 0 1.5rem;
+                margin: 1.5rem auto;
+            }
             .content-header {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 1rem;
+                padding: 1.2rem 1.5rem;
             }
             .content-header .header-stats {
                 width: 100%;
@@ -466,12 +506,11 @@
         }
         @media (max-width: 768px) {
             .content-wrapper {
-                padding: 0 0.8rem;
+                padding: 0 1rem;
                 margin: 1rem auto;
-                max-width: 100%;
             }
             .content-header {
-                padding: 0.8rem 1rem;
+                padding: 1rem 1.2rem;
             }
             .content-header .header-left {
                 width: 100%;
@@ -480,71 +519,136 @@
             .content-header .header-left .breadcrumb-wrap {
                 order: 2;
                 width: 100%;
-                margin-top: 4px;
+                margin-top: 6px;
             }
             .content-header .header-left .breadcrumb-wrap .breadcrumb {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
             }
             .content-header h1 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .content-header .header-stats .stat-badge {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.7rem;
+                font-size: 0.75rem;
+                padding: 0.3rem 0.8rem;
             }
             .table tbody td {
-                padding: 0.6rem 0.7rem;
+                padding: 0.8rem 1rem;
             }
             .action-buttons {
                 flex-direction: column;
-                gap: 3px;
+                gap: 4px;
             }
             .action-btn {
                 justify-content: center;
                 width: 100%;
-                padding: 0.25rem 0.6rem;
-                font-size: 0.6rem;
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
             }
             .table-footer {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                padding: 0.8rem 1rem;
+            }
+            .designation-badge {
+                font-size: 0.8rem;
+                padding: 0.35rem 1rem;
+            }
+            .status-badge {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.8rem;
+            }
+            .bearer-count {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .modal-body .delete-icon-wrapper {
+                width: 60px;
+                height: 60px;
+            }
+            .modal-body .delete-icon-wrapper i {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+                margin: 0.8rem auto;
+            }
+            .content-header {
+                padding: 0.8rem 1rem;
+            }
+            .content-header h1 {
+                font-size: 1.1rem;
+            }
+            .content-header h1 i {
+                font-size: 1.2rem;
+            }
+            .content-header .header-left .breadcrumb-wrap .breadcrumb {
+                font-size: 0.7rem;
+            }
+            .content-header .header-stats {
+                flex-wrap: wrap;
+            }
+            .btn-primary-custom {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .btn-primary-custom i {
+                font-size: 0.8rem;
+            }
+            .table thead th {
+                font-size: 0.65rem;
                 padding: 0.6rem 0.8rem;
+            }
+            .table tbody td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
             }
             .designation-badge {
                 font-size: 0.7rem;
-                padding: 0.3rem 0.8rem;
+                padding: 0.25rem 0.8rem;
+            }
+            .designation-badge i {
+                font-size: 0.8rem;
+            }
+            .status-badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.6rem;
+            }
+            .bearer-count {
+                font-size: 0.65rem;
+                padding: 0.15rem 0.6rem;
+            }
+            .action-btn {
+                font-size: 0.65rem;
+                padding: 0.25rem 0.6rem;
+            }
+            .modal-body {
+                padding: 1.5rem;
+            }
+            .modal-footer .btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 1.5rem;
             }
             .modal-body .delete-icon-wrapper {
                 width: 55px;
                 height: 55px;
             }
             .modal-body .delete-icon-wrapper i {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
-        }
-        @media (max-width: 576px) {
-            .content-header h1 {
-                font-size: 1rem;
+            .empty-state {
+                padding: 2.5rem 1.5rem;
             }
-            .content-header .header-stats {
-                flex-wrap: wrap;
+            .empty-state i {
+                font-size: 3rem;
             }
-            .table thead th {
-                font-size: 0.6rem;
-                padding: 0.5rem 0.6rem;
+            .empty-state h5 {
+                font-size: 1.1rem;
             }
-            .table tbody td {
-                padding: 0.5rem 0.6rem;
-                font-size: 0.7rem;
-            }
-            .designation-badge {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.6rem;
-            }
-            .modal-footer .btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 1.2rem;
+            .empty-state p {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -594,18 +698,18 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th style="width: 60px;">#</th>
                             <th>Designation Name</th>
                             <th>Office Bearers</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th style="width: 180px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for designation in designations %}
                         <tr>
                             <td>
-                                <span class="fw-bold text-muted">{{ forloop.counter }}</span>
+                                <span class="fw-bold text-muted" style="font-size: 0.95rem;">{{ forloop.counter }}</span>
                             </td>
                             <td>
                                 <span class="designation-badge">
@@ -621,20 +725,20 @@
                             </td>
                             <td>
                                 {% if designation.officebearer_set.count > 0 %}
-                                    <span class="badge bg-success bg-opacity-10 text-success" style="font-weight: 600; padding: 0.3rem 0.8rem; border-radius: var(--radius-pill);">
+                                    <span class="status-badge active">
                                         <i class="fas fa-check-circle"></i> Active
                                     </span>
                                 {% else %}
-                                    <span class="badge bg-secondary bg-opacity-10 text-secondary" style="font-weight: 600; padding: 0.3rem 0.8rem; border-radius: var(--radius-pill);">
+                                    <span class="status-badge inactive">
                                         <i class="fas fa-clock"></i> No Bearers
                                     </span>
                                 {% endif %}
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{% url 'edit_designation' designation.id %}" class="action-btn edit">
+                                    <!-- <a href="{% url 'edit_designation' designation.id %}" class="action-btn edit">
                                         <i class="fas fa-edit"></i> Edit
-                                    </a>
+                                    </a> -->
                                     <a href="#" class="action-btn delete" 
                                        data-bs-toggle="modal" 
                                        data-bs-target="#deleteModal"
@@ -699,12 +803,12 @@
                 <h5>Are you sure you want to delete</h5>
                 <h5 class="designation-name-display" id="modalDesignationName">Designation Name</h5>
                 <p class="mt-3">This action cannot be undone. All data associated with this designation will be permanently removed.</p>
-                <p class="text-danger mt-2" style="font-size: 0.85rem;">
+                <p class="warning-text mt-2">
                     <i class="fas fa-exclamation-circle"></i>
                     Note: This will also remove this designation from all office bearers.
                 </p>
-                <div id="bearerWarning" class="mt-2" style="display: none;">
-                    <span class="badge bg-danger" style="padding: 0.4rem 1rem; font-size: 0.75rem;">
+                <div id="bearerWarning" class="mt-3" style="display: none;">
+                    <span class="badge-warning-custom">
                         <i class="fas fa-users"></i>
                         This designation has <span id="bearerCount">0</span> office bearer(s) assigned
                     </span>

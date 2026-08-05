@@ -95,35 +95,54 @@
 </style>
 
 <section class="kalpana-wrapper">
-
-    <div class="kalpana-main">
-
-        <div class="kalpana-title">Kalpana</div>
-
-        <div class="kalpana-grid">
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-            <a href="{% url 'kalpanadetail' %}" class="kalpana-card">
-           <h3>Kalpana 2026</h3></a>
-
-        </div>
-
+    <div class="kalpana-header">
+        <h1 class="kalpana-title">Kalpana</h1>
+        <!-- <p class="kalpana-subtitle">Official documents, notices and publications from the Diocese</p>
+        <div class="kalpana-stats">
+            <i class="fas fa-file-alt"></i>
+            {{ kalpanas|length }} Kalpana{{ kalpanas|length|pluralize }} available
+        </div> -->
     </div>
 
+    <div class="kalpana-grid">
+        {% if kalpanas %}
+            {% for kalpana in kalpanas %}
+                <a href="{% url 'kalpanadetail' kalpana.slug %}" class="kalpana-card">
+                    <!-- <div class="card-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div> -->
+                    <h3>{{ kalpana.title }}</h3>
+                    <div class="card-meta">
+                        <!-- <span>
+                            <i class="fas fa-file-alt"></i>
+                            {{ kalpana.files.count }} document{{ kalpana.files.count|pluralize }}
+                        </span> -->
+                        <!-- <span>
+                            <i class="far fa-calendar-alt"></i>
+                            {{ kalpana.created_at|date:"M d, Y" }}
+                        </span> -->
+                        <!-- {% if kalpana.files.all %}
+                            {% with kalpana.files.all|first as first_file %}
+                                <span class="file-badge">
+                                    <i class="fas fa-{% if first_file.file_type == 'pdf' %}file-pdf{% elif first_file.file_type == 'excel' %}file-excel{% elif first_file.file_type == 'word' %}file-word{% else %}file{% endif %}"></i>
+                                    {{ first_file.file_type|default:'file'|upper }}
+                                </span>
+                            {% endwith %}
+                        {% endif %} -->
+                    </div>
+                    <!-- <span class="card-footer-link">
+                        View Details <i class="fas fa-arrow-right"></i>
+                    </span> -->
+                </a>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-scroll"></i>
+                <h3>No Kalpana Found</h3>
+                <p>No official documents or notices are available at this time.</p>
+            </div>
+        {% endif %}
+    </div>
 </section>
 
 </div>

@@ -1,0 +1,1106 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Kalpana · {{ kalpana.title }}</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           EDIT KALPANA – FULL WIDTH MODERN DESIGN
+        ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            font-family: 'Inter', sans-serif;
+            color: #0f172a;
+        }
+
+        /* Content wrapper - FULL WIDTH */
+        .content-wrapper {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Content header styling */
+        .content-header-custom {
+            padding: 2rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #e76514;
+            font-size: 2rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom .separator {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #e76514;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #c9500f;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .content-header-custom .breadcrumb-custom .active-item i {
+            color: #e76514;
+        }
+
+        /* Main card - FULL WIDTH */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #ffffff;
+            transition: all 0.25s ease;
+            width: 100%;
+        }
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .card-premium .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+        .card-premium .card-header .header-left i {
+            color: #e76514;
+            font-size: 1.2rem;
+        }
+        .card-premium .card-header .badge-edit {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: #e76514;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-premium .card-header .badge-edit i {
+            color: #ffffff;
+        }
+        .card-premium .card-body {
+            padding: 2.5rem 2.5rem;
+        }
+
+        /* Form groups */
+        .form-group-modern {
+            margin-bottom: 2rem;
+        }
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group-modern label i {
+            color: #e76514;
+            width: 22px;
+            font-size: 1rem;
+        }
+        .form-group-modern label .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Form controls */
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.85rem 1.4rem;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            width: 100%;
+            background: #ffffff;
+        }
+        .form-control-modern:focus {
+            border-color: #e76514;
+            box-shadow: 0 0 0 4px rgba(231, 101, 20, 0.08);
+            outline: none;
+        }
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        textarea.form-control-modern {
+            min-height: 80px;
+            resize: vertical;
+            background: #ffffff;
+        }
+
+        /* Django form field overrides */
+        .form-control-modern-django {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 0.85rem 1.4rem !important;
+            font-size: 0.95rem !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            width: 100% !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 50px !important;
+            color: #1e293b !important;
+            background: #ffffff !important;
+        }
+        .form-control-modern-django:focus {
+            border-color: #e76514 !important;
+            box-shadow: 0 0 0 4px rgba(231, 101, 20, 0.08) !important;
+            outline: none !important;
+            background: #ffffff !important;
+        }
+        textarea.form-control-modern-django {
+            min-height: 150px !important;
+            resize: vertical !important;
+            background: #ffffff !important;
+        }
+        input.form-control-modern-django {
+            background: #ffffff !important;
+        }
+
+        /* Section headings */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0f172a;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-heading-modern i {
+            color: #e76514;
+            font-size: 1.3rem;
+            width: 30px;
+            text-align: center;
+        }
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* Error messages */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.85rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .errorlist-modern li {
+            padding: 8px 16px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .errorlist-modern li::before {
+            content: "⚠";
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            padding: 0.7rem 2.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: #e76514;
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem 3.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ffffff;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(231, 101, 20, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+        .btn-primary-modern:hover {
+            background: #c9500f;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(231, 101, 20, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-modern:active {
+            transform: scale(0.97);
+        }
+
+        /* Card footer */
+        .card-footer-modern {
+            padding: 2rem 0 0 0;
+            background: transparent;
+            border-top: none;
+            display: flex;
+            gap: 20px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        /* Help text */
+        .help-text-modern {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.4rem;
+            font-weight: 450;
+        }
+        .help-text-modern i {
+            color: #e76514;
+            margin-right: 4px;
+        }
+
+        /* Pair Card */
+        .pair-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: 0.2s;
+        }
+        .pair-card:hover {
+            border-color: #e76514;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .pair-card .pair-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .pair-card .pair-header .pair-number {
+            font-weight: 700;
+            color: #e76514;
+            font-size: 0.85rem;
+            background: #fef3ee;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+        }
+        .pair-card .pair-header .remove-pair-btn {
+            background: #fef2f2;
+            color: #dc2626;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .pair-card .pair-header .remove-pair-btn:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .pair-card .pair-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .pair-card .pair-body textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .pair-file-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #fff;
+            position: relative;
+        }
+        .pair-file-area:hover {
+            border-color: #e76514;
+            background: #fef3ee;
+        }
+        .pair-file-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .pair-file-area small {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .pair-file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.8rem;
+        }
+        .pair-file-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            padding: 0.3rem 0.8rem 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            border: 1px solid #e2e8f0;
+        }
+        .pair-file-pill i {
+            color: #e76514;
+        }
+        .pair-file-pill .remove-file-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0 0.2rem;
+        }
+        .pair-file-pill .remove-file-btn:hover {
+            color: #dc2626;
+        }
+
+        .btn-add-more {
+            background: #fef3ee;
+            color: #e76514;
+            border: 1.5px dashed #e76514;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-add-more:hover {
+            background: #e76514;
+            color: #fff;
+            border-color: #e76514;
+        }
+
+        /* Existing Files Section */
+        .existing-files-section {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .existing-files-section .section-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .existing-files-section .section-title i {
+            color: #e76514;
+        }
+        .existing-files-section .file-count {
+            background: #fef3ee;
+            color: #e76514;
+            padding: 0.1rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+
+        .existing-file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            padding: 0.7rem 1rem;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 0.5rem;
+            transition: 0.2s;
+        }
+        .existing-file-item:hover {
+            border-color: #e76514;
+        }
+        .existing-file-item i {
+            color: #e76514;
+            font-size: 1.1rem;
+        }
+        .existing-file-item .file-info {
+            flex: 1;
+        }
+        .existing-file-item .file-info .file-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .existing-file-item .file-info .file-desc {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        .existing-file-item .file-info .file-meta {
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
+        .existing-file-item .file-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .existing-file-item .file-actions .btn-sm {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .existing-file-item .file-actions .btn-danger-sm {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .existing-file-item .file-actions .btn-danger-sm:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+        .existing-file-item .file-actions .btn-view-sm {
+            background: #fef3ee;
+            color: #e76514;
+        }
+        .existing-file-item .file-actions .btn-view-sm:hover {
+            background: #e76514;
+            color: #fff;
+        }
+        .existing-file-item.deleted {
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
+        .existing-file-item.deleted .file-actions {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 0 1.5rem;
+            }
+            .card-premium .card-body {
+                padding: 2rem;
+            }
+            .card-premium .card-header {
+                padding: 1.2rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.5rem;
+            }
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer-modern {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-footer-modern .btn-outline-modern,
+            .card-footer-modern .btn-primary-modern {
+                width: 100%;
+                justify-content: center;
+            }
+            .form-control-modern {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            .form-control-modern-django {
+                padding: 0.7rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                min-height: 44px !important;
+            }
+            .existing-file-item {
+                flex-wrap: wrap;
+            }
+            .existing-file-item .file-actions {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+            }
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .content-header-custom .header-title h1 i {
+                font-size: 1.4rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .card-premium .card-header {
+                padding: 0.8rem 1.2rem;
+            }
+            .pair-card {
+                padding: 1rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 2rem;
+                font-size: 0.9rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 2rem;
+                font-size: 0.9rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+                margin: 1.5rem 0 0.8rem 0;
+            }
+            .section-heading-modern i {
+                font-size: 1.1rem;
+                width: 24px;
+            }
+            textarea.form-control-modern-django {
+                min-height: 100px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+
+    <!-- ========================================
+       CUSTOM PAGE HEADER
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-scroll"></i>
+                    Edit Kalpana
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span class="separator">›</span>
+                <a href="{% url 'kalpana_list' %}">
+                    <i class="fas fa-scroll"></i> Kalpana
+                </a>
+                <span class="separator">›</span>
+                <span class="active-item">
+                    <i class="fas fa-edit"></i> Edit
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       MAIN CARD - FULL WIDTH
+    ======================================== -->
+    <div class="card card-premium">
+        <div class="card-header">
+            <div class="header-left">
+                <i class="fas fa-clipboard-list"></i>
+                Edit Kalpana — <span class="text-muted font-weight-normal">{{ kalpana.title }}</span>
+            </div>
+            <span class="badge-edit">
+                <i class="fas fa-edit"></i> Edit Mode
+            </span>
+        </div>
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data" id="kalpanaForm" action="{% url 'kalpana_update' kalpana.slug %}">
+                {% csrf_token %}
+
+                <!-- ========================================
+                   BASIC INFORMATION
+                ======================================== -->
+                <div class="section-heading-modern">
+                    <i class="fas fa-info-circle"></i> Basic Information
+                    <span class="line-spacer"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group-modern">
+                            <label for="{{ form.title.id_for_label }}">
+                                <i class="fas fa-heading"></i> Title <span class="required-star">*</span>
+                            </label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                            <ul class="errorlist-modern">{{ form.title.errors }}</ul>
+                            {% endif %}
+                            <div class="help-text-modern">
+                                <i class="fas fa-info-circle"></i> Enter the title for this Kalpana
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================
+                   EXISTING FILES
+                ======================================== -->
+                <div class="section-heading-modern">
+                    <i class="fas fa-file-alt"></i> Existing Files
+                    <span class="line-spacer"></span>
+                </div>
+
+                <div class="existing-files-section">
+                    <div class="section-title">
+                        <i class="fas fa-file-alt"></i>
+                        Attached Files
+                        <span class="file-count">{{ existing_files|length }} file{{ existing_files|pluralize }}</span>
+                    </div>
+                    
+                    {% if existing_files %}
+                        {% for file in existing_files %}
+                        <div class="existing-file-item" id="file-item-{{ file.id }}">
+                            <i class="fas fa-{% if file.file_type == 'pdf' %}file-pdf{% elif file.file_type == 'word' %}file-word{% elif file.file_type == 'excel' %}file-excel{% else %}file{% endif %}"></i>
+                            <div class="file-info">
+                                <div class="file-name">{{ file.file_name }}</div>
+                                <div class="file-desc">{{ file.description|default:"No description" }}</div>
+                                <div class="file-meta">
+                                    <span>{{ file.file_size|default:"Unknown size" }}</span>
+                                    <span class="mx-1">·</span>
+                                    <span>Uploaded: {{ file.uploaded_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                {% if file.file %}
+                                <a href="{{ file.file.url }}" target="_blank" class="btn-sm btn-view-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                {% endif %}
+                                <button type="button" class="btn-sm btn-danger-sm" onclick="deleteFile({{ file.id }})">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="color: #94a3b8; text-align: center; padding: 1rem;">
+                            <i class="fas fa-info-circle"></i> No files attached to this Kalpana yet.
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- ========================================
+                   ADD NEW FILES
+                ======================================== -->
+                <div class="section-heading-modern">
+                    <i class="fas fa-plus-circle"></i> Add New Files
+                    <span class="line-spacer"></span>
+                </div>
+
+                <div class="form-group-modern">
+                    <div class="help-text-modern" style="margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle"></i> Add new descriptions and files below.
+                    </div>
+
+                    <div id="pairsContainer">
+                        <!-- Pair 1 (default) -->
+                        <div class="pair-card" data-pair-index="0">
+                            <div class="pair-header">
+                                <span class="pair-number"><i class="fas fa-hashtag"></i> New Description #1</span>
+                                <button type="button" class="remove-pair-btn" onclick="removePair(this)" style="display:none;">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </div>
+                            <div class="pair-body">
+                                <textarea class="form-control-modern form-control-modern-django pair-description" 
+                                          name="descriptions[]" 
+                                          placeholder="Enter description for this Kalpana..." 
+                                          rows="2"></textarea>
+                                
+                                <div class="pair-file-area">
+                                    <i class="fas fa-cloud-upload-alt" style="color: #94a3b8; display: block; margin-bottom: 4px;"></i>
+                                    <small><strong>Click to upload</strong> or drag and drop files for this description</small>
+                                    <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
+                                    <input type="file" class="pair-file-input" name="files" multiple 
+                                           accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
+                                           onchange="handlePairFiles(this)">
+                                </div>
+                                <div class="pair-file-list" id="fileList_0"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-add-more" onclick="addPair()">
+                        <i class="fas fa-plus-circle"></i> Add More Description + Files
+                    </button>
+                </div>
+
+                <!-- Hidden field for deleted file IDs -->
+                <input type="hidden" name="deleted_files" id="deletedFiles" value="">
+
+                <!-- ========================================
+                   CARD FOOTER
+                ======================================== -->
+                <div class="card-footer-modern">
+                    <a href="{% url 'kalpana_list' %}" class="btn-outline-modern">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn-primary-modern">
+                        <i class="fas fa-save"></i> Update Kalpana
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let pairCounter = 1;
+    let deletedFileIds = [];
+
+    // ============================================================
+    // ADD PAIR
+    // ============================================================
+    function addPair() {
+        const container = document.getElementById('pairsContainer');
+        const newIndex = pairCounter;
+        pairCounter++;
+
+        const div = document.createElement('div');
+        div.className = 'pair-card';
+        div.dataset.pairIndex = newIndex;
+        div.innerHTML = `
+            <div class="pair-header">
+                <span class="pair-number"><i class="fas fa-hashtag"></i> New Description #${newIndex + 1}</span>
+                <button type="button" class="remove-pair-btn" onclick="removePair(this)">
+                    <i class="fas fa-trash-alt"></i> Remove
+                </button>
+            </div>
+            <div class="pair-body">
+                <textarea class="form-control-modern form-control-modern-django pair-description" 
+                          name="descriptions[]" 
+                          placeholder="Enter description for this Kalpana..." 
+                          rows="2"></textarea>
+                
+                <div class="pair-file-area">
+                    <i class="fas fa-cloud-upload-alt" style="color: #94a3b8; display: block; margin-bottom: 4px;"></i>
+                    <small><strong>Click to upload</strong> or drag and drop files for this description</small>
+                    <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
+                    <input type="file" class="pair-file-input" name="files" multiple 
+                           accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
+                           onchange="handlePairFiles(this)">
+                </div>
+                <div class="pair-file-list" id="fileList_${newIndex}"></div>
+            </div>
+        `;
+        container.appendChild(div);
+        updatePairNumbers();
+    }
+
+    // ============================================================
+    // REMOVE PAIR
+    // ============================================================
+    function removePair(btn) {
+        const pairCard = btn.closest('.pair-card');
+        if (document.querySelectorAll('.pair-card').length > 1) {
+            if (confirm('Remove this description and its files?')) {
+                pairCard.remove();
+                updatePairNumbers();
+            }
+        } else {
+            alert('You must have at least one description.');
+        }
+    }
+
+    // ============================================================
+    // UPDATE PAIR NUMBERS
+    // ============================================================
+    function updatePairNumbers() {
+        const pairs = document.querySelectorAll('.pair-card');
+        pairs.forEach((pair, index) => {
+            const numberSpan = pair.querySelector('.pair-number');
+            if (numberSpan) {
+                numberSpan.innerHTML = `<i class="fas fa-hashtag"></i> New Description #${index + 1}`;
+            }
+            const fileList = pair.querySelector('.pair-file-list');
+            if (fileList) {
+                fileList.id = `fileList_${index}`;
+            }
+            pair.dataset.pairIndex = index;
+        });
+    }
+
+    // ============================================================
+    // HANDLE FILES FOR A PAIR
+    // ============================================================
+    function handlePairFiles(input) {
+        const pairCard = input.closest('.pair-card');
+        const fileListDiv = pairCard.querySelector('.pair-file-list');
+        
+        fileListDiv.innerHTML = '';
+
+        const files = input.files;
+        if (files.length === 0) {
+            fileListDiv.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const pill = document.createElement('span');
+            pill.className = 'pair-file-pill';
+            const icon = getFileIcon(file.name);
+            const size = (file.size / 1024).toFixed(1) + ' KB';
+            pill.innerHTML = `
+                <i class="${icon}"></i>
+                ${escapeHtml(file.name)}
+                <span style="color:#94a3b8; font-size:0.7rem;">(${size})</span>
+                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this)">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            `;
+            fileListDiv.appendChild(pill);
+        }
+    }
+
+    // ============================================================
+    // REMOVE FILE FROM PAIR
+    // ============================================================
+    function removeFileFromPair(btn) {
+        const pill = btn.closest('.pair-file-pill');
+        const fileList = pill.closest('.pair-file-list');
+        
+        pill.remove();
+        
+        if (fileList.children.length === 0) {
+            fileList.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
+        }
+    }
+
+    // ============================================================
+    // DELETE FILE - Uses AJAX to delete immediately
+    // ============================================================
+    function deleteFile(fileId) {
+        if (confirm('Are you sure you want to remove this file?')) {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            fetch(`/admin/delete-file/${fileId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (response.ok) {
+                    const fileItem = document.getElementById('file-item-' + fileId);
+                    if (fileItem) {
+                        fileItem.style.transition = 'all 0.3s ease';
+                        fileItem.style.opacity = '0';
+                        fileItem.style.transform = 'translateX(-20px)';
+                        setTimeout(() => {
+                            fileItem.remove();
+                            updateFileCount();
+                        }, 300);
+                    }
+                } else {
+                    alert('Error removing file. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error removing file. Please try again.');
+            });
+        }
+    }
+
+    // ============================================================
+    // UPDATE FILE COUNT
+    // ============================================================
+    function updateFileCount() {
+        const remainingFiles = document.querySelectorAll('.existing-file-item:not(.deleted)').length;
+        const countBadge = document.querySelector('.file-count');
+        if (countBadge) {
+            countBadge.textContent = remainingFiles + ' file' + (remainingFiles !== 1 ? 's' : '');
+        }
+        if (remainingFiles === 0) {
+            const section = document.querySelector('.existing-files-section');
+            const filesContainer = section.querySelector('.existing-file-item');
+            if (!filesContainer) {
+                const noFilesMsg = document.createElement('div');
+                noFilesMsg.style.cssText = 'color: #94a3b8; text-align: center; padding: 1rem;';
+                noFilesMsg.innerHTML = '<i class="fas fa-info-circle"></i> No files attached to this Kalpana yet.';
+                section.appendChild(noFilesMsg);
+            }
+        }
+    }
+
+    // ============================================================
+    // HELPERS
+    // ============================================================
+    function getFileIcon(filename) {
+        const ext = filename.split('.').pop().toLowerCase();
+        if (['pdf'].includes(ext)) return 'fas fa-file-pdf';
+        if (['doc', 'docx'].includes(ext)) return 'fas fa-file-word';
+        if (['xls', 'xlsx'].includes(ext)) return 'fas fa-file-excel';
+        if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp'].includes(ext)) return 'fas fa-file-image';
+        if (['txt'].includes(ext)) return 'fas fa-file-alt';
+        return 'fas fa-file';
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ============================================================
+    // INIT
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add class to Django form fields for consistent styling
+        document.querySelectorAll('#kalpanaForm input, #kalpanaForm select, #kalpanaForm textarea').forEach(function(el) {
+            if (!el.closest('.pair-file-area')) {
+                el.classList.add('form-control-modern-django');
+            }
+        });
+
+        const firstFileList = document.getElementById('fileList_0');
+        if (firstFileList) {
+            firstFileList.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
+        }
+    });
+</script>
+
+{% include 'admin/adminfooter.html' %}
+</body>
+</html>

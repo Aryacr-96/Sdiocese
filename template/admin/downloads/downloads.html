@@ -1,0 +1,573 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Downloads · Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-pill: 9999px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+        .content-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header h1 i { color: var(--primary); }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 1.25rem 2rem;
+            background: #f8fafc;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .card-body { padding: 2rem; }
+
+        .table-responsive { overflow-x: auto; }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        .table tbody tr:hover { background: #f8fafc; }
+
+        .file-icon {
+            width: 50px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            font-size: 1.5rem;
+            background: #f8fafc;
+        }
+        .file-icon.pdf { color: #dc2626; border-color: #fca5a5; background: #fef2f2; }
+        .file-icon.word { color: #2563eb; border-color: #93c5fd; background: #eff6ff; }
+        .file-icon.excel { color: #16a34a; border-color: #86efac; background: #f0fdf4; }
+        .file-icon.other { color: #6b7280; border-color: #d1d5db; background: #f3f4f6; }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-pill);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .action-btn.edit { background: var(--warning-light); color: #92400e; }
+        .action-btn.edit:hover { background: var(--warning); color: #fff; }
+        .action-btn.delete { background: var(--danger-light); color: var(--danger); }
+        .action-btn.delete:hover { background: var(--danger); color: #fff; }
+        .action-btn.download { background: var(--info-light); color: var(--info); }
+        .action-btn.download:hover { background: var(--info); color: #fff; }
+        .action-btn.view { background: var(--primary-light); color: var(--primary); }
+        .action-btn.view:hover { background: var(--primary); color: #fff; }
+
+        .doc-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .doc-type-badge.manual { background: #dbeafe; color: #1d4ed8; }
+        .doc-type-badge.constitution { background: #fef3c7; color: #b45309; }
+        .doc-type-badge.guidelines { background: #d1fae5; color: #065f46; }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .search-form input {
+            padding: 0.5rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            flex: 1;
+            min-width: 200px;
+        }
+        .search-form input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .search-form button {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .search-form button:hover { background: var(--primary-hover); }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .pagination a, .pagination span {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        .pagination .current { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .pagination a:hover { background: var(--primary-light); }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .empty-state i { font-size: 4rem; color: #d1d5db; margin-bottom: 1rem; display: block; }
+        .empty-state h3 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 0.5rem; }
+
+        .alert-modern {
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid;
+        }
+        .alert-modern.error {
+            background: var(--danger-light);
+            color: #991b1b;
+            border-left-color: var(--danger);
+        }
+        .alert-modern i {
+            font-size: 1.1rem;
+        }
+
+        .modal-content {
+            border-radius: var(--radius-lg);
+            border: none;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+        }
+        .modal-header {
+            border-bottom: 2px solid var(--danger-light);
+            padding: 1.5rem 2rem;
+        }
+        .modal-header .modal-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .modal-header .modal-title i { color: var(--danger); }
+        .modal-body { padding: 2rem; }
+        .modal-body .delete-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--danger-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+        }
+        .modal-body .delete-icon-wrapper i { font-size: 2.5rem; color: var(--danger); }
+        .modal-body .item-name-display {
+            font-weight: 700;
+            color: var(--danger);
+            background: var(--danger-light);
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+        }
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.2rem 2rem;
+            gap: 12px;
+        }
+        .modal-footer .btn {
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+        }
+        .modal-footer .btn-secondary {
+            background: #e2e8f0;
+            border: none;
+            color: var(--text-main);
+        }
+        .modal-footer .btn-danger {
+            background: var(--danger);
+            border: none;
+            color: #ffffff;
+        }
+        .modal-footer .btn-danger:hover {
+            background: var(--danger-hover);
+        }
+
+        .file-size-badge {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-pill);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 1rem; margin: 1rem auto; }
+            .content-header { flex-direction: column; align-items: flex-start; }
+            .card-body { padding: 1rem; }
+            .table { font-size: 0.85rem; }
+            .file-icon { width: 40px; height: 50px; font-size: 1.2rem; }
+            .action-btn { font-size: 0.65rem; padding: 0.2rem 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <h1><i class="fas fa-download"></i> Downloads</h1>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <span style="background: var(--primary-light); color: var(--primary); padding: 0.4rem 1.2rem; border-radius: var(--radius-pill); font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fas fa-file"></i> Total: {{ total_items }}
+            </span>
+            <a href="{% url 'admin_download_add' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i> Add New
+            </a>
+        </div>
+    </section>
+
+    <!-- FORM ERRORS ONLY - No success messages -->
+    {% if form.errors %}
+        <div class="alert-modern error" style="margin-bottom: 1.5rem;">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Please correct the following errors:</strong>
+                <ul style="margin-top: 0.5rem; margin-bottom: 0; padding-left: 1.5rem;">
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field|title }}:</strong> {{ errors|join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    <div style="margin-bottom: 1.5rem;">
+        <form method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Search by document type..." value="{{ search_query }}">
+            <button type="submit"><i class="fas fa-search"></i> Search</button>
+            <a href="{% url 'admin_download_list' %}" style="padding:0.5rem 1.5rem; background:#e5e7eb; border-radius:var(--radius-md); text-decoration:none; color:var(--text-main); font-weight:600;">Clear</a>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span><i class="fas fa-list"></i> Downloads</span>
+            <span style="font-size:0.85rem; color:var(--text-muted);">{{ downloads.paginator.count }} items found</span>
+        </div>
+        <div class="card-body">
+            {% if downloads %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Document Type</th>
+                            <th>File Name</th>
+                            <th>Format</th>
+                            <th>Size</th>
+                            <th style="text-align:center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for download in downloads %}
+                        <tr>
+                            <td>
+                                <div class="file-icon 
+                                    {% if download.file.name|slice:'-3'|upper == 'PDF' %}pdf
+                                    {% elif download.file.name|slice:'-3'|upper == 'DOC' or download.file.name|slice:'-4'|upper == 'DOCX' %}word
+                                    {% elif download.file.name|slice:'-3'|upper == 'XLS' or download.file.name|slice:'-4'|upper == 'XLSX' %}excel
+                                    {% else %}other{% endif %}">
+                                    <i class="fas 
+                                        {% if download.file.name|slice:'-3'|upper == 'PDF' %}fa-file-pdf
+                                        {% elif download.file.name|slice:'-3'|upper == 'DOC' or download.file.name|slice:'-4'|upper == 'DOCX' %}fa-file-word
+                                        {% elif download.file.name|slice:'-3'|upper == 'XLS' or download.file.name|slice:'-4'|upper == 'XLSX' %}fa-file-excel
+                                        {% else %}fa-file{% endif %}">
+                                    </i>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="doc-type-badge 
+                                    {% if download.document_type == 'church_account_manual' %}manual
+                                    {% elif download.document_type == 'constitution_1934' %}constitution
+                                    {% else %}guidelines{% endif %}">
+                                    <i class="fas 
+                                        {% if download.document_type == 'church_account_manual' %}fa-book
+                                        {% elif download.document_type == 'constitution_1934' %}fa-gavel
+                                        {% else %}fa-file-alt{% endif %}">
+                                    </i>
+                                    {{ download.get_document_type_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ download.file.url }}" target="_blank" class="text-decoration-none" style="color: var(--text-main);">
+                                    {{ download.file.name|slice:"-20" }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge 
+                                    {% if download.file.name|slice:'-3'|upper == 'PDF' %}bg-danger
+                                    {% elif download.file.name|slice:'-3'|upper == 'DOC' or download.file.name|slice:'-4'|upper == 'DOCX' %}bg-primary
+                                    {% elif download.file.name|slice:'-3'|upper == 'XLS' or download.file.name|slice:'-4'|upper == 'XLSX' %}bg-success
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ download.file.name|slice:"-3"|upper }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="file-size-badge">{{ download.file.size|filesizeformat }}</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <!-- <a href="{{ download.file.url }}" target="_blank" class="action-btn download">
+                                        <i class="fas fa-download"></i> Download
+                                    </a> -->
+                                    <a href="{% url 'admin_download_edit' download.id %}" class="action-btn edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <button type="button"
+                                            class="action-btn delete"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-item-id="{{ download.id }}"
+                                            data-item-title="{{ download.get_document_type_display }}">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if downloads.has_other_pages %}
+            <div class="pagination">
+                {% if downloads.has_previous %}
+                    <a href="?page={{ downloads.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">&laquo; Previous</a>
+                {% endif %}
+
+                {% for num in downloads.paginator.page_range %}
+                    {% if downloads.number == num %}
+                        <span class="current">{{ num }}</span>
+                    {% elif num > downloads.number|add:'-3' and num < downloads.number|add:'3' %}
+                        <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if downloads.has_next %}
+                    <a href="?page={{ downloads.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Next &raquo;</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-download"></i>
+                <h3>No downloads found</h3>
+                <p>Get started by adding your first downloadable document.</p>
+                <a href="{% url 'admin_download_add' %}" class="btn-primary-custom" style="display:inline-flex; margin-top:1rem;">
+                    <i class="fas fa-plus-circle"></i> Add First Download
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fas fa-exclamation-triangle"></i> Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="delete-icon-wrapper">
+                    <i class="fas fa-file"></i>
+                </div>
+                <h5>Are you sure you want to delete</h5>
+                <h5 class="item-name-display" id="modalItemTitle">Download</h5>
+                <p class="mt-3">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <form id="deleteForm" method="POST" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Yes, Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteModal = document.getElementById('deleteModal');
+    const modalItemTitle = document.getElementById('modalItemTitle');
+    const deleteForm = document.getElementById('deleteForm');
+    
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            if (button) {
+                const itemId = button.getAttribute('data-item-id');
+                const itemTitle = button.getAttribute('data-item-title');
+                if (modalItemTitle) {
+                    modalItemTitle.textContent = itemTitle || 'Download';
+                }
+                if (deleteForm) {
+                    deleteForm.action = "{% url 'admin_download_delete' 0 %}".replace('0', itemId);
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>

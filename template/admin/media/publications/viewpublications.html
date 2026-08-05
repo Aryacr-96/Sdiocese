@@ -1,0 +1,315 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ publication.title }} · Diocese</title>
+
+    <style>
+        .content-header-custom {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .content-header-custom .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .content-header-custom .header-title h1 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+        .content-header-custom .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .content-header-custom .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .content-header-custom .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+        .content-header-custom .breadcrumb-custom .active-item {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .publication-view {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .publication-view .publication-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .publication-view .publication-body {
+            padding: 2rem;
+        }
+        .publication-view .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .publication-view .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #eef2f6;
+        }
+        .detail-card .detail-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .detail-card .detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #0f172a;
+            margin-top: 0.25rem;
+        }
+
+        .action-buttons-view {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn-action-view {
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-action-view.edit {
+            background: #4f46e5;
+            color: white;
+        }
+        .btn-action-view.edit:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+        .btn-action-view.download {
+            background: #0ea5e9;
+            color: white;
+        }
+        .btn-action-view.download:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+        }
+        .btn-action-view.delete {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-action-view.delete:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .publication-cover {
+            border-radius: 12px;
+            border: 1px solid #eef2f6;
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <!-- ========================================
+       PAGE HEADER
+    ======================================== -->
+    <section class="content-header-custom">
+        <div class="header-row">
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-file-alt"></i>
+                    {{ publication.title }}
+                </h1>
+            </div>
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <span style="color:#94a3b8;margin:0 4px;">›</span>
+                <a href="{% url 'publication_list' %}">
+                    <i class="fas fa-file-alt"></i> Publications
+                </a>
+                <span style="color:#94a3b8;margin:0 4px;">›</span>
+                <span class="active-item">
+                    <i class="fas fa-eye"></i> {{ publication.title|truncatechars:30 }}
+                </span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ========================================
+       PUBLICATION DETAILS
+    ======================================== -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="publication-view">
+                        <div class="publication-header">
+                            <div>
+                                <h3 style="font-weight:700;color:#0f172a;margin:0;">
+                                    {{ publication.title }}
+                                </h3>
+                                <small style="color:#64748b;">
+                                    <i class="fas fa-calendar"></i> 
+                                    Uploaded: {{ publication.uploaded_at|date:"F d, Y H:i" }}
+                                </small>
+                            </div>
+                            <div class="action-buttons-view">
+                                <a href="{% url 'edit_publication' publication.pk %}" class="btn-action-view edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                {% if publication.file %}
+                                <a href="{{ publication.file.url }}" target="_blank" class="btn-action-view download">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'delete_publication' publication.pk %}" class="btn-action-view delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                        <div class="publication-body">
+                            <div class="detail-grid">
+                                <!-- Cover Image -->
+                                <div>
+                                    <div class="detail-card">
+                                        <div class="detail-label">
+                                            <i class="fas fa-image"></i> Cover Image
+                                        </div>
+                                        <div style="margin-top:0.5rem;">
+                                            {% if publication.image %}
+                                                <img src="{{ publication.image.url }}" 
+                                                     alt="{{ publication.title }}"
+                                                     class="publication-cover">
+                                            {% else %}
+                                                <div style="background:#f1f5f9;border-radius:12px;padding:2rem;text-align:center;">
+                                                    <i class="fas fa-file-alt" style="font-size:3rem;color:#94a3b8;"></i>
+                                                    <p style="color:#94a3b8;margin-top:0.5rem;">No cover image</p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Publication Info -->
+                                <div>
+                                    <div class="detail-card">
+                                        <div class="detail-label">
+                                            <i class="fas fa-info-circle"></i> Publication Info
+                                        </div>
+                                        <div style="margin-top:0.5rem;">
+                                            <div style="margin-bottom:0.75rem;">
+                                                <span style="font-weight:600;color:#475569;">Slug:</span>
+                                                <span style="color:#0f172a;">{{ publication.slug }}</span>
+                                            </div>
+                                            <div style="margin-bottom:0.75rem;">
+                                                <span style="font-weight:600;color:#475569;">File:</span>
+                                                <br>
+                                                {% if publication.file %}
+                                                    <a href="{{ publication.file.url }}" target="_blank" 
+                                                       style="color:#4f46e5;text-decoration:none;font-weight:500;">
+                                                        <i class="fas fa-file-pdf"></i> 
+                                                        {{ publication.file.name|slice:"19:" }}
+                                                    </a>
+                                                {% else %}
+                                                    <span style="color:#94a3b8;">No file attached</span>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <span style="font-weight:600;color:#475569;">Uploaded At:</span>
+                                                <br>
+                                                <span style="color:#0f172a;">
+                                                    {{ publication.uploaded_at|date:"F d, Y H:i" }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quick Actions -->
+                                    <div class="detail-card" style="margin-top:1rem;">
+                                        <div class="detail-label">
+                                            <i class="fas fa-cog"></i> Quick Actions
+                                        </div>
+                                        <div style="margin-top:0.5rem;display:flex;gap:10px;flex-wrap:wrap;">
+                                            <a href="{% url 'edit_publication' publication.pk %}" 
+                                               class="btn-action-view edit" style="padding:0.4rem 1.2rem;font-size:0.8rem;">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a href="{% url 'publication_list' %}" 
+                                               class="btn-action-view" style="padding:0.4rem 1.2rem;font-size:0.8rem;background:#e2e8f0;color:#475569;">
+                                                <i class="fas fa-arrow-left"></i> Back to List
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% include 'admin/adminfooter.html' %}
+
+</body>
+</html>

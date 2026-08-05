@@ -1,0 +1,639 @@
+{% include 'admin/adminheader.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Karunyasparsham · Admin</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ----- EXPANDED CONTENT WRAPPER ----- */
+        .content-wrapper {
+            flex: 1;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        /* ----- Page Header (Expanded) ----- */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .content-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+        .content-header h1 i {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .content-header .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+            color: #ffffff;
+        }
+
+        .btn-warning-custom {
+            background: var(--warning);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-warning-custom:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .btn-danger-custom {
+            background: var(--danger);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-danger-custom:hover {
+            background: var(--danger-hover);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .btn-secondary-custom {
+            background: #94a3b8;
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-secondary-custom:hover {
+            background: #64748b;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* ----- Main Card (Expanded) ----- */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .card .card-header {
+            background: #f8fafc;
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .card .card-header .card-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+        .card .card-header .card-title i {
+            color: var(--primary);
+        }
+        .card .card-body {
+            padding: 2.5rem;
+        }
+        .card .card-footer {
+            background: #f8fafc;
+            padding: 1.2rem 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ----- Detail Items (Expanded) ----- */
+        .detail-item {
+            display: flex;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        .detail-item .detail-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            width: 200px;
+            flex-shrink: 0;
+        }
+        .detail-item .detail-value {
+            font-size: 1rem;
+            color: var(--text-main);
+            flex: 1;
+        }
+        .detail-item .detail-value .slug-text {
+            background: #f1f5f9;
+            padding: 0.2rem 0.8rem;
+            border-radius: var(--radius-pill);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* ----- Image Display (Expanded) ----- */
+        .detail-image {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            object-fit: cover;
+        }
+        .detail-image-container {
+            text-align: center;
+            padding: 1.5rem 0 2rem 0;
+        }
+        .no-image {
+            padding: 2.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+        }
+        .no-image i {
+            font-size: 3.5rem;
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .no-image p {
+            font-size: 1rem;
+        }
+
+        /* ----- Badges (Expanded) ----- */
+        .badge-status {
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-status.processing {
+            background: var(--warning-light);
+            color: #92400e;
+        }
+        .badge-status.completed {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        .badge-status.inactive {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .badge-type {
+            padding: 0.35rem 1rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge-type.about {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .badge-type.project {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 0 1.5rem;
+                margin: 1.5rem auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem 1.2rem;
+            }
+            .content-header .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+            .content-header h1 {
+                font-size: 1.3rem;
+            }
+            .card .card-header {
+                padding: 1rem 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card .card-header .card-title {
+                font-size: 1rem;
+            }
+            .card .card-body {
+                padding: 1.5rem;
+            }
+            .card .card-footer {
+                padding: 1rem 1.2rem;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .card .card-footer .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .detail-item {
+                flex-direction: column;
+                padding: 0.8rem 0;
+            }
+            .detail-item .detail-label {
+                width: 100%;
+                margin-bottom: 0.3rem;
+            }
+            .detail-item .detail-value {
+                font-size: 0.95rem;
+            }
+            .detail-image {
+                max-height: 350px;
+            }
+            .btn {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+                margin: 0.8rem auto;
+            }
+            .content-header h1 {
+                font-size: 1.1rem;
+            }
+            .content-header h1 i {
+                font-size: 1.2rem;
+            }
+            .card .card-body {
+                padding: 1.2rem;
+            }
+            .card .card-header {
+                padding: 0.8rem 1rem;
+            }
+            .card .card-footer {
+                padding: 0.8rem 1rem;
+            }
+            .detail-item {
+                padding: 0.6rem 0;
+            }
+            .detail-item .detail-label {
+                font-size: 0.8rem;
+            }
+            .detail-item .detail-value {
+                font-size: 0.9rem;
+            }
+            .detail-image {
+                max-height: 250px;
+            }
+            .detail-image-container {
+                padding: 1rem 0;
+            }
+            .no-image {
+                padding: 1.5rem;
+            }
+            .no-image i {
+                font-size: 2.5rem;
+            }
+            .badge-status, .badge-type {
+                font-size: 0.65rem;
+                padding: 0.25rem 0.7rem;
+            }
+            .btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .btn i {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- ===== PAGE HEADER ===== -->
+        <section class="content-header">
+            <div>
+                <h1>
+                    <i class="fas fa-hands-praying"></i>
+                    {{ entry.title|default:"Karunyasparsham" }}
+                </h1>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'karunyasparsham_list' %}" class="btn-secondary-custom">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <a href="{% url 'karunyasparsham_edit' entry.pk %}" class="btn-warning-custom">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="{% url 'karunyasparsham_delete' entry.pk %}" class="btn-danger-custom" onclick="return confirm('Are you sure you want to delete this entry?')">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== MAIN CARD ===== -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fas fa-info-circle"></i>
+                    Entry Details
+                    <span class="badge-type {% if entry.content_type == 'about' %}about{% else %}project{% endif %}">
+                        <i class="fas fa-{% if entry.content_type == 'about' %}info-circle{% else %}project-diagram{% endif %}"></i>
+                        {{ entry.get_content_type_display }}
+                    </span>
+                    <span class="badge-status {{ entry.active }}">
+                        <i class="fas fa-{% if entry.active == 'processing' %}clock{% elif entry.active == 'completed' %}check-circle{% else %}times-circle{% endif %}"></i>
+                        {{ entry.get_active_display }}
+                    </span>
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+                        <i class="fas fa-hashtag"></i> ID: {{ entry.id }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <!-- ===== IMAGE ===== -->
+                <div class="detail-image-container">
+                    {% if entry.image %}
+                        <img src="{{ entry.image.url }}" alt="{{ entry.title }}" class="detail-image">
+                    {% else %}
+                        <div class="no-image">
+                            <i class="fas fa-image"></i>
+                            <p>No image uploaded for this entry</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- ===== DETAILS ===== -->
+                <div class="detail-item">
+                    <div class="detail-label"><i class="fas fa-tag"></i> Content Type</div>
+                    <div class="detail-value">
+                        <span class="badge-type {% if entry.content_type == 'about' %}about{% else %}project{% endif %}">
+                            {{ entry.get_content_type_display }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label"><i class="fas fa-heading"></i> Title</div>
+                    <div class="detail-value">
+                        <strong>{{ entry.title|default:"Untitled" }}</strong>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label"><i class="fas fa-link"></i> Slug</div>
+                    <div class="detail-value">
+                        <span class="slug-text">{{ entry.slug }}</span>
+                    </div>
+                </div>
+
+                {% if entry.content_type == 'about' %}
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-align-left"></i> About Content</div>
+                        <div class="detail-value">
+                            {{ entry.about_content|safe|default:"No content" }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-align-left"></i> Project Description</div>
+                        <div class="detail-value">
+                            {{ entry.project_description|default:"No description" }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-align-left"></i> Project Content</div>
+                        <div class="detail-value">
+                            {{ entry.project_content|safe|default:"No content" }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-location-dot"></i> Location</div>
+                        <div class="detail-value">
+                            {{ entry.project_location|default:"Not specified" }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-tags"></i> Category</div>
+                        <div class="detail-value">
+                            {% if entry.category %}
+                                <span class="badge bg-primary" style="font-size: 0.85rem; padding: 0.35rem 0.9rem; border-radius: var(--radius-pill);">
+                                    <i class="fas fa-tag"></i> {{ entry.category.name }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted">No category assigned</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-circle"></i> Status</div>
+                        <div class="detail-value">
+                            <span class="badge-status {{ entry.active }}">
+                                <i class="fas fa-{% if entry.active == 'processing' %}clock{% elif entry.active == 'completed' %}check-circle{% else %}times-circle{% endif %}"></i>
+                                {{ entry.get_active_display }}
+                            </span>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="detail-item">
+                    <div class="detail-label"><i class="fas fa-calendar-plus"></i> Created</div>
+                    <div class="detail-value">
+                        {{ entry.created_at|date:"F d, Y" }} at {{ entry.created_at|time:"h:i A" }}
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label"><i class="fas fa-clock"></i> Last Updated</div>
+                    <div class="detail-value">
+                        {{ entry.updated_at|date:"F d, Y" }} at {{ entry.updated_at|time:"h:i A" }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-footer">
+                <a href="{% url 'karunyasparsham_edit' entry.pk %}" class="btn-warning-custom">
+                    <i class="fas fa-edit"></i> Edit Entry
+                </a>
+                <a href="{% url 'karunyasparsham_delete' entry.pk %}" class="btn-danger-custom" onclick="return confirm('Are you sure you want to delete this entry?')">
+                    <i class="fas fa-trash"></i> Delete Entry
+                </a>
+                <a href="{% url 'karunyasparsham_list' %}" class="btn-secondary-custom">
+                    <i class="fas fa-list"></i> View All
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'admin/adminfooter.html' %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

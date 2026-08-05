@@ -1,0 +1,1491 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+{{ form.media }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Gallery Item · Diocese</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .content-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+        .content-header h1 i {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .content-header .header-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .content-header .header-stats .stat-badge {
+            background: var(--primary-light);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            color: #ffffff;
+        }
+        .btn-primary-custom i {
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+        .card .card-header {
+            background: #f8fafc;
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .card .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+        .card .card-header .header-left i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        .card .card-header .header-left .text-muted {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .card .card-header .badge {
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .card .card-header .badge.badge-edit {
+            background: var(--warning);
+            color: #ffffff;
+        }
+        .card .card-body {
+            padding: 2rem;
+        }
+
+        .section-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading:first-of-type {
+            margin-top: 0;
+        }
+        .section-heading i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        .section-heading .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border-color), transparent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group label i {
+            color: var(--primary);
+            width: 18px;
+            font-size: 0.9rem;
+        }
+        .form-group label .required-star {
+            color: var(--danger);
+            margin-left: 2px;
+        }
+
+        .form-control {
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            background: #ffffff;
+            color: var(--text-main);
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+            outline: none;
+        }
+        .form-control::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-control-django {
+            border: 1.5px solid var(--border-color) !important;
+            border-radius: var(--radius-md) !important;
+            padding: 0.75rem 1.2rem !important;
+            font-size: 0.9rem !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Inter', sans-serif !important;
+            width: 100% !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 48px !important;
+            color: var(--text-main) !important;
+            background: #ffffff !important;
+        }
+        .form-control-django:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08) !important;
+            outline: none !important;
+        }
+        textarea.form-control-django {
+            min-height: 100px !important;
+            resize: vertical !important;
+        }
+        select.form-control-django {
+            appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1rem center !important;
+            padding-right: 2.5rem !important;
+        }
+
+        /* ===== DISABLED STATE FOR FORM CONTROLS ===== */
+        .form-control.disabled,
+        .form-control-django.disabled {
+            background: #f1f5f9 !important;
+            cursor: not-allowed !important;
+            opacity: 0.6;
+            border-color: #d1d5db !important;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #fafcfd;
+            transition: all 0.2s ease;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .file-upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .file-upload-area:hover i {
+            color: var(--primary);
+        }
+        .file-upload-area p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 500;
+            pointer-events: none;
+        }
+        .file-upload-area p strong {
+            color: var(--primary);
+        }
+        .file-upload-area small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+            pointer-events: none;
+        }
+        
+        .file-upload-area input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== DISABLED FILE UPLOAD AREA ===== */
+        .file-upload-area.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #d1d5db !important;
+            background: #f8fafc;
+        }
+        .file-upload-area.disabled:hover {
+            border-color: #d1d5db !important;
+            background: #f8fafc;
+        }
+        .file-upload-area.disabled input[type="file"] {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .file-upload-area.disabled p strong {
+            color: #94a3b8;
+        }
+        .file-upload-area.disabled i {
+            color: #d1d5db !important;
+        }
+
+        .file-info {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            align-items: center;
+            gap: 10px;
+        }
+        .file-info.active {
+            display: flex;
+        }
+        .file-info i {
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+        .file-info.disabled-info {
+            background: #f1f5f9;
+            border-color: #d1d5db;
+            color: #94a3b8;
+        }
+        .file-info.disabled-info i {
+            color: #94a3b8;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: #fafcfd;
+            text-align: center;
+        }
+        .image-preview.active {
+            display: block;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+        }
+
+        .current-file {
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--primary);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .current-file i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .current-file a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .current-file a:hover {
+            text-decoration: underline;
+        }
+
+        .video-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: #fafcfd;
+            text-align: center;
+        }
+        .video-preview video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: var(--radius-md);
+        }
+        .video-preview iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border-radius: var(--radius-md);
+            border: none;
+        }
+        .video-preview .current-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .help-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            font-weight: 400;
+        }
+        .help-text i {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+
+        .errorlist {
+            color: var(--danger);
+            font-size: 0.85rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .errorlist li {
+            padding: 8px 16px;
+            background: var(--danger-light);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--danger);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .errorlist li::before {
+            content: "⚠";
+            font-size: 0.9rem;
+        }
+
+        .alert-modern {
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid;
+        }
+        .alert-modern.error {
+            background: var(--danger-light);
+            color: #991b1b;
+            border-left-color: var(--danger);
+        }
+        .alert-modern i {
+            font-size: 1.1rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem 2rem;
+            background: #f8fafc;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2.5rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.35);
+            color: #ffffff;
+        }
+
+        .media-fields {
+            display: none;
+        }
+        .media-fields.visible {
+            display: block;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.75rem;
+        }
+        .col-12 {
+            flex: 0 0 100%;
+            padding: 0 0.75rem;
+        }
+        .col-md-6 {
+            flex: 0 0 50%;
+            padding: 0 0.75rem;
+        }
+        .col-md-8 {
+            flex: 0 0 66.666667%;
+            padding: 0 0.75rem;
+        }
+        .col-md-4 {
+            flex: 0 0 33.333333%;
+            padding: 0 0.75rem;
+        }
+
+        .disabled-notice {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        .disabled-notice i {
+            color: var(--warning);
+            margin-right: 4px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        .status-indicator.url-active {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .status-indicator.file-active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .status-indicator.both-empty {
+            background: #f1f5f9;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-6, .col-md-8, .col-md-4 {
+                flex: 0 0 100%;
+            }
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.25rem;
+            }
+            .content-header h1 {
+                font-size: 1.3rem;
+            }
+            .card .card-body {
+                padding: 1.25rem;
+            }
+            .card .card-header {
+                padding: 0.8rem 1.25rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem 1.25rem;
+            }
+            .card-footer .btn-outline,
+            .card-footer .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            .video-preview iframe {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+            }
+            .content-header h1 {
+                font-size: 1.1rem;
+            }
+            .card .card-body {
+                padding: 1rem;
+            }
+            .video-preview iframe {
+                height: 150px;
+            }
+            .btn-primary {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- PAGE HEADER -->
+        <section class="content-header">
+            <div>
+                <h1>
+                    <i class="fas fa-edit"></i>
+                    Edit Gallery Item
+                </h1>
+            </div>
+            <div class="header-stats">
+                <span class="stat-badge">
+                    <i class="fas fa-images"></i>
+                    Editing Gallery Item
+                </span>
+                <a href="{% url 'admin_gallery_list' %}" class="btn-primary-custom" style="background: var(--text-muted); box-shadow: none;">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Gallery
+                </a>
+            </div>
+        </section>
+
+        <!-- FORM ERRORS -->
+        {% if form.errors %}
+        <div class="alert-modern error" style="margin-bottom: 1.5rem;">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Please correct the following errors:</strong>
+                <ul style="margin-top: 0.5rem; margin-bottom: 0; padding-left: 1.5rem;">
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field|title }}:</strong> {{ errors|join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- MAIN CARD -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="header-left">
+                        <i class="fas fa-clipboard-list"></i>
+                        Edit Gallery Item
+                        <span class="text-muted">— Update the fields below</span>
+                    </div>
+                    <span class="badge badge-edit">
+                        <i class="fas fa-edit"></i>
+                        Edit Mode
+                    </span>
+                </div>
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data" id="galleryForm">
+                        {% csrf_token %}
+
+                        <!-- ====== MEDIA TYPE ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-film"></i> Media Type
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.media_type.id_for_label }}">
+                                        <i class="fas fa-tag"></i> Media Type <span class="required-star">*</span>
+                                    </label>
+                                    {{ form.media_type }}
+                                    <div class="disabled-notice">
+                                        <i class="fas fa-lock"></i> Media type cannot be changed while editing
+                                    </div>
+                                    {% if form.media_type.errors %}
+                                    <ul class="errorlist">{{ form.media_type.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> The media type is locked during editing
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== TITLE ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-info-circle"></i> Basic Information
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="{{ form.title.id_for_label }}">
+                                        <i class="fas fa-heading"></i> Title <span class="required-star">*</span>
+                                    </label>
+                                    {{ form.title }}
+                                    {% if form.title.errors %}
+                                    <ul class="errorlist">{{ form.title.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> Enter the title of the gallery item
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== IMAGE FIELDS ====== -->
+                        <div class="media-fields image-fields" id="imageFields">
+                            <div class="section-heading">
+                                <i class="fas fa-image"></i> Image
+                                <span class="line-spacer"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.image.id_for_label }}">
+                                    <i class="fas fa-image"></i> Image File <span class="required-star">*</span>
+                                </label>
+                                <div class="file-upload-area" id="imageDropZone">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p><strong>Click to upload</strong> or drag and drop</p>
+                                    <small>JPEG, PNG, WebP</small>
+                                    {{ form.image }}
+                                </div>
+                                {% if form.image.errors %}
+                                <ul class="errorlist">{{ form.image.errors }}</ul>
+                                {% endif %}
+                                <div class="help-text">
+                                    <i class="fas fa-info-circle"></i> Upload an image for the gallery
+                                </div>
+                                <div class="image-preview" id="imagePreviewContainer">
+                                    <img id="imagePreview" src="#" alt="Preview" />
+                                </div>
+                                {% if gallery_item and gallery_item.image %}
+                                <div class="current-file">
+                                    <i class="fas fa-image"></i>
+                                    <span>Current: <a href="{{ gallery_item.image.url }}" target="_blank">{{ gallery_item.image.name }}</a></span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- ====== VIDEO FIELDS ====== -->
+                        <div class="media-fields video-fields" id="videoFields">
+                            <div class="section-heading">
+                                <i class="fas fa-video"></i> Video
+                                <span class="line-spacer"></span>
+                            </div>
+
+                            <!-- Status Indicator -->
+                            <div id="videoStatusIndicator" class="status-indicator both-empty" style="margin-bottom: 1rem;">
+                                <i class="fas fa-info-circle"></i>
+                                <span id="videoStatusText">No video source selected</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.video_url.id_for_label }}">
+                                            <i class="fas fa-link"></i> Video URL
+                                        </label>
+                                        {{ form.video_url }}
+                                        {% if form.video_url.errors %}
+                                        <ul class="errorlist">{{ form.video_url.errors }}</ul>
+                                        {% endif %}
+                                        <div class="help-text" id="videoUrlHelpText">
+                                            <i class="fas fa-info-circle"></i> YouTube, Vimeo, or other video platform URL
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.video_file.id_for_label }}">
+                                            <i class="fas fa-upload"></i> Local Video File
+                                        </label>
+                                        <div class="file-upload-area" id="videoDropZone">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p><strong>Click to upload</strong> or drag and drop</p>
+                                            <small>MP4, WebM, OGG</small>
+                                            {{ form.video_file }}
+                                        </div>
+                                        {% if form.video_file.errors %}
+                                        <ul class="errorlist">{{ form.video_file.errors }}</ul>
+                                        {% endif %}
+                                        <div class="help-text" id="videoFileHelpText">
+                                            <i class="fas fa-info-circle"></i> Upload a video file (MP4, WebM, OGG)
+                                        </div>
+                                        <div class="file-info" id="videoFileInfoContainer">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span id="videoFileInfoText">No file selected</span>
+                                        </div>
+                                        {% if gallery_item and gallery_item.video_file %}
+                                        <div class="current-file">
+                                            <i class="fas fa-video"></i>
+                                            <span>Current: <a href="{{ gallery_item.video_file.url }}" target="_blank">{{ gallery_item.video_file.name }}</a></span>
+                                        </div>
+                                        <div class="video-preview">
+                                            <span class="current-label"><i class="fas fa-video"></i> Current Video</span>
+                                            <video controls>
+                                                <source src="{{ gallery_item.video_file.url }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.video_embed_code.id_for_label }}">
+                                            <i class="fas fa-code"></i> Video Embed Code
+                                        </label>
+                                        {{ form.video_embed_code }}
+                                        {% if form.video_embed_code.errors %}
+                                        <ul class="errorlist">{{ form.video_embed_code.errors }}</ul>
+                                        {% endif %}
+                                        <div class="help-text">
+                                            <i class="fas fa-info-circle"></i> Paste embed code from YouTube, Vimeo, or other platforms (optional)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="video-preview" id="videoUrlPreview" style="display:none;">
+                                <span class="current-label"><i class="fas fa-video"></i> Video Preview</span>
+                                <iframe id="videoPreviewIframe" src="" allowfullscreen></iframe>
+                            </div>
+                        </div>
+
+                        <!-- ====== DESCRIPTION ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-align-left"></i> Additional Information
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="{{ form.description.id_for_label }}">
+                                        <i class="fas fa-align-left"></i> Description
+                                    </label>
+                                    {{ form.description }}
+                                    {% if form.description.errors %}
+                                    <ul class="errorlist">{{ form.description.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> Brief description of the gallery item (optional)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== CARD FOOTER ====== -->
+                        <div class="card-footer">
+                            <a href="{% url 'admin_gallery_list' %}" class="btn-outline">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    {% include 'admin/adminfooter.html' %}
+
+</div>
+
+<script>
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add class to Django form fields
+            document.querySelectorAll('#galleryForm input:not([type="file"]), #galleryForm select, #galleryForm textarea').forEach(function(el) {
+                el.classList.add('form-control-django');
+            });
+
+            // ===== DISABLE MEDIA TYPE SELECT =====
+            const mediaTypeSelect = document.getElementById('id_media_type');
+            if (mediaTypeSelect) {
+                mediaTypeSelect.disabled = true;
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'media_type';
+                hiddenInput.value = mediaTypeSelect.value;
+                mediaTypeSelect.parentNode.appendChild(hiddenInput);
+            }
+
+            // ===== MEDIA TYPE TOGGLE =====
+            const imageFields = document.getElementById('imageFields');
+            const videoFields = document.getElementById('videoFields');
+
+            function toggleMediaFields() {
+                const selectedType = mediaTypeSelect ? mediaTypeSelect.value : 'image';
+                
+                if (imageFields) imageFields.classList.remove('visible');
+                if (videoFields) videoFields.classList.remove('visible');
+                
+                if (selectedType === 'image') {
+                    if (imageFields) imageFields.classList.add('visible');
+                } else if (selectedType === 'video') {
+                    if (videoFields) videoFields.classList.add('visible');
+                }
+            }
+
+            if (mediaTypeSelect) {
+                toggleMediaFields();
+            }
+
+            // ============================================================
+            // VIDEO URL vs VIDEO FILE - CONDITIONAL LOGIC
+            // ============================================================
+            const videoUrlInput = document.getElementById('id_video_url');
+            const videoFileInput = document.getElementById('id_video_file');
+            const videoDropZone = document.getElementById('videoDropZone');
+            const videoFileInfoText = document.getElementById('videoFileInfoText');
+            const videoFileInfoContainer = document.getElementById('videoFileInfoContainer');
+            const videoStatusText = document.getElementById('videoStatusText');
+            const videoStatusIndicator = document.getElementById('videoStatusIndicator');
+            const videoUrlHelpText = document.getElementById('videoUrlHelpText');
+            const videoFileHelpText = document.getElementById('videoFileHelpText');
+
+            // ===== FUNCTION: UPDATE STATUS INDICATOR =====
+            function updateVideoStatus() {
+                const hasUrl = videoUrlInput && videoUrlInput.value.trim() !== '';
+                const hasFile = videoFileInput && videoFileInput.files.length > 0;
+                const hasExistingFile = {% if gallery_item and gallery_item.video_file %}true{% else %}false{% endif %};
+
+                if (hasUrl) {
+                    videoStatusIndicator.className = 'status-indicator url-active';
+                    videoStatusText.textContent = 'Video URL selected';
+                    videoStatusIndicator.querySelector('i').className = 'fas fa-link';
+                } else if (hasFile || hasExistingFile) {
+                    videoStatusIndicator.className = 'status-indicator file-active';
+                    videoStatusText.textContent = 'Video file selected';
+                    videoStatusIndicator.querySelector('i').className = 'fas fa-video';
+                } else {
+                    videoStatusIndicator.className = 'status-indicator both-empty';
+                    videoStatusText.textContent = 'No video source selected';
+                    videoStatusIndicator.querySelector('i').className = 'fas fa-info-circle';
+                }
+            }
+
+            // ===== FUNCTION: DISABLE VIDEO FILE UPLOAD =====
+            function disableVideoFile(disable) {
+                if (disable) {
+                    videoFileInput.disabled = true;
+                    videoFileInput.required = false;
+                    if (videoDropZone) {
+                        videoDropZone.classList.add('disabled');
+                        videoDropZone.querySelector('p').innerHTML = '<strong>File upload disabled</strong> (URL selected)';
+                        videoDropZone.querySelector('i').className = 'fas fa-lock';
+                        videoDropZone.querySelector('i').style.color = '#94a3b8';
+                    }
+                    if (videoFileInfoContainer) {
+                        videoFileInfoContainer.classList.add('disabled-info');
+                        videoFileInfoContainer.classList.remove('active');
+                        videoFileInfoText.textContent = 'File upload disabled (URL selected)';
+                    }
+                    if (videoFileHelpText) {
+                        videoFileHelpText.innerHTML = '<i class="fas fa-lock"></i> File upload disabled because a URL is selected';
+                        videoFileHelpText.style.color = '#94a3b8';
+                    }
+                } else {
+                    videoFileInput.disabled = false;
+                    if (videoDropZone) {
+                        videoDropZone.classList.remove('disabled');
+                        videoDropZone.querySelector('p').innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                        videoDropZone.querySelector('i').className = 'fas fa-cloud-upload-alt';
+                        videoDropZone.querySelector('i').style.color = '';
+                    }
+                    if (videoFileInfoContainer) {
+                        videoFileInfoContainer.classList.remove('disabled-info');
+                        if (videoFileInput.files.length === 0) {
+                            videoFileInfoContainer.classList.remove('active');
+                            videoFileInfoText.textContent = 'No file selected';
+                        }
+                    }
+                    if (videoFileHelpText) {
+                        videoFileHelpText.innerHTML = '<i class="fas fa-info-circle"></i> Upload a video file (MP4, WebM, OGG)';
+                        videoFileHelpText.style.color = '';
+                    }
+                }
+                updateVideoStatus();
+            }
+
+            // ===== FUNCTION: DISABLE VIDEO URL INPUT =====
+            function disableVideoUrl(disable) {
+                if (disable) {
+                    videoUrlInput.disabled = true;
+                    videoUrlInput.classList.add('disabled');
+                    if (videoUrlHelpText) {
+                        videoUrlHelpText.innerHTML = '<i class="fas fa-lock"></i> URL input disabled (file selected)';
+                        videoUrlHelpText.style.color = '#94a3b8';
+                    }
+                } else {
+                    videoUrlInput.disabled = false;
+                    videoUrlInput.classList.remove('disabled');
+                    if (videoUrlHelpText) {
+                        videoUrlHelpText.innerHTML = '<i class="fas fa-info-circle"></i> YouTube, Vimeo, or other video platform URL';
+                        videoUrlHelpText.style.color = '';
+                    }
+                }
+                updateVideoStatus();
+            }
+
+            // ===== VIDEO URL INPUT EVENT =====
+            if (videoUrlInput) {
+                videoUrlInput.addEventListener('input', function() {
+                    const url = this.value.trim();
+                    if (url !== '') {
+                        // URL has content - disable file upload
+                        disableVideoFile(true);
+                        // If file is selected, clear it
+                        if (videoFileInput && videoFileInput.files.length > 0) {
+                            videoFileInput.value = '';
+                            if (videoFileInfoContainer) {
+                                videoFileInfoContainer.classList.remove('active');
+                                videoFileInfoText.textContent = 'File cleared (URL selected)';
+                            }
+                            if (videoDropZone) {
+                                videoDropZone.querySelector('p').innerHTML = '<strong>File upload disabled</strong> (URL selected)';
+                                videoDropZone.querySelector('i').className = 'fas fa-lock';
+                                videoDropZone.querySelector('i').style.color = '#94a3b8';
+                            }
+                        }
+                        // Show video preview
+                        showVideoPreview(url);
+                    } else {
+                        // URL is empty - enable file upload
+                        disableVideoFile(false);
+                        // If no file selected, enable URL
+                        if (videoFileInput && videoFileInput.files.length === 0) {
+                            disableVideoUrl(false);
+                        }
+                        // Hide video preview
+                        hideVideoPreview();
+                    }
+                    updateVideoStatus();
+                });
+            }
+
+            // ===== VIDEO FILE INPUT EVENT =====
+            if (videoFileInput) {
+                videoFileInput.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        // File selected - disable URL input
+                        disableVideoUrl(true);
+                        // Clear URL if it has content
+                        if (videoUrlInput && videoUrlInput.value.trim() !== '') {
+                            videoUrlInput.value = '';
+                        }
+                        // Update file info
+                        if (videoFileInfoContainer && videoFileInfoText) {
+                            const fileName = this.files[0].name;
+                            const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                            videoFileInfoContainer.classList.remove('disabled-info');
+                            videoFileInfoContainer.classList.add('active');
+                            videoFileInfoText.textContent = `${fileName} (${fileSize} MB)`;
+                        }
+                        // Update drop zone
+                        if (videoDropZone) {
+                            const fileName = this.files[0].name;
+                            videoDropZone.querySelector('p').innerHTML = `<strong>${fileName}</strong> (selected)`;
+                            videoDropZone.querySelector('i').className = 'fas fa-check-circle';
+                            videoDropZone.querySelector('i').style.color = '#16a34a';
+                        }
+                        // Hide URL preview
+                        hideVideoPreview();
+                    } else {
+                        // No file selected - enable URL input
+                        disableVideoUrl(false);
+                        // Reset file info
+                        if (videoFileInfoContainer) {
+                            videoFileInfoContainer.classList.remove('active');
+                            videoFileInfoText.textContent = 'No file selected';
+                        }
+                        // Reset drop zone
+                        if (videoDropZone) {
+                            videoDropZone.querySelector('p').innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                            videoDropZone.querySelector('i').className = 'fas fa-cloud-upload-alt';
+                            videoDropZone.querySelector('i').style.color = '';
+                        }
+                        // Check if URL has content to re-disable file
+                        if (videoUrlInput && videoUrlInput.value.trim() !== '') {
+                            disableVideoFile(true);
+                        }
+                    }
+                    updateVideoStatus();
+                });
+            }
+
+            // ===== VIDEO PREVIEW FUNCTIONS =====
+            function showVideoPreview(url) {
+                const previewContainer = document.getElementById('videoUrlPreview');
+                const previewIframe = document.getElementById('videoPreviewIframe');
+                if (!previewContainer || !previewIframe) return;
+
+                let embedUrl = url;
+                if (url.includes('youtube.com/watch') || url.includes('youtu.be')) {
+                    const videoId = extractYouTubeId(url);
+                    if (videoId) {
+                        embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    }
+                } else if (url.includes('vimeo.com')) {
+                    const videoId = extractVimeoId(url);
+                    if (videoId) {
+                        embedUrl = `https://player.vimeo.com/video/${videoId}`;
+                    }
+                } else if (url.includes('facebook.com')) {
+                    // Facebook embed
+                    embedUrl = url;
+                }
+
+                previewIframe.src = embedUrl;
+                previewContainer.style.display = 'block';
+            }
+
+            function hideVideoPreview() {
+                const previewContainer = document.getElementById('videoUrlPreview');
+                const previewIframe = document.getElementById('videoPreviewIframe');
+                if (previewContainer) {
+                    previewContainer.style.display = 'none';
+                }
+                if (previewIframe) {
+                    previewIframe.src = '';
+                }
+            }
+
+            function extractYouTubeId(url) {
+                const patterns = [
+                    /(?:youtube\.com\/watch\?v=)([\w-]+)/,
+                    /(?:youtu\.be\/)([\w-]+)/,
+                    /(?:youtube\.com\/embed\/)([\w-]+)/,
+                    /(?:youtube\.com\/shorts\/)([\w-]+)/
+                ];
+                for (const pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match) return match[1];
+                }
+                return null;
+            }
+
+            function extractVimeoId(url) {
+                const match = url.match(/vimeo\.com\/(\d+)/);
+                return match ? match[1] : null;
+            }
+
+            // ===== INITIAL STATE =====
+            // Check if URL has value on load
+            if (videoUrlInput && videoUrlInput.value.trim() !== '') {
+                disableVideoFile(true);
+                showVideoPreview(videoUrlInput.value.trim());
+            }
+            // Check if file is selected on load
+            if (videoFileInput && videoFileInput.files.length > 0) {
+                disableVideoUrl(true);
+            }
+            // Check if there's an existing video file (from edit mode)
+            const hasExistingVideoFile = {% if gallery_item and gallery_item.video_file %}true{% else %}false{% endif %};
+            if (hasExistingVideoFile && (!videoFileInput || videoFileInput.files.length === 0)) {
+                // There's an existing file but no new file selected
+                // We need to handle this case - the file is already saved
+                // Don't disable URL if there's a file in the database but no new file
+                // The user should be able to add a URL to replace it
+                if (videoUrlInput && videoUrlInput.value.trim() === '') {
+                    // Only disable URL if there's an existing file and no URL
+                    // But we should let the user choose to add a URL instead
+                    // So we don't disable anything - let the user decide
+                }
+            }
+            // Update status indicator
+            updateVideoStatus();
+
+            // ===== FORM VALIDATION =====
+            const form = document.getElementById('galleryForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const selectedType = mediaTypeSelect ? mediaTypeSelect.value : 'image';
+                    
+                    if (selectedType === 'video') {
+                        const url = videoUrlInput ? videoUrlInput.value.trim() : '';
+                        const hasFile = videoFileInput ? videoFileInput.files.length > 0 : false;
+                        const hasExistingFile = {% if gallery_item and gallery_item.video_file %}true{% else %}false{% endif %};
+                        
+                        if (!url && !hasFile && !hasExistingFile) {
+                            e.preventDefault();
+                            alert('Please provide either a Video URL or upload a Video File.');
+                            if (videoUrlInput) {
+                                videoUrlInput.style.borderColor = '#ef4444';
+                            }
+                            if (videoDropZone) {
+                                videoDropZone.style.borderColor = '#ef4444';
+                            }
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            }
+
+            // ===== IMAGE UPLOAD =====
+            const imageInput = document.getElementById('id_image');
+            const imageDropZone = document.getElementById('imageDropZone');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (imageInput && imageDropZone) {
+                imageInput.addEventListener('change', function(e) {
+                    e.stopPropagation();
+                    if (this.files && this.files[0]) {
+                        const fileName = this.files[0].name;
+                        const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                        const pTag = imageDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = 
+                                `<strong>${fileName}</strong> <span style="color:#94a3b8;font-size:0.85rem;">(${fileSize} MB)</span>`;
+                        }
+                        const icon = imageDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-check-circle';
+                            icon.style.color = '#2563eb';
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (imagePreview) {
+                                imagePreview.src = e.target.result;
+                            }
+                            if (imagePreviewContainer) {
+                                imagePreviewContainer.classList.add('active');
+                            }
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        const pTag = imageDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                        }
+                        const icon = imageDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-cloud-upload-alt';
+                            icon.style.color = '';
+                        }
+                        if (imagePreviewContainer) {
+                            imagePreviewContainer.classList.remove('active');
+                        }
+                        if (imagePreview) {
+                            imagePreview.src = '#';
+                        }
+                    }
+                });
+
+                imageDropZone.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        imageInput.click();
+                    }
+                });
+            }
+
+            // ===== IMAGE DRAG & DROP =====
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            const imageDropZoneForDrag = document.getElementById('imageDropZone');
+            const imageInputForDrag = document.getElementById('id_image');
+            
+            if (imageDropZoneForDrag && imageInputForDrag) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, function() {
+                        imageDropZoneForDrag.classList.add('dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, function() {
+                        imageDropZoneForDrag.classList.remove('dragover');
+                    }, false);
+                });
+
+                imageDropZoneForDrag.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        imageInputForDrag.files = files;
+                        const event = new Event('change', { bubbles: true });
+                        imageInputForDrag.dispatchEvent(event);
+                    }
+                }, false);
+            }
+
+            // ===== VIDEO DRAG & DROP =====
+            const videoDropZoneForDrag = document.getElementById('videoDropZone');
+            const videoInputForDrag = document.getElementById('id_video_file');
+            
+            if (videoDropZoneForDrag && videoInputForDrag) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    videoDropZoneForDrag.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    videoDropZoneForDrag.addEventListener(eventName, function() {
+                        videoDropZoneForDrag.classList.add('dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    videoDropZoneForDrag.addEventListener(eventName, function() {
+                        videoDropZoneForDrag.classList.remove('dragover');
+                    }, false);
+                });
+
+                videoDropZoneForDrag.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        // Check if URL is disabled
+                        if (videoInputForDrag.disabled) {
+                            alert('Please clear the video URL first before uploading a file.');
+                            return;
+                        }
+                        videoInputForDrag.files = files;
+                        const event = new Event('change', { bubbles: true });
+                        videoInputForDrag.dispatchEvent(event);
+                    }
+                }, false);
+            }
+
+            // ===== VIDEO URL PREVIEW ON LOAD =====
+            // If there's a URL value on load, show preview
+            if (videoUrlInput && videoUrlInput.value.trim() !== '') {
+                showVideoPreview(videoUrlInput.value.trim());
+            }
+
+        });
+    })();
+</script>
+
+</body>
+</html>

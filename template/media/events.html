@@ -116,7 +116,6 @@
     }
 }
 </style>
-
 <section class="events-section">
 
     <div class="events-header">
@@ -125,49 +124,37 @@
     </div>
 
     <div class="events-grid">
-
-        <!-- Event 1 -->
-        <div class="event-card">
-            <img src="{% static 'images/college.jpg' %}" alt="">
-            <div class="event-content">
-                <div class="event-date">25 June 2026</div>
-                <div class="event-title">Education Awareness Seminar</div>
-                <div class="event-desc">
-                    Join us for a seminar focused on modern education trends and student development.
+        {% if events %}
+            {% for event in events %}
+            <!-- Event Card -->
+            <div class="event-card">
+                {% if event.image %}
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                {% else %}
+                    <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
+                {% endif %}
+                <div class="event-content">
+                    <div class="event-date">{{ event.event_date|date:"d F Y" }}</div>
+                    <div class="event-title">{{ event.title }}</div>
+                    <div class="event-desc">
+                        {{ event.description|truncatewords:15 }}
+                    </div>
+                    <div class="event-meta">
+                        📍 {{ event.location }} | 🕒 {{ event.event_time|time:"g:i A" }}
+                    </div>
+                    {% if event.slug %}
+                        <a href="{% url 'kalpana_detail' event.slug %}" class="event-btn">View Details</a>
+                    {% endif %}
                 </div>
-                <div class="event-meta">📍 Manathavady | 🕒 8:00 AM</div>
-                <a href="#" class="event-btn">View Details</a>
             </div>
-        </div>
-
-        <!-- Event 2 -->
-        <div class="event-card">
-            <img src="{% static 'images/retreat.webp' %}" alt="">
-            <div class="event-content">
-                <div class="event-date">02 July 2026</div>
-                <div class="event-title">Medical Camp</div>
-                <div class="event-desc">
-                    Free health check-up camp with expert doctors and medical facilities.
-                </div>
-                <div class="event-meta">📍 Meenagadi | 🕒 9:00 AM</div>
-                <a href="#" class="event-btn">View Details</a>
+            {% endfor %}
+        {% else %}
+            <div class="no-events">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>No Upcoming Events</h3>
+                <p>Check back later for new events and programs.</p>
             </div>
-        </div>
-
-        <!-- Event 3 -->
-        <div class="event-card">
-            <img src="{% static 'images/school1.jpg' %}" alt="">
-            <div class="event-content">
-                <div class="event-date">15 July 2026</div>
-                <div class="event-title">Youth Retreat Program</div>
-                <div class="event-desc">
-                    A spiritual and motivational retreat for youth development and leadership.
-                </div>
-                <div class="event-meta">📍 Bathery | 🕒 10:00 AM</div>
-                <a href="#" class="event-btn">View Details</a>
-            </div>
-        </div>
-
+        {% endif %}
     </div>
 
 </section>

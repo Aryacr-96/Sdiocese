@@ -267,30 +267,42 @@ iframe{
             <h3>Phone</h3>
             <p>{{ parish.phone }}</p>
         </div>
-
-    </div>
-
-    <!-- Google Map -->
-    {% if parish.map_url %}
-    <div class="church-content-card">
-
-        <h2 class="mb-3">
+        
+  {% if parish.map_url %}
+    <a href="{{ parish.map_url }}" target="_blank" style="text-decoration: none; color: inherit; display: block;">
+        <div class="church-info-card">
             <i class="fas fa-map-marker-alt"></i>
-            Church Location
-        </h2>
-
-        <iframe
-            src="{{ parish.map_url }}"
-            width="100%"
-            height="450"
-            style="border:0; border-radius:12px;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+            <h3>Location</h3>
+            <p>{{ parish.location }}</p>
+        </div>
+    </a>
+{% else %}
+    <div class="church-info-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Location</h3>
+        <p>{{ parish.location }}</p>
+    </div>
+{% endif %}
 
     </div>
-    {% endif %}
+
+    <!-- Google Map
+   {% if parish.map_url %}
+<div class="church-content-card">
+
+    <h2 class="mb-3">
+        <i class="fas fa-map-marker-alt"></i>
+        Church Location
+    </h2>
+
+    <div class="text-center">
+        <a href="{{ parish.map_url }}" target="_blank" class="btn btn-danger">
+            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
+        </a>
+    </div>
+
+</div>
+{% endif %} -->
 
 </section>
 </div>

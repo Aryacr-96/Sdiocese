@@ -92,7 +92,6 @@ from django.db import models
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 import re
-
 class Parish(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
@@ -107,22 +106,22 @@ class Parish(models.Model):
     
     # ForeignKey to Priest for Vicar
     vicar = models.ForeignKey(
-    Priest,
-    on_delete=models.SET_NULL,
-    null=True,
-    blank=True,
-    related_name='parishes',
-    limit_choices_to={'position': 'priest'},
-)
+        Priest,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='parishes',
+        limit_choices_to={'position': 'priest'},
+    )
     # Assistant Vicar
     assistant_vicar = models.ForeignKey(
-    Priest,
-    on_delete=models.SET_NULL,
-    null=True,
-    blank=True,
-    related_name='assistant_vicar_parishes',
-    limit_choices_to={'position': 'priest'},
-)
+        Priest,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='assistant_vicar_parishes',
+        limit_choices_to={'position': 'priest'},
+    )
     # Keep vicar_name for backward compatibility or as a fallback
     vicar_name = models.CharField(
         max_length=150, 
@@ -140,39 +139,35 @@ class Parish(models.Model):
     description = RichTextUploadingField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     class Meta:
         ordering = ['name']
         verbose_name = "Parish"
         verbose_name_plural = "Parishes"
-def save(self, *args, **kwargs):
-    if not self.slug:
-        base_slug = slugify(self.name)  # 👈 Use name, not first_name/last_name
-        slug = base_slug
-        counter = 1
 
-        # 👈 Check Parish objects, not Priest objects
-        while Parish.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-            slug = f"{base_slug}-{counter}"
-            counter += 1
+    # ===== FIXED: save() method - properly indented =====
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)  # Use name, not first_name/last_name
+            slug = base_slug
+            counter = 1
 
-        self.slug = slug
+            # Check Parish objects, not Priest objects
+            while Parish.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
 
-    super().save(*args, **kwargs)
+            self.slug = slug
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
-
     def get_vicar_display(self):
-
         if self.vicar:
             return f"{self.vicar.first_name} {self.vicar.last_name}"
-
         return self.vicar_name or "No vicar assigned"
-
-
-
-  
 
 
 from django.db import models
@@ -516,6 +511,550 @@ class Designation(models.Model):
         help_text="Designation name"
     )
 
+# KARUNYA SPARSHAM
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['name']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    
+from django.db import models
+from django.utils.text import slugify  # <-- IMPORT HERE TOO
+from django.urls import reverse
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
+    image = models.ImageField(upload_to='category_images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['name']
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
+
+class Karunyasparsham(models.Model):
+    # Status choices for active field
+    STATUS_CHOICES = [
+        ('inactive', 'Inactive'),
+        ('completed', 'Completed'),
+        ('processing', 'Processing'),
+    ]
+    
+    # Content type choices
+    CONTENT_TYPE_CHOICES = [
+        ('about', 'About'),
+        ('project', 'Project'),
+    ]
+    
+    # Common fields
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES, default='about')
+    
+    # About section fields
+    about_title = models.CharField(max_length=200, blank=True, null=True)
+    about_image = models.ImageField(upload_to='karunyasparsham/about/', blank=True, null=True)
+    about_content = RichTextUploadingField(blank=True, null=True)
+    
+    # Project section fields
+    project_title = models.CharField(max_length=200, blank=True, null=True)
+    project_image = models.ImageField(upload_to='karunyasparsham/projects/', blank=True, null=True)
+    project_description = models.TextField(blank=True, null=True)
+    project_content = RichTextUploadingField(blank=True, null=True)
+    project_location = models.CharField(max_length=200, blank=True, null=True)
+    
+    # Project status
+    active = models.CharField(max_length=20, choices=STATUS_CHOICES, default='processing')
+    
+    # Foreign key to Category
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='karunyasparsham_projects')
+    
+    # Slug field
+    slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    
+    # Additional fields
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = "Karunyasparsham"
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['content_type']),
+            models.Index(fields=['category']),
+            models.Index(fields=['active']),
+        ]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            if self.content_type == 'about' and self.about_title:
+                base_slug = slugify(self.about_title)
+            elif self.content_type == 'project' and self.project_title:
+                base_slug = slugify(self.project_title)
+            else:
+                base_slug = slugify(f"{self.content_type}-{self.id or 'temp'}")
+            
+            # Ensure unique slug
+            self.slug = self.generate_unique_slug(base_slug)
         
+        super().save(*args, **kwargs)
+
+    def generate_unique_slug(self, base_slug):
+        """Generate unique slug by adding number if slug already exists"""
+        slug = base_slug
+        num = 1
+        while Karunyasparsham.objects.filter(slug=slug).exclude(id=self.id).exists():
+            slug = f"{base_slug}-{num}"
+            num += 1
+        return slug
+
+    def __str__(self):
+        if self.content_type == 'about':
+            return self.about_title or "About Section"
+        return self.project_title or "Project Section"
+
+    def get_absolute_url(self):
+        """Get absolute URL for the entry"""
+        if self.slug:
+            return reverse('karunyasparsham_detail', kwargs={'slug': self.slug})
+        return reverse('karunyasparsham_detail_pk', kwargs={'pk': self.pk})
+
+    @property
+    def title(self):
+        """Get title based on content type"""
+        if self.content_type == 'about':
+            return self.about_title
+        return self.project_title
+
+    @property
+    def content(self):
+        """Get content based on content type"""
+        if self.content_type == 'about':
+            return self.about_content
+        return self.project_content
+
+    @property
+    def image(self):
+        """Get image based on content type"""
+        if self.content_type == 'about':
+            return self.about_image
+        return self.project_image
+
+
+from django.db import models
+from django.utils.text import slugify
+import os
+
+def publication_upload_path(instance, filename):
+    return os.path.join("publications/files", filename)
+
+def publication_image_path(instance, filename):
+    return os.path.join("publications/images", filename)
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
+    image = models.ImageField(
+        upload_to=publication_image_path,
+        blank=True,
+        null=True
+    )
+    file = models.FileField(
+        upload_to=publication_upload_path
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-uploaded_at']
+        verbose_name = "Publication"
+        verbose_name_plural = "Publications"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while Publication.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+
+# GALLERY
+from django.db import models
+from django.utils.text import slugify
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
+class Gallery(models.Model):
+    # Media type choices
+    MEDIA_TYPES = [
+        ('image', 'Image'),
+        ('video', 'Video'),
+    ]
+    
+    # Common fields
+    title = models.CharField(max_length=255, verbose_name="Title")
+    slug = models.SlugField(unique=True, blank=True, verbose_name="Slug")
+    media_type = models.CharField(
+        max_length=10,
+        choices=MEDIA_TYPES,
+        default='image',
+        verbose_name="Media Type"
+    )
+    
+    # Image fields
+    image = models.ImageField(
+        upload_to='gallery/images/',
+        blank=True,
+        null=True,
+        verbose_name="Image"
+    )
+    
+    # Video fields
+    video_url = models.URLField(
+        max_length=500,
+        blank=True,
+        null=True,
+        validators=[URLValidator()],
+        verbose_name="Video URL (YouTube, Vimeo, etc.)"
+    )
+    video_file = models.FileField(
+        upload_to='gallery/videos/',
+        blank=True,
+        null=True,
+        verbose_name="Video File"
+    )
+    video_embed_code = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Video Embed Code",
+        help_text="Paste embed code from YouTube, Vimeo, or other video platforms"
+    )
+    
+    # Common fields
+    description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Description"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At")
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Gallery Item"
+        verbose_name_plural = "Gallery Items"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while Gallery.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    def get_media_type_display(self):
+        return dict(self.MEDIA_TYPES).get(self.media_type, 'Unknown')
+
+    def is_image(self):
+        return self.media_type == 'image'
+
+    def is_video(self):
+        return self.media_type == 'video'
+
+    def get_video_id(self):
+        """Extract video ID from YouTube URL"""
+        if not self.video_url:
+            return None
+        
+        import re
+        patterns = [
+            r'(?:youtube\.com\/watch\?v=)([\w-]+)',
+            r'(?:youtu\.be\/)([\w-]+)',
+            r'(?:youtube\.com\/embed\/)([\w-]+)',
+            r'(?:youtube\.com\/shorts\/)([\w-]+)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, self.video_url)
+            if match:
+                return match.group(1)
+        return None
+
+    def get_embed_url(self):
+        """Get embed URL for various platforms"""
+        if self.video_embed_code:
+            return self.video_embed_code
+        
+        if not self.video_url:
+            return None
+        
+        video_id = self.get_video_id()
+        if video_id:
+            return f'https://www.youtube.com/embed/{video_id}'
+        
+        if 'vimeo.com' in self.video_url:
+            import re
+            match = re.search(r'vimeo\.com/(\d+)', self.video_url)
+            if match:
+                return f'https://player.vimeo.com/video/{match.group(1)}'
+        
+        return self.video_url
+
+    def get_thumbnail_url(self):
+        """Get thumbnail URL for video platforms"""
+        if self.is_video() and self.video_url:
+            video_id = self.get_video_id()
+            if video_id:
+                return f'https://img.youtube.com/vi/{video_id}/mqdefault.jpg'
+        return None
+
+    def clean(self):
+        """Validate the model data"""
+        if self.media_type == 'image' and not self.image:
+            raise ValidationError({'image': 'An image is required when media type is Image.'})
+        
+        if self.media_type == 'video':
+            if not self.video_url and not self.video_file and not self.video_embed_code:
+                raise ValidationError({
+                    'video_url': 'A video URL, video file, or embed code is required when media type is Video.'
+                })
+
+
+
+
+#PRAYER BOOKS
+
+from django.db import models
+from django.utils.text import slugify
+
+class PrayerBook(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Title")
+    slug = models.SlugField(unique=True, blank=True, verbose_name="Slug")
+    image = models.ImageField(
+        upload_to='prayer_books/',
+        blank=True,
+        null=True,
+        verbose_name="Book Cover Image"
+    )
+    file = models.FileField(
+        upload_to='prayer_books/files/',
+        blank=True,
+        null=True,
+        verbose_name="File (PDF, Excel, Word)"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At")
+
+    class Meta:
+        ordering = ['title']
+        verbose_name = "Prayer Book"
+        verbose_name_plural = "Prayer Books"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while PrayerBook.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    def get_file_extension(self):
+        """Get the file extension"""
+        if self.file:
+            return self.file.name.split('.')[-1].lower()
+        return None
+
+    def get_file_icon(self):
+        """Get Font Awesome icon based on file type"""
+        ext = self.get_file_extension()
+        icons = {
+            'pdf': 'fa-file-pdf',
+            'doc': 'fa-file-word',
+            'docx': 'fa-file-word',
+            'xls': 'fa-file-excel',
+            'xlsx': 'fa-file-excel',
+            'ppt': 'fa-file-powerpoint',
+            'pptx': 'fa-file-powerpoint',
+            'txt': 'fa-file-alt',
+            'zip': 'fa-file-archive',
+            'rar': 'fa-file-archive',
+        }
+        return icons.get(ext, 'fa-file')
+
+
+
+#KALPANA from django.db import models
+from django.utils.text import slugify
+import os
+
+class Kalpana(models.Model):
+    # ===== ONLY TITLE (with year) =====
+    title = models.CharField(max_length=200, help_text="e.g., Kalpana 2026, Kalpana 2025")
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Kalpana'
+        verbose_name_plural = 'Kalpana'
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+
+class KalpanaFile(models.Model):
+    """Each Kalpana has multiple files (PDF, Excel, Word)"""
+    kalpana = models.ForeignKey(Kalpana, on_delete=models.CASCADE, related_name='files')
+    file = models.FileField(upload_to='kalpana_files/%Y/%m/')
+    file_name = models.CharField(max_length=200, blank=True, help_text="Display name for the file")
+    description = models.TextField(blank=True, help_text="Description of this file")
+    file_type = models.CharField(max_length=20, blank=True)
+    file_size = models.CharField(max_length=20, blank=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['uploaded_at']
+        verbose_name = 'Kalpana File'
+        verbose_name_plural = 'Kalpana Files'
+    
+    def __str__(self):
+        return self.file_name or self.file.name
+    
+    def save(self, *args, **kwargs):
+        if not self.file_name:
+            self.file_name = self.file.name
+        if not self.file_type:
+            ext = os.path.splitext(self.file.name)[1].lower()
+            file_types = {
+                '.pdf': 'pdf', '.doc': 'word', '.docx': 'word',
+                '.xls': 'excel', '.xlsx': 'excel', '.csv': 'excel',
+                '.jpg': 'image', '.jpeg': 'image', '.png': 'image',
+                '.gif': 'image', '.svg': 'image', '.webp': 'image'
+            }
+            self.file_type = file_types.get(ext, 'other')
+        if not self.file_size and self.file and hasattr(self.file, 'size'):
+            size = self.file.size
+            if size < 1024:
+                self.file_size = f"{size} B"
+            elif size < 1024 * 1024:
+                self.file_size = f"{(size / 1024):.1f} KB"
+            else:
+                self.file_size = f"{(size / (1024 * 1024)):.2f} MB"
+        super().save(*args, **kwargs)
+
+
+
+# EVENTS
+
+
+from django.db import models
+from django.utils import timezone
+
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='events/', blank=True, null=True)
+    description = models.TextField()
+    event_date = models.DateField()  # Changed to DateField for date only
+    event_time = models.TimeField()  # New separate time field
+    location = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_event_datetime(self):
+        """Combine date and time into a single datetime object"""
+        return timezone.datetime.combine(self.event_date, self.event_time)
+
+    class Meta:
+        ordering = ['event_date', 'event_time']
+
+
+#DOWNLOADS
+
+from django.db import models
+from django.core.validators import FileExtensionValidator
+
+class Download(models.Model):
+    """
+    Simple model for downloadable documents.
+    """
+    
+    DOCUMENT_TYPES = [
+        ('church_account_manual', 'Church Account Manual'),
+        ('constitution_1934', '1934 Constitution'),
+        ('guidelines', 'Guidelines'),
+    ]
+    
+    document_type = models.CharField(
+        max_length=50,
+        choices=DOCUMENT_TYPES,
+        verbose_name="Document Type"
+    )
+    
+    file = models.FileField(
+        upload_to='downloads/',
+        validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'xls', 'xlsx'])],
+        help_text="Upload PDF, Word, or Excel files"
+    )
+
+    class Meta:
+        db_table = 'downloads'
+        ordering = ['document_type']
+        verbose_name = 'Download'
+        verbose_name_plural = 'Downloads'
+
+    def __str__(self):
+        return f"{self.get_document_type_display()}"

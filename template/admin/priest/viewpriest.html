@@ -62,19 +62,20 @@
             min-height: 100vh;
         }
 
+        /* ----- EXPANDED CONTENT WRAPPER ----- */
         .content-wrapper {
             flex: 1;
-            max-width: 1100px;
-            margin: 1.5rem auto;
-            padding: 0 1.5rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
             width: 100%;
         }
 
-        /* ----- Page Header (Modern) ----- */
+        /* ----- Page Header (Expanded) ----- */
         .content-header-custom {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             background: var(--card-bg);
-            padding: 1.2rem 1.5rem;
+            padding: 1.5rem 2rem;
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
@@ -84,12 +85,12 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         .content-header-custom .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
         .content-header-custom .header-left .breadcrumb-wrap {
             display: flex;
@@ -99,7 +100,7 @@
             background: transparent;
             padding: 0;
             margin: 0;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
         .content-header-custom .header-left .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
             content: "›";
@@ -121,30 +122,30 @@
         .content-header-custom h1 {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--text-main);
             letter-spacing: -0.02em;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin: 0;
         }
         .content-header-custom h1 i {
             color: var(--primary);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
         }
         .content-header-custom .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
         .content-header-custom .header-right .position-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 0.3rem 1rem;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
             border-radius: var(--radius-pill);
-            font-size: 0.7rem;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.03em;
@@ -160,10 +161,10 @@
             color: var(--info);
         }
         .content-header-custom .header-right .position-badge i {
-            font-size: 0.7rem;
+            font-size: 0.85rem;
         }
 
-        /* ----- Card ----- */
+        /* ----- Card (Expanded) ----- */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
@@ -176,10 +177,10 @@
             box-shadow: var(--shadow-card-hover);
         }
         .card .card-body {
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
-        /* ----- Priest Image ----- */
+        /* ----- Priest Image (Expanded) ----- */
         .priest-image-wrapper {
             position: relative;
             display: inline-block;
@@ -187,12 +188,12 @@
         }
         .priest-image-wrapper .position-badge-large {
             position: absolute;
-            bottom: 10px;
+            bottom: 14px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 0.4rem 1.2rem;
+            padding: 0.5rem 1.5rem;
             border-radius: var(--radius-pill);
-            font-size: 0.7rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -213,7 +214,7 @@
 
         .priest-image {
             width: 100%;
-            max-height: 350px;
+            max-height: 400px;
             object-fit: cover;
             border-radius: var(--radius-md);
             border: 3px solid var(--border-color);
@@ -225,7 +226,7 @@
         }
         .priest-image-placeholder {
             width: 100%;
-            height: 350px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -233,24 +234,24 @@
             border-radius: var(--radius-md);
             border: 3px solid var(--border-color);
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
             color: var(--primary);
         }
         .priest-image-placeholder i {
-            font-size: 5rem;
+            font-size: 5.5rem;
             opacity: 0.5;
         }
         .priest-image-placeholder p {
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin: 0;
         }
 
-        /* ----- Details Table ----- */
+        /* ----- Details Table (Expanded) ----- */
         .details-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         .details-table tr {
             border-bottom: 1px solid var(--border-color);
@@ -263,11 +264,11 @@
             background: #f8fafc;
         }
         .details-table th {
-            width: 200px;
-            padding: 0.8rem 1rem;
+            width: 220px;
+            padding: 1rem 1.2rem;
             font-weight: 600;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.03em;
             background: #f8fafc;
@@ -275,10 +276,11 @@
             white-space: nowrap;
         }
         .details-table td {
-            padding: 0.8rem 1rem;
+            padding: 1rem 1.2rem;
             color: var(--text-main);
             border: none;
             font-weight: 500;
+            font-size: 0.95rem;
         }
         .details-table td .text-muted-light {
             color: var(--text-muted);
@@ -290,14 +292,14 @@
             font-weight: 400;
         }
 
-        /* ----- Position Badge Inline ----- */
+        /* ----- Position Badge Inline (Expanded) ----- */
         .position-badge-inline {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            padding: 0.3rem 1rem;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
             border-radius: var(--radius-pill);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.03em;
@@ -317,16 +319,17 @@
             color: var(--info);
         }
         .position-badge-inline i {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
 
-        /* ----- Pastoral Experience ----- */
+        /* ----- Pastoral Experience (Expanded) ----- */
         .pastoral-card {
             background: #f8fafc;
             border-radius: var(--radius-md);
-            padding: 0.8rem 1.2rem;
+            padding: 1rem 1.5rem;
             border-left: 4px solid var(--primary);
             display: inline-block;
+            width: 100%;
         }
         .pastoral-card .pastoral-year {
             font-weight: 700;
@@ -335,29 +338,30 @@
         .pastoral-card .pastoral-details {
             color: var(--text-main);
             font-weight: 500;
+            font-size: 0.95rem;
         }
         .pastoral-card .pastoral-church {
             color: var(--text-muted);
             font-weight: 400;
         }
 
-        /* ----- Action Buttons ----- */
+        /* ----- Action Buttons (Expanded) ----- */
         .action-bar {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
         .btn-back {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #475569;
             background: #ffffff;
             border: 1.5px solid var(--border-color);
@@ -373,11 +377,11 @@
         .btn-edit {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
             background: var(--warning);
             border: none;
@@ -393,11 +397,11 @@
         .btn-delete {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
             background: var(--danger);
             border: none;
@@ -416,6 +420,7 @@
         .retired-date {
             color: #dc2626;
             font-weight: 600;
+            font-size: 0.95rem;
         }
         .retired-date i {
             margin-right: 6px;
@@ -423,20 +428,30 @@
 
         /* ----- Responsive ----- */
         @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 0 1.5rem;
+                margin: 1.5rem auto;
+            }
             .details-table th {
-                width: 150px;
-                font-size: 0.75rem;
-                padding: 0.6rem 0.8rem;
+                width: 160px;
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
             }
             .details-table td {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.85rem;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            .card .card-body {
+                padding: 2rem;
             }
         }
         @media (max-width: 768px) {
             .content-wrapper {
                 padding: 0 1rem;
                 margin: 1rem auto;
+            }
+            .content-header-custom {
+                padding: 1.2rem 1.5rem;
             }
             .content-header-custom .header-row {
                 flex-direction: column;
@@ -449,36 +464,39 @@
             .content-header-custom .header-left .breadcrumb-wrap {
                 order: 2;
                 width: 100%;
-                margin-top: 4px;
+                margin-top: 6px;
             }
             .content-header-custom .header-left .breadcrumb-wrap .breadcrumb {
-                font-size: 0.7rem;
+                font-size: 0.8rem;
             }
             .content-header-custom h1 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .content-header-custom .header-right {
                 width: 100%;
                 justify-content: flex-start;
             }
             .card .card-body {
-                padding: 1.2rem;
+                padding: 1.5rem;
             }
             .details-table th {
-                width: 120px;
-                font-size: 0.7rem;
-                padding: 0.5rem 0.6rem;
+                width: 130px;
+                font-size: 0.75rem;
+                padding: 0.6rem 0.8rem;
                 white-space: normal;
             }
             .details-table td {
-                padding: 0.5rem 0.6rem;
-                font-size: 0.8rem;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
             }
             .priest-image {
-                max-height: 250px;
+                max-height: 280px;
             }
             .priest-image-placeholder {
-                height: 250px;
+                height: 280px;
+            }
+            .priest-image-placeholder i {
+                font-size: 4rem;
             }
             .action-bar {
                 flex-direction: column;
@@ -490,39 +508,75 @@
                 justify-content: center;
                 width: 100%;
             }
+            .pastoral-card {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.85rem;
+            }
         }
         @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+                margin: 0.8rem auto;
+            }
+            .content-header-custom {
+                padding: 1rem 1.2rem;
+            }
             .content-header-custom h1 {
-                font-size: 1rem;
+                font-size: 1.1rem;
+            }
+            .content-header-custom h1 i {
+                font-size: 1.2rem;
+            }
+            .content-header-custom .header-right .position-badge {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.8rem;
             }
             .card .card-body {
-                padding: 1rem;
+                padding: 1.2rem;
             }
             .details-table th {
                 width: 90px;
                 font-size: 0.65rem;
-                padding: 0.4rem 0.5rem;
+                padding: 0.5rem 0.6rem;
             }
             .details-table td {
-                padding: 0.4rem 0.5rem;
-                font-size: 0.75rem;
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
             }
             .priest-image {
-                max-height: 200px;
+                max-height: 220px;
             }
             .priest-image-placeholder {
-                height: 200px;
+                height: 220px;
             }
             .priest-image-placeholder i {
                 font-size: 3rem;
             }
-            .pastoral-card {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
+            .priest-image-placeholder p {
+                font-size: 1rem;
+            }
+            .priest-image-wrapper .position-badge-large {
+                font-size: 0.7rem;
+                padding: 0.3rem 1rem;
+                bottom: 10px;
             }
             .position-badge-inline {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.7rem;
+                font-size: 0.7rem;
+                padding: 0.3rem 0.8rem;
+            }
+            .btn-back, .btn-edit, .btn-delete {
+                font-size: 0.8rem;
+                padding: 0.6rem 1.5rem;
+            }
+            .pastoral-card {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .retired-date {
+                font-size: 0.85rem;
+            }
+            .details-table td .empty-value {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -605,7 +659,7 @@
                                     <div class="priest-image-placeholder">
                                         <i class="fas fa-user-pastor"></i>
                                         <p>{{ priest.first_name }} {{ priest.last_name }}</p>
-                                        <span style="font-size:0.8rem; font-weight:400; opacity:0.7;">
+                                        <span style="font-size:0.9rem; font-weight:400; opacity:0.7;">
                                             <i class="fas fa-{{ priest.position }}"></i>
                                             {{ priest.get_position_display }}
                                         </span>
@@ -700,28 +754,25 @@
                                         {% endif %}
                                     </td>
                                 </tr>
-                               <tr>
-    <th>
-        <i class="fas fa-church"></i> Pastoral Experience
-    </th>
-
-    <td>
-        {% if priest.pastoral_experience %}
-
-            <div class="pastoral-card">
-
-                <div class="pastoral-details">
-                    <i class="fas fa-file-alt"></i>
-                    {{ priest.pastoral_experience|safe }}
-                </div>
-            </div>
-        {% else %}
-            <span class="empty-value">
-                No pastoral experience recorded
-            </span>
-        {% endif %}
-    </td>
-</tr>
+                                <tr>
+                                    <th>
+                                        <i class="fas fa-church"></i> Pastoral Experience
+                                    </th>
+                                    <td>
+                                        {% if priest.pastoral_experience %}
+                                            <div class="pastoral-card">
+                                                <div class="pastoral-details">
+                                                    <i class="fas fa-file-alt"></i>
+                                                    {{ priest.pastoral_experience|safe }}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span class="empty-value">
+                                                No pastoral experience recorded
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th><i class="fas fa-align-left"></i> Description</th>
                                     <td>
@@ -744,12 +795,7 @@
                                     <i class="fas fa-edit"></i>
                                     Edit Priest
                                 </a>
-                                <!-- <a href="{% url 'delete_priest' priest.id %}" 
-                                   class="btn-delete"
-                                   onclick="return confirm('Are you sure you want to delete {{ priest.first_name }} {{ priest.last_name }}? This action cannot be undone.')">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Delete Priest
-                                </a> -->
+                                <!-- Delete button commented out for safety -->
                             </div>
 
                         </div>

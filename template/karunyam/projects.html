@@ -100,7 +100,6 @@
     }
 }
 </style>
-
 <section class="projects-section">
 
     <div class="projects-header">
@@ -110,46 +109,38 @@
 
     <div class="projects-grid">
 
-        <div class="project-card">
-            <div class="project-image">
-                <img src="{% static 'images/college.jpg' %}" alt="">
-            </div>
-            <div class="project-content">
-                <h3>Medical Assistance</h3>
-                <p>
-                    Supporting patients with treatment expenses, medicines,
-                    and healthcare resources during difficult times.
-                </p>
-                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
-            </div>
-        </div>
+        {% for project in projects %}
 
         <div class="project-card">
+
             <div class="project-image">
-                <img src="{% static 'images/school2.jpg' %}" alt="">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.heading }}">
+                {% endif %}
             </div>
+
             <div class="project-content">
-                <h3>Palliative Care</h3>
+
+                <h3>{{ project.heading }}</h3>
+
                 <p>
-                    Providing comfort, emotional support, and care services
-                    for those facing serious health conditions.
+                    {{ project.content|striptags|truncatewords:20 }}
                 </p>
-                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
+
+                <a href="{% url 'projects_detail' project.slug %}"
+                   class="project-btn">
+                    Read More
+                </a>
+
             </div>
+
         </div>
-        <div class="project-card">
-            <div class="project-image">
-                <img src="{% static 'images/retreat.webp' %}" alt="">
-            </div>
-            <div class="project-content">
-                <h3>Educational Support</h3>
-                <p>
-                    Helping students through scholarships, educational
-                    materials, and mentorship opportunities.
-                </p>
-                <a href="{% url 'projects_detail' %}" class="project-btn">Read More</a>
-            </div>
-        </div>
+
+        {% empty %}
+
+        <p>No projects available.</p>
+
+        {% endfor %}
 
     </div>
 

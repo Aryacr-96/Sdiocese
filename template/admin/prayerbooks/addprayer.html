@@ -1,0 +1,996 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+{{ form.media }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ title }} · Prayer Books</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+            --info: #0891b2;
+            --info-light: #cffafe;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-pill: 9999px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .content-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+        .content-header h1 i {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .content-header .header-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .content-header .header-stats .stat-badge {
+            background: var(--primary-light);
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-custom {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            color: #ffffff;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+        .card .card-header {
+            background: #f8fafc;
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .card .card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+        .card .card-header .header-left i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        .card .card-header .header-left .text-muted {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .card .card-header .badge {
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .card .card-header .badge.badge-new {
+            background: var(--primary);
+            color: #ffffff;
+        }
+        .card .card-header .badge.badge-edit {
+            background: var(--warning);
+            color: #ffffff;
+        }
+        .card .card-body {
+            padding: 2rem;
+        }
+
+        .section-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-heading:first-of-type {
+            margin-top: 0;
+        }
+        .section-heading i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+        }
+        .section-heading .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border-color), transparent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group label i {
+            color: var(--primary);
+            width: 18px;
+            font-size: 0.9rem;
+        }
+        .form-group label .required-star {
+            color: var(--danger);
+            margin-left: 2px;
+        }
+
+        .form-control {
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            background: #ffffff;
+            color: var(--text-main);
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+            outline: none;
+        }
+        .form-control::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-control-django {
+            border: 1.5px solid var(--border-color) !important;
+            border-radius: var(--radius-md) !important;
+            padding: 0.75rem 1.2rem !important;
+            font-size: 0.9rem !important;
+            transition: all 0.2s ease !important;
+            font-family: 'Inter', sans-serif !important;
+            width: 100% !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 48px !important;
+            color: var(--text-main) !important;
+            background: #ffffff !important;
+        }
+        .form-control-django:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08) !important;
+            outline: none !important;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: #fafcfd;
+            transition: all 0.2s ease;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .file-upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .file-upload-area i {
+            font-size: 2.5rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .file-upload-area:hover i {
+            color: var(--primary);
+        }
+        .file-upload-area p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 500;
+            pointer-events: none;
+        }
+        .file-upload-area p strong {
+            color: var(--primary);
+        }
+        .file-upload-area small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+            pointer-events: none;
+        }
+        
+        .file-upload-area input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+        }
+
+        .file-info {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            align-items: center;
+            gap: 10px;
+        }
+        .file-info.active {
+            display: flex;
+        }
+        .file-info i {
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: #fafcfd;
+            text-align: center;
+        }
+        .image-preview.active {
+            display: block;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+        }
+
+        .current-file {
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--primary);
+            font-size: 0.85rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .current-file i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .current-file a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .current-file a:hover {
+            text-decoration: underline;
+        }
+
+        .help-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            font-weight: 400;
+        }
+        .help-text i {
+            color: var(--primary);
+            margin-right: 4px;
+        }
+
+        .errorlist {
+            color: var(--danger);
+            font-size: 0.85rem;
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .errorlist li {
+            padding: 8px 16px;
+            background: var(--danger-light);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--danger);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .errorlist li::before {
+            content: "⚠";
+            font-size: 0.9rem;
+        }
+
+        .alert-modern {
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid;
+        }
+        .alert-modern.error {
+            background: var(--danger-light);
+            color: #991b1b;
+            border-left-color: var(--danger);
+        }
+        .alert-modern i {
+            font-size: 1.1rem;
+        }
+
+        .card-footer {
+            padding: 1.5rem 2rem;
+            background: #f8fafc;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2.5rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.35);
+            color: #ffffff;
+        }
+
+        .btn-success {
+            background: var(--success);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .btn-success:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.75rem;
+        }
+        .col-12 {
+            flex: 0 0 100%;
+            padding: 0 0.75rem;
+        }
+        .col-md-6 {
+            flex: 0 0 50%;
+            padding: 0 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 100%;
+            }
+            .content-wrapper {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.25rem;
+            }
+            .content-header h1 {
+                font-size: 1.3rem;
+            }
+            .card .card-body {
+                padding: 1.25rem;
+            }
+            .card .card-header {
+                padding: 0.8rem 1.25rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-footer {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem 1.25rem;
+            }
+            .card-footer .btn-outline,
+            .card-footer .btn-primary,
+            .card-footer .btn-success {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+            }
+            .content-header h1 {
+                font-size: 1.1rem;
+            }
+            .card .card-body {
+                padding: 1rem;
+            }
+            .btn-primary {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+            .btn-success {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="content-wrapper">
+
+        <!-- PAGE HEADER -->
+        <section class="content-header">
+            <div>
+                <h1>
+                    <i class="fas {% if is_edit %}fa-edit{% else %}fa-plus-circle{% endif %}"></i>
+                    {{ title }}
+                </h1>
+            </div>
+            <div class="header-stats">
+                <span class="stat-badge">
+                    <i class="fas fa-book"></i>
+                    {% if is_edit %}Editing{% else %}New{% endif %} Prayer Book
+                </span>
+                <a href="{% url 'admin_prayerbook_list' %}" class="btn-primary-custom" style="background: var(--text-muted); box-shadow: none;">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Prayer Books
+                </a>
+            </div>
+        </section>
+
+        <!-- FORM ERRORS -->
+        {% if form.errors %}
+        <div class="alert-modern error" style="margin-bottom: 1.5rem;">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+                <strong>Please correct the following errors:</strong>
+                <ul style="margin-top: 0.5rem; margin-bottom: 0; padding-left: 1.5rem;">
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field|title }}:</strong> {{ errors|join:", " }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- MAIN CARD -->
+        <section class="content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="header-left">
+                        <i class="fas fa-clipboard-list"></i>
+                        Prayer Book Information
+                        <span class="text-muted">— Complete all required fields</span>
+                    </div>
+                    <span class="badge {% if is_edit %}badge-edit{% else %}badge-new{% endif %}">
+                        <i class="fas {% if is_edit %}fa-edit{% else %}fa-plus-circle{% endif %}"></i>
+                        {% if is_edit %}Edit Mode{% else %}New Entry{% endif %}
+                    </span>
+                </div>
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data" id="prayerBookForm">
+                        {% csrf_token %}
+
+                        <!-- ====== TITLE ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-info-circle"></i> Basic Information
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="{{ form.title.id_for_label }}">
+                                        <i class="fas fa-heading"></i> Title <span class="required-star">*</span>
+                                    </label>
+                                    {{ form.title }}
+                                    {% if form.title.errors %}
+                                    <ul class="errorlist">{{ form.title.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> Enter the title of the prayer book
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== IMAGE ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-image"></i> Cover Image
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="{{ form.image.id_for_label }}">
+                                        <i class="fas fa-image"></i> Cover Image
+                                    </label>
+                                    <div class="file-upload-area" id="imageDropZone">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p><strong>Click to upload</strong> or drag and drop</p>
+                                        <small>JPG, JPEG, PNG, GIF, WebP</small>
+                                        {{ form.image }}
+                                    </div>
+                                    {% if form.image.errors %}
+                                    <ul class="errorlist">{{ form.image.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> Upload a cover image for the prayer book (optional)
+                                    </div>
+                                    <div class="image-preview" id="imagePreviewContainer">
+                                        <img id="imagePreview" src="#" alt="Preview" />
+                                    </div>
+                                    {% if prayer_book and prayer_book.image %}
+                                    <div class="current-file">
+                                        <i class="fas fa-image"></i>
+                                        <span>Current: <a href="{{ prayer_book.image.url }}" target="_blank">{{ prayer_book.image.name }}</a></span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== FILE ====== -->
+                        <div class="section-heading">
+                            <i class="fas fa-file"></i> File Upload
+                            <span class="line-spacer"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="{{ form.file.id_for_label }}">
+                                        <i class="fas fa-file"></i> File (PDF, Word, Excel)
+                                    </label>
+                                    <div class="file-upload-area" id="fileDropZone">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p><strong>Click to upload</strong> or drag and drop</p>
+                                        <small>PDF, Word (.doc, .docx), Excel (.xls, .xlsx)</small>
+                                        {{ form.file }}
+                                    </div>
+                                    {% if form.file.errors %}
+                                    <ul class="errorlist">{{ form.file.errors }}</ul>
+                                    {% endif %}
+                                    <div class="help-text">
+                                        <i class="fas fa-info-circle"></i> Upload the prayer book file (PDF, Word, or Excel)
+                                    </div>
+                                    <div class="file-info" id="fileInfoContainer">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span id="fileInfoText">No file selected</span>
+                                    </div>
+                                    {% if prayer_book and prayer_book.file %}
+                                    <div class="current-file">
+                                        <i class="fas fa-file"></i>
+                                        <span>Current: <a href="{{ prayer_book.file.url }}" target="_blank">{{ prayer_book.file.name }}</a></span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== CARD FOOTER ====== -->
+                        <div class="card-footer">
+                            <a href="{% url 'admin_prayerbook_list' %}" class="btn-outline">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            {% if not is_edit %}
+                            <!-- <button type="submit" name="save_and_add_another" class="btn-success">
+                                <i class="fas fa-plus-circle"></i> Save & Add Another
+                            </button> -->
+                            {% endif %}
+                            <!-- <button type="submit" name="save_and_continue" class="btn-outline">
+                                <i class="fas fa-edit"></i> Save & Continue
+                            </button> -->
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i> {% if is_edit %}Update{% else %}Save{% endif %}
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    {% include 'admin/adminfooter.html' %}
+
+</div>
+
+<script>
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add class to Django form fields
+            document.querySelectorAll('#prayerBookForm input:not([type="file"]), #prayerBookForm select, #prayerBookForm textarea').forEach(function(el) {
+                el.classList.add('form-control-django');
+            });
+
+            // ===== IMAGE UPLOAD =====
+            const imageInput = document.getElementById('id_image');
+            const imageDropZone = document.getElementById('imageDropZone');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (imageInput && imageDropZone) {
+                imageInput.addEventListener('change', function(e) {
+                    e.stopPropagation();
+                    if (this.files && this.files[0]) {
+                        const fileName = this.files[0].name;
+                        const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                        const pTag = imageDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = 
+                                `<strong>${fileName}</strong> <span style="color:#94a3b8;font-size:0.85rem;">(${fileSize} MB)</span>`;
+                        }
+                        const icon = imageDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-check-circle';
+                            icon.style.color = '#2563eb';
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (imagePreview) {
+                                imagePreview.src = e.target.result;
+                            }
+                            if (imagePreviewContainer) {
+                                imagePreviewContainer.classList.add('active');
+                            }
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                    } else {
+                        const pTag = imageDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                        }
+                        const icon = imageDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-cloud-upload-alt';
+                            icon.style.color = '';
+                        }
+                        if (imagePreviewContainer) {
+                            imagePreviewContainer.classList.remove('active');
+                        }
+                        if (imagePreview) {
+                            imagePreview.src = '#';
+                        }
+                    }
+                });
+
+                imageDropZone.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        imageInput.click();
+                    }
+                });
+            }
+
+            // ===== IMAGE DRAG & DROP =====
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            const imageDropZoneForDrag = document.getElementById('imageDropZone');
+            const imageInputForDrag = document.getElementById('id_image');
+            
+            if (imageDropZoneForDrag && imageInputForDrag) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, function() {
+                        imageDropZoneForDrag.classList.add('dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    imageDropZoneForDrag.addEventListener(eventName, function() {
+                        imageDropZoneForDrag.classList.remove('dragover');
+                    }, false);
+                });
+
+                imageDropZoneForDrag.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        imageInputForDrag.files = files;
+                        const event = new Event('change', { bubbles: true });
+                        imageInputForDrag.dispatchEvent(event);
+                    }
+                }, false);
+            }
+
+            // ===== FILE UPLOAD =====
+            const fileInput = document.getElementById('id_file');
+            const fileDropZone = document.getElementById('fileDropZone');
+            const fileInfoContainer = document.getElementById('fileInfoContainer');
+            const fileInfoText = document.getElementById('fileInfoText');
+
+            if (fileInput && fileDropZone) {
+                fileInput.addEventListener('change', function(e) {
+                    e.stopPropagation();
+                    if (this.files && this.files[0]) {
+                        const fileName = this.files[0].name;
+                        const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                        const pTag = fileDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = 
+                                `<strong>${fileName}</strong> <span style="color:#94a3b8;font-size:0.85rem;">(${fileSize} MB)</span>`;
+                        }
+                        const icon = fileDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-check-circle';
+                            icon.style.color = '#2563eb';
+                        }
+
+                        if (fileInfoContainer && fileInfoText) {
+                            fileInfoContainer.classList.add('active');
+                            fileInfoText.textContent = `${fileName} (${fileSize} MB)`;
+                        }
+                    } else {
+                        const pTag = fileDropZone.querySelector('p');
+                        if (pTag) {
+                            pTag.innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                        }
+                        const icon = fileDropZone.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-cloud-upload-alt';
+                            icon.style.color = '';
+                        }
+                        if (fileInfoContainer) {
+                            fileInfoContainer.classList.remove('active');
+                        }
+                        if (fileInfoText) {
+                            fileInfoText.textContent = 'No file selected';
+                        }
+                    }
+                });
+
+                fileDropZone.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        fileInput.click();
+                    }
+                });
+            }
+
+            // ===== FILE DRAG & DROP =====
+            const fileDropZoneForDrag = document.getElementById('fileDropZone');
+            const fileInputForDrag = document.getElementById('id_file');
+            
+            if (fileDropZoneForDrag && fileInputForDrag) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    fileDropZoneForDrag.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    fileDropZoneForDrag.addEventListener(eventName, function() {
+                        fileDropZoneForDrag.classList.add('dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    fileDropZoneForDrag.addEventListener(eventName, function() {
+                        fileDropZoneForDrag.classList.remove('dragover');
+                    }, false);
+                });
+
+                fileDropZoneForDrag.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    if (files.length > 0) {
+                        fileInputForDrag.files = files;
+                        const event = new Event('change', { bubbles: true });
+                        fileInputForDrag.dispatchEvent(event);
+                    }
+                }, false);
+            }
+
+        });
+    })();
+</script>
+
+</body>
+</html>

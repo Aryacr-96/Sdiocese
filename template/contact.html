@@ -591,167 +591,171 @@ textarea.input-field-style {
 </div>
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
 <script>
-// Sidebar toggle (existing code)
-const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== SIDEBAR TOGGLE =====
+    function initSidebar() {
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebar = document.getElementById('sidebarPanel');
+        const overlay = document.getElementById('sidebarOverlay');
 
-function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (sidebar.classList.contains('open')) {
-            closeSidebar();
-        } else {
-            openSidebar();
+        function openSidebar() {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('active');
+            if (toggleBtn) toggleBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-    });
-}
 
-if (overlay) {
-    overlay.addEventListener('click', closeSidebar);
-}
+        function closeSidebar() {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+            if (toggleBtn) toggleBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
+        if (toggleBtn) {
+            toggleBtn.removeEventListener('click', openSidebar);
+            toggleBtn.removeEventListener('click', closeSidebar);
+            
+            toggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (sidebar && sidebar.classList.contains('open')) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            });
+        }
 
-// Dropdown menu (existing code)
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
+        if (overlay) {
+            overlay.removeEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+        }
 
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+                closeSidebar();
             }
         });
+    }
 
-        dropdown.classList.toggle("active");
+    initSidebar();
+    setTimeout(initSidebar, 100);
+
+    // ===== DROPDOWN MENU =====
+    document.querySelectorAll(".menu-link").forEach(function(link) {
+        link.addEventListener("click", function() {
+            const dropdown = this.parentElement;
+            document.querySelectorAll(".dropdown").forEach(function(item) {
+                if (item !== dropdown) {
+                    item.classList.remove("active");
+                }
+            });
+            dropdown.classList.toggle("active");
+        });
     });
-});
 
-// History blocks (existing code)
-const historyBlocks = document.querySelectorAll('.history-block');
+    // ===== HISTORY BLOCKS SCROLL ANIMATION =====
+    const historyBlocks = document.querySelectorAll('.history-block');
 
-window.addEventListener('scroll', () => {
-    historyBlocks.forEach(block => {
-        const rect = block.getBoundingClientRect();
-        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+    window.addEventListener('scroll', function() {
+        historyBlocks.forEach(function(block) {
+            const rect = block.getBoundingClientRect();
+            const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+            if (isMiddle) {
+                block.style.setProperty('--line-color', '#e76514');
+            } else {
+                block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+            }
+        });
+    });
 
-        if (isMiddle) {
-            block.style.setProperty('--line-color', '#e76514');
-        } else {
-            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+    // ===== CALENDAR =====
+    let current = new Date();
+
+    const events = {
+        "2026-01-01": "New Year Holy Mass - 6:30 AM",
+        "2026-01-06": "Epiphany Celebration",
+        "2026-02-14": "Family Prayer Day",
+        "2026-03-25": "Annunciation Feast",
+        "2026-04-20": "Easter Vigil",
+        "2026-06-15": "Bible Study & Youth Meeting",
+        "2026-08-15": "Independence Day Prayer",
+        "2026-09-08": "Feast of Mary",
+        "2026-12-25": "Christmas Mass"
+    };
+
+    function renderCalendar() {
+        const cal = document.getElementById("calendar");
+        if (!cal) return;
+        cal.innerHTML = "";
+
+        let year = current.getFullYear();
+        let month = current.getMonth();
+
+        let firstDay = new Date(year, month, 1).getDay();
+        let days = new Date(year, month + 1, 0).getDate();
+
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const monthTitle = document.getElementById("monthTitle");
+        if (monthTitle) {
+            monthTitle.innerText = monthNames[month] + " " + year;
         }
-    });
-});
 
-// Calendar (existing code)
-let current = new Date();
+        for (let i = 0; i < firstDay; i++) {
+            cal.innerHTML += `<div></div>`;
+        }
 
-const events = {
-    "2026-01-01": "New Year Holy Mass - 6:30 AM",
-    "2026-01-06": "Epiphany Celebration",
-    "2026-02-14": "Family Prayer Day",
-    "2026-03-25": "Annunciation Feast",
-    "2026-04-20": "Easter Vigil",
-    "2026-06-15": "Bible Study & Youth Meeting",
-    "2026-08-15": "Independence Day Prayer",
-    "2026-09-08": "Feast of Mary",
-    "2026-12-25": "Christmas Mass"
-};
+        for (let d = 1; d <= days; d++) {
+            let dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
 
-function renderCalendar(){
-    const cal = document.getElementById("calendar");
-    if (!cal) return;
-    cal.innerHTML = "";
-
-    let year = current.getFullYear();
-    let month = current.getMonth();
-
-    let firstDay = new Date(year, month, 1).getDay();
-    let days = new Date(year, month+1, 0).getDate();
-
-    const monthNames = [
-        "January","February","March","April","May","June",
-        "July","August","September","October","November","December"
-    ];
-
-    const monthTitle = document.getElementById("monthTitle");
-    if (monthTitle) {
-        monthTitle.innerText = monthNames[month] + " " + year;
+            cal.innerHTML += `
+                <div class="day ${events[dateKey] ? 'has-event' : ''}"
+                     onclick="openEvent('${dateKey}')">
+                    ${d}
+                    ${events[dateKey] ? '<div class="dot"></div>' : ''}
+                </div>
+            `;
+        }
     }
 
-    for(let i=0;i<firstDay;i++){
-        cal.innerHTML += `<div></div>`;
+    window.openEvent = function(date) {
+        const popup = document.getElementById("popup");
+        const popupDate = document.getElementById("popupDate");
+        const popupEvents = document.getElementById("popupEvents");
+
+        if (!popup || !popupDate || !popupEvents) return;
+
+        popup.style.display = "flex";
+        popupDate.innerText = date;
+        popupEvents.innerText = events[date] || "No programs on this day.";
+    };
+
+    window.closePopup = function() {
+        const popup = document.getElementById("popup");
+        if (popup) popup.style.display = "none";
+    };
+
+    window.changeMonth = function(step) {
+        current.setMonth(current.getMonth() + step);
+        renderCalendar();
+    };
+
+    if (document.getElementById("calendar")) {
+        renderCalendar();
     }
 
-    for(let d=1; d<=days; d++){
-        let dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    window.onclick = function(e) {
+        if (e.target && e.target.id === "popup") {
+            window.closePopup();
+        }
+    };
 
-        cal.innerHTML += `
-            <div class="day ${events[dateKey] ? 'has-event' : ''}"
-                 onclick="openEvent('${dateKey}')">
-                ${d}
-                ${events[dateKey] ? '<div class="dot"></div>' : ''}
-            </div>
-        `;
-    }
-}
-
-function openEvent(date){
-    const popup = document.getElementById("popup");
-    const popupDate = document.getElementById("popupDate");
-    const popupEvents = document.getElementById("popupEvents");
-    
-    if (!popup || !popupDate || !popupEvents) return;
-    
-    popup.style.display = "flex";
-    popupDate.innerText = date;
-    popupEvents.innerText = events[date] || "No programs on this day.";
-}
-
-function closePopup(){
-    const popup = document.getElementById("popup");
-    if (popup) popup.style.display = "none";
-}
-
-function changeMonth(step){
-    current.setMonth(current.getMonth() + step);
-    renderCalendar();
-}
-
-window.onclick = function(e){
-    if(e.target.id === "popup"){
-        closePopup();
-    }
-}
-
-// Initialize calendar if element exists
-if (document.getElementById("calendar")) {
-    renderCalendar();
-}
-
-// ===== PRAYER FORM VALIDATION =====
-document.addEventListener('DOMContentLoaded', function() {
+    // ===== PRAYER FORM VALIDATION =====
     const form = document.getElementById('prayerForm');
     const submitBtn = document.getElementById('submitBtn');
     const prayerRequest = document.getElementById('prayer_request');
@@ -784,13 +788,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, '').slice(0, 10);
-            
+
             // Remove existing error
             const errorEl = this.parentElement.querySelector('.form-error');
             if (errorEl) {
                 errorEl.remove();
             }
-            
+
             // Update styling
             if (this.value.length === 10) {
                 this.style.borderColor = '#16a34a';
@@ -835,7 +839,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 phone.style.borderColor = '#dc2626';
                 phone.style.background = '#fef2f2';
-                
+
                 let errorEl = phone.parentElement.querySelector('.form-error');
                 if (!errorEl) {
                     errorEl = document.createElement('div');
@@ -843,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorEl.textContent = 'Please enter a valid 10-digit phone number';
                     phone.parentElement.appendChild(errorEl);
                 }
-                
+
                 phone.focus();
                 return false;
             }
@@ -855,7 +859,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 prayerReq.style.borderColor = '#dc2626';
                 prayerReq.style.background = '#fef2f2';
                 prayerReq.focus();
-                
+
                 let errorEl = prayerReq.parentElement.querySelector('.form-error');
                 if (!errorEl) {
                     errorEl = document.createElement('div');
@@ -871,7 +875,6 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
             submitBtn.textContent = '';
 
-            // Return true to submit
             return true;
         });
     }

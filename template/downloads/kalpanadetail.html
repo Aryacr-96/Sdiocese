@@ -48,10 +48,27 @@
     background:#fff6f1;
 }
 
-.download-item a{
+.download-item .file-info{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    flex:1;
+}
+
+.download-item .file-info a{
     text-decoration:none;
     color:#23395d;
     font-size:15px;
+    transition:0.2s;
+}
+
+.download-item .file-info a:hover{
+    color:#e76514;
+}
+
+.download-item .file-info .file-desc{
+    color:#888;
+    font-size:13px;
 }
 
 .download-btn{
@@ -62,6 +79,7 @@
     text-decoration:none;
     font-size:13px;
     transition:0.3s;
+    white-space:nowrap;
 }
 
 .download-btn:hover{
@@ -74,6 +92,18 @@
         flex-direction:column;
     }
 }
+
+@media(max-width:600px){
+    .download-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+    .download-btn{
+        width:100%;
+        text-align:center;
+    }
+}
 </style>
 
 <section class="detail-wrapper">
@@ -81,77 +111,34 @@
     <!-- LEFT -->
     <div class="detail-main">
 
-        <div class="page-title">Kalpana 2026</div>
+        <div class="page-title">{{ kalpana.title }}</div>
         <div class="sub-title">Download official documents, notices and publications</div>
 
         <div class="download-list">
-
-          <div class="download-item">
-    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-      Kalpana No. 171 – 2026 Association Electronic Voting – English
-    </a>
-
-    <a class="download-btn"
-       href="{% static 'images/Motors UI (1).pdf' %}"
-       target="_blank">
-        View
-    </a>
-</div>
+            {% for file in files %}
             <div class="download-item">
-    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-       Kalapana No. 171 – 2026 Association Electronic Voting – Malayalam
-    </a>
-
-    <a class="download-btn"
-       href="{% static 'images/Motors UI (1).pdf' %}"
-       target="_blank">
-        View
-    </a>
-</div>
-
-            <div class="download-item">
-    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-       Kalpana No. 130 H.H Baselios Paulos Perunnal
-    </a>
-
-    <a class="download-btn"
-       href="{% static 'images/Motors UI (1).pdf' %}"
-       target="_blank">
-        View
-    </a>
-</div>
-
-           <div class="download-item">
-    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-       Kalpana No 150 A  Accounts Kalpana 2026 to All Parishes
-    </a>
-
-    <a class="download-btn"
-       href="{% static 'images/Motors UI (1).pdf' %}"
-       target="_blank">
-        View
-    </a>
-</div>
-
-            <div class="download-item">
-    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-        Kalpana No 150 Church Accounts Kalpana 2026 to Institutions
-    </a>
-
-    <a class="download-btn"
-       href="{% static 'images/Motors UI (1).pdf' %}"
-       target="_blank">
-        View
-    </a>
-</div>
-
+                <div class="file-info">
+                    <a href="{{ file.file.url }}" target="_blank">
+                        {{ file.description|default:file.file_name }}
+                    </a>
+                </div>
+                <a class="download-btn"
+                   href="{{ file.file.url }}"
+                   target="_blank">
+                    View
+                </a>
+            </div>
+            {% empty %}
+            <div style="padding:20px;text-align:center;color:#777;">
+                No files available for this Kalpana.
+            </div>
+            {% endfor %}
         </div>
 
     </div>
 
-   
-
 </section>
+
 </div>
 {% include 'footer.html' %}
 
@@ -209,5 +196,23 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
+<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+window.addEventListener('scroll', () => {
+    historyBlocks.forEach(block => {
+        const rect = block.getBoundingClientRect();
+        
+        // This check defines the "active" zone (the center of your screen)
+        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        if (isMiddle) {
+            // Change to active color while scrolling
+            block.style.setProperty('--line-color', '#e76514');
+        } else {
+            // Reset to inactive color when not scrolling over this block
+            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+        }
+    });
+});</script>
 </body>
 </html>

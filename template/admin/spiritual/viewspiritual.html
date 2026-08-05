@@ -31,6 +31,7 @@
             --warning-light: #fef3c7;
             --danger: #dc2626;
             --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
             --info: #0891b2;
             --info-light: #cffafe;
             --border-color: #e2e8f0;
@@ -62,19 +63,20 @@
             min-height: 100vh;
         }
 
+        /* ----- EXPANDED CONTENT WRAPPER ----- */
         .content-wrapper {
             flex: 1;
-            max-width: 1100px;
-            margin: 1.5rem auto;
-            padding: 0 1.5rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
             width: 100%;
         }
 
-        /* ----- Page Header ----- */
+        /* ----- Page Header (Expanded) ----- */
         .content-header {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             background: var(--card-bg);
-            padding: 1.2rem 1.5rem;
+            padding: 1.5rem 2rem;
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
@@ -84,31 +86,32 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         .content-header .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
         .content-header h1 {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: var(--text-main);
             letter-spacing: -0.02em;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             margin: 0;
         }
         .content-header h1 i {
             color: var(--primary);
-            font-size: 1.6rem;
+            font-size: 1.8rem;
         }
         .content-header .subtitle {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 500;
         }
         .content-header .breadcrumb-wrap {
@@ -119,7 +122,7 @@
             background: transparent;
             padding: 0;
             margin: 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         .content-header .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
             content: "›";
@@ -140,7 +143,7 @@
             font-weight: 600;
         }
 
-        /* ----- Card ----- */
+        /* ----- Card (Expanded) ----- */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
@@ -153,17 +156,17 @@
             box-shadow: var(--shadow-card-hover);
         }
         .card .card-body {
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
-        /* ----- Badges ----- */
+        /* ----- Badges (Expanded) ----- */
         .stat-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 0.3rem 1rem;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
             border-radius: var(--radius-pill);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
             margin: 2px;
         }
@@ -184,11 +187,11 @@
             color: #b45309;
         }
 
-        /* ----- Details Table ----- */
+        /* ----- Details Table (Expanded) ----- */
         .details-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
         .details-table tr {
             border-bottom: 1px solid var(--border-color);
@@ -201,11 +204,11 @@
             background: #f8fafc;
         }
         .details-table th {
-            width: 200px;
-            padding: 0.8rem 1rem;
+            width: 220px;
+            padding: 1rem 1.2rem;
             font-weight: 600;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.03em;
             background: #f8fafc;
@@ -213,10 +216,11 @@
             white-space: nowrap;
         }
         .details-table td {
-            padding: 0.8rem 1rem;
+            padding: 1rem 1.2rem;
             color: var(--text-main);
             border: none;
             font-weight: 500;
+            font-size: 0.95rem;
         }
         .details-table td .empty-value {
             color: var(--text-muted);
@@ -224,18 +228,18 @@
             font-weight: 400;
         }
 
-        /* ----- Office Bearers List ----- */
+        /* ----- Office Bearers List (Expanded) ----- */
         .bearers-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
         .bearer-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             background: #f8fafc;
-            padding: 10px 16px;
+            padding: 14px 20px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
@@ -245,8 +249,8 @@
             box-shadow: var(--shadow-sm);
         }
         .bearer-item .bearer-avatar {
-            width: 44px;
-            height: 44px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             overflow: hidden;
             border: 2px solid var(--border-color);
@@ -262,7 +266,7 @@
             object-fit: cover;
         }
         .bearer-item .bearer-avatar i {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--primary);
         }
         .bearer-item .bearer-info {
@@ -271,9 +275,10 @@
         .bearer-item .bearer-info .bearer-name {
             font-weight: 600;
             color: var(--text-main);
+            font-size: 1rem;
         }
         .bearer-item .bearer-info .bearer-designation {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
         .bearer-item .bearer-info .bearer-designation i {
@@ -281,7 +286,7 @@
             margin-right: 4px;
         }
         .bearer-item .bearer-info .bearer-phone {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
         .bearer-item .bearer-info .bearer-phone a {
@@ -294,14 +299,14 @@
         .designation-badge-sm {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 2px 10px;
+            gap: 6px;
+            padding: 3px 12px;
             border-radius: var(--radius-pill);
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.03em;
-            margin-left: 6px;
+            margin-left: 8px;
         }
         .designation-badge-sm.president {
             background: #dbeafe;
@@ -316,14 +321,14 @@
             color: #475569;
         }
 
-        /* ----- Coordinator Badge ----- */
+        /* ----- Coordinator Badge (Expanded) ----- */
         .coordinator-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 4px 12px;
+            gap: 6px;
+            padding: 5px 14px;
             border-radius: var(--radius-pill);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 600;
             background: #ede9fe;
             color: #7c3aed;
@@ -333,21 +338,21 @@
             color: #7c3aed;
         }
 
-        /* ----- Coordinators Table ----- */
+        /* ----- Coordinators Table (Expanded) ----- */
         .coordinators-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
-            margin-top: 8px;
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
         .coordinators-table thead {
             background: #f8fafc;
         }
         .coordinators-table thead th {
-            padding: 10px 14px;
+            padding: 12px 16px;
             text-align: left;
             font-weight: 600;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
@@ -361,7 +366,7 @@
             background: #f8fafc;
         }
         .coordinators-table tbody td {
-            padding: 10px 14px;
+            padding: 12px 16px;
             vertical-align: middle;
         }
         .coordinators-table .district-name {
@@ -379,35 +384,36 @@
             font-style: italic;
         }
         .coordinators-table .coordinator-avatar-sm {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #8b5cf6, #a78bfa);
             color: white;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
+            margin-right: 8px;
         }
 
-        /* ----- Action Buttons ----- */
+        /* ----- Action Buttons (Expanded) ----- */
         .action-bar {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
         .btn-back {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #475569;
             background: #ffffff;
             border: 1.5px solid var(--border-color);
@@ -423,11 +429,11 @@
         .btn-edit {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
             background: var(--warning);
             border: none;
@@ -443,11 +449,11 @@
         .btn-delete {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.6rem 1.8rem;
+            gap: 10px;
+            padding: 0.7rem 2rem;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
             background: var(--danger);
             border: none;
@@ -462,16 +468,16 @@
             color: #ffffff;
         }
 
-        /* ----- Section Titles ----- */
+        /* ----- Section Titles (Expanded) ----- */
         .section-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-main);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .section-title i {
             color: var(--primary);
@@ -479,32 +485,32 @@
         .section-title .section-badge {
             background: var(--primary-light);
             color: var(--primary);
-            padding: 2px 12px;
+            padding: 3px 14px;
             border-radius: var(--radius-pill);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
-        /* ----- Empty State ----- */
+        /* ----- Empty State (Expanded) ----- */
         .empty-state-sm {
-            padding: 30px 20px;
+            padding: 40px 24px;
             text-align: center;
             background: #f8fafc;
             border-radius: var(--radius-md);
             border: 1px dashed var(--border-color);
         }
         .empty-state-sm i {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #cbd5e1;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         .empty-state-sm p {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             margin: 0;
         }
 
-        /* ===== DELETE MODAL ===== */
+        /* ===== DELETE MODAL (Expanded) ===== */
         .modal-content {
             border-radius: var(--radius-lg);
             border: none;
@@ -512,15 +518,15 @@
         }
         .modal-header {
             border-bottom: 2px solid var(--danger-light);
-            padding: 1.2rem 1.5rem;
+            padding: 1.5rem 2rem;
         }
         .modal-header .modal-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .modal-header .modal-title i {
             color: var(--danger);
@@ -532,20 +538,20 @@
             transform: rotate(90deg);
         }
         .modal-body {
-            padding: 1.5rem;
+            padding: 2rem;
         }
         .modal-body .delete-icon-wrapper {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: var(--danger-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.2rem;
         }
         .modal-body .delete-icon-wrapper i {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--danger);
         }
         .modal-body h5 {
@@ -553,41 +559,43 @@
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
+            font-size: 1.1rem;
         }
         .modal-body .category-name-display {
             font-weight: 700;
             color: var(--danger);
             background: var(--danger-light);
-            padding: 0.2rem 0.8rem;
+            padding: 0.3rem 1rem;
             border-radius: var(--radius-pill);
             display: inline-block;
+            font-size: 1.1rem;
         }
         .modal-body p {
             color: var(--text-muted);
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 0;
         }
         .modal-body .warning-text {
             color: var(--danger);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         .modal-body .info-text {
             color: #2563eb;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         .modal-footer {
             border-top: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
-            gap: 10px;
+            padding: 1.2rem 2rem;
+            gap: 12px;
         }
         .modal-footer .btn {
             border-radius: var(--radius-pill);
-            padding: 0.5rem 1.8rem;
+            padding: 0.6rem 2rem;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
         }
         .modal-footer .btn-secondary {
@@ -615,20 +623,33 @@
 
         /* ----- Responsive ----- */
         @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 0 1.5rem;
+                margin: 1.5rem auto;
+            }
             .details-table th {
-                width: 150px;
-                font-size: 0.75rem;
-                padding: 0.6rem 0.8rem;
+                width: 160px;
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
             }
             .details-table td {
-                padding: 0.6rem 0.8rem;
-                font-size: 0.85rem;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            .card .card-body {
+                padding: 2rem;
+            }
+            .content-header h1 {
+                font-size: 1.5rem;
             }
         }
         @media (max-width: 768px) {
             .content-wrapper {
                 padding: 0 1rem;
                 margin: 1rem auto;
+            }
+            .content-header {
+                padding: 1.2rem 1.5rem;
             }
             .content-header .header-top {
                 flex-direction: column;
@@ -637,25 +658,32 @@
             .content-header h1 {
                 font-size: 1.3rem;
             }
+            .content-header .subtitle {
+                font-size: 0.85rem;
+            }
+            .content-header .breadcrumb-wrap .breadcrumb {
+                font-size: 0.8rem;
+            }
             .card .card-body {
-                padding: 1.2rem;
+                padding: 1.5rem;
             }
             .details-table th {
-                width: 120px;
-                font-size: 0.7rem;
-                padding: 0.5rem 0.6rem;
+                width: 130px;
+                font-size: 0.75rem;
+                padding: 0.6rem 0.8rem;
                 white-space: normal;
             }
             .details-table td {
-                padding: 0.5rem 0.6rem;
-                font-size: 0.8rem;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
             }
             .bearer-item {
-                padding: 8px 12px;
+                padding: 10px 14px;
+                flex-wrap: wrap;
             }
             .bearer-item .bearer-avatar {
-                width: 36px;
-                height: 36px;
+                width: 44px;
+                height: 44px;
             }
             .action-bar {
                 flex-direction: column;
@@ -668,40 +696,82 @@
                 width: 100%;
             }
             .coordinators-table {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
             }
             .coordinators-table thead th,
             .coordinators-table tbody td {
-                padding: 6px 10px;
+                padding: 8px 10px;
+            }
+            .coordinators-table .coordinator-avatar-sm {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+            .section-title {
+                font-size: 1rem;
             }
         }
         @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 0 0.8rem;
+                margin: 0.8rem auto;
+            }
+            .content-header {
+                padding: 1rem 1.2rem;
+            }
             .content-header h1 {
                 font-size: 1.1rem;
             }
+            .content-header h1 i {
+                font-size: 1.2rem;
+            }
+            .content-header .subtitle {
+                font-size: 0.75rem;
+            }
+            .content-header .breadcrumb-wrap .breadcrumb {
+                font-size: 0.7rem;
+            }
             .card .card-body {
-                padding: 1rem;
+                padding: 1.2rem;
             }
             .details-table th {
                 width: 90px;
                 font-size: 0.65rem;
-                padding: 0.4rem 0.5rem;
+                padding: 0.5rem 0.6rem;
             }
             .details-table td {
-                padding: 0.4rem 0.5rem;
-                font-size: 0.75rem;
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
             }
             .bearer-item {
                 flex-direction: column;
                 text-align: center;
-                padding: 12px;
+                padding: 14px;
             }
             .bearer-item .bearer-avatar {
-                width: 48px;
-                height: 48px;
+                width: 56px;
+                height: 56px;
+            }
+            .bearer-item .bearer-info .bearer-name {
+                font-size: 0.9rem;
+            }
+            .bearer-item .bearer-info .bearer-designation {
+                font-size: 0.8rem;
+            }
+            .bearer-item .bearer-info .bearer-phone {
+                font-size: 0.8rem;
+            }
+            .designation-badge-sm {
+                font-size: 0.6rem;
+                padding: 2px 8px;
+                margin-left: 4px;
             }
             .section-title {
                 font-size: 0.95rem;
+            }
+            .section-title .section-badge {
+                font-size: 0.7rem;
+                padding: 2px 10px;
             }
             .coordinators-table {
                 font-size: 0.7rem;
@@ -710,16 +780,42 @@
             .coordinators-table tbody td {
                 padding: 4px 6px;
             }
+            .coordinators-table .coordinator-avatar-sm {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+                margin-right: 4px;
+            }
+            .coordinator-badge {
+                font-size: 0.65rem;
+                padding: 3px 8px;
+            }
+            .empty-state-sm {
+                padding: 24px 16px;
+            }
+            .empty-state-sm i {
+                font-size: 2rem;
+            }
+            .empty-state-sm p {
+                font-size: 0.85rem;
+            }
+            .btn-back, .btn-edit, .btn-delete {
+                font-size: 0.8rem;
+                padding: 0.6rem 1.5rem;
+            }
+            .modal-body {
+                padding: 1.5rem;
+            }
             .modal-body .delete-icon-wrapper {
-                width: 55px;
-                height: 55px;
+                width: 60px;
+                height: 60px;
             }
             .modal-body .delete-icon-wrapper i {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
             .modal-footer .btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 1.2rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 1.5rem;
             }
         }
     </style>
@@ -768,7 +864,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <!-- Right Column: Details Table -->
+                    <!-- Details Table -->
                     <div class="row">
                         <div class="col-12">
                             <table class="details-table">
@@ -789,7 +885,7 @@
                                 <tr>
                                     <th><i class="fas fa-link"></i> Slug</th>
                                     <td>
-                                        <code style="background:#f1f5f9; padding:0.2rem 0.6rem; border-radius:4px; font-size:0.85rem;">
+                                        <code style="background:#f1f5f9; padding:0.25rem 0.8rem; border-radius:6px; font-size:0.9rem;">
                                             {{ spiritual.slug }}
                                         </code>
                                     </td>

@@ -4,21 +4,13 @@
 
 <!-- CURRENT PRIESTS -->
 <section class="priest-section">
-
-    <h2 class="section-title-priest">
-        Priests Directory
-    </h2>
-
-
-    <div class="priest-dir-grid">
-
+         <h2 class="section-title-priest">
+            Priests Directory
+         </h2>
+            <div class="priest-dir-grid">
         {% for priest in priests %}
-
-        <div class="priest-dir-card">
-
-
+            <div class="priest-dir-card">
             <div class="priest-dir-img-box">
-
                 {% if priest.image %}
                     <img src="{{ priest.image.url }}" 
                          alt="{{ priest.first_name }}">
@@ -26,80 +18,37 @@
                     <img src="{% static 'images/member.jpg' %}" 
                          alt="Profile">
                 {% endif %}
-
             </div>
-
-
-
             <div class="priest-dir-info-box">
-
-
                 <h2 class="priest-dir-name">
                     Rev. {{ priest.first_name }} {{ priest.last_name }}
                 </h2>
-
-
-
                 <p class="priest-dir-role">
                     <i class="fas fa-cross"></i>
                     {{ priest.get_position_display }}
                 </p>
+            <p class="priest-dir-text">
+                <i class="fas fa-church church-icon"></i>
+                <span>{{ priest.home_parish }}</span>
+            </p>
+            <p class="priest-dir-text">
+                <i class="fas fa-location-dot location-icon"></i>
+                <span>{{ priest.address }}</span>
+            </p>
 
-
-
-                <p class="priest-dir-text">
-
-                    <i class="fas fa-church church-icon"></i>
-
-                    {{ priest.pastoral_church }}
-
-                </p>
-
-
-
-                <p class="priest-dir-text">
-
-                    <i class="fas fa-location-dot location-icon"></i>
-
-                    {{ priest.address }}
-
-                </p>
-
-
-
-                <p class="priest-dir-text">
-
-                    <i class="fas fa-phone phone-icon"></i>
-
-                    {{ priest.phone }}
-
-                </p>
-
-
-
-                <a href="{% url 'priest_details' priest.slug %}"
-                   class="priest-dir-profile-btn">
-
-                    PROFILE
-
-                </a>
-
-
+            <p class="priest-dir-text">
+                <i class="fas fa-phone phone-icon"></i>
+                <span>{{ priest.phone }}</span>
+            </p>
+            <a href="{% url 'priest_details' priest.slug %}"
+                   class="priest-dir-profile-btn">PROFILE
+            </a>
             </div>
-
-
         </div>
-
-
         {% empty %}
-
         <p>No current priests found.</p>
-
         {% endfor %}
-
-
     </div>
-
 </section>
 
 
@@ -129,10 +78,10 @@
             <i class="fas fa-cross"></i>
             {{ priest.get_position_display }}
         </p>
-        <p class="priest-dir-text">
-            <i class="fas fa-church church-icon"></i>
-            {{ priest.pastoral_church }}
-        </p>
+       <p class="priest-dir-text">
+    <i class="fas fa-church church-icon"></i>
+    {{ priest.home_parish }}
+    </p>
         <p class="priest-dir-text">
             <i class="fas fa-location-dot location-icon"></i>
             {{ priest.address }}
@@ -172,10 +121,9 @@ Rev. {{ priest.first_name }} {{ priest.last_name }}
 <p class="priest-dir-role">
 <i class="fas fa-cross"></i>
 {{ priest.get_position_display }}
-</p>
-<p class="priest-dir-text">
-<i class="fas fa-church church-icon"></i>
-{{ priest.pastoral_church }}
+</p><p class="priest-dir-text">
+    <i class="fas fa-church church-icon"></i>
+    {{ priest.home_parish }}
 </p>
 <p class="priest-dir-text">
 <i class="fas fa-location-dot location-icon"></i>
@@ -185,8 +133,8 @@ Rev. {{ priest.first_name }} {{ priest.last_name }}
 <i class="fas fa-phone phone-icon"></i>
 {{ priest.phone }}
 </p>
-<a href="{% url 'priest_details' priest.slug %}"
-class="priest-dir-profile-btn">PROFILE</a>
+<!-- <a href="{% url 'priest_details' priest.slug %}"
+class="priest-dir-profile-btn">PROFILE</a> -->
 </div>
 </div>
 {% empty %}

@@ -1,18 +1,7 @@
-{% extends 'admin/adminheader.html' %}
+{% include 'admin/adminheader.html' %}
 
-{% block content %}
+
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard · Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-</head>
-<body>
 
 <style>
     /* ========================================
@@ -34,6 +23,8 @@
         max-width: 1400px;
         margin: 0 auto;
         padding: 30px 24px;
+        background: #f0f4f9;
+        min-height: calc(100vh - 72px);
     }
 
     /* ===== PAGE HEADER ===== */
@@ -98,6 +89,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
 
     .page-header .header-right .datetime i {
@@ -476,6 +468,12 @@
             font-size: 12px;
         }
     }
+
+
+
+
+
+    
 </style>
 
 <!-- ========================================
@@ -504,7 +502,51 @@
         </div>
     </div>
 
-    
+    <!-- ===== STATS ROW (Optional - Add if you have data) ===== -->
+    <!-- 
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">1,234</div>
+                <div class="stat-label">Total Users</div>
+                <span class="stat-change up"><i class="fas fa-arrow-up"></i> 12%</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <i class="fas fa-church"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">56</div>
+                <div class="stat-label">Parishes</div>
+                <span class="stat-change up"><i class="fas fa-arrow-up"></i> 4%</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">89</div>
+                <div class="stat-label">Priests</div>
+                <span class="stat-change down"><i class="fas fa-arrow-down"></i> 2%</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">
+                <i class="fas fa-praying-hands"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">247</div>
+                <div class="stat-label">Prayer Requests</div>
+                <span class="stat-change up"><i class="fas fa-arrow-up"></i> 8%</span>
+            </div>
+        </div>
+    </div>
+    -->
 
     <!-- ===== SECTION TITLE ===== -->
     <div class="section-title">
@@ -517,71 +559,74 @@
     <div class="card-grid">
 
         <!-- PRIESTS -->
-        <div class="dashboard-card">
-            <div class="card-icon blue">
-                <i class="fas fa-user-tie"></i>
-            </div>
-             
-            <h3 class="card-title">Priests</h3>
-            <p class="card-description">
-                Manage priest profiles, assignments, and contact information.
-            </p>
-            <a href="{% url 'admin_priests' %}" class="card-link">
-                Manage Priests <i class="fas fa-arrow-right"></i>
-            </a>
+        <a href="{% url 'admin_priests' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+        <div class="card-icon blue">
+            <i class="fas fa-user-tie"></i>
         </div>
+        <h3 class="card-title">Priests</h3>
+        <p class="card-description">
+            Manage priest profiles, assignments, and contact information.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Priests <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
 
         <!-- PARISHES -->
-        <div class="dashboard-card">
-            <div class="card-icon green">
-                <i class="fas fa-church"></i>
-            </div>
-             
-            <h3 class="card-title">Parishes</h3>
-            <p class="card-description">
-                Manage parish details, locations, and associated priests.
-            </p>
-            <a href="{% url 'admin_parishes' %}" class="card-link">
-                Manage Parishes <i class="fas fa-arrow-right"></i>
-            </a>
+        <a href="{% url 'admin_parishes' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon green">
+            <i class="fas fa-church"></i>
         </div>
-
-        <!-- CONTACTS -->
-        <div class="dashboard-card">
-            <div class="card-icon purple">
-                <i class="fas fa-address-book"></i>
-            </div>
-             
-            <h3 class="card-title">Contacts</h3>
-            <p class="card-description">
-                Manage contact inquiries and messages from the website.
-            </p>
-            <a href="{% url 'contactpage' %}" class="card-link">
-                View Contacts <i class="fas fa-arrow-right"></i>
-            </a>
+        <h3 class="card-title">Parishes</h3>
+        <p class="card-description">
+            Manage parish details, locations, and associated priests.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Parishes <i class="fas fa-arrow-right"></i>
         </div>
-        <!-- DESIGNATIONS -->
-
-<div class="dashboard-card">
-    <div class="card-icon green">
-        <i class="fas fa-briefcase"></i>
     </div>
-     
-    <h3 class="card-title">Designations</h3>
-    <p class="card-description">
-        Manage official designations and positions for office bearers.
-    </p>
-    <a href="{% url 'designation' %}" class="card-link">
-        Manage Designations <i class="fas fa-arrow-right"></i>
-    </a>
-</div>
+</a>
 
-        <!-- OFFICE BEARERS -->
+        <!-- PRAYER REQUESTS -->
+       <a href="{% url 'contactpage' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon purple">
+            <i class="fas fa-praying-hands"></i>
+        </div>
+        <h3 class="card-title">Prayer Request</h3>
+        <p class="card-description">
+            Manage contact inquiries and messages from the website.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-eye"></i> View Prayer Requests <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+
+        <!-- DESIGNATIONS -->
+       <a href="{% url 'designation' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon indigo">
+            <i class="fas fa-crown"></i>
+        </div>
+        <h3 class="card-title">Designations</h3>
+        <p class="card-description">
+            Manage official designations and positions for office bearers.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Designations <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+        <!-- OFFICE BEARERS (Hidden - Uncomment if needed) -->
+        <!-- 
         <div class="dashboard-card">
             <div class="card-icon orange">
                 <i class="fas fa-user-tie"></i>
             </div>
-             
             <h3 class="card-title">Office Bearers</h3>
             <p class="card-description">
                 Manage office bearers and assign them to spiritual categories.
@@ -590,52 +635,167 @@
                 Manage Office Bearers <i class="fas fa-arrow-right"></i>
             </a>
         </div>
+        -->
 
-         <div class="dashboard-card">
-    <div class="card-icon purple">
-        <i class="fas fa-users"></i>
-    </div>
-
-    <h3 class="card-title">Coordinators</h3>
-
-    <p class="card-description">
-        Manage spiritual coordinators and their details for each spiritual organization.
-    </p>
-
-    <a href="{% url 'coordinator_list' %}" class="card-link">
-        Manage Coordinators
-        <i class="fas fa-arrow-right"></i>
-    </a>
-</div>
         <!-- SPIRITUAL -->
-        <div class="dashboard-card">
-            <div class="card-icon indigo">
-                <i class="fas fa-cross"></i>
-            </div>
-             
-            <h3 class="card-title">Spiritual</h3>
-            <p class="card-description">
-                Manage spiritual categories and their content with office bearers.
-            </p>
-            <a href="{% url 'spiritual' %}" class="card-link">
-                Manage Spiritual <i class="fas fa-arrow-right"></i>
-            </a>
+        <a href="{% url 'spiritual' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+        <div class="card-icon indigo">
+            <i class="fas fa-cross"></i>
         </div>
+        <h3 class="card-title">Spiritual</h3>
+        <p class="card-description">
+            Manage spiritual categories and their content with office bearers.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Spiritual <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+        <!-- KARUNYA SPARSHAM -->
+        <a href="{% url 'karunyasparsham_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon cyan">
+            <i class="fas fa-hands-praying"></i>
+        </div>
+        <h3 class="card-title">Karunya Sparsham</h3>
+        <p class="card-description">
+            Manage prayer requests and intentions submitted through the Karunya Sparsham ministry.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-eye"></i> View Karunyasparsham <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
 
-        <!-- SETTINGS / ADDITIONAL -->
+        <!-- KARUNYA SPARSHAM CATEGORIES -->
         <!-- <div class="dashboard-card">
             <div class="card-icon teal">
-                <i class="fas fa-cog"></i>
+                <i class="fas fa-hand-holding-heart"></i>
             </div>
-            <span class="card-badge pending">Settings</span>
-            <h3 class="card-title">System Settings</h3>
+            <h3 class="card-title">Karunya Sparsham Categories</h3>
             <p class="card-description">
-                Configure site settings, preferences, and general options.
+                Manage Karunya Sparsham categories used to organize prayer requests and ministry activities.
             </p>
-            <a href="#" class="card-link">
-                Go to Settings <i class="fas fa-arrow-right"></i>
+            <a href="{% url 'category_list' %}" class="card-link">
+                View Categories <i class="fas fa-arrow-right"></i>
             </a>
         </div> -->
+         <!--PUBLICATIONS-->
+       <a href="{% url 'publication_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon purple">
+            <i class="fas fa-newspaper"></i>
+        </div>
+        <h3 class="card-title">PUBLICATIONS</h3>
+        <p class="card-description">
+            Manage all publications including prayer books, spiritual resources, and official documents. Upload and organize PDF, Word, and Excel files for easy access.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Publications <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+
+         <!--GALLERY-->
+       <a href="{% url 'admin_gallery_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+        <div class="card-icon teal">
+            <i class="fas fa-images"></i>
+        </div>
+        <h3 class="card-title">GALLERY</h3>
+        <p class="card-description">
+            Manage photo and video gallery items for displaying events and activities on the website.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Gallery <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+<!-- PRAYER BOOKS -->
+<a href="{% url 'admin_prayerbook_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+        <div class="card-icon green">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <h3 class="card-title">PRAYER BOOKS</h3>
+        <p class="card-description">
+            Manage prayer books and spiritual resources. Upload PDF, Word, and Excel files.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Prayer Books <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+<!-- KALPANA -->
+<a href="{% url 'kalpana_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;" >
+    <div class="dashboard-card">
+        <div class="card-icon rose">
+            <i class="fas fa-file-alt"></i>
+        </div>
+        <h3 class="card-title">KALPANA</h3>
+        <p class="card-description">
+            Manage Kalpana documents, notices and publications. Upload PDF, Word, and Excel files with descriptions.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Kalpana <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+
+
+<!-- EVENTS -->
+<a href="{% url 'event_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+        <div class="card-icon orange">
+            <i class="fas fa-calendar-plus"></i>
+        </div>
+        <h3 class="card-title">EVENTS</h3>
+        <p class="card-description">
+            Manage events and activities for the diocese. Upload images and descriptions.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Events <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+
+
+
+
+<!-- DOWNLOADS -->
+<a href="{% url 'admin_download_list' %}" class="dashboard-card-link" style="text-decoration: none; display: block;">
+    <div class="dashboard-card">
+         <div class="card-icon blue">  <!-- Changed from orange to blue for download theme -->
+            <i class="fas fa-download"></i>  <!-- Changed to download icon -->
+        </div>
+        <h3 class="card-title">DOWNLOADS</h3>
+        <p class="card-description">
+            Manage events and activities for the diocese. Upload images and descriptions.
+        </p>
+        <div class="card-link">
+            <i class="fas fa-edit"></i> Manage Events <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+</a>
+
+
+
+        <!-- COORDINATORS (Hidden - Uncomment if needed) -->
+        <!-- 
+        <div class="dashboard-card">
+            <div class="card-icon purple">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="card-title">Coordinators</h3>
+            <p class="card-description">
+                Manage spiritual coordinators and their details for each spiritual organization.
+            </p>
+            <a href="{% url 'coordinator_list' %}" class="card-link">
+                Manage Coordinators <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        -->
 
     </div>
 
@@ -659,7 +819,3 @@
     });
 </script>
 
-</body>
-</html>
-
-{% endblock %}

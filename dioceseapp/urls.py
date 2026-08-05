@@ -39,8 +39,7 @@ urlpatterns = [
     path('priest_details/<slug:slug>/', views.priest_details, name='priest_details'),
     path('priestretired_details/<slug:slug>/',views.priestretired_details,name='priestretired_details'),
     path('parish/', views.parish, name='parish'),
-    path('parish-details/<slug:slug>/',views.parish_details,name='parish_details'
-),
+    path('parish-details/<slug:slug>/',views.parish_details,name='parish_details'),
 
 
         
@@ -67,8 +66,8 @@ urlpatterns = [
     #KARUNYA SPARSAM
 
     path('karunyam/',views.karunyam,name='karunyam'),
-    path('projects/',views.projects,name='projects'),
-    path('projects_detail/',views.projects_detail,name='projects_detail'),
+    path("projects/", views.projects, name="projects"),
+    path("projects/<slug:slug>/", views.projects_detail, name="projects_detail"),
     
 
 
@@ -89,13 +88,13 @@ urlpatterns = [
     path('publications/',views.publications,name='publications'),
     path('images/',views.images,name='images'),
     path('videos/',views.videos,name='videos'),
-    path('calendar/',views.calendar,name='calendar'),
-     path('events/',views.events,name='events'),
+    path('events/', views.events, name='events'),  
+    path('calendar/', views.calendar, name='calendar'),
 
     #DOWNLOADS
 
-    path('kalpana/',views.kalpana,name='kalpana'),
-    path('kalpanadetail/',views.kalpanadetail,name='kalpanadetail'), 
+    path('kalpana/', views.kalpana, name='kalpana'),
+    path('kalpanadetail/<slug:slug>/', views.kalpanadetail, name='kalpanadetail'),
     path('guideline/',views.guideline,name='guideline'),
     path('prayerbook/',views.prayerbook,name='prayerbook'),
     path('prayerbook/',views.prayerbook,name='prayerbook'),
@@ -174,7 +173,103 @@ urlpatterns = [
     # path('coordinators/detail/<int:id>/', views.coordinator_detail, name='coordinator_detail'),
     # API ENDPOINT FOR SEARCH (Optional)
     # path('api/officebearers/search/', views.search_officebearers, name='search_officebearers'),
-    #COORDINATORS
-    
 
+
+    #KARUNYA SPARSHAM
+    path('karunyasparsham_list/', views.karunyasparsham_list, name='karunyasparsham_list'),
+    path('karunyasparsham_create/', views.karunyasparsham_create, name='karunyasparsham_create'),
+    
+    # Edit and delete
+    path('karunyasparsham_edit/<int:pk>/', views.karunyasparsham_edit, name='karunyasparsham_edit'),
+    path('karunyasparsham_delete/<int:pk>/', views.karunyasparsham_delete, name='karunyasparsham_delete'),
+    
+    # Detail views
+    path('karunyasparsham_detail/<slug:slug>/', views.karunyasparsham_detail, name='karunyasparsham_detail'),
+    path('karunyasparsham_detail_pk/<int:pk>/', views.karunyasparsham_detail_pk, name='karunyasparsham_detail_pk'),
+    
+    # API endpoints
+    path('api/about-exists/', views.get_existing_about, name='about_exists'),
+    path('api/about-options/', views.get_about_options, name='about_options'),
+    path('api/project-options/', views.get_project_options, name='project_options'),
+    
+    # Status toggle
+    path('toggle-status/<int:pk>/', views.toggle_status, name='toggle_status'),
+
+    #KARUNYAM CATEGORY
+    path('category_list/', views.category_list, name='category_list'),
+    
+    # Create
+    path('create/', views.category_create, name='category_create'),
+    
+  
+    
+    # Update
+    path('<int:pk>/update/', views.category_update, name='category_update'),
+    
+    # Delete
+    path('<int:pk>/delete/', views.category_delete, name='category_delete'),
+    
+    # Bulk actions
+    path('bulk-delete/', views.category_bulk_delete, name='category_bulk_delete'),
+
+
+    #PUBLICATION ADMIN
+    # List all publications
+    path('admin/publications/', views.publication_list, name='publication_list'),
+    
+    # Add new publication
+    path('admin/publication/add/', views.add_publication, name='add_publication'),
+    
+    # View publication details
+    path('admin/publication/<int:pk>/', views.view_publication, name='view_publication'),
+    
+    # Edit publication
+    path('admin/publication/<int:pk>/edit/', views.edit_publication, name='edit_publication'),
+    
+    # Delete publication
+    path('admin/publication/<int:pk>/delete/', views.delete_publication, name='delete_publication'),
+
+  #GALLERY
+     # Admin URLs
+    path('admin/gallery/', views.admin_gallery_list, name='admin_gallery_list'),
+    path('admin/gallery/add/', views.admin_gallery_add, name='admin_gallery_add'),
+    path('admin/gallery/edit/<int:pk>/', views.admin_gallery_edit, name='admin_gallery_edit'),
+    path('admin/gallery/delete/<int:pk>/', views.admin_gallery_delete, name='admin_gallery_delete'),
+
+
+
+    #PRAYER BOOKS
+      # Admin Prayer Books - MUST come before any wildcard patterns
+    path('admin/prayerbooks/', views.admin_prayerbook_list, name='admin_prayerbook_list'),
+    path('admin/prayerbooks/add/', views.admin_prayerbook_add, name='admin_prayerbook_add'),
+    path('admin/prayerbooks/edit/<int:pk>/', views.admin_prayerbook_edit, name='admin_prayerbook_edit'),
+    path('admin/prayerbooks/delete/<int:pk>/', views.admin_prayerbook_delete, name='admin_prayerbook_delete'),
+
+
+    #KALPANA
+   
+
+    path('admin/kalpana_list/', views.kalpana_list, name='kalpana_list'),
+    path('admin/kalpana_create/', views.kalpana_create, name='kalpana_create'),
+    path('admin/update/<slug:slug>/', views.kalpana_update, name='kalpana_update'),
+    path('admin/kalpana_delete/<slug:slug>/', views.kalpana_delete, name='kalpana_delete'),
+
+
+    #EVENTS
+    
+    path('admin/event_list/', views.event_list, name='event_list'),
+    path('admin/event_add/', views.event_add, name='event_add'),
+    path('admin/event_edit/', views.event_edit, name='event_edit'),
+    path('admin/event_delete/', views.event_delete, name='event_delete'),
+
+
+    #DOWNLOADS
+
+    
+    path('admin/downloads/list/', views.admin_download_list, name='admin_download_list'),
+    path('admin/downloads/add/', views.admin_download_add, name='admin_download_add'),
+    path('admin/downloads/edit/<int:pk>/', views.admin_download_edit, name='admin_download_edit'),
+    path('admin/downloads/delete/<int:pk>/', views.admin_download_delete, name='admin_download_delete'),
+     
 ]
+    

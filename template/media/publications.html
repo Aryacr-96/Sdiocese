@@ -122,87 +122,79 @@
 <!-- Font Awesome -->
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <section class="publications-section">
 
     <div class="section-title-publication">
-        <h2>Publications</h2>
-       
+        <h2>
+            <i class="fas fa-book-open"></i>
+            Publications
+        </h2>
+        <!-- <div class="publication-count">
+            <i class="fas fa-file-alt"></i>
+            {{ publications|length }}
+        </div> -->
     </div>
 
     <div class="publication-grid">
 
-        <!-- Publication 1 -->
-        <div class="publication-card">
-            <div class="publication-image">
-                <img src="{% static 'images/publication.jpg' %}" alt="Nirmala Sangeetham">
+        {% if publications %}
+            {% for publication in publications %}
+            <div class="publication-card">
+                <div class="publication-image">
+                    {% if publication.image %}
+                        <img src="{{ publication.image.url }}" alt="{{ publication.title }}">
+                    {% else %}
+                        <div class="no-image">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="publication-content">
+                    <h3>{{ publication.title }}</h3>
+
+                    <!-- File type badge -->
+                    {% with file_ext=publication.file.name|slice:"-3:"|lower %}
+                        {% if file_ext == 'pdf' %}
+                            <!-- <span class="file-type-badge pdf">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </span> -->
+                        {% elif file_ext == 'doc' or file_ext == 'docx' %}
+                            <span class="file-type-badge doc">
+                                <i class="fas fa-file-word"></i> DOC
+                            </span>
+                        {% elif file_ext == 'jpg' or file_ext == 'jpeg' or file_ext == 'png' or file_ext == 'gif' %}
+                            <span class="file-type-badge image">
+                                <i class="fas fa-file-image"></i> Image
+                            </span>
+                        {% else %}
+                            <span class="file-type-badge other">
+                                <i class="fas fa-file"></i> {{ file_ext|upper }}
+                            </span>
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- <div class="publication-meta">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ publication.uploaded_at|date:"M d, Y" }}
+                    </div> -->
+
+                    <a href="{{ publication.file.url }}"
+                       class="download-btn"
+                       download>
+                        <i class="fas fa-download"></i>
+                        Download
+                    </a>
+                </div>
             </div>
-
-            <div class="publication-content">
-                <h3>Nirmala Sangeetham</h3>
-
-                <a href="{% static 'pdf/nirmala-sangeetham.pdf' %}"
-                   class="download-btn"
-                   download>
-                    <i class="fas fa-download"></i>
-                    Download
-                </a>
+            {% endfor %}
+        {% else %}
+            <div class="no-publications">
+                <i class="fas fa-book-open"></i>
+                <h4>No Publications Available</h4>
+                <p>Check back later for new publications.</p>
             </div>
-        </div>
-
-        <!-- Publication 2 -->
-        <div class="publication-card">
-            <div class="publication-image">
-                <img src="{% static 'images/publication.jpg' %}" alt="">
-            </div>
-
-            <div class="publication-content">
-                <h3>Nirmala Sangeetham</h3>
-
-                <a href="{% static '#' %}"
-                   class="download-btn"
-                   download>
-                    <i class="fas fa-download"></i>
-                    Download
-                </a>
-            </div>
-        </div>
-
-        <!-- Publication 3 -->
-        <div class="publication-card">
-            <div class="publication-image">
-                <img src="{% static 'images/publication.jpg' %}" alt="">
-            </div>
-
-            <div class="publication-content">
-                <h3>Nirmala Sangeetham</h3>
-
-                <a href="{% static '#' %}"
-                   class="download-btn"
-                   download>
-                    <i class="fas fa-download"></i>
-                    Download
-                </a>
-            </div>
-        </div>
-
-        <!-- Publication 4 -->
-        <div class="publication-card">
-            <div class="publication-image">
-                <img src="{% static 'images/publication.jpg' %}" alt="">
-            </div>
-
-            <div class="publication-content">
-                <h3>Nirmala Sangeetham</h3>
-
-                <a href="{% static '#' %}"
-                   class="download-btn"
-                   download>
-                    <i class="fas fa-download"></i>
-                    Download
-                </a>
-            </div>
-        </div>
+        {% endif %}
 
     </div>
 
@@ -281,3 +273,7 @@ window.addEventListener('scroll', () => {
     });
 });
 </script>
+
+
+
+

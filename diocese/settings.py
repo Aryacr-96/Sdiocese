@@ -95,6 +95,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'dioceseapp.context_processors.spiritual_categories',
+                'dioceseapp.context_processors.downloads'
             ],
         },
     },

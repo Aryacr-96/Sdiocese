@@ -174,18 +174,44 @@
                     <span class="arrow">▸</span>
                 </a>
 
-                <div class="submenu">
-                    <a href="{% url 'kalpana' %}">  <span class="arrow">▸</span>Kalpana</a>
-                    <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-                   <span class="arrow">▸</span>Church Accounts Manual</a>
-                     <a href="{% url 'guideline' %}">  <span class="arrow">▸</span>Guidelines for Preparing Church Accounts</a>
-                     <a href="{% url 'prayerbook' %}">  <span class="arrow">▸</span>Prayer Books</a>
-                     <a href="{% static 'images/Motors UI (1).pdf' %}" target="_blank">
-                <span class="arrow">▸</span>1934 Constitution</a>
-                </div>
-            </div>
+               <div class="submenu">
+    <a href="{% url 'kalpana' %}">
+        <span class="arrow">▸</span>Kalpana
+    </a>
+    <a href="{% url 'prayerbook' %}">
+        <span class="arrow">▸</span>Prayer Books
+    </a>
+    
+    {% if downloads %}
+        <div class="downloads-list">
+        
+            <!-- Church Accounts Manual -->
+            {% if church_account_manual %}
+                <a href="{{ church_account_manual.file.url }}" target="_blank">
+                    <span class="arrow">▸</span>Church Accounts Manual
+                </a>
+                <!-- <small>({{ church_account_manual.file.size|filesizeformat }})</small> -->
+            {% endif %}  <!-- ← Close church_account_manual if -->
+            
+            <!-- Guidelines -->
+            {% if guidelines %}
+                <a href="{% url 'guideline' %}">
+                    <span class="arrow">▸</span>Guidelines for Preparing Church Accounts
+                </a>
+            {% endif %}  <!-- ← Close guidelines if -->
+            
+            <!-- 1934 Constitution -->
+            {% if constitution_1934 %}
+                <a href="{{ constitution_1934.file.url }}" target="_blank">
+                    <span class="arrow">▸</span>1934 Constitution
+                </a>
+            {% endif %}  
+            
+        </div>
+    {% endif %}  
+</div>
             <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
+                <a href="{% url 'admin' %}" class="menu-link">
                   <i class="fa-regular fa-user menu-icon"></i> Login
                     <span class="arrow"></span>
                 </a>
