@@ -9,17 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Add Priest · Diocese</title>
 
-    <!-- Google Font: Plus Jakarta Sans (already in base) -->
-    <!-- Font Awesome 6 (already in base) -->
-    <!-- Bootstrap 5 / AdminLTE (already in base) -->
-
     <style>
         /* ========================================
            ADD PRIEST SPECIFIC STYLES
-           (Compatible with AdminLTE skin)
         ======================================== */
         
-        /* Content header styling */
         .content-header-custom {
             padding: 1.5rem 0 1rem 0;
             margin-bottom: 1.5rem;
@@ -86,11 +80,7 @@
             align-items: center;
             gap: 6px;
         }
-        .content-header-custom .breadcrumb-custom .active-item i {
-            color: #4f46e5;
-        }
 
-        /* Main card */
         .card-premium {
             border: none;
             border-radius: 20px;
@@ -129,14 +119,10 @@
             align-items: center;
             gap: 6px;
         }
-        .card-premium .card-header .badge-new i {
-            color: #ffffff;
-        }
         .card-premium .card-body {
             padding: 2.2rem 2rem;
         }
 
-        /* Form groups */
         .form-group-modern {
             margin-bottom: 1.6rem;
         }
@@ -159,7 +145,6 @@
             margin-left: 2px;
         }
 
-        /* Form controls – more modern, rounded */
         .form-control-modern {
             border: 1.5px solid #e2e8f0;
             border-radius: 12px;
@@ -192,7 +177,6 @@
             resize: vertical;
         }
 
-        /* Section headings */
         .section-heading-modern {
             font-weight: 700;
             font-size: 1rem;
@@ -216,7 +200,6 @@
             background: linear-gradient(to right, #e2e8f0, transparent);
         }
 
-        /* File upload area */
         .file-upload-area-modern {
             border: 2px dashed #e2e8f0;
             border-radius: 16px;
@@ -267,7 +250,6 @@
             cursor: pointer;
         }
 
-        /* Error messages */
         .errorlist-modern {
             color: #ef4444;
             font-size: 0.8rem;
@@ -290,7 +272,6 @@
             font-size: 0.8rem;
         }
 
-        /* Buttons */
         .btn-outline-modern {
             background: transparent;
             border: 1.5px solid #e2e8f0;
@@ -333,11 +314,7 @@
             box-shadow: 0 8px 30px rgba(79, 70, 229, 0.35);
             color: #ffffff;
         }
-        .btn-primary-modern:active {
-            transform: scale(0.97);
-        }
 
-        /* Card footer */
         .card-footer-modern {
             padding: 1.5rem 0 0 0;
             background: transparent;
@@ -348,7 +325,6 @@
             flex-wrap: wrap;
         }
 
-        /* Help text */
         .help-text-modern {
             font-size: 0.75rem;
             color: #64748b;
@@ -360,7 +336,6 @@
             margin-right: 4px;
         }
 
-        /* Image preview */
         .image-preview-modern {
             display: none;
             margin-top: 1rem;
@@ -380,7 +355,10 @@
             object-fit: cover;
         }
 
-        /* Responsive */
+        .hidden-section {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .content-header-custom .header-row {
                 flex-direction: column;
@@ -442,13 +420,10 @@
 </head>
 <body>
 
-<!-- ========================================
-   PAGE WRAPPER (already in base)
-======================================== -->
 <div class="content-wrapper">
 
     <!-- ========================================
-       CUSTOM PAGE HEADER WITH ALIGNMENT
+       CUSTOM PAGE HEADER
     ======================================== -->
     <section class="content-header-custom">
         <div class="header-row">
@@ -491,7 +466,6 @@
                                 <i class="fas fa-plus-circle"></i> New Entry
                             </span>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
 
                             <form method="POST" enctype="multipart/form-data" id="priestForm">
@@ -508,10 +482,10 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_first_name">
+                                            <label for="{{ form.first_name.id_for_label }}">
                                                 <i class="fas fa-user"></i> First Name <span class="required-star">*</span>
                                             </label>
-                                            <input type="text" name="first_name" id="id_first_name" class="form-control form-control-modern" placeholder="Enter first name" required>
+                                            {{ form.first_name }}
                                             {% if form.first_name.errors %}
                                             <ul class="errorlist-modern">{{ form.first_name.errors }}</ul>
                                             {% endif %}
@@ -519,10 +493,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_last_name">
+                                            <label for="{{ form.last_name.id_for_label }}">
                                                 <i class="fas fa-user"></i> Last Name <span class="required-star">*</span>
                                             </label>
-                                            <input type="text" name="last_name" id="id_last_name" class="form-control form-control-modern" placeholder="Enter last name" required>
+                                            {{ form.last_name }}
                                             {% if form.last_name.errors %}
                                             <ul class="errorlist-modern">{{ form.last_name.errors }}</ul>
                                             {% endif %}
@@ -531,12 +505,12 @@
                                 </div>
 
                                 <div class="row">
-                                   <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_home_parish">
+                                            <label for="{{ form.home_parish.id_for_label }}">
                                                 <i class="fas fa-church"></i> Home Parish
                                             </label>
-                                            <input type="text" name="home_parish" id="id_home_parish" class="form-control form-control-modern" placeholder="Enter home parish">
+                                            {{ form.home_parish }}
                                             {% if form.home_parish.errors %}
                                             <ul class="errorlist-modern">{{ form.home_parish.errors }}</ul>
                                             {% endif %}
@@ -547,24 +521,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_position">
+                                            <label for="{{ form.position.id_for_label }}">
                                                 <i class="fas fa-briefcase"></i> Position <span class="required-star">*</span>
                                             </label>
-                                            <select name="position" id="id_position" class="form-control-modern" required>
-
-                                                <option value="">-- --</option>
-
-                                                <option value="priest">Priest</option>
-
-                                                <option value="retired_priest">
-                                                    Retired Priest
-                                                </option>
-
-                                                <option value="seminary_student">
-                                                    Seminary Student
-                                                </option>
-
-                                            </select>
+                                            {{ form.position }}
                                             {% if form.position.errors %}
                                             <ul class="errorlist-modern">{{ form.position.errors }}</ul>
                                             {% endif %}
@@ -576,37 +536,26 @@
                                 </div>
 
                                 <div class="row">
-                                     <!-- Blood Group + Retirement Date -->
-                                <div class="row">
-                                    <!-- Blood Group -->
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_blood_group">
+                                            <label for="{{ form.blood_group.id_for_label }}">
                                                 <i class="fas fa-droplet"></i> Blood Group
                                             </label>
-                                            <input type="text"
-                                                   name="blood_group"
-                                                   id="id_blood_group"
-                                                   class="form-control form-control-modern"
-                                                   placeholder="e.g., A+, O-">
+                                            {{ form.blood_group }}
                                             {% if form.blood_group.errors %}
-                                            <ul class="errorlist-modern">
-                                                {{ form.blood_group.errors }}
-                                            </ul>
+                                            <ul class="errorlist-modern">{{ form.blood_group.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i>
-                                                For emergency purposes
+                                                <i class="fas fa-info-circle"></i> For emergency purposes
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_ordained_on">
+                                            <label for="{{ form.ordained_on.id_for_label }}">
                                                 <i class="fas fa-cross"></i> Ordained On
                                             </label>
-                                            <input type="date" name="ordained_on" id="id_ordained_on" class="form-control form-control-modern">
+                                            {{ form.ordained_on }}
                                             {% if form.ordained_on.errors %}
                                             <ul class="errorlist-modern">{{ form.ordained_on.errors }}</ul>
                                             {% endif %}
@@ -617,56 +566,78 @@
                                     </div>
                                 </div>
 
-                               
-                                    <!-- Retirement Date -->
+                                <!-- Retirement Date (Hidden by default) -->
+                                <div class="row">
                                     <div class="col-md-6" id="retiredDateField" style="display:none;">
                                         <div class="form-group-modern">
-                                            <label for="id_retired_on">
-                                                <i class="fas fa-calendar-times"></i>
-                                                Retired On
+                                            <label for="{{ form.retired_on.id_for_label }}">
+                                                <i class="fas fa-calendar-times"></i> Retired On
                                             </label>
-                                            <input type="date"
-                                                   name="retired_on"
-                                                   id="id_retired_on"
-                                                   class="form-control form-control-modern">
+                                            {{ form.retired_on }}
                                             {% if form.retired_on.errors %}
-                                            <ul class="errorlist-modern">
-                                                {{ form.retired_on.errors }}
-                                            </ul>
+                                            <ul class="errorlist-modern">{{ form.retired_on.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i>
-                                                Retirement date of the priest
+                                                <i class="fas fa-info-circle"></i> Retirement date of the priest
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- ========================================
-                                   CURRENT PASTORAL EXPERIENCE
+                                   PASTORAL EXPERIENCE
                                 ======================================== -->
-                                                                
-                                <div class="section-heading-modern">
-                                    <i class="fas fa-church"></i> Pastoral Experience
-                                    <span class="line-spacer"></span>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group-modern">
-                                            {{ form.pastoral_experience }}
-                                            {% if form.pastoral_experience.errors %}
-                                            <ul class="errorlist-modern">
-                                                {{ form.pastoral_experience.errors }}
-                                            </ul>
-                                            {% endif %}
-                                            <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i>
-                                                Enter priest's pastoral history, appointments, and service details.
+                                <div id="pastoralExperienceSection">
+                                    <div class="section-heading-modern">
+                                        <i class="fas fa-church"></i> Pastoral Experience
+                                        <span class="line-spacer"></span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group-modern">
+                                                <label for="{{ form.pastoral_experience.id_for_label }}" style="font-weight: 600; font-size: 0.85rem; color: #1e293b; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px;">
+                                                    <i class="fas fa-church" style="color: #4f46e5;"></i> Pastoral Experience
+                                                    <span style="font-weight: 400; font-size: 0.75rem; color: #94a3b8; margin-left: 4px;">(Optional)</span>
+                                                </label>
+                                                
+                                                <!-- Example Format Guide -->
+                                                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px;">
+                                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                                        <i class="fas fa-lightbulb" style="color: #f59e0b;"></i>
+                                                        <span style="font-weight: 600; font-size: 0.85rem; color: #0f172a;">Example Format:</span>
+                                                        <span style="font-size: 0.7rem; color: #94a3b8; margin-left: auto;">
+                                                            <i class="fas fa-arrow-right"></i> Start Year - End Year | Church Name | Position
+                                                        </span>
+                                                    </div>
+                                                    <div style="font-size: 0.8rem; color: #475569; line-height: 1.8; background: #ffffff; padding: 10px 14px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                            <span><i class="fas fa-calendar-alt" style="color: #4f46e5; width: 16px;"></i> <strong>2020 - Present</strong> | St. Mary's Church | Vicar</span>
+                                                            <span><i class="fas fa-calendar-alt" style="color: #4f46e5; width: 16px;"></i> <strong>2015 - 2020</strong> | St. George's Church | Assistant Vicar</span>
+                                                            <span><i class="fas fa-calendar-alt" style="color: #4f46e5; width: 16px;"></i> <strong>2010 - 2015</strong> | St. Joseph's Church | Associate Pastor</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {{ form.pastoral_experience }}
+                                                {% if form.pastoral_experience.errors %}
+                                                <ul class="errorlist-modern">{{ form.pastoral_experience.errors }}</ul>
+                                                {% endif %}
+                                                <div class="help-text-modern" style="margin-top: 8px;">
+                                                    <i class="fas fa-info-circle" style="color: #4f46e5;"></i>
+                                                    Enter priest's pastoral history, appointments, and service details.
+                                                    <br>
+                                                    <i class="fas fa-arrow-right" style="color: #4f46e5; font-size: 0.7rem;"></i>
+                                                    <strong style="color: #0f172a;">Format:</strong> <span style="color: #475569;">Start Year - End Year (or "Present") | Church Name | Position</span>
+                                                    <br>
+                                                    <i class="fas fa-arrow-right" style="color: #4f46e5; font-size: 0.7rem;"></i>
+                                                    <strong style="color: #0f172a;">Separate multiple entries</strong> <span style="color: #475569;">with a new line (press Enter)</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                                                <!-- ========================================
+
+                                <!-- ========================================
                                    CONTACT INFORMATION
                                 ======================================== -->
                                 <div class="section-heading-modern">
@@ -677,10 +648,10 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group-modern">
-                                            <label for="id_address">
+                                            <label for="{{ form.address.id_for_label }}">
                                                 <i class="fas fa-home"></i> Address
                                             </label>
-                                            <textarea name="address" id="id_address" class="form-control form-control-modern" rows="3" placeholder="Enter residential or office address"></textarea>
+                                            {{ form.address }}
                                             {% if form.address.errors %}
                                             <ul class="errorlist-modern">{{ form.address.errors }}</ul>
                                             {% endif %}
@@ -694,10 +665,10 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_phone">
+                                            <label for="{{ form.phone.id_for_label }}">
                                                 <i class="fas fa-phone"></i> Phone Number
                                             </label>
-                                            <input type="text" name="phone" id="id_phone" class="form-control form-control-modern" placeholder="e.g., +1234567890">
+                                            {{ form.phone }}
                                             {% if form.phone.errors %}
                                             <ul class="errorlist-modern">{{ form.phone.errors }}</ul>
                                             {% endif %}
@@ -708,10 +679,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
-                                            <label for="id_email">
+                                            <label for="{{ form.email.id_for_label }}">
                                                 <i class="fas fa-envelope"></i> Email Address
                                             </label>
-                                            <input type="email" name="email" id="id_email" class="form-control form-control-modern" placeholder="priest@example.com">
+                                            {{ form.email }}
                                             {% if form.email.errors %}
                                             <ul class="errorlist-modern">{{ form.email.errors }}</ul>
                                             {% endif %}
@@ -733,14 +704,14 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group-modern">
-                                            <label for="id_image">
+                                            <label for="{{ form.image.id_for_label }}">
                                                 <i class="fas fa-image"></i> Priest Photo
                                             </label>
                                             <div class="file-upload-area-modern" id="fileDropZone">
                                                 <i class="fas fa-cloud-upload-alt"></i>
                                                 <p><strong>Click to upload</strong> or drag and drop</p>
                                                 <small>JPEG, PNG (Max 5MB)</small>
-                                                <input type="file" name="image" id="id_image" accept="image/*">
+                                                {{ form.image }}
                                             </div>
                                             {% if form.image.errors %}
                                             <ul class="errorlist-modern">{{ form.image.errors }}</ul>
@@ -748,7 +719,6 @@
                                             <div class="help-text-modern">
                                                 <i class="fas fa-info-circle"></i> Upload a professional photo of the priest
                                             </div>
-                                            <!-- Image preview container -->
                                             <div class="image-preview-modern" id="imagePreviewContainer">
                                                 <img id="imagePreview" src="#" alt="Preview" />
                                             </div>
@@ -767,12 +737,9 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group-modern">
-                                            
                                             {{ form.description }}
                                             {% if form.description.errors %}
-                                            <ul class="errorlist-modern">
-                                                {{ form.description.errors }}
-                                            </ul>
+                                            <ul class="errorlist-modern">{{ form.description.errors }}</ul>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -793,32 +760,22 @@
                             </form>
 
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
-<!-- ========================================
-   ADMIN FOOTER (included)
-======================================== -->
 {% include 'admin/adminfooter.html' %}
 
 <!-- ========================================
-   SCRIPTS - IMAGE PREVIEW & FILE UPLOAD
+   SCRIPTS
 ======================================== -->
 <script>
     (function() {
         // ===== IMAGE PREVIEW =====
-        const fileInput = document.querySelector('input[type="file"]');
+        const fileInput = document.querySelector('#id_image');
         const dropZone = document.getElementById('fileDropZone');
         const previewContainer = document.getElementById('imagePreviewContainer');
         const previewImage = document.getElementById('imagePreview');
@@ -839,7 +796,6 @@
                         icon.style.color = '#4f46e5';
                     }
 
-                    // Show image preview
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         if (previewImage) {
@@ -912,45 +868,23 @@
                 }
             }
         }
-
-        // ===== SLUG AUTO-GENERATION (if slug field exists) =====
-        const firstNameInput = document.getElementById('id_first_name');
-        const lastNameInput = document.getElementById('id_last_name');
-        const slugInput = document.getElementById('id_slug');
-
-        function generateSlug() {
-            if (!slugInput) return;
-            
-            const firstName = firstNameInput ? firstNameInput.value.trim() : '';
-            const lastName = lastNameInput ? lastNameInput.value.trim() : '';
-            
-            if (firstName && lastName) {
-                const baseSlug = `${firstName}-${lastName}`.toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '-')
-                    .replace(/^-+|-+$/g, '');
-                slugInput.value = baseSlug;
-            }
-        }
-
-        if (firstNameInput && lastNameInput) {
-            firstNameInput.addEventListener('input', generateSlug);
-            lastNameInput.addEventListener('input', generateSlug);
-        }
-
     })();
 </script>
 
 <!-- ========================================
-   RETIREMENT DATE TOGGLE
+   POSITION TOGGLE
 ======================================== -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const positionField = document.getElementById("id_position");
         const retiredDateField = document.getElementById("retiredDateField");
         const retiredDateInput = document.getElementById("id_retired_on");
+        const pastoralExperienceSection = document.getElementById("pastoralExperienceSection");
 
         function checkPosition() {
-            if (positionField.value === "retired_priest") {
+            const selectedPosition = positionField.value;
+            
+            if (selectedPosition === "retired_priest") {
                 retiredDateField.style.display = "block";
                 if (retiredDateInput) {
                     retiredDateInput.required = true;
@@ -962,12 +896,16 @@
                     retiredDateInput.value = "";
                 }
             }
+
+            if (selectedPosition === "seminary_student") {
+                pastoralExperienceSection.style.display = "none";
+            } else {
+                pastoralExperienceSection.style.display = "block";
+            }
         }
 
-        // Run when page loads
         checkPosition();
 
-        // Run when dropdown changes
         if (positionField) {
             positionField.addEventListener("change", checkPosition);
         }

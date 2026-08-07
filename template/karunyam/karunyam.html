@@ -1,5 +1,7 @@
 {% load static %}
-{% include 'header.html' %}<style>
+{% include 'header.html' %}
+
+<style>
 .karunya-intro{
     margin-left: 40px;
     margin-right: 1px;
@@ -9,6 +11,7 @@
     align-items:start;
     padding:0 30px;
     margin-top: 60px;
+    margin-bottom: 60px;
 }
 
 .section-tag{
@@ -32,65 +35,85 @@
     font-size:13px;
 }
 
-/* Sticky image container */
+/* Sticky image container - FIXED */
 .intro-image{
     position:sticky;
     top:100px;
     align-self:start;
+    width:100%;
+    max-width:500px;
 }
 
 .intro-image img{
-    width:80%;
-    height: 380px;
+    width:100%;
+    height:380px;
     border-radius:30px;
     box-shadow:0 25px 50px rgba(0,0,0,.15);
-    object-fit:fill;
+    object-fit:cover;
+    display:block;
 }
 
 @media(max-width:992px){
     .karunya-intro{
         grid-template-columns:1fr;
         gap:40px;
+        padding:0 20px;
     }
 
     .intro-content h2{
-        font-size:34px;
+        font-size:28px;
     }
 
     /* Disable sticky on mobile */
     .intro-image{
         position:static;
+        max-width:100%;
+    }
+    
+    .intro-image img{
+        height:300px;
     }
 }
-</style><section class="karunya-intro">
+
+@media(max-width:576px){
+    .karunya-intro{
+        padding:0 15px;
+        margin-top:30px;
+    }
+    
+    .intro-content h2{
+        font-size:24px;
+    }
+    
+    .intro-image img{
+        height:220px;
+        border-radius:20px;
+    }
+}
+</style>
+
+<section class="karunya-intro">
 
     <div class="intro-content">
-
         {% if about %}
-         <span class="section-tag">ABOUT KARUNYA SPARSHAM</span>
-            
-
+            <span class="section-tag">ABOUT KARUNYA SPARSHAM</span>
             <h2>{{ about.title }}</h2>
-
             <p>{{ about.content|safe }}</p>
-
         {% endif %}
-
     </div>
 
-    <div class="intro-image" style="height: 40%;">
-
+    <div class="intro-image">
         {% if about.image %}
-            <img src="{{ about.image.url }}" alt="{{ about.heading }}">
+            <img src="{{ about.image.url }}" alt="{{ about.title }}">
+        {% else %}
+            <img src="{% static 'images/default-karunya.jpg' %}" alt="Karunya Sparsham">
         {% endif %}
-
     </div>
 
 </section>
 </div>
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
 <script>
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
@@ -143,23 +166,23 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+<script>
+const historyBlocks = document.querySelectorAll('.history-block');
 
 window.addEventListener('scroll', () => {
     historyBlocks.forEach(block => {
         const rect = block.getBoundingClientRect();
-        
-        // This check defines the "active" zone (the center of your screen)
         const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
 
         if (isMiddle) {
-            // Change to active color while scrolling
             block.style.setProperty('--line-color', '#e76514');
         } else {
-            // Reset to inactive color when not scrolling over this block
             block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
         }
     });
-});</script>
+});
+</script>
+
 </body>
-</html>   
+</html>

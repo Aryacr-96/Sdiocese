@@ -39,7 +39,8 @@ urlpatterns = [
     path('priest_details/<slug:slug>/', views.priest_details, name='priest_details'),
     path('priestretired_details/<slug:slug>/',views.priestretired_details,name='priestretired_details'),
     path('parish/', views.parish, name='parish'),
-    path('parish-details/<slug:slug>/',views.parish_details,name='parish_details'),
+    path('parish/<slug:slug>/', views.parish_details, name='parish_details'),
+    path('parish/id/<int:parish_id>/', views.parish_details_by_id, name='parish_details_by_id'),
 
 
         

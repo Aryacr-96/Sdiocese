@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Diocese | Dashboard</title>
+  <title>Diocese | Admin</title>
 
-  <!-- Google Fonts: Inter & Plus Jakarta Sans for a ultra-modern look -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -29,113 +29,216 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    /* GLOBAL OVERRIDES */
-    body {
+    /* ========================================
+       COMPLETE RESET - REMOVE ALL GAPS
+    ======================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
       background-color: #f8fafc;
     }
 
-    /* Top Navbar - Clean & Modern */
-    .main-header.navbar {
-      border-bottom: 1px solid #e9edf2 !important;
-      background: #ffffff !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      padding: 8px 24px;
-      height: 72px;
-    }
-    
-    .navbar-brand {
-      padding: 0;
-      margin-right: 0;
+    /* Fix the wrapper - NO GAPS */
+    .wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      min-height: auto !important;
+      background: #f0f4f9 !important;
     }
 
+    /* Hide ALL AdminLTE default wrappers */
+    .main-sidebar,
+    .control-sidebar,
+    .content-header {
+      display: none !important;
+    }
+
+    /* Override content-wrapper - match dashboard design */
+    .content-wrapper {
+      display: block !important;
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      padding: 0 24px 40px !important;
+      background: #f0f4f9 !important;
+      min-height: calc(100vh - 70px) !important;
+      margin-top: 0 !important; /* NO GAP */
+      padding-top: 16px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      box-shadow: none !important;
+      border: none !important;
+      background: #f0f4f9 !important;
+    }
+
+    /* ========================================
+       NAVBAR - PROFESSIONAL & CLEAN
+    ======================================== */
+    .main-header.navbar {
+      background: #ffffff !important;
+      border-bottom: 1px solid #e9edf2 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      padding: 0 2rem !important;
+      height: 70px !important;
+      display: flex !important;
+      align-items: center !important;
+      margin: 0 !important;
+      margin-bottom: 0 !important; /* REMOVE GAP */
+      position: relative;
+      z-index: 1000;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Fix Bootstrap navbar margin */
+    .navbar {
+      margin-bottom: 0 !important;
+    }
+
+    /* Brand / Logo */
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      padding: 0 !important;
+      margin-right: 2rem !important;
+      flex-shrink: 0;
+    }
+    
     .navbar-brand img {
       height: 38px;
       width: auto;
+      object-fit: contain;
     }
-
+    
     .navbar-brand .brand-text {
       font-weight: 700;
       font-size: 1.1rem;
+      letter-spacing: -0.3px;
       color: #0f172a;
       margin-left: 10px;
-      letter-spacing: -0.3px;
+      white-space: nowrap;
     }
 
-    /* Right-aligned navigation */
-    .navbar-nav.ms-auto {
-      gap: 4px;
+    /* Navbar Collapse */
+    .navbar-collapse {
+      flex: 1;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Centered Nav Links */
+    .navbar-nav.nav-links-center {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .navbar-nav .nav-item {
+      position: relative;
     }
 
     .navbar-nav .nav-link {
-      color: #475569 !important;
       font-weight: 500;
-      font-size: 0.875rem;
-      padding: 8px 16px !important;
+      font-size: 0.85rem;
+      color: #475569 !important;
+      padding: 0.5rem 0.9rem !important;
       border-radius: 8px;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
-      position: relative;
+      gap: 7px;
+      transition: all 0.2s ease;
+      background: transparent;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
     }
 
     .navbar-nav .nav-link i {
       font-size: 0.95rem;
       color: #64748b;
-      transition: color 0.2s ease;
+      transition: color 0.2s;
     }
 
     .navbar-nav .nav-link:hover {
-      background-color: #f1f5f9 !important;
+      background: #f1f5f9 !important;
       color: #0f172a !important;
     }
-
+    
     .navbar-nav .nav-link:hover i {
       color: #0f172a;
     }
 
-    /* Active button state */
     .navbar-nav .nav-link.active {
       background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
       color: #ffffff !important;
       box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
     }
-
+    
     .navbar-nav .nav-link.active i {
       color: #ffffff !important;
     }
 
-    /* Active indicator dot for non-active items */
-    .navbar-nav .nav-link:not(.active)::after {
-      content: '';
-      position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: #4f46e5;
-      transition: width 0.3s ease;
+    /* Divider */
+    .navbar-divider {
+      width: 1px;
+      height: 28px;
+      background: #e2e8f0;
+      margin: 0 6px;
+      flex-shrink: 0;
     }
 
-    .navbar-nav .nav-link:not(.active):hover::after {
-      width: 20px;
+    /* Right Side Actions */
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+      margin-left: 0.5rem;
     }
 
-    /* Profile Dropdown Styles */
-    .nav-item.dropdown .dropdown-toggle {
-      padding: 8px 12px !important;
+    .nav-link.fullscreen-btn {
+      padding: 0.4rem 0.6rem !important;
       border-radius: 8px;
-      cursor: pointer;
+      color: #64748b !important;
+    }
+    
+    .nav-link.fullscreen-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a !important;
     }
 
+    /* Profile Dropdown */
+    .nav-item.dropdown .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.3rem 0.7rem 0.3rem 0.5rem !important;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .nav-item.dropdown .dropdown-toggle:hover {
+      background: #f1f5f9;
+    }
+    
     .nav-item.dropdown .dropdown-toggle::after {
       display: none;
     }
 
-    .nav-item.dropdown .dropdown-toggle .user-avatar {
+    .user-avatar {
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -146,244 +249,266 @@
       justify-content: center;
       font-weight: 700;
       font-size: 14px;
+      flex-shrink: 0;
     }
 
-    .nav-item.dropdown .dropdown-toggle .user-name {
+    .user-name {
       font-weight: 500;
       color: #0f172a;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
     }
 
-    .nav-item.dropdown .dropdown-toggle .dropdown-arrow {
+    .dropdown-arrow {
       color: #94a3b8;
-      font-size: 12px;
-      transition: transform 0.3s ease;
+      font-size: 11px;
+      transition: transform 0.2s;
+      margin-left: 2px;
     }
-
-    .nav-item.dropdown.show .dropdown-toggle .dropdown-arrow {
+    
+    .nav-item.dropdown.show .dropdown-arrow {
       transform: rotate(180deg);
     }
 
     .dropdown-menu.profile-dropdown {
       border: none;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      padding: 8px;
-      margin-top: 10px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 0.5rem 0.3rem;
+      margin-top: 8px;
       min-width: 220px;
       border: 1px solid #f1f5f9;
+      background: #ffffff;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-header {
-      padding: 12px 16px 8px 16px;
+      padding: 0.5rem 1rem 0.3rem 1rem;
       border-bottom: 1px solid #f1f5f9;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
-
-    .dropdown-menu.profile-dropdown .dropdown-header .dropdown-user-name {
+    
+    .dropdown-menu.profile-dropdown .dropdown-user-name {
       font-weight: 700;
       color: #0f172a;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
-
-    .dropdown-menu.profile-dropdown .dropdown-header .dropdown-user-email {
-      font-size: 0.8rem;
+    
+    .dropdown-menu.profile-dropdown .dropdown-user-email {
+      font-size: 0.75rem;
       color: #94a3b8;
       margin-top: 2px;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item {
-      border-radius: 8px;
-      padding: 10px 16px;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
       font-weight: 500;
-      color: #475569;
-      transition: all 0.2s ease;
+      color: #334155;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
+      transition: all 0.15s;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item i {
       width: 18px;
       color: #64748b;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
+      font-size: 0.9rem;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item:hover {
-      background-color: #f1f5f9;
+      background: #f8fafc;
       color: #0f172a;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item:hover i {
       color: #0f172a;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item.text-danger {
-      color: #ef4444 !important;
+      color: #dc2626 !important;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item.text-danger i {
-      color: #ef4444 !important;
+      color: #dc2626 !important;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item.text-danger:hover {
       background: #fef2f2 !important;
-      color: #dc2626 !important;
+      color: #b91c1c !important;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-item.text-danger:hover i {
-      color: #dc2626 !important;
+      color: #b91c1c !important;
     }
-
+    
     .dropdown-menu.profile-dropdown .dropdown-divider {
-      margin: 6px 0;
+      margin: 0.2rem 0;
       border-color: #f1f5f9;
     }
 
-    /* Divider in navbar */
-    .navbar-divider {
-      width: 1px;
-      height: 30px;
-      background: #e2e8f0;
-      margin: 0 8px;
-    }
-
-    /* Navbar toggle for mobile */
-    .navbar-toggler {
-      border: none;
-      padding: 6px 10px;
-      margin-left: 8px;
-    }
-
-    .navbar-toggler:focus {
-      box-shadow: none;
-    }
-
-    /* Mobile responsive */
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
     @media (max-width: 991px) {
+      .main-header.navbar {
+        padding: 0 1rem !important;
+        height: 64px !important;
+      }
+      
+      .navbar-brand {
+        margin-right: 0.5rem !important;
+      }
+      
+      .navbar-brand .brand-text {
+        font-size: 1rem;
+        margin-left: 8px;
+      }
+      
       .navbar-collapse {
-        background: #ffffff;
-        padding: 16px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        margin-top: 12px;
         position: absolute;
         top: 100%;
-        left: 16px;
-        right: 16px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        padding: 1rem 1.2rem;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+        border-top: 1px solid #f1f5f9;
+        flex-direction: column;
+        align-items: stretch;
         z-index: 1050;
-        border: 1px solid #e9edf2;
         max-height: 80vh;
         overflow-y: auto;
+        display: none;
       }
-
-      .navbar-nav.ms-auto {
+      
+      .navbar-collapse.show {
+        display: flex;
+      }
+      
+      .navbar-nav.nav-links-center {
         flex-direction: column;
+        align-items: stretch;
         width: 100%;
         gap: 2px;
+        margin: 0 0 0.8rem 0;
       }
-
+      
       .navbar-nav .nav-link {
-        padding: 10px 16px !important;
+        padding: 0.6rem 1rem !important;
         width: 100%;
+        border-radius: 10px;
+        justify-content: flex-start;
       }
-
+      
       .navbar-divider {
         display: none;
       }
-
-      .navbar-nav .nav-link:not(.active)::after {
-        display: none;
+      
+      .navbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 0.8rem;
+        margin-top: 0.2rem;
+        flex-wrap: wrap;
+        gap: 0.3rem;
       }
-
+      
       .nav-item.dropdown {
         width: 100%;
       }
-
+      
       .nav-item.dropdown .dropdown-toggle {
         width: 100%;
         justify-content: flex-start;
+        padding: 0.4rem 0.8rem !important;
       }
-
+      
       .dropdown-menu.profile-dropdown {
         position: static !important;
         transform: none !important;
         box-shadow: none;
         border: none;
-        padding: 0;
-        margin: 4px 0 0 16px;
-        width: calc(100% - 16px);
+        padding: 0.2rem 0 0 0.8rem;
+        margin: 2px 0 0 0;
+        width: 100%;
+        background: transparent;
       }
-
+      
       .dropdown-menu.profile-dropdown .dropdown-header {
         display: none;
+      }
+      
+      .dropdown-menu.profile-dropdown .dropdown-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 8px;
+      }
+      
+      .dropdown-menu.profile-dropdown .dropdown-divider {
+        margin: 0.2rem 0;
+      }
+      
+      .fullscreen-btn {
+        display: none;
+      }
+      
+      .navbar-toggler {
+        border: none;
+        padding: 0.3rem 0.6rem;
+        margin-left: auto;
+        background: transparent;
+      }
+      
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+      
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(15, 23, 42, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* Fix content wrapper padding on mobile */
+      .content-wrapper {
+        padding: 12px 16px 30px !important;
+        padding-top: 12px !important;
       }
     }
 
     @media (max-width: 576px) {
       .main-header.navbar {
-        padding: 8px 12px;
-        height: 64px;
+        padding: 0 0.8rem !important;
+        height: 60px !important;
       }
-
+      
       .navbar-brand img {
         height: 30px;
       }
-
+      
       .navbar-brand .brand-text {
         font-size: 0.9rem;
-        margin-left: 6px;
+      }
+      
+      .navbar-actions .user-name {
+        display: none;
+      }
+      
+      .nav-item.dropdown .dropdown-toggle {
+        padding: 0.3rem 0.5rem !important;
+      }
+
+      .content-wrapper {
+        padding: 10px 12px 24px !important;
+        padding-top: 10px !important;
       }
     }
 
-    /* Content adjustment */
-    .content-wrapper {
-      margin-left: 0 !important;
-      padding: 24px !important;
-      background: #f8fafc;
-      min-height: calc(100vh - 72px);
-    }
-
-    .content-header {
-      padding: 0 0 20px 0 !important;
-    }
-
-    .content-header h1 {
-      font-weight: 700;
-      color: #0f172a;
-      font-size: 1.75rem;
-    }
-
-    .content-header .breadcrumb {
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      font-weight: 500;
-    }
-
-    .main-sidebar {
-      display: none !important;
-    }
-
-    .wrapper {
+    /* Preloader */
+    .preloader {
       display: flex;
-      flex-direction: column;
     }
-
-    .wrapper .main-header {
-      flex-shrink: 0;
-    }
-
-    .wrapper .content-wrapper {
-      flex: 1;
-    }
-
-
-
-
-    
   </style>
 </head>
 
@@ -395,199 +520,117 @@
     <img class="animation__shake" src="{% static 'images/manayath logo_white.png' %}" height="50">
   </div>
 
-  <!-- Navbar - Top Only -->
+  <!-- ========================================
+       NAVBAR - PROFESSIONAL & CENTERED
+  ======================================== -->
   <nav class="main-header navbar navbar-expand-lg navbar-white navbar-light">
-    <!-- Brand / Logo -->
-    <!-- <a href="{% url 'admin_dashboard' %}" class="navbar-brand">
+    <!-- Brand -->
+    <a href="{% url 'admin_dashboard' %}" class="navbar-brand">
       <img src="{% static 'images/image.png' %}" alt="Logo">
-    </a> -->
+      <span class="brand-text d-none d-sm-inline">Diocese</span>
+    </a>
 
-    <!-- Toggle Button for Mobile -->
+    <!-- Toggler (mobile) -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Navbar Links - Now on the right side -->
+    <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ">
-        <!-- Dashboard -->
+      <!-- Centered nav links -->
+      <ul class="navbar-nav nav-links-center">
         <li class="nav-item">
           <a href="{% url 'admin_dashboard' %}" class="nav-link active">
             <i class="fas fa-home"></i> Dashboard
           </a>
         </li>
-        
-        <!-- Priest -->
-      <li class="nav-item">
+        <li class="nav-item">
           <a href="{% url 'admin_priests' %}" class="nav-link">
             <i class="fas fa-user-tie"></i> Priest
           </a>
-        </li> 
-        
-        <!-- Parish -->
+        </li>
         <li class="nav-item">
           <a href="{% url 'admin_parishes' %}" class="nav-link">
             <i class="fas fa-church"></i> Parish
           </a>
-        </li> 
-        <!-- Office Bearers -->
-        <!-- <li class="nav-item">
-          <a href="{% url 'officebearer' %}" class="nav-link">
-            <i class="fas fa-user-tie"></i> Bearers
-          </a>
-        </li> -->
-        
-        <!-- Spiritual -->
-         <li class="nav-item">
+        </li>
+        <li class="nav-item">
           <a href="{% url 'spiritual' %}" class="nav-link">
             <i class="fas fa-cross"></i> Spiritual
           </a>
-        </li> 
-        
-        <!-- Contact -->
-      <li class="nav-item">
+        </li>
+        <li class="nav-item">
           <a href="{% url 'contactpage' %}" class="nav-link">
-            <i class="fas fa-address-book"></i> Prayer Request
-          </a>
-        </li> 
-        <li class="nav-item">
-          <a href="{% url 'publication_list' %}" class="nav-link">
-             <i class="fas fa-newspaper"></i></i> Publications
-          </a>
-        </li> 
-
-         <li class="nav-item">
-          <a href="{% url 'admin_gallery_list' %}" class="nav-link">
-             <i class="fas fa-images"></i></i></i>Gallery
-          </a>
-        </li> 
-
-          <li class="nav-item">
-          <a href="{% url 'kalpana_list' %}" class="nav-link">
-              <i class="fas fa-file-alt"></i> Kalpana
-          </a>
-        </li> 
-
-
-
-        <li class="nav-item">
-          <a href="{% url 'event_list' %}" class="nav-link">
-               <i class="fas fa-calendar-plus"></i> Events
-          </a>
-        </li> 
-
-
-         <li class="nav-item">
-          <a href="{% url 'admin_download_list' %}" class="nav-link">
-                <i class="fas fa-download"></i> Downloads
-          </a>
-        </li> 
-        <!-- Divider -->
-        <li class="navbar-divider"></li>
-
-        <!-- Fullscreen Toggle -->
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
+            <i class="fas fa-address-book"></i> Prayer
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{% url 'publication_list' %}" class="nav-link">
+            <i class="fas fa-newspaper"></i> Publications
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'admin_gallery_list' %}" class="nav-link">
+            <i class="fas fa-images"></i> Gallery
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'kalpana_list' %}" class="nav-link">
+            <i class="fas fa-file-alt"></i> Kalpana
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'event_list' %}" class="nav-link">
+            <i class="fas fa-calendar-plus"></i> Events
+          </a>
+        </li>
+      </ul>
 
-        <!-- Profile Dropdown with Logout and Password Change -->
-        <li class="nav-item dropdown">
+      <!-- Right side: actions + profile -->
+      <div class="navbar-actions">
+        <span class="navbar-divider d-none d-lg-block"></span>
+
+        <!-- Fullscreen toggle -->
+        <a class="nav-link fullscreen-btn d-none d-sm-block" data-widget="fullscreen" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+
+        <!-- Profile dropdown -->
+        <li class="nav-item dropdown" style="list-style: none;">
           <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="user-avatar">S</span>
-            <span class="user-name d-none d-lg-inline">Settings</span>
+            <span class="user-name d-none d-md-inline">Settings</span>
             <i class="fas fa-chevron-down dropdown-arrow"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-end profile-dropdown" aria-labelledby="profileDropdown">
-            <!-- Dropdown Header -->
             <div class="dropdown-header">
               <div class="dropdown-user-name">Admin User</div>
-              <!-- <div class="dropdown-user-email">admin@diocese.com</div> -->
             </div>
             <div class="dropdown-divider"></div>
-            
-            <!-- Profile Link (Optional) -->
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-user-circle"></i> My Profile
-            </a>
-            <!-- Best Choice -->
-          <a class="dropdown-item" href="{% url 'officebearer' %}">
-            <i class="fas fa-users"></i> Spiritual Office Bearers
-          </a>
-          <a class="dropdown-item" href="{% url 'coordinator_list' %}">
-           <i class="fas fa-id-badge"></i> Spiritual Coordinators
-          </a>
-          <a class="dropdown-item" href="{% url 'designation' %}">
-           <i class="fas fa-id-badge"></i> Spiritual Designations
-          </a>
-          <a class="dropdown-item" href="{% url 'category_list' %}">
-            <i class="fas fa-layer-group"></i> Karunyasparsham Categories
-          </a>
-            <!-- Settings Link (Optional) -->
-            <!-- <a class="dropdown-item" href="#">
-              <i class="fas fa-cog"></i> Settings
-            </a> -->
-            
+            <a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> My Profile</a>
+            <!-- <a class="dropdown-item" href="{% url 'officebearer' %}"><i class="fas fa-users"></i> Spiritual Office Bearers</a>
+            <a class="dropdown-item" href="{% url 'coordinator_list' %}"><i class="fas fa-id-badge"></i> Spiritual Coordinators</a> -->
+            <a class="dropdown-item" href="{% url 'designation' %}"><i class="fas fa-id-badge"></i> Spiritual Designations</a>
+            <a class="dropdown-item" href="{% url 'category_list' %}"><i class="fas fa-layer-group"></i> Karunyasparsham Categories</a>
+            <a class="dropdown-item" href="{% url 'admin_download_list' %}"><i class="fas fa-download"></i> Downloads</a>
             <div class="dropdown-divider"></div>
-            
-            <!-- Change Password -->
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-key"></i> Change Password
-            </a>
-            
-            <!-- Logout -->
-            <a class="dropdown-item text-danger" href="{% url 'logoutadmin' %}">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+            <a class="dropdown-item" href="#"><i class="fas fa-key"></i> Change Password</a>
+            <a class="dropdown-item text-danger" href="{% url 'logoutadmin' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
         </li>
-      </ul>
+      </div>
     </div>
   </nav>
 
-  <!-- Content Wrapper -->
-  <!-- <div class="content-wrapper"> -->
-    <!-- Content Header (Page header) -->
-    <!-- <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Dashboard</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Main content -->
-    <!-- <section class="content">
-      <div class="container-fluid"> -->
-        <!-- Your dashboard content goes here -->
-        <!-- <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Welcome to Admin Panel</h3>
-              </div>
-              <div class="card-body">
-                <p>Dashboard content goes here.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div> -->
+  <!-- ===== THIS IS WHERE YOUR CONTENT GOES ===== -->
+  <!-- The dashboard content will be inserted here when you include this file -->
+  <!-- Any content inside this div will render with NO GAP -->
+  {% block content %}
+  <!-- Your dashboard content goes here -->
+  {% endblock %}
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark"></aside>
-
 </div>
 
 <!-- Scripts -->
@@ -610,24 +653,17 @@
 <script src="{% static 'style/dist/js/adminlte.js' %}"></script>
 <script src="{% static 'style/dist/js/pages/dashboard.js' %}"></script>
 
-<!-- JavaScript to handle active states dynamically -->
+<!-- Active state helper -->
 <script>
   $(document).ready(function() {
-    // Get current URL path
     var currentPath = window.location.pathname;
-    
-    // Remove active class from all nav links
     $('.navbar-nav .nav-link').removeClass('active');
-    
-    // Add active class based on current URL
     $('.navbar-nav .nav-link').each(function() {
       var link = $(this).attr('href');
       if (link && currentPath.includes(link)) {
         $(this).addClass('active');
       }
     });
-    
-    // If no active class found, set Dashboard as active
     if ($('.navbar-nav .nav-link.active').length === 0) {
       $('.navbar-nav .nav-link:first').addClass('active');
     }

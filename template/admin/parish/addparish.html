@@ -199,6 +199,56 @@
             background: #ffffff !important;
         }
 
+        /* Phone field specific styling */
+        #id_phone {
+            width: 100%;
+            padding: 0.7rem 1.2rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+        }
+
+        #id_phone:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+            outline: none;
+        }
+
+        #id_phone::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        /* Phone error state */
+        #id_phone.error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+        }
+
+        /* Phone success state */
+        #id_phone.success {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1) !important;
+        }
+
+        /* Phone error message */
+        .phone-error {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .phone-error i {
+            font-size: 0.8rem;
+        }
+
         /* Section headings */
         .section-heading-modern {
             font-weight: 700;
@@ -470,6 +520,33 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
             color: #fff;
+        }
+
+        /* Social media icons styling */
+        .social-icon-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        .social-icon-preview.whatsapp {
+            background: #25D366;
+            color: #fff;
+        }
+        .social-icon-preview.facebook {
+            background: #1877F2;
+            color: #fff;
+        }
+        .social-icon-preview.instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+        }
+        .social-icon-preview i {
+            font-size: 0.9rem;
         }
 
         /* Content header styling */
@@ -857,67 +934,174 @@
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
                                             <label for="{{ form.phone.id_for_label }}">
-                                                <i class="fas fa-phone"></i> Phone Number
+                                                <i class="fas fa-phone" style="color: #4f46e5;"></i> Phone Number
                                             </label>
-                                            {{ form.phone }}
+                                            <input type="text" 
+                                                   name="phone" 
+                                                   id="id_phone" 
+                                                   class="form-control-modern" 
+                                                   maxlength="10" 
+                                                   placeholder="Enter 10 digit phone number"
+                                                   value="{{ form.phone.value|default:'' }}"
+                                                   autocomplete="tel"
+                                                   pattern="\d{10}"
+                                                   title="Please enter exactly 10 digits">
                                             {% if form.phone.errors %}
                                             <ul class="errorlist-modern">{{ form.phone.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i> Primary contact number for the parish
+                                                <i class="fas fa-info-circle" style="color: #4f46e5;"></i> Enter exactly 10 digits (e.g., 9876543210)
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
                                             <label for="{{ form.trustee.id_for_label }}">
-                                                <i class="fas fa-handshake"></i> Trustee
+                                                <i class="fas fa-handshake" style="color: #4f46e5;"></i> Trustee
                                             </label>
                                             {{ form.trustee }}
                                             {% if form.trustee.errors %}
                                             <ul class="errorlist-modern">{{ form.trustee.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i> The trustee or caretaker of the parish
+                                                <i class="fas fa-info-circle" style="color: #4f46e5;"></i> The trustee or caretaker of the parish
                                             </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group-modern">
                                             <label for="{{ form.secretary.id_for_label }}">
-                                                <i class="fas fa-user"></i> Secretary
+                                                <i class="fas fa-user" style="color: #4f46e5;"></i> Secretary
                                             </label>
                                             {{ form.secretary }}
                                             {% if form.secretary.errors %}
                                             <ul class="errorlist-modern">{{ form.secretary.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i> The Secretary of the parish
+                                                <i class="fas fa-info-circle" style="color: #4f46e5;"></i> The Secretary of the parish
                                             </div>
                                         </div>
                                     </div>
-                                     <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group-modern">
                                             <label for="{{ form.number_of_families.id_for_label }}">
-                                                <i class="fas fa-people-group"></i> Number of Families
+                                                <i class="fas fa-people-group" style="color: #4f46e5;"></i> Number of Families
                                             </label>
                                             {{ form.number_of_families }}
                                             {% if form.number_of_families.errors %}
                                             <ul class="errorlist-modern">{{ form.number_of_families.errors }}</ul>
                                             {% endif %}
                                             <div class="help-text-modern">
-                                                <i class="fas fa-info-circle"></i> Total number of families registered
+                                                <i class="fas fa-info-circle" style="color: #4f46e5;"></i> Total number of families registered
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- ========================================
-                                   DESCRIPTION - FIXED WITH CKEDITOR
+                                   SOCIAL MEDIA SECTION
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-share-alt"></i> Social Media &amp; Digital Presence
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.whatsapp_number.id_for_label }}">
+                                                <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp Number
+                                            </label>
+                                            {{ form.whatsapp_number }}
+                                            {% if form.whatsapp_number.errors %}
+                                            <ul class="errorlist-modern">{{ form.whatsapp_number.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Include country code (e.g., +1234567890)
+                                            </div>
+                                            <div id="whatsappPreview" class="social-icon-preview whatsapp" style="display:none;">
+                                                <i class="fab fa-whatsapp"></i>
+                                                <span id="whatsappDisplay">+1234567890</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.facebook_id.id_for_label }}">
+                                                <i class="fab fa-facebook" style="color:#1877F2;"></i> Facebook ID / Username
+                                            </label>
+                                            {{ form.facebook_id }}
+                                            {% if form.facebook_id.errors %}
+                                            <ul class="errorlist-modern">{{ form.facebook_id.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Page ID (numbers) or username (e.g., parishname)
+                                            </div>
+                                            <div id="facebookPreview" class="social-icon-preview facebook" style="display:none;">
+                                                <i class="fab fa-facebook"></i>
+                                                <span id="facebookDisplay">parishname</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.facebook_url.id_for_label }}">
+                                                <i class="fas fa-link"></i> Facebook Page URL (Optional)
+                                            </label>
+                                            {{ form.facebook_url }}
+                                            {% if form.facebook_url.errors %}
+                                            <ul class="errorlist-modern">{{ form.facebook_url.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Full URL (leave blank to auto-generate from ID)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.instagram_id.id_for_label }}">
+                                                <i class="fab fa-instagram" style="color:#bc1888;"></i> Instagram Username
+                                            </label>
+                                            {{ form.instagram_id }}
+                                            {% if form.instagram_id.errors %}
+                                            <ul class="errorlist-modern">{{ form.instagram_id.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Username without @ (e.g., parishname)
+                                            </div>
+                                            <div id="instagramPreview" class="social-icon-preview instagram" style="display:none;">
+                                                <i class="fab fa-instagram"></i>
+                                                <span id="instagramDisplay">parishname</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.instagram_url.id_for_label }}">
+                                                <i class="fas fa-link"></i> Instagram Profile URL (Optional)
+                                            </label>
+                                            {{ form.instagram_url }}
+                                            {% if form.instagram_url.errors %}
+                                            <ul class="errorlist-modern">{{ form.instagram_url.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Full URL (leave blank to auto-generate from username)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
+                                   DESCRIPTION
                                 ======================================== -->
                                 <div class="section-heading-modern">
                                     <i class="fas fa-align-left"></i> Description
@@ -927,7 +1111,6 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group-modern" style="margin-bottom: 0.5rem; padding-top: 0;">
-                                            <!-- IMPORTANT: form.media must be here -->
                                             {{ form.media }}
                                             {{ form.description }}
                                             {% if form.description.errors %}
@@ -1110,6 +1293,65 @@
                 updateAssistantVicarDropdown(vicarSelect.value);
             }, 100);
         }
+
+        // ===== SOCIAL MEDIA PREVIEWS =====
+        function updateSocialPreviews() {
+            // WhatsApp
+            const whatsappInput = document.getElementById('id_whatsapp_number');
+            const whatsappPreview = document.getElementById('whatsappPreview');
+            const whatsappDisplay = document.getElementById('whatsappDisplay');
+            if (whatsappInput && whatsappPreview && whatsappDisplay) {
+                const val = whatsappInput.value.trim();
+                if (val) {
+                    whatsappDisplay.textContent = val;
+                    whatsappPreview.style.display = 'inline-flex';
+                } else {
+                    whatsappPreview.style.display = 'none';
+                }
+            }
+
+            // Facebook
+            const facebookInput = document.getElementById('id_facebook_id');
+            const facebookPreview = document.getElementById('facebookPreview');
+            const facebookDisplay = document.getElementById('facebookDisplay');
+            if (facebookInput && facebookPreview && facebookDisplay) {
+                const val = facebookInput.value.trim();
+                if (val) {
+                    facebookDisplay.textContent = val;
+                    facebookPreview.style.display = 'inline-flex';
+                } else {
+                    facebookPreview.style.display = 'none';
+                }
+            }
+
+            // Instagram
+            const instagramInput = document.getElementById('id_instagram_id');
+            const instagramPreview = document.getElementById('instagramPreview');
+            const instagramDisplay = document.getElementById('instagramDisplay');
+            if (instagramInput && instagramPreview && instagramDisplay) {
+                const val = instagramInput.value.trim();
+                if (val) {
+                    instagramDisplay.textContent = val.replace('@', '');
+                    instagramPreview.style.display = 'inline-flex';
+                } else {
+                    instagramPreview.style.display = 'none';
+                }
+            }
+        }
+
+        // Add event listeners for social media previews
+        document.addEventListener('DOMContentLoaded', function() {
+            const socialInputs = ['id_whatsapp_number', 'id_facebook_id', 'id_instagram_id'];
+            socialInputs.forEach(function(id) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updateSocialPreviews);
+                    el.addEventListener('change', updateSocialPreviews);
+                }
+            });
+            // Initial update
+            setTimeout(updateSocialPreviews, 300);
+        });
 
         // ===== MAP PREVIEW =====
         const mapUrlInput = document.getElementById('id_map_url');
@@ -1338,6 +1580,60 @@
                 });
             }
         }, 200);
+    });
+
+    // ========================================
+    // PHONE NUMBER VALIDATION
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('id_phone');
+        if (phoneInput) {
+            // Allow only numbers
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+                
+                // Remove error state while typing
+                this.classList.remove('error', 'success');
+                const errorMsg = this.parentElement.querySelector('.phone-error');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+                this.style.borderColor = '';
+                this.style.boxShadow = '';
+            });
+            
+            // Validate on blur
+            phoneInput.addEventListener('blur', function() {
+                const val = this.value.trim();
+                const errorContainer = this.parentElement;
+                let errorMsg = errorContainer.querySelector('.phone-error');
+                
+                // Remove existing error message
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+                
+                // Reset styling
+                this.classList.remove('error', 'success');
+                this.style.borderColor = '';
+                this.style.boxShadow = '';
+                
+                if (val && !/^\d{10}$/.test(val)) {
+                    this.classList.add('error');
+                    this.style.borderColor = '#ef4444';
+                    this.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
+                    
+                    errorMsg = document.createElement('div');
+                    errorMsg.className = 'phone-error';
+                    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Phone number must be exactly 10 digits.';
+                    errorContainer.appendChild(errorMsg);
+                } else if (val && /^\d{10}$/.test(val)) {
+                    this.classList.add('success');
+                    this.style.borderColor = '#22c55e';
+                    this.style.boxShadow = '0 0 0 4px rgba(34, 197, 94, 0.1)';
+                }
+            });
+        }
     });
 </script>
 

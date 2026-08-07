@@ -1,4 +1,3 @@
-
 {% load static %}
 {% include 'header.html' %}
 
@@ -30,8 +29,28 @@
 
 .projects-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(3, 1fr);
     gap:30px;
+}
+
+@media(max-width:992px){
+    .projects-grid{
+        grid-template-columns:repeat(2, 1fr);
+    }
+}
+
+@media(max-width:768px){
+    .projects-grid{
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+    }
+}
+
+@media(max-width:576px){
+    .projects-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
 }
 
 .project-card{
@@ -40,6 +59,9 @@
     overflow:hidden;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
     transition:.4s ease;
+    display:flex;
+    flex-direction:column;
+    height:400px;
 }
 
 .project-card:hover{
@@ -48,8 +70,12 @@
 }
 
 .project-image{
-    height:250px;
+    width:100%;
+    height:220px;
     overflow:hidden;
+    flex-shrink:0;
+    background:#f0f0f0;
+    position:relative;
 }
 
 .project-image img{
@@ -57,6 +83,7 @@
     height:100%;
     object-fit:cover;
     transition:.5s;
+    display:block;
 }
 
 .project-card:hover .project-image img{
@@ -64,42 +91,132 @@
 }
 
 .project-content{
-    padding:25px;
+    padding:18px 22px 22px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
 }
 
 .project-content h3{
     color:#23395d;
-    margin-bottom:12px;
-    font-size:22px;
+    margin-bottom:10px;
+    font-size:19px;
+    line-height:1.3;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    height:50px;
+    font-weight:700;
+    flex-shrink:0;
 }
 
-.project-content p{
+.project-content .desc-text{
     color:#666;
-    line-height:1.8;
+    line-height:1.6;
     font-size:14px;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    margin-bottom:15px;
+    flex:1;
+}
+
+.project-content .desc-text.empty{
+    color:#999;
+    font-style:italic;
+    flex:0;
+    margin-bottom:0;
 }
 
 .project-btn{
     display:inline-block;
-    margin-top:18px;
-    padding:10px 20px;
+    padding:10px 24px;
     background:#e76514;
     color:#fff;
     text-decoration:none;
     border-radius:30px;
     transition:.3s;
+    font-size:14px;
+    font-weight:500;
+    flex-shrink:0;
+    align-self:flex-start;
+    border:none;
+    cursor:pointer;
 }
 
 .project-btn:hover{
     background:#23395d;
+    color:#fff;
+}
+
+.project-image .no-image{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, #f5f5f5, #e8e8e8);
+    color:#aaa;
+    font-size:48px;
+}
+
+.no-projects{
+    grid-column:1 / -1;
+    text-align:center;
+    padding:60px 20px;
+    color:#666;
+    font-size:16px;
+    background:#fff;
+    border-radius:20px;
+    border:2px dashed #ddd;
 }
 
 @media(max-width:768px){
     .projects-header h2{
         font-size:32px;
     }
+    .project-card{
+        height:370px;
+    }
+    .project-image{
+        height:180px;
+    }
+    .project-content h3{
+        font-size:17px;
+        height:44px;
+    }
+}
+
+@media(max-width:576px){
+    .projects-section{
+        margin-left:10px;
+        margin-right:10px;
+        padding:0 10px;
+        margin-top:40px;
+    }
+    .project-card{
+        height:350px;
+    }
+    .project-image{
+        height:160px;
+    }
+    .project-content{
+        padding:15px 16px 18px;
+    }
+    .project-content h3{
+        font-size:16px;
+        height:40px;
+    }
+    .project-btn{
+        font-size:13px;
+        padding:8px 20px;
+    }
 }
 </style>
+
 <section class="projects-section">
 
     <div class="projects-header">
@@ -114,18 +231,26 @@
         <div class="project-card">
 
             <div class="project-image">
-                {% if project.image %}
-                    <img src="{{ project.image.url }}" alt="{{ project.heading }}">
+                {% if project.project_image %}
+                    <img src="{{ project.project_image.url }}" alt="{{ project.project_title }}">
+                {% else %}
+                    <div class="no-image">
+                        <i class="fas fa-image"></i>
+                    </div>
                 {% endif %}
             </div>
 
             <div class="project-content">
 
-                <h3>{{ project.heading }}</h3>
+                <h3>{{ project.project_title }}</h3>
 
-                <p>
-                    {{ project.content|striptags|truncatewords:20 }}
-                </p>
+                {% if project.project_description %}
+                    <p class="desc-text">
+                        {{ project.project_description|striptags|truncatewords:20 }}
+                    </p>
+                {% else %}
+                    <p class="desc-text empty">No description available</p>
+                {% endif %}
 
                 <a href="{% url 'projects_detail' project.slug %}"
                    class="project-btn">
@@ -138,17 +263,19 @@
 
         {% empty %}
 
-        <p>No projects available.</p>
+        <div class="no-projects">
+            <i class="fas fa-folder-open" style="font-size:48px; display:block; margin-bottom:15px; color:#ccc;"></i>
+            No projects available.
+        </div>
 
         {% endfor %}
 
     </div>
 
 </section>
-</div>
+    </div>
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
 <script>
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
@@ -201,20 +328,19 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+<script>
+const historyBlocks = document.querySelectorAll('.history-block');
 
 window.addEventListener('scroll', () => {
     historyBlocks.forEach(block => {
         const rect = block.getBoundingClientRect();
         
-        // This check defines the "active" zone (the center of your screen)
         const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
 
         if (isMiddle) {
-            // Change to active color while scrolling
             block.style.setProperty('--line-color', '#e76514');
         } else {
-            // Reset to inactive color when not scrolling over this block
             block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
         }
     });

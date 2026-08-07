@@ -87,11 +87,11 @@ class Priest(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-
 from django.db import models
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 import re
+
 class Parish(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
@@ -106,7 +106,7 @@ class Parish(models.Model):
     
     # ForeignKey to Priest for Vicar
     vicar = models.ForeignKey(
-        Priest,
+        'Priest',  # Use string reference to avoid circular import
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -115,7 +115,7 @@ class Parish(models.Model):
     )
     # Assistant Vicar
     assistant_vicar = models.ForeignKey(
-        Priest,
+        'Priest',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -133,6 +133,38 @@ class Parish(models.Model):
     established_year = models.PositiveIntegerField()
     district = models.CharField(max_length=100)
     phone = models.CharField(max_length=15, blank=True, null=True)
+    
+    # SOCIAL MEDIA FIELDS
+    whatsapp_number = models.CharField(
+        max_length=20, 
+        blank=True, 
+        null=True,
+        help_text="WhatsApp number with country code (e.g., +1234567890)"
+    )
+    facebook_id = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True,
+        help_text="Facebook page ID or username (e.g., parishname or 123456789)"
+    )
+    instagram_id = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True,
+        help_text="Instagram username without @ (e.g., parishname)"
+    )
+    # Optional: Add URLs for convenience
+    facebook_url = models.URLField(
+        blank=True, 
+        null=True,
+        help_text="Full Facebook page URL (optional, will be auto-generated if ID is provided)"
+    )
+    instagram_url = models.URLField(
+        blank=True, 
+        null=True,
+        help_text="Full Instagram profile URL (optional, will be auto-generated if ID is provided)"
+    )
+    
     trustee = models.CharField(max_length=150, blank=True, null=True)
     secretary = models.CharField(max_length=150, blank=True, null=True)
     number_of_families = models.PositiveIntegerField(default=0)
@@ -145,19 +177,24 @@ class Parish(models.Model):
         verbose_name = "Parish"
         verbose_name_plural = "Parishes"
 
-    # ===== FIXED: save() method - properly indented =====
     def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.name)  # Use name, not first_name/last_name
+    # ALWAYS generate slug if not exists - this is the key
+        if not self.slug or self.slug == '':
+            base_slug = slugify(self.name)
             slug = base_slug
             counter = 1
 
-            # Check Parish objects, not Priest objects
             while Parish.objects.filter(slug=slug).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
 
             self.slug = slug
+
+    # Auto-set vicar_name from selected vicar
+        if self.vicar:
+            self.vicar_name = f"{self.vicar.first_name} {self.vicar.last_name}"
+        elif not self.vicar and not self.vicar_name:
+            self.vicar_name = "No vicar assigned"
 
         super().save(*args, **kwargs)
 
@@ -169,7 +206,59 @@ class Parish(models.Model):
             return f"{self.vicar.first_name} {self.vicar.last_name}"
         return self.vicar_name or "No vicar assigned"
 
+    def get_assistant_vicar_display(self):
+        if self.assistant_vicar:
+            return f"{self.assistant_vicar.first_name} {self.assistant_vicar.last_name}"
+        return "No assistant vicar assigned"
 
+    # Helper methods to get social media URLs
+    def get_facebook_url(self):
+        """Get Facebook URL - use custom URL if set, otherwise construct from ID"""
+        if self.facebook_url:
+            return self.facebook_url
+        if self.facebook_id:
+            # Check if it's a numeric ID or username
+            if self.facebook_id.isdigit():
+                return f"https://www.facebook.com/profile.php?id={self.facebook_id}"
+            else:
+                return f"https://www.facebook.com/{self.facebook_id}"
+        return None
+
+    def get_instagram_url(self):
+        """Get Instagram URL - use custom URL if set, otherwise construct from ID"""
+        if self.instagram_url:
+            return self.instagram_url
+        if self.instagram_id:
+            # Remove @ if present
+            clean_id = self.instagram_id.lstrip('@')
+            return f"https://www.instagram.com/{clean_id}/"
+        return None
+
+    def get_whatsapp_url(self):
+        """Get WhatsApp URL for easy linking"""
+        if self.whatsapp_number:
+            # Remove any non-digit characters except +
+            clean_number = re.sub(r'[^0-9+]', '', self.whatsapp_number)
+            return f"https://wa.me/{clean_number}"
+        return None
+
+    def get_all_social_media(self):
+        """Get all social media URLs as a dictionary"""
+        return {
+            'facebook': self.get_facebook_url(),
+            'instagram': self.get_instagram_url(),
+            'whatsapp': self.get_whatsapp_url(),
+        }
+
+    def has_social_media(self):
+        """Check if parish has any social media links"""
+        return any([
+            self.facebook_url,
+            self.facebook_id,
+            self.instagram_url,
+            self.instagram_id,
+            self.whatsapp_number
+        ])
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
@@ -184,7 +273,7 @@ class Contact(models.Model):
         blank=True
     )
 
-    email = models.EmailField()
+    email = models.EmailField(blank=True, null=True)
 
     phone = models.IntegerField(
         validators=[
@@ -223,8 +312,7 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.full_name
-    
-# models.py
+   # models.py
 from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.text import slugify
@@ -318,7 +406,7 @@ class Officebearer(models.Model):
 class Spiritual(models.Model):
     """
     Model to store spiritual categories.
-    Each spiritual category can have multiple office bearers.
+    Each spiritual category can have multiple office bearers and coordinators.
     """
     category_title = models.CharField(
         max_length=200,
@@ -345,6 +433,15 @@ class Spiritual(models.Model):
         related_name='spiritual_categories',
         blank=True,
         help_text="Office bearers associated with this spiritual category"
+    )
+    
+    # ✅ NEW: Many-to-Many relationship with Coordinator through SpiritualCoordinator
+    coordinators = models.ManyToManyField(
+        'Coordinator',
+        through='SpiritualCoordinator',
+        related_name='spiritual_categories',
+        blank=True,
+        help_text="Coordinators associated with this spiritual category"
     )
     
     created_at = models.DateTimeField(
@@ -378,6 +475,15 @@ class Spiritual(models.Model):
     def get_office_bearers_list(self):
         """Returns a list of all office bearers associated with this category"""
         return self.officebearers.all().order_by('name')
+    
+    # ✅ NEW: Helper methods for coordinators
+    def get_coordinators_count(self):
+        """Returns the count of coordinators associated with this category"""
+        return self.coordinators.count()
+
+    def get_coordinators_list(self):
+        """Returns a list of all coordinators associated with this category"""
+        return self.coordinators.all().order_by('name')
 
 
 # ============================================
@@ -439,23 +545,71 @@ class SpiritualOfficeBearer(models.Model):
         }
 
 
+# ============================================
+# SPIRITUAL COORDINATOR (Through Model) - NEW
+# ============================================
+class SpiritualCoordinator(models.Model):
+    """
+    Through model for Many-to-Many relationship between Spiritual and Coordinator.
+    This allows additional fields like added_date, notes, etc.
+    """
+    spiritual = models.ForeignKey(
+        Spiritual,
+        on_delete=models.CASCADE,
+        related_name='spiritual_coordinators',
+        help_text="Spiritual category"
+    )
+    
+    coordinator = models.ForeignKey(
+        'Coordinator',
+        on_delete=models.CASCADE,
+        related_name='coordinator_spirituals',
+        help_text="Coordinator"
+    )
+    
+    added_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="Date and time when this coordinator was added to this category"
+    )
+    
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Whether this association is currently active"
+    )
+    
+    notes = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Additional notes about this association (optional)"
+    )
+
+    class Meta:
+        unique_together = ['spiritual', 'coordinator']
+        ordering = ['spiritual', 'coordinator']
+        verbose_name = "Spiritual Coordinator"
+        verbose_name_plural = "Spiritual Coordinators"
+
+    def __str__(self):
+        return f"{self.spiritual.category_title} - {self.coordinator.name}"
+
+    def get_coordinator_info(self):
+        """Returns coordinator details"""
+        return {
+            'name': self.coordinator.name,
+            'designation': self.coordinator.designation,
+            'phone': self.coordinator.phone,
+            'district': self.coordinator.district,
+        }
+
 
 # ============================================
-# SPIRITUAL COORDINATOR
+# COORDINATOR MODEL - UPDATED (Removed FK to Spiritual)
 # ============================================
 class Coordinator(models.Model):
     """
     Model to store coordinator information.
-    Each coordinator belongs to one spiritual category (ForeignKey).
+    Coordinators can be linked to multiple Spiritual categories through ManyToMany.
     """
-    # FK to Spiritual
-    spiritual = models.ForeignKey(
-        Spiritual,
-        on_delete=models.CASCADE,
-        related_name='coordinators',
-        help_text="Spiritual category this coordinator belongs to"
-    )
-    
     name = models.CharField(
         max_length=150,
         help_text="Coordinator name"
@@ -471,6 +625,14 @@ class Coordinator(models.Model):
         help_text="Coordinator designation/position"
     )
     
+    # ✅ NEW: Added image field
+    image = models.ImageField(
+        upload_to="coordinators/",
+        blank=True,
+        null=True,
+        help_text="Profile photo of the coordinator"
+    )
+    
     district = models.CharField(
         max_length=100,
         help_text="Coordinator district"
@@ -478,7 +640,15 @@ class Coordinator(models.Model):
     
     phone = models.CharField(
         max_length=10,
-        help_text="10 digit phone number"
+        validators=[phone_validator],
+        help_text="10-digit phone number"
+    )
+    
+    # ✅ NEW: Added email field
+    email = models.EmailField(
+        blank=True,
+        null=True,
+        help_text="Email address (optional)"
     )
     
     created_at = models.DateTimeField(
@@ -499,7 +669,26 @@ class Coordinator(models.Model):
     def __str__(self):
         designation_name = self.designation.name if self.designation else "No Designation"
         return f"{self.name} - {designation_name}"
-
+    
+    # ✅ NEW: Helper methods
+    def get_full_info(self):
+        """Returns a string with full information about the coordinator"""
+        info = f"{self.name}"
+        if self.designation:
+            info += f" ({self.designation.name})"
+        if self.phone:
+            info += f" - {self.phone}"
+        if self.email:
+            info += f" - {self.email}"
+        return info
+    
+    def get_spiritual_categories(self):
+        """Returns all spiritual categories this coordinator belongs to"""
+        return self.spiritual_categories.all()
+    
+    def get_spiritual_categories_count(self):
+        """Returns count of spiritual categories this coordinator belongs to"""
+        return self.spiritual_categories.count()
     
 
 

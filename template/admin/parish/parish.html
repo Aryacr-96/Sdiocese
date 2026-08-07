@@ -11,35 +11,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ========================================
+           DASHBOARD MATCHING STYLES
+        ======================================== */
         :root {
-            --bg-main: #f4f7fb;
+            --bg-main: #f0f4f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --primary-light: #eff6ff;
-            --success: #16a34a;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #eef2ff;
+            --success: #22c55e;
             --success-light: #dcfce7;
             --warning: #f59e0b;
             --warning-light: #fef3c7;
             --danger: #dc2626;
             --danger-light: #fef2f2;
             --danger-hover: #b91c1c;
-            --info: #0891b2;
-            --info-light: #cffafe;
+            --info: #06b6d4;
+            --info-light: #ecfeff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
-            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
-            --radius-lg: 20px;
-            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card-hover: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+            --radius-lg: 14px;
+            --radius-md: 10px;
             --radius-pill: 9999px;
         }
 
@@ -53,116 +52,111 @@
             background-color: var(--bg-main);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ----- EXPANDED CONTENT WRAPPER ----- */
+        /* Content wrapper - matches dashboard */
         .content-wrapper {
-            flex: 1;
             max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            width: 100%;
+            margin: 0 auto !important;
+            padding: 16px 24px 40px !important;
+            background: #f0f4f9;
+            min-height: calc(100vh - 70px);
+            padding-top: 16px !important;
         }
 
-        /* ----- Page Header (Expanded) ----- */
-        .content-header {
+        /* Override any margin from header */
+        .wrapper .content-wrapper {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-top: 16px !important;
+            margin-top: -10px !important;
+        }
+
+        /* ----- Page Header (Dashboard Style) ----- */
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--card-bg);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
         }
-        .content-header .header-left {
+
+        .page-header .header-left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 14px;
         }
-        .content-header .header-left .breadcrumb-wrap {
+
+        .page-header .header-left .greeting-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 14px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
         }
-        .content-header .header-left .breadcrumb-wrap .breadcrumb {
-            background: transparent;
-            padding: 0;
+
+        .page-header .header-left h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
             margin: 0;
-            font-size: 0.9rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
-        .content-header .header-left .breadcrumb-wrap .breadcrumb-item + .breadcrumb-item::before {
-            content: "›";
-            color: var(--text-muted);
+
+        .page-header .header-left h1 small {
+            font-weight: 400;
+            font-size: 14px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0;
         }
-        .content-header .header-left .breadcrumb-wrap .breadcrumb-item a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .content-header .header-left .breadcrumb-wrap .breadcrumb-item a:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-        .content-header .header-left .breadcrumb-wrap .breadcrumb-item.active {
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-        .content-header h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
+
+        .page-header .header-right {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 0;
         }
-        .content-header h1 i {
-            color: var(--primary);
-            font-size: 1.6rem;
-        }
-        .content-header .header-stats {
-            display: flex;
-            gap: 1.2rem;
-            align-items: center;
-        }
-        .content-header .header-stats .stat-badge {
-            background: var(--primary-light);
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
+
+        .page-header .header-right .stat-badge {
+            font-size: 13px;
+            color: #64748b;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
-        .content-header .header-stats .stat-badge i {
-            font-size: 0.9rem;
+
+        .page-header .header-right .stat-badge i {
+            color: #6366f1;
         }
 
         .btn-primary-custom {
-            background: var(--primary);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
             border-radius: var(--radius-pill);
-            padding: 0.6rem 2rem;
+            padding: 0.6rem 1.8rem;
             font-weight: 600;
             font-size: 0.9rem;
             color: #ffffff;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -170,33 +164,54 @@
             cursor: pointer;
         }
         .btn-primary-custom:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
             color: #ffffff;
         }
         .btn-primary-custom i {
             font-size: 0.9rem;
         }
 
-        /* ----- Card (Expanded) ----- */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--border-color);
+        /* ----- Card (Dashboard Style) ----- */
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
-        .card:hover {
-            box-shadow: var(--shadow-card-hover);
+        .dashboard-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
         }
-        .card .card-body {
+        .dashboard-card .card-body {
             padding: 0;
             overflow-x: auto;
         }
 
-        /* ----- Table (Expanded) ----- */
+        /* ----- Section Title (Dashboard Style) ----- */
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #6366f1;
+        }
+
+        .section-title .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* ----- Table (Dashboard Style) ----- */
         .table {
             margin-bottom: 0;
             font-size: 0.9rem;
@@ -206,7 +221,6 @@
             border-bottom: 2px solid var(--border-color);
         }
         .table thead th {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -232,7 +246,7 @@
             border: none;
         }
 
-        /* ----- Parish Image (Expanded) ----- */
+        /* ----- Parish Image (Dashboard Style) ----- */
         .parish-image {
             width: 56px;
             height: 56px;
@@ -258,7 +272,7 @@
             border: 2px solid var(--border-color);
         }
 
-        /* ----- Parish Name (Expanded) ----- */
+        /* ----- Parish Name (Dashboard Style) ----- */
         .parish-name {
             font-weight: 600;
             color: var(--text-main);
@@ -271,7 +285,7 @@
             display: block;
         }
 
-        /* ----- Vicar Info (Expanded) ----- */
+        /* ----- Vicar Info (Dashboard Style) ----- */
         .vicar-info {
             display: flex;
             align-items: center;
@@ -295,7 +309,7 @@
             font-size: 0.8rem;
         }
 
-        /* ----- Info Badges (Expanded) ----- */
+        /* ----- Info Badges (Dashboard Style) ----- */
         .info-badge {
             display: inline-flex;
             align-items: center;
@@ -325,7 +339,7 @@
             color: var(--info);
         }
 
-        /* ----- Contact Info (Expanded) ----- */
+        /* ----- Contact Info (Dashboard Style) ----- */
         .contact-info {
             display: flex;
             flex-direction: column;
@@ -351,7 +365,7 @@
             color: var(--primary);
         }
 
-        /* ----- Action Buttons (Expanded) ----- */
+        /* ----- Action Buttons (Dashboard Style) ----- */
         .action-buttons {
             display: flex;
             gap: 6px;
@@ -401,7 +415,7 @@
             transform: translateY(-1px);
         }
 
-        /* ----- Empty State (Expanded) ----- */
+        /* ----- Empty State (Dashboard Style) ----- */
         .empty-state {
             padding: 4rem 2rem;
             text-align: center;
@@ -412,7 +426,6 @@
             margin-bottom: 1rem;
         }
         .empty-state h5 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 1.3rem;
             color: var(--text-main);
@@ -424,7 +437,7 @@
             margin: 0.5rem auto 1.5rem;
         }
 
-        /* ----- Table Footer (Expanded) ----- */
+        /* ----- Table Footer (Dashboard Style) ----- */
         .table-footer {
             padding: 1rem 1.5rem;
             background: #f8fafc;
@@ -440,23 +453,23 @@
             color: var(--text-muted);
         }
 
-        /* ===== DELETE MODAL STYLES ===== */
+        /* ===== DELETE MODAL (Dashboard Style) ===== */
         .modal-content {
-            border-radius: var(--radius-lg);
-            border: none;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
         }
         .modal-header {
             border-bottom: 2px solid var(--danger-light);
             padding: 1.5rem 2rem;
         }
         .modal-header .modal-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 12px;
+            color: #0f172a;
         }
         .modal-header .modal-title i {
             color: var(--danger);
@@ -485,7 +498,6 @@
             color: var(--danger);
         }
         .modal-body h5 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
@@ -541,51 +553,39 @@
             margin-right: 6px;
         }
 
-        /* ----- Responsive ----- */
+        /* ----- Responsive (Dashboard Style) ----- */
         @media (max-width: 992px) {
             .content-wrapper {
-                padding: 0 1.5rem;
-                margin: 1.5rem auto;
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
             }
-            .content-header {
+            .page-header {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 1.2rem 1.5rem;
+                gap: 10px;
             }
-            .content-header .header-stats {
+            .page-header .header-left h1 {
+                font-size: 20px;
+            }
+            .page-header .header-left h1 small {
+                font-size: 13px;
+            }
+            .page-header .header-right {
                 width: 100%;
-                justify-content: space-between;
-            }
-            .content-header .header-left .breadcrumb-wrap .breadcrumb {
-                font-size: 0.8rem;
             }
         }
         @media (max-width: 768px) {
             .content-wrapper {
-                padding: 0 1rem;
-                margin: 1rem auto;
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
             }
-            .content-header {
-                padding: 1rem 1.2rem;
+            .page-header .header-left .greeting-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
-            .content-header .header-left {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            .content-header .header-left .breadcrumb-wrap {
-                order: 2;
-                width: 100%;
-                margin-top: 6px;
-            }
-            .content-header .header-left .breadcrumb-wrap .breadcrumb {
-                font-size: 0.75rem;
-            }
-            .content-header h1 {
-                font-size: 1.3rem;
-            }
-            .content-header .header-stats .stat-badge {
-                font-size: 0.75rem;
-                padding: 0.3rem 0.8rem;
+            .page-header .header-left h1 {
+                font-size: 18px;
             }
             .table tbody td {
                 padding: 0.8rem 1rem;
@@ -622,23 +622,16 @@
         }
         @media (max-width: 576px) {
             .content-wrapper {
-                padding: 0 0.8rem;
-                margin: 0.8rem auto;
+                padding: 10px 12px 24px !important;
+                padding-top: 10px !important;
             }
-            .content-header {
-                padding: 0.8rem 1rem;
+            .page-header .header-left h1 {
+                font-size: 18px;
             }
-            .content-header h1 {
-                font-size: 1.1rem;
-            }
-            .content-header h1 i {
-                font-size: 1.2rem;
-            }
-            .content-header .header-stats {
-                flex-wrap: wrap;
-            }
-            .content-header .header-left .breadcrumb-wrap .breadcrumb {
-                font-size: 0.7rem;
+            .page-header .header-left .greeting-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
             }
             .table thead th {
                 font-size: 0.65rem;
@@ -693,207 +686,202 @@
     </style>
 </head>
 <body>
-<div class="app-wrapper">
 
-    <div class="content-wrapper">
+<!-- ========================================
+     CONTENT WRAPPER (Dashboard Style)
+======================================== -->
+<div class="content-wrapper">
 
-        <!-- ===== PAGE HEADER ===== -->
-        <section class="content-header">
-            <div class="header-left">
+    <!-- ===== PAGE HEADER (Dashboard Style) ===== -->
+    <div class="page-header">
+        <div class="header-left">
+            <div class="greeting-icon">
+                <i class="fas fa-church"></i>
+            </div>
+            <div>
                 <h1>
-                    <i class="fas fa-church"></i>
                     Parishes
+                    <small>Manage parish details, locations, and associated priests</small>
                 </h1>
-                <div class="breadcrumb-wrap">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{% url 'admin_dashboard' %}">
-                                <i class="fas fa-home"></i> Home
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <i class="fas fa-church"></i> Parishes
-                        </li>
-                    </ol>
-                </div>
             </div>
-            <div class="header-stats">
-                <span class="stat-badge">
-                    <i class="fas fa-users"></i>
-                    {{ parishes|length }}
-                </span>
-                <a href="{% url 'add_parish' %}" class="btn-primary-custom">
-                    <i class="fas fa-plus-circle"></i>
-                    Add Parish
-                </a>
-            </div>
-        </section>
-
-        <!-- ===== PARISHES TABLE ===== -->
-        <section class="content">
-            <div class="card">
-                <div class="card-body">
-
-                    {% if parishes %}
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="width: 80px;">Image</th>
-                                    <th>Parish Name</th>
-                                    <th>Vicar</th>
-                                    <th>District</th>
-                                    <th>Families</th>
-                                    <th>Contact</th>
-                                    <th style="width: 240px;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for parish in parishes %}
-                                <tr>
-                                    <!-- Image -->
-                                    <td>
-                                        {% if parish.image %}
-                                            <img src="{{ parish.image.url }}"
-                                                 alt="{{ parish.name }}"
-                                                 class="parish-image">
-                                        {% else %}
-                                            <div class="parish-image-placeholder">
-                                                <i class="fas fa-church"></i>
-                                            </div>
-                                        {% endif %}
-                                    </td>
-
-                                    <!-- Parish Name -->
-                                    <td>
-                                        <div class="parish-name">
-                                            {{ parish.name }}
-                                            <small>
-                                                <i class="fas fa-map-marker-alt"></i>
-                                                {{ parish.location|truncatechars:40 }}
-                                            </small>
-                                        </div>
-                                    </td>
-
-                                    <!-- Vicar -->
-                                    <td>
-                                        {% if parish.vicar %}
-                                            <div class="vicar-info">
-                                                {% if parish.vicar.image %}
-                                                    <img src="{{ parish.vicar.image.url }}" 
-                                                         alt="{{ parish.vicar.get_full_name }}"
-                                                         class="vicar-avatar">
-                                                {% endif %}
-                                                <span class="vicar-name">
-                                                    {{ parish.vicar.get_full_name }}
-                                                </span>
-                                            </div>
-                                        {% elif parish.vicar_name %}
-                                            <span class="vicar-name">
-                                                {{ parish.vicar_name }}
-                                            </span>
-                                        {% else %}
-                                            <span class="vicar-name">
-                                                <span class="no-vicar">
-                                                    <i class="fas fa-minus"></i> No vicar
-                                                </span>
-                                            </span>
-                                        {% endif %}
-                                    </td>
-
-                                    <!-- District -->
-                                    <td>
-                                        <span class="info-badge district">
-                                            <i class="fas fa-city"></i>
-                                            {{ parish.district }}
-                                        </span>
-                                    </td>
-
-                                    <!-- Families -->
-                                    <td>
-                                        <span class="info-badge families">
-                                            <i class="fas fa-users"></i>
-                                            {{ parish.number_of_families }}
-                                        </span>
-                                    </td>
-
-                                    <!-- Contact -->
-                                    <td>
-                                        <div class="contact-info">
-                                            {% if parish.phone %}
-                                                <span class="contact-item">
-                                                    <i class="fas fa-phone"></i>
-                                                    <a href="tel:{{ parish.phone }}">{{ parish.phone }}</a>
-                                                </span>
-                                            {% else %}
-                                                <span class="contact-item text-muted">
-                                                    <i class="fas fa-minus"></i> No phone
-                                                </span>
-                                            {% endif %}
-                                        </div>
-                                    </td>
-
-                                    <!-- Actions -->
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="{% url 'view_parish' parish.id %}"
-                                               class="action-btn view"
-                                               title="View Parish">
-                                                <i class="fas fa-eye"></i> View
-                                            </a>
-                                            <a href="{% url 'edit_parish' parish.id %}"
-                                               class="action-btn edit"
-                                               title="Edit Parish">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
-                                            <!-- Delete button that triggers modal -->
-                                            <button type="button"
-                                                    class="action-btn delete"
-                                                    title="Delete Parish"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal"
-                                                    data-parish-id="{{ parish.id }}"
-                                                    data-parish-name="{{ parish.name }}">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                        <!-- Table Footer -->
-                        <div class="table-footer">
-                            <span class="info-text">
-                                <i class="fas fa-info-circle"></i>
-                                {{ parishes|length }} parish{{ parishes|length|pluralize }}
-                            </span>
-                            <span class="info-text">
-                                <i class="fas fa-clock"></i>
-                                {% now "M j, Y" %}
-                            </span>
-                        </div>
-
-                    {% else %}
-                        <!-- ===== EMPTY STATE ===== -->
-                        <div class="empty-state">
-                            <i class="fas fa-church"></i>
-                            <h5>No Parishes Found</h5>
-                            <p>Add your first parish to get started.</p>
-                            <a href="{% url 'add_parish' %}" class="btn-primary-custom">
-                                <i class="fas fa-plus-circle"></i>
-                                Add First Parish
-                            </a>
-                        </div>
-                    {% endif %}
-
-                </div>
-            </div>
-        </section>
-
+        </div>
+        <div class="header-right">
+            <span class="stat-badge">
+                <i class="fas fa-users"></i>
+                {{ parishes|length }} Parish{{ parishes|length|pluralize }}
+            </span>
+            <a href="{% url 'add_parish' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add Parish
+            </a>
+        </div>
     </div>
 
-    {% include 'admin/adminfooter.html' %}
+    <!-- ===== SECTION TITLE (Dashboard Style) ===== -->
+    <div class="section-title">
+        <i class="fas fa-list"></i>
+        All Parishes
+        <span class="section-line"></span>
+    </div>
+
+    <!-- ===== PARISHES TABLE ===== -->
+    <div class="dashboard-card">
+        <div class="card-body">
+
+            {% if parishes %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Image</th>
+                            <th>Parish Name</th>
+                            <th>Vicar</th>
+                            <th>District</th>
+                            <th>Families</th>
+                            <th>Contact</th>
+                            <th style="width: 240px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for parish in parishes %}
+                        <tr>
+                            <!-- Image -->
+                            <td>
+                                {% if parish.image %}
+                                    <img src="{{ parish.image.url }}"
+                                         alt="{{ parish.name }}"
+                                         class="parish-image">
+                                {% else %}
+                                    <div class="parish-image-placeholder">
+                                        <i class="fas fa-church"></i>
+                                    </div>
+                                {% endif %}
+                            </td>
+
+                            <!-- Parish Name -->
+                            <td>
+                                <div class="parish-name">
+                                    {{ parish.name }}
+                                    <small>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {{ parish.location|truncatechars:40 }}
+                                    </small>
+                                </div>
+                            </td>
+
+                            <!-- Vicar -->
+                            <td>
+                                {% if parish.vicar %}
+                                    <div class="vicar-info">
+                                        {% if parish.vicar.image %}
+                                            <img src="{{ parish.vicar.image.url }}" 
+                                                 alt="{{ parish.vicar.get_full_name }}"
+                                                 class="vicar-avatar">
+                                        {% endif %}
+                                        <span class="vicar-name">
+                                            {{ parish.vicar.get_full_name }}
+                                        </span>
+                                    </div>
+                                {% elif parish.vicar_name %}
+                                    <span class="vicar-name">
+                                        {{ parish.vicar_name }}
+                                    </span>
+                                {% else %}
+                                    <span class="vicar-name">
+                                        <span class="no-vicar">
+                                            <i class="fas fa-minus"></i> No vicar
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <!-- District -->
+                            <td>
+                                <span class="info-badge district">
+                                    <i class="fas fa-city"></i>
+                                    {{ parish.district }}
+                                </span>
+                            </td>
+
+                            <!-- Families -->
+                            <td>
+                                <span class="info-badge families">
+                                    <i class="fas fa-users"></i>
+                                    {{ parish.number_of_families }}
+                                </span>
+                            </td>
+
+                            <!-- Contact -->
+                            <td>
+                                <div class="contact-info">
+                                    {% if parish.phone %}
+                                        <span class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <a href="tel:{{ parish.phone }}">{{ parish.phone }}</a>
+                                        </span>
+                                    {% else %}
+                                        <span class="contact-item text-muted">
+                                            <i class="fas fa-minus"></i> No phone
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </td>
+
+                            <!-- Actions -->
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{% url 'view_parish' parish.id %}"
+                                       class="action-btn view"
+                                       title="View Parish">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                    <a href="{% url 'edit_parish' parish.id %}"
+                                       class="action-btn edit"
+                                       title="Edit Parish">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <button type="button"
+                                            class="action-btn delete"
+                                            title="Delete Parish"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-parish-id="{{ parish.id }}"
+                                            data-parish-name="{{ parish.name }}">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Table Footer -->
+                <div class="table-footer">
+                    <span class="info-text">
+                        <i class="fas fa-info-circle"></i>
+                        Showing {{ parishes|length }} parish{{ parishes|length|pluralize }}
+                    </span>
+                    <span class="info-text">
+                        <i class="fas fa-clock"></i>
+                        {% now "M j, Y" %}
+                    </span>
+                </div>
+
+            {% else %}
+                <!-- ===== EMPTY STATE ===== -->
+                <div class="empty-state">
+                    <i class="fas fa-church"></i>
+                    <h5>No Parishes Found</h5>
+                    <p>Add your first parish to get started.</p>
+                    <a href="{% url 'add_parish' %}" class="btn-primary-custom">
+                        <i class="fas fa-plus-circle"></i>
+                        Add First Parish
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
 
 </div>
 

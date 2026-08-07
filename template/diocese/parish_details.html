@@ -1,316 +1,1245 @@
 {% load static %}
 {% include 'header.html' %}
-<style>
-    .church-detail-section{
-        margin-top: 60px;
-    }
-    .church-overview{
-    display:grid;
-    grid-template-columns:450px 1fr;
-    gap:40px;
-    background:#fff;
-    padding:30px;
-    border-radius:20px;
-    margin-bottom:40px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-  
-}
 
-.church-overview-image{
-    overflow:hidden;
-    border-radius:15px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ parish.name }} · Parish Details</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           ROOT VARIABLES
+        ======================================== */
+        :root {
+            --primary: #dd7e43;
+            --primary-dark: #c96a32;
+            --primary-light: #fdf0e8;
+            --secondary: #1a2a3a;
+            --secondary-light: #2a4564;
+            --text-dark: #0f1a2a;
+            --text-muted: #6b7a8a;
+            --text-light: #9aaab8;
+            --bg-light: #f4f7fb;
+            --bg-white: #ffffff;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+            --shadow-xl: 0 30px 80px rgba(0,0,0,0.15);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 30px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            
+            /* Social Colors */
+            --whatsapp: #25D366;
+            --facebook: #1877F2;
+            --instagram: #E4405F;
+            --youtube: #FF0000;
+            --maps: #EA4335;
+        }
 
-.church-overview-image img{
-    width:100%;
-    height:100%;
-    min-height:450px;
-    object-fit:cover;
-    display:block;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.church-overview-content h1{
-    color:#2a4564; 
-    font-size:32px;
-    margin-bottom:15px;
-}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-.church-location{
-    color:#666;
-    font-size:17px;
-    margin-bottom:25px;
-}
+        /* ========================================
+           CHURCH DETAIL SECTION
+        ======================================== */
+        .church-detail-section {
+            max-width: 1280px;
+            margin: 100px auto 60px;
+            padding: 0 24px;
+        }
 
-.church-location i{
-    color:#dd7e43;
-}
+        /* ========================================
+           HERO SECTION - VIBRANT
+        ======================================== */
+        .church-hero {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-lg);
+            background: var(--secondary);
+        }
 
-.church-overview-content h2{
-    color:#2a4564; 
-    margin-bottom:20px;
-    position:relative;
-}
+        .church-hero-bg {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+        }
 
-.church-overview-content h2::after{
-    content:'';
-    width:70px;
-    height:3px;
-    background:#dd7e43;
-    display:block;
-    margin-top:10px;
-}
+        .church-hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.church-overview-content p{
-    color:#555;
-    line-height:1.9;
-    margin-bottom:15px;
-    font-size: 13px;
-}
+        .church-hero-bg .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(26, 42, 58, 0.92) 0%, 
+                rgba(26, 42, 58, 0.6) 60%,
+                rgba(26, 42, 58, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            padding: 50px 60px;
+        }
 
-@media(max-width:992px){
+        .hero-content {
+            max-width: 700px;
+            color: #fff;
+        }
 
-    .church-overview{
-        grid-template-columns:1fr;
-    }
+        .hero-content .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(221, 126, 67, 0.4);
+        }
 
-    .church-overview-image img{
-        min-height:300px;
-    }
+        .hero-content .hero-badge i {
+            font-size: 0.9rem;
+        }
 
-    .church-overview-content h1{
-        font-size:28px;
-    }
-}
-    .church-detail-section{
-    padding:40px;
-    margin-left:70px;
-    margin-right:26px;
-    background:#f8fafc;
-}
-/* --- Church Info Cards (Grid) --- */
-.church-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-}
+        .hero-content h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
 
-.church-info-card {
-    background: #ffffff;
-    padding: 35px 25px;
-    border-radius: 20px;
-    text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+        .hero-content h1 span {
+            color: var(--primary);
+        }
 
-.church-info-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    border-color: #dd7e43;
-}
+        .hero-content .hero-location {
+            font-size: 18px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
 
-.church-info-card i {
-    font-size: 28px;
-    color: #dd7e43;
-    background: rgba(231, 101, 20, 0.1);
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
+        .hero-content .hero-location i {
+            color: var(--primary);
+            font-size: 20px;
+        }
 
-.church-info-card:hover i {
-    background: #dd7e43;
-    color: #fff;
-    transform: scale(1.1);
-}
+        .hero-content .hero-location a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 2px solid rgba(221, 126, 67, 0.3);
+            padding-bottom: 2px;
+            transition: var(--transition);
+        }
 
-.church-info-card h3 {
-    font-size: 15px;
-    color: #2a4564;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .hero-content .hero-location a:hover {
+            border-bottom-color: var(--primary);
+        }
 
-.church-info-card p {
-    font-weight: 600;
-    color: #555;
-    margin: 0;
-    font-size: 13px;
-}
+        .hero-stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
 
-/* --- Content Card --- */
-.church-content-card {
-    background: #fff;
-    padding: 40px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border-left: 5px solid #dd7e43;; /* Adds a nice accent strip */
-}
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-.church-content-card h2 {
-    color: #2a4564;
-    margin-bottom: 25px;
-    font-size: 24px;
-}
-iframe{
-    border-radius:15px;
-}
+        .hero-stat i {
+            color: var(--primary);
+            font-size: 18px;
+        }
 
-@media(max-width:992px){
+        .hero-stat span {
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-    .church-detail-section{
-        margin-left:0;
-        padding:20px;
-    }
+        .hero-stat strong {
+            font-weight: 700;
+            color: #fff;
+        }
 
-    .church-banner{
-        height:300px;
-    }
+        .hero-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
 
-    .church-header h1{
-        font-size:28px;
-    }
-}
-</style><section class="church-detail-section">
+        .hero-social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-    <div class="church-overview">
+        .hero-social-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
 
-        <!-- Church Image -->
-        <div class="church-overview-image">
+        .hero-social-btn i {
+            font-size: 1.2rem;
+        }
 
-            {% if parish.image %}
+        .hero-social-btn.whatsapp {
+            background: var(--whatsapp);
+            color: #fff;
+        }
+
+        .hero-social-btn.facebook {
+            background: var(--facebook);
+            color: #fff;
+        }
+
+        .hero-social-btn.instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+        }
+
+        .hero-social-btn.maps {
+            background: var(--maps);
+            color: #fff;
+        }
+
+        .hero-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .hero-placeholder i {
+            font-size: 80px;
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        .hero-placeholder h2 {
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        /* ========================================
+           SECTION TITLE
+        ======================================== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .section-header .line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        .section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            white-space: nowrap;
+        }
+
+        .section-header h2 i {
+            color: var(--primary);
+            font-size: 26px;
+        }
+
+        /* ========================================
+           ABOUT SECTION - FULL WIDTH
+        ======================================== */
+        .about-section-wrapper {
+            width:1250px;
+            margin-left: -75px;
+            margin-right: 10px;
+            margin-bottom: 40px;
+        }
+
+        .about-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 40px 45px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(221, 126, 67, 0.08);
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .about-section:hover {
+            box-shadow: var(--shadow-md);
+            border-color: rgba(221, 126, 67, 0.2);
+        }
+
+        .about-content {
+            color: #444;
+            line-height: 1.9;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        .about-content p {
+            margin-bottom: 12px;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ========================================
+           INFO CARDS - ATTRACTIVE GRID
+        ======================================== */
+        .info-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: var(--bg-white);
+            padding: 30px 20px 24px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: default;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card Icon */
+        .info-card .card-icon {
+            width: 72px;
+            height: 72px;
+            line-height: 72px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            font-size: 28px;
+            transition: var(--transition);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .info-card:hover .card-icon {
+            background: var(--primary);
+            color: #fff;
+            transform: scale(1.1) rotate(-8deg);
+            box-shadow: 0 8px 25px rgba(221, 126, 67, 0.3);
+        }
+
+        .info-card h3 {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .info-card p {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .info-card .empty-value {
+            color: #bbb;
+            font-weight: 400;
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        .info-card a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .info-card a:hover {
+            color: var(--primary);
+        }
+
+        /* Phone card special */
+        .info-card.phone-card p a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .info-card.phone-card p a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Location card special */
+        .info-card.location-card {
+            background: linear-gradient(135deg, #fff, #fef8f5);
+            border-color: rgba(234, 67, 53, 0.12);
+        }
+
+        .info-card.location-card .card-icon {
+            background: rgba(234, 67, 53, 0.1);
+            color: #ea4335;
+        }
+
+        .info-card.location-card:hover .card-icon {
+            background: linear-gradient(135deg, #ea4335, #c62828);
+            color: #fff;
+        }
+
+        .info-card.location-card .location-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #ea4335, #c62828);
+            color: #fff;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+        }
+
+        .info-card.location-card .location-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(234, 67, 53, 0.4);
+            color: #fff;
+        }
+
+        /* ========================================
+           MAP SECTION
+        ======================================== */
+        .map-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(221, 126, 67, 0.08);
+            transition: var(--transition);
+        }
+
+        .map-section:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .map-header {
+            padding: 22px 35px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .map-header h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .map-header h3 i {
+            color: var(--primary);
+        }
+
+        .map-header .map-address {
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-header .map-address i {
+            color: var(--primary);
+        }
+
+        .map-container {
+            position: relative;
+            padding-bottom: 45%;
+            height: 0;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .map-container .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .map-container .map-placeholder i {
+            font-size: 60px;
+            color: #cbd5e1;
+        }
+
+        .map-container .map-placeholder p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 400px;
+        }
+
+        .map-container .map-placeholder .btn-google {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #ea4335, #c62828);
+            color: #fff;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .map-container .map-placeholder .btn-google:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(234, 67, 53, 0.4);
+        }
+
+        .map-footer {
+            padding: 16px 35px;
+            background: #f8fafc;
+            border-top: 1px solid #eef2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .map-footer .directions-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .map-footer .directions-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(4px);
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 1200px) {
+            .info-cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .info-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .church-hero-bg {
+                height: 380px;
+            }
+
+            .church-hero-bg .hero-overlay {
+                padding: 40px 45px;
+            }
+
+            .hero-content h1 {
+                font-size: 38px;
+            }
+
+            .map-container {
+                padding-bottom: 55%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .church-detail-section {
+                margin: 80px auto 40px;
+                padding: 0 16px;
+            }
+
+            .church-hero-bg {
+                height: 340px;
+            }
+
+            .church-hero-bg .hero-overlay {
+                padding: 30px 30px;
+                align-items: flex-end;
+            }
+
+            .hero-content h1 {
+                font-size: 30px;
+            }
+
+            .hero-content .hero-location {
+                font-size: 15px;
+            }
+
+            .hero-stats {
+                gap: 10px;
+            }
+
+            .hero-stat {
+                padding: 6px 16px;
+                font-size: 12px;
+            }
+
+            .hero-stat i {
+                font-size: 14px;
+            }
+
+            .hero-social-btn {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+
+            .hero-social-btn i {
+                font-size: 1rem;
+            }
+
+            .info-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .info-card {
+                padding: 22px 14px 18px;
+            }
+
+            .info-card .card-icon {
+                width: 60px;
+                height: 60px;
+                line-height: 60px;
+                font-size: 22px;
+            }
+
+            .info-card h3 {
+                font-size: 10px;
+            }
+
+            .info-card p {
+                font-size: 13px;
+            }
+
+            .about-section {
+                padding: 28px 24px;
+            }
+
+            .about-content {
+                font-size: 14px;
+            }
+
+            .section-header h2 {
+                font-size: 22px;
+            }
+
+            .section-header h2 i {
+                font-size: 20px;
+            }
+
+            .map-header {
+                padding: 16px 22px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .map-header h3 {
+                font-size: 17px;
+            }
+
+            .map-header .map-address {
+                font-size: 13px;
+            }
+
+            .map-container {
+                padding-bottom: 65%;
+            }
+
+            .map-footer {
+                padding: 14px 22px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .church-detail-section {
+                margin: 70px auto 30px;
+                padding: 0 12px;
+            }
+
+            .church-hero-bg {
+                height: 300px;
+            }
+
+            .church-hero-bg .hero-overlay {
+                padding: 20px 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 24px;
+            }
+
+            .hero-content .hero-badge {
+                font-size: 0.65rem;
+                padding: 5px 14px;
+                margin-bottom: 12px;
+            }
+
+            .hero-content .hero-location {
+                font-size: 13px;
+                flex-wrap: wrap;
+            }
+
+            .hero-stats {
+                gap: 6px;
+            }
+
+            .hero-stat {
+                padding: 4px 12px;
+                font-size: 11px;
+            }
+
+            .hero-stat i {
+                font-size: 12px;
+            }
+
+            .hero-social {
+                gap: 8px;
+            }
+
+            .hero-social-btn {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
+
+            .hero-social-btn i {
+                font-size: 0.8rem;
+            }
+
+            .info-cards-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .info-card {
+                padding: 16px 10px 14px;
+            }
+
+            .info-card .card-icon {
+                width: 48px;
+                height: 48px;
+                line-height: 48px;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            .info-card h3 {
+                font-size: 9px;
+                letter-spacing: 0.5px;
+            }
+
+            .info-card p {
+                font-size: 12px;
+            }
+
+            .info-card.location-card .location-btn {
+                font-size: 0.7rem;
+                padding: 5px 14px;
+            }
+
+            .about-section {
+                padding: 18px 16px;
+            }
+
+            .about-content {
+                font-size: 13px;
+            }
+
+            .section-header h2 {
+                font-size: 18px;
+            }
+
+            .section-header h2 i {
+                font-size: 16px;
+            }
+
+            .map-header {
+                padding: 14px 16px;
+            }
+
+            .map-header h3 {
+                font-size: 15px;
+            }
+
+            .map-header .map-address {
+                font-size: 12px;
+            }
+
+            .map-container {
+                padding-bottom: 75%;
+            }
+
+            .map-footer {
+                padding: 10px 16px;
+            }
+
+            .map-footer .directions-link {
+                font-size: 0.8rem;
+            }
+
+            .hero-placeholder {
+                height: 300px;
+            }
+
+            .hero-placeholder i {
+                font-size: 50px;
+            }
+
+            .hero-placeholder h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========================================
+   CHURCH DETAIL SECTION
+======================================== -->
+<section class="church-detail-section">
+
+    <!-- ===== HERO SECTION ===== -->
+    <div class="church-hero">
+        {% if parish.image %}
+            <div class="church-hero-bg">
                 <img src="{{ parish.image.url }}" alt="{{ parish.name }}">
-            {% else %}
-                <img src="{% static 'images/churchdio.jpeg' %}" alt="{{ parish.name }}">
-            {% endif %}
+                <div class="hero-overlay">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-church"></i>
+                            {{ parish.district }} · Established {{ parish.established_year }}
+                        </div>
+                        <h1>{{ parish.name }}</h1>
+                        <p class="hero-location">
+                            <i class="fas fa-location-dot"></i>
+                            {% if parish.map_url %}
+                                <a href="{{ parish.map_url }}" target="_blank">
+                                    {{ parish.location }}
+                                    <i class="fas fa-external-link-alt" style="font-size: 12px; margin-left: 4px;"></i>
+                                </a>
+                            {% else %}
+                                {{ parish.location }}
+                            {% endif %}
+                        </p>
 
-        </div>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <i class="fas fa-users"></i>
+                                <span><strong>{{ parish.number_of_families }}</strong> Families</span>
+                            </div>
+                            <div class="hero-stat">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Est. <strong>{{ parish.established_year }}</strong></span>
+                            </div>
+                            {% if parish.phone %}
+                            <div class="hero-stat">
+                                <i class="fas fa-phone"></i>
+                                <span><a href="tel:{{ parish.phone }}" style="color:inherit;text-decoration:none;">{{ parish.phone }}</a></span>
+                            </div>
+                            {% endif %}
+                        </div>
 
-        <!-- Church Details -->
-        <div class="church-overview-content">
+                        <!-- Social Media Buttons -->
+                        <div class="hero-social">
+                            {% if parish.whatsapp_number %}
+                                <a href="https://wa.me/{{ parish.whatsapp_number|cut:'+' }}" 
+                                   target="_blank" 
+                                   class="hero-social-btn whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                    WhatsApp
+                                </a>
+                            {% endif %}
 
-            <h1>{{ parish.name }}</h1>
+                            {% if parish.get_facebook_url %}
+                                <a href="{{ parish.get_facebook_url }}" 
+                                   target="_blank" 
+                                   class="hero-social-btn facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                    Facebook
+                                </a>
+                            {% endif %}
 
-            <p class="church-location">
-                <i class="fas fa-location-dot"></i>
-                {{ parish.location }}
-            </p>
+                            {% if parish.get_instagram_url %}
+                                <a href="{{ parish.get_instagram_url }}" 
+                                   target="_blank" 
+                                   class="hero-social-btn instagram">
+                                    <i class="fab fa-instagram"></i>
+                                    Instagram
+                                </a>
+                            {% endif %}
 
-            <h2>Church History</h2>
-
-            <div class="church-description">
-                {{ parish.description|safe }}
+                            {% if parish.map_url %}
+                                <a href="{{ parish.map_url }}" 
+                                   target="_blank" 
+                                   class="hero-social-btn maps">
+                                    <i class="fas fa-directions"></i>
+                                    Directions
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        </div>
-
+        {% else %}
+            <div class="hero-placeholder">
+                <i class="fas fa-church"></i>
+                <h2>{{ parish.name }}</h2>
+                <p style="opacity: 0.7; font-size: 16px;">{{ parish.district }} · Established {{ parish.established_year }}</p>
+            </div>
+        {% endif %}
     </div>
 
-    <!-- Information Cards -->
-    <div class="church-info-grid">
+    <!-- ===== ABOUT SECTION - FULL WIDTH ===== -->
+    {% if parish.description %}
+    <div class="about-section-wrapper">
+        <div class="about-section">
+            <div class="section-header">
+                <h2><i class="fas fa-scroll"></i> About the Parish</h2>
+                <div class="line"></div>
+            </div>
+            <div class="about-content">
+                {{ parish.description|safe }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
-        <div class="church-info-card">
-            <i class="fas fa-user-tie"></i>
+    <!-- ===== INFO CARDS ===== -->
+    <div class="info-cards-grid">
+
+        <!-- Vicar -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
             <h3>Vicar</h3>
             <p>
                 {% if parish.vicar %}
                     {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
                 {% else %}
-                    Not Assigned
+                    <span class="empty-value">Not Assigned</span>
                 {% endif %}
             </p>
         </div>
 
-        <div class="church-info-card">
-            <i class="fas fa-user-friends"></i>
+        <!-- Assistant Vicar -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-user-friends"></i></div>
             <h3>Assistant Vicar</h3>
             <p>
                 {% if parish.assistant_vicar %}
                     {{ parish.assistant_vicar.first_name }}
                     {{ parish.assistant_vicar.last_name }}
                 {% else %}
-                    Not Assigned
+                    <span class="empty-value">Not Assigned</span>
                 {% endif %}
             </p>
         </div>
 
-        <div class="church-info-card">
-            <i class="fas fa-users"></i>
+        <!-- Trustee -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-handshake"></i></div>
             <h3>Trustee</h3>
-            <p>{{ parish.trustee }}</p>
+            <p>
+                {% if parish.trustee %}
+                    {{ parish.trustee }}
+                {% else %}
+                    <span class="empty-value">Not specified</span>
+                {% endif %}
+            </p>
         </div>
-        <div class="church-info-card">
-            <i class="fas fa-users"></i>
+
+        <!-- Secretary -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-user-secret"></i></div>
             <h3>Secretary</h3>
-            <p>{{ parish.secretary }}</p>
+            <p>
+                {% if parish.secretary %}
+                    {{ parish.secretary }}
+                {% else %}
+                    <span class="empty-value">Not specified</span>
+                {% endif %}
+            </p>
         </div>
-        <div class="church-info-card">
-            <i class="fas fa-house-user"></i>
+
+        <!-- Families -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-house-user"></i></div>
             <h3>Families</h3>
-            <p>{{ parish.number_of_families }}</p>
+            <p><strong>{{ parish.number_of_families }}</strong></p>
         </div>
 
-        <div class="church-info-card">
-            <i class="fas fa-calendar-alt"></i>
-            <h3>Established</h3>
-            <p>{{ parish.established_year }}</p>
+        <!-- District -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-city"></i></div>
+            <h3>District</h3>
+            <p>{{ parish.district }}</p>
         </div>
 
-        <div class="church-info-card">
-            <i class="fas fa-phone"></i>
+        <!-- Phone -->
+        <div class="info-card phone-card">
+            <div class="card-icon"><i class="fas fa-phone"></i></div>
             <h3>Phone</h3>
-            <p>{{ parish.phone }}</p>
+            <p>
+                {% if parish.phone %}
+                    <a href="tel:{{ parish.phone }}">{{ parish.phone }}</a>
+                {% else %}
+                    <span class="empty-value">Not specified</span>
+                {% endif %}
+            </p>
         </div>
-        
-  {% if parish.map_url %}
-    <a href="{{ parish.map_url }}" target="_blank" style="text-decoration: none; color: inherit; display: block;">
-        <div class="church-info-card">
-            <i class="fas fa-map-marker-alt"></i>
+
+        <!-- Location -->
+        <!-- <div class="info-card location-card">
+            <div class="card-icon"><i class="fas fa-map-marker-alt"></i></div>
             <h3>Location</h3>
             <p>{{ parish.location }}</p>
+            {% if parish.map_url %}
+                <a href="{{ parish.map_url }}" target="_blank" class="location-btn">
+                    <i class="fas fa-directions"></i> Get Directions
+                </a>
+            {% endif %}
+        </div> -->
+
+    </div>
+
+    <!-- ===== MAP SECTION ===== -->
+    <!-- {% if parish.map_url %}
+    <div class="map-section">
+        <div class="map-header">
+            <h3>
+                <i class="fas fa-map-marked-alt"></i>
+                Church Location
+            </h3>
+            <span class="map-address">
+                <i class="fas fa-location-dot"></i>
+                {{ parish.location }}
+            </span>
         </div>
-    </a>
-{% else %}
-    <div class="church-info-card">
-        <i class="fas fa-map-marker-alt"></i>
-        <h3>Location</h3>
-        <p>{{ parish.location }}</p>
+        
+        <div class="map-container">
+            <iframe
+                src="{{ parish.map_url }}"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <div class="map-footer">
+            <span style="color: var(--text-muted); font-size: 14px;">
+                <i class="fas fa-info-circle"></i> Click the map to explore
+            </span>
+            <a href="{{ parish.map_url }}" target="_blank" class="directions-link">
+                <i class="fas fa-external-link-alt"></i>
+                Open in Google Maps
+                <i class="fas fa-arrow-right" style="font-size: 12px;"></i>
+            </a>
+        </div>
     </div>
-{% endif %}
-
-    </div>
-
-    <!-- Google Map
-   {% if parish.map_url %}
-<div class="church-content-card">
-
-    <h2 class="mb-3">
-        <i class="fas fa-map-marker-alt"></i>
-        Church Location
-    </h2>
-
-    <div class="text-center">
-        <a href="{{ parish.map_url }}" target="_blank" class="btn btn-danger">
-            <i class="fas fa-map-marked-alt"></i> Open in Google Maps
-        </a>
-    </div>
-
-</div>
-{% endif %} -->
+    {% endif %} -->
 
 </section>
 </div>
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
+<!-- ========================================
+   SCRIPTS
+======================================== -->
 <script>
-const toggleBtn = document.getElementById('sidebarToggleBtn');
+    // Sidebar toggle functionality
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    const sidebar = document.getElementById('sidebarPanel');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add('open');
+        if (overlay) overlay.classList.add('active');
+        if (toggleBtn) toggleBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove('open');
+        if (overlay) overlay.classList.remove('active');
+        if (toggleBtn) toggleBtn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (sidebar && sidebar.classList.contains('open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+
+    // Dropdown menu toggle
+    document.querySelectorAll(".menu-link").forEach(link => {
+        link.addEventListener("click", function () {
+            const dropdown = this.parentElement;
+            document.querySelectorAll(".dropdown").forEach(item => {
+                if (item !== dropdown) {
+                    item.classList.remove("active");
+                }
+            });
+            dropdown.classList.toggle("active");
+        });
+    });
+</script>
+
+
+
+
+<!-- JAVASCRIPT -->
+<script>const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
 const overlay = document.getElementById('sidebarOverlay');
 
@@ -328,8 +1257,9 @@ function closeSidebar() {
     document.body.style.overflow = '';
 }
 
-toggleBtn.addEventListener('click', (e) => {
+toggleBtn.addEventListener('click', function (e) {
     e.stopPropagation();
+
     if (sidebar.classList.contains('open')) {
         closeSidebar();
     } else {
@@ -337,9 +1267,22 @@ toggleBtn.addEventListener('click', (e) => {
     }
 });
 
+// Overlay click
 overlay.addEventListener('click', closeSidebar);
 
-document.addEventListener('keydown', (e) => {
+// Click outside sidebar
+document.addEventListener('click', function (e) {
+    if (
+        sidebar.classList.contains('open') &&
+        !sidebar.contains(e.target) &&
+        !toggleBtn.contains(e.target)
+    ) {
+        closeSidebar();
+    }
+});
+
+// ESC key
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && sidebar.classList.contains('open')) {
         closeSidebar();
     }

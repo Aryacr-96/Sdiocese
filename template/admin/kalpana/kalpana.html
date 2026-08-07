@@ -11,35 +11,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ========================================
+           DASHBOARD MATCHING STYLES
+        ======================================== */
         :root {
-            --bg-main: #f4f7fb;
+            --bg-main: #f0f4f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --primary: #e76514;
-            --primary-hover: #c9500f;
-            --primary-light: #fef3ee;
-            --success: #16a34a;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #eef2ff;
+            --success: #22c55e;
             --success-light: #dcfce7;
             --warning: #f59e0b;
             --warning-light: #fef3c7;
             --danger: #dc2626;
             --danger-light: #fef2f2;
             --danger-hover: #b91c1c;
-            --info: #0891b2;
-            --info-light: #cffafe;
+            --info: #06b6d4;
+            --info-light: #ecfeff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
-            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
-            --radius-lg: 20px;
-            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card-hover: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+            --radius-lg: 14px;
+            --radius-md: 10px;
             --radius-pill: 9999px;
         }
 
@@ -53,80 +52,111 @@
             background-color: var(--bg-main);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
+        /* Content wrapper - matches dashboard */
         .content-wrapper {
-            flex: 1;
             max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            width: 100%;
+            margin: 0 auto !important;
+            padding: 16px 24px 40px !important;
+            background: #f0f4f9;
+            min-height: calc(100vh - 70px);
+            padding-top: 16px !important;
         }
 
-        /* ----- Page Header ----- */
-        .content-header {
+        /* Override any margin from header */
+        .wrapper .content-wrapper {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-top: 16px !important;
+            margin-top: -10px !important;
+        }
+
+        /* ----- Page Header (Dashboard Style) ----- */
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--card-bg);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
         }
-        .content-header h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
+
+        .page-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-header .header-left .greeting-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .page-header .header-left h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .page-header .header-left h1 small {
+            font-weight: 400;
+            font-size: 14px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0;
+        }
+
+        .page-header .header-right {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 0;
         }
-        .content-header h1 i {
-            color: var(--primary);
-            font-size: 1.6rem;
-        }
-        .content-header .header-stats {
-            display: flex;
-            gap: 1.2rem;
-            align-items: center;
-        }
-        .content-header .header-stats .stat-badge {
-            background: var(--primary-light);
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
+
+        .page-header .header-right .stat-badge {
+            font-size: 13px;
+            color: #64748b;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .page-header .header-right .stat-badge i {
+            color: #6366f1;
         }
 
         .btn-primary-custom {
-            background: var(--primary);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
             border-radius: var(--radius-pill);
-            padding: 0.6rem 2rem;
+            padding: 0.6rem 1.8rem;
             font-weight: 600;
             font-size: 0.9rem;
             color: #ffffff;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(231, 101, 20, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -134,76 +164,74 @@
             cursor: pointer;
         }
         .btn-primary-custom:hover {
-            background: var(--primary-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(231, 101, 20, 0.4);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
             color: #ffffff;
         }
+        .btn-primary-custom i {
+            font-size: 0.9rem;
+        }
 
-        /* ----- Card ----- */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            margin-bottom: 2rem;
-        }
-        .card:hover {
-            box-shadow: var(--shadow-card-hover);
-        }
-        .card .card-header {
-            background: #f8fafc;
-            padding: 1.2rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-        .card .card-header .card-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        /* ----- Section Title (Dashboard Style) ----- */
+        .section-title {
+            font-size: 17px;
             font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text-main);
+            color: #0f172a;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 0;
-        }
-        .card .card-header .card-title i {
-            color: var(--primary);
-        }
-        .card .card-body {
-            padding: 2rem;
         }
 
-        /* ----- Kalpana Grid ----- */
+        .section-title i {
+            color: #6366f1;
+        }
+
+        .section-title .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* ----- Kalpana Grid (Dashboard Style) ----- */
         .kalpana-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
         }
 
-        /* ----- Kalpana Card ----- */
+        /* ----- Kalpana Card (Dashboard Style) ----- */
         .kalpana-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
             padding: 1.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
         .kalpana-card:hover {
-            box-shadow: var(--shadow-card-hover);
             transform: translateY(-4px);
-            border-color: var(--primary);
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+        }
+
+        .kalpana-card .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            background: #eef2ff;
+            color: #6366f1;
         }
 
         .kalpana-card .card-top {
@@ -218,23 +246,23 @@
         }
 
         .kalpana-card .card-title-section h3 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: var(--text-main);
+            color: #0f172a;
             margin: 0 0 4px 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .kalpana-card .card-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
             margin: 4px 0 0 0;
         }
 
         .kalpana-card .card-meta .meta-item {
             font-size: 0.75rem;
-            color: var(--text-muted);
+            color: #64748b;
             background: #f1f5f9;
             padding: 3px 10px;
             border-radius: var(--radius-pill);
@@ -245,12 +273,13 @@
 
         .kalpana-card .card-meta .meta-item i {
             font-size: 0.7rem;
+            color: #6366f1;
         }
 
         .kalpana-card .card-description {
             font-size: 0.9rem;
             color: #475569;
-            margin: 4px 0 0 0;
+            margin: 0;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -263,12 +292,12 @@
             gap: 6px;
             margin-top: 6px;
             padding-top: 12px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #e2e8f0;
             flex-wrap: wrap;
         }
 
         .kalpana-card .card-actions .btn-sm {
-            padding: 0.35rem 0.9rem;
+            padding: 0.35rem 1rem;
             border-radius: var(--radius-pill);
             font-size: 0.75rem;
             font-weight: 600;
@@ -282,98 +311,177 @@
         }
 
         .kalpana-card .card-actions .btn-edit {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: #fef3c7;
+            color: #b45309;
         }
 
         .kalpana-card .card-actions .btn-edit:hover {
-            background: #dbeafe;
+            background: #b45309;
+            color: #ffffff;
             transform: translateY(-1px);
         }
 
         .kalpana-card .card-actions .btn-delete {
-            background: var(--danger-light);
-            color: var(--danger);
+            background: #fef2f2;
+            color: #dc2626;
         }
 
         .kalpana-card .card-actions .btn-delete:hover {
-            background: #fecaca;
+            background: #dc2626;
+            color: #ffffff;
             transform: translateY(-1px);
         }
 
-        /* ----- Empty State ----- */
+        /* ----- Empty State (Dashboard Style) ----- */
         .empty-state {
             grid-column: 1 / -1;
             text-align: center;
             padding: 4rem 2rem;
-            background: #f8fafc;
-            border-radius: var(--radius-md);
-            border: 2px dashed var(--border-color);
+            background: white;
+            border-radius: 14px;
+            border: 2px dashed #e2e8f0;
         }
 
         .empty-state i {
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: #cbd5e1;
             display: block;
             margin-bottom: 1rem;
         }
 
-        .empty-state h3 {
-            color: var(--text-main);
-            font-size: 1.3rem;
+        .empty-state h5 {
             font-weight: 700;
+            font-size: 1.3rem;
+            color: #0f172a;
             margin-bottom: 0.5rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         .empty-state p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: #64748b;
+            font-size: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .empty-state .btn-add-empty {
-            background: var(--primary);
-            color: #fff;
-            padding: 0.7rem 2rem;
-            border-radius: var(--radius-pill);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
+        /* ----- Responsive (Dashboard Style) ----- */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .page-header .header-left h1 {
+                font-size: 20px;
+            }
+            .page-header .header-left h1 small {
+                font-size: 13px;
+            }
+            .page-header .header-right {
+                width: 100%;
+            }
+            .kalpana-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
         }
 
-        .empty-state .btn-add-empty:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(231, 101, 20, 0.3);
-            color: #fff;
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
+            }
+            .page-header .header-left .greeting-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+            .kalpana-grid {
+                grid-template-columns: 1fr;
+            }
+            .kalpana-card .card-title-section h3 {
+                font-size: 1rem;
+            }
+            .kalpana-card .card-meta .meta-item {
+                font-size: 0.7rem;
+                padding: 2px 8px;
+            }
+            .kalpana-card .card-actions .btn-sm {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.8rem;
+            }
         }
 
-        /* ===== Modal ===== */
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 10px 12px 24px !important;
+                padding-top: 10px !important;
+            }
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+            .page-header .header-left .greeting-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            .btn-primary-custom {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .btn-primary-custom i {
+                font-size: 0.8rem;
+            }
+            .kalpana-card {
+                padding: 1.2rem;
+            }
+            .kalpana-card .card-title-section h3 {
+                font-size: 0.95rem;
+            }
+            .empty-state {
+                padding: 2.5rem 1.5rem;
+            }
+            .empty-state i {
+                font-size: 3rem;
+            }
+            .empty-state h5 {
+                font-size: 1.1rem;
+            }
+            .empty-state p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ===== DELETE MODAL (Dashboard Style) ===== */
         .modal-content {
-            border-radius: var(--radius-lg);
-            border: none;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
         }
         .modal-header {
-            border-bottom: 2px solid var(--danger-light);
+            border-bottom: 2px solid #fef2f2;
             padding: 1.5rem 2rem;
         }
         .modal-header .modal-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 12px;
+            color: #0f172a;
         }
         .modal-header .modal-title i {
-            color: var(--danger);
+            color: #dc2626;
+        }
+        .modal-header .btn-close {
+            transition: all 0.2s ease;
+        }
+        .modal-header .btn-close:hover {
+            transform: rotate(90deg);
         }
         .modal-body {
             padding: 2rem;
@@ -383,7 +491,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: var(--danger-light);
+            background: #fef2f2;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -391,18 +499,17 @@
         }
         .modal-body .delete-icon-wrapper i {
             font-size: 2.5rem;
-            color: var(--danger);
+            color: #dc2626;
         }
         .modal-body h5 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
-            color: var(--text-main);
+            color: #0f172a;
             font-size: 1.1rem;
         }
         .modal-body .entry-name-display {
             font-weight: 700;
-            color: var(--danger);
-            background: var(--danger-light);
+            color: #dc2626;
+            background: #fef2f2;
             padding: 0.3rem 1.5rem;
             border-radius: var(--radius-pill);
             display: inline-block;
@@ -410,13 +517,13 @@
             margin-top: 0.5rem;
         }
         .modal-body p {
-            color: var(--text-muted);
+            color: #64748b;
             font-size: 0.95rem;
             margin-bottom: 0;
             margin-top: 0.8rem;
         }
         .modal-footer {
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #e2e8f0;
             padding: 1.2rem 2rem;
             gap: 12px;
             justify-content: center;
@@ -431,197 +538,115 @@
         .modal-footer .btn-secondary {
             background: #e2e8f0;
             border: none;
-            color: var(--text-main);
+            color: #0f172a;
         }
         .modal-footer .btn-secondary:hover {
             background: #cbd5e1;
             transform: translateY(-1px);
         }
         .modal-footer .btn-danger {
-            background: var(--danger);
+            background: #dc2626;
             border: none;
             color: #ffffff;
         }
         .modal-footer .btn-danger:hover {
-            background: var(--danger-hover);
+            background: #b91c1c;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 992px) {
-            .content-wrapper {
-                padding: 0 1.5rem;
-                margin: 1.5rem auto;
-            }
-            .kalpana-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                padding: 0 1rem;
-                margin: 1rem auto;
-            }
-            .content-header {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 1rem 1.2rem;
-            }
-            .content-header .header-stats {
-                width: 100%;
-                justify-content: space-between;
-            }
-            .content-header h1 {
-                font-size: 1.3rem;
-            }
-            .kalpana-grid {
-                grid-template-columns: 1fr;
-            }
-            .modal-body .delete-icon-wrapper {
-                width: 60px;
-                height: 60px;
-            }
-            .modal-body .delete-icon-wrapper i {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .content-wrapper {
-                padding: 0 0.8rem;
-                margin: 0.8rem auto;
-            }
-            .content-header h1 {
-                font-size: 1.1rem;
-            }
-            .content-header h1 i {
-                font-size: 1.2rem;
-            }
-            .content-header .header-stats .stat-badge {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.8rem;
-            }
-            .btn-primary-custom {
-                padding: 0.5rem 1.2rem;
-                font-size: 0.8rem;
-            }
-            .btn-primary-custom i {
-                font-size: 0.8rem;
-            }
-            .kalpana-card .card-title-section h3 {
-                font-size: 1rem;
-            }
-            .kalpana-card .card-meta .meta-item {
-                font-size: 0.65rem;
-                padding: 2px 8px;
-            }
-            .kalpana-card .card-actions .btn-sm {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.7rem;
-            }
-            .modal-body {
-                padding: 1.5rem;
-            }
-            .modal-footer .btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 1.2rem;
-            }
-            .empty-state {
-                padding: 2.5rem 1.5rem;
-            }
-            .empty-state i {
-                font-size: 2.5rem;
-            }
-            .empty-state h3 {
-                font-size: 1.1rem;
-            }
         }
     </style>
 </head>
 <body>
-<div class="app-wrapper">
 
-    <div class="content-wrapper">
+<!-- ========================================
+     CONTENT WRAPPER (Dashboard Style)
+======================================== -->
+<div class="content-wrapper">
 
-        <!-- ===== PAGE HEADER ===== -->
-        <section class="content-header">
+    <!-- ===== PAGE HEADER (Dashboard Style) ===== -->
+    <div class="page-header">
+        <div class="header-left">
+            <div class="greeting-icon">
+                <i class="fas fa-scroll"></i>
+            </div>
             <div>
                 <h1>
-                    <i class="fas fa-scroll"></i>
                     Kalpana
+                    <small>Manage Kalpana documents, notices and publications</small>
                 </h1>
             </div>
-            <div class="header-stats">
-                <span class="stat-badge">
-                    <i class="fas fa-list"></i>
-                    {{ kalpanas|length|default:0 }} Kalpana{{ kalpanas|length|pluralize }}
-                </span>
-                <a href="{% url 'kalpana_create' %}" class="btn-primary-custom">
-                    <i class="fas fa-plus-circle"></i>
-                    Add New Kalpana
-                </a>
-            </div>
-        </section>
-
-        <!-- ========================================
-             KALPANA GRID
-        ======================================== -->
-        <div class="kalpana-grid" id="kalpanaGrid">
-            
-            {% if kalpanas %}
-                {% for kalpana in kalpanas %}
-                    <div class="kalpana-card" data-title="{{ kalpana.title }}" data-slug="{{ kalpana.slug }}">
-                        <div class="card-top">
-                            <div class="card-title-section">
-                                <h3>{{ kalpana.title }}</h3>
-                                <div class="card-meta">
-                                    <!-- <span class="meta-item">
-                                        <i class="fas fa-file-alt"></i> 
-                                        {{ kalpana.files|length|default:0 }} document{{ kalpana.files|length|pluralize }}
-                                    </span> -->
-                                    <span class="meta-item">
-                                        <i class="far fa-calendar-alt"></i> 
-                                        {{ kalpana.created_at|date:"M d, Y" }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-actions">
-                            <a href="{% url 'kalpana_update' kalpana.slug %}" class="btn-sm btn-edit" title="Edit Kalpana">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <button type="button" 
-                                    class="btn-sm btn-delete delete-btn" 
-                                    data-slug="{{ kalpana.slug }}"
-                                    data-title="{{ kalpana.title }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal"
-                                    title="Delete Kalpana">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </button>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <!-- Empty state -->
-                <div class="empty-state">
-                    <i class="fas fa-scroll"></i>
-                    <h3>No Kalpana Found</h3>
-                    <p>Start by creating your first Kalpana entry.</p>
-                    <a href="{% url 'kalpana_create' %}" class="btn-add-empty">
-                        <i class="fas fa-plus"></i> Create First Kalpana
-                    </a>
-                </div>
-            {% endif %}
-            
+        </div>
+        <div class="header-right">
+            <span class="stat-badge">
+                <i class="fas fa-list"></i>
+                {{ kalpanas|length|default:0 }} Kalpana{{ kalpanas|length|pluralize }}
+            </span>
+            <a href="{% url 'kalpana_create' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add New Kalpana
+            </a>
         </div>
     </div>
 
-    {% include 'admin/adminfooter.html' %}
+    <!-- ===== SECTION TITLE (Dashboard Style) ===== -->
+    <div class="section-title">
+        <i class="fas fa-list"></i>
+        All Kalpana
+        <span class="section-line"></span>
+    </div>
 
+    <!-- ========================================
+         KALPANA GRID
+    ======================================== -->
+    <div class="kalpana-grid" id="kalpanaGrid">
+        
+        {% if kalpanas %}
+            {% for kalpana in kalpanas %}
+                <div class="kalpana-card" data-title="{{ kalpana.title }}" data-slug="{{ kalpana.slug }}">
+                    <div class="card-top">
+                        <div class="card-title-section">
+                            <div class="card-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3>{{ kalpana.title }}</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="far fa-calendar-alt"></i> 
+                                    {{ kalpana.created_at|date:"M d, Y" }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="{% url 'kalpana_update' kalpana.slug %}" class="btn-sm btn-edit" title="Edit Kalpana">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <button type="button" 
+                                class="btn-sm btn-delete delete-btn" 
+                                data-slug="{{ kalpana.slug }}"
+                                data-title="{{ kalpana.title }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteModal"
+                                title="Delete Kalpana">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Empty state -->
+            <div class="empty-state">
+                <i class="fas fa-scroll"></i>
+                <h5>No Kalpana Found</h5>
+                <p>Start by creating your first Kalpana entry.</p>
+                <a href="{% url 'kalpana_create' %}" class="btn-primary-custom">
+                    <i class="fas fa-plus-circle"></i> Create First Kalpana
+                </a>
+            </div>
+        {% endif %}
+        
+    </div>
 </div>
 
 <!-- ===== DELETE CONFIRMATION MODAL ===== -->
@@ -664,18 +689,21 @@
 <script>
 // ===== DELETE MODAL HANDLER =====
 document.addEventListener('DOMContentLoaded', function() {
-    const deleteButtons = document.querySelectorAll('.delete-btn');
     const modalEntryName = document.getElementById('modalEntryName');
     const deleteForm = document.getElementById('deleteForm');
+    const deleteModal = document.getElementById('deleteModal');
     
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const entrySlug = this.getAttribute('data-slug');
-            const entryTitle = this.getAttribute('data-title');
-            modalEntryName.textContent = entryTitle;
-            deleteForm.action = "{% url 'kalpana_delete' 'slug-placeholder' %}".replace('slug-placeholder', entrySlug);
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            if (button) {
+                const entrySlug = button.getAttribute('data-slug');
+                const entryTitle = button.getAttribute('data-title');
+                modalEntryName.textContent = entryTitle;
+                deleteForm.action = "{% url 'kalpana_delete' 'slug-placeholder' %}".replace('slug-placeholder', entrySlug);
+            }
         });
-    });
+    }
 });
 </script>
 

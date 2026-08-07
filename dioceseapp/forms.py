@@ -11,116 +11,11 @@ class adminform(forms.Form):
 # ========================================
 # PRIEST FORM - FIXED
 # ========================================
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import Priest
+
 class PriestForm(forms.ModelForm):
-
-    description = forms.CharField(
-        widget=CKEditorUploadingWidget(attrs={
-            'class': 'form-control-modern',
-            'style': 'width: 100%; min-height: 150px;',
-        }),
-        label='',
-        required=False
-    )
-
-
-    pastoral_experience = forms.CharField(
-        widget=CKEditorUploadingWidget(attrs={
-            'class': 'form-control-modern',
-            'style': 'width: 100%; min-height: 200px;',
-        }),
-        label='Pastoral Experience',
-        required=False
-    )
-
-
-    class Meta:
-        model = Priest
-        fields = "__all__"
-
-        labels = {
-            'description': '',
-            'pastoral_experience': 'Pastoral Experience',
-        }
-
-
-        widgets = {
-
-            "ordained_on": forms.DateInput(
-                attrs={
-                    "type": "date",
-                    "class": "form-control-modern"
-                }
-            ),
-
-            "retired_on": forms.DateInput(
-                attrs={
-                    "type": "date",
-                    "class": "form-control-modern"
-                }
-            ),
-
-
-            "first_name": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'Enter first name',
-            }),
-
-
-            "last_name": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'Enter last name',
-            }),
-
-
-            "slug": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'Auto-generated from name',
-                'readonly': True,
-            }),
-
-
-            "position": forms.Select(attrs={
-                'class': 'form-control-modern',
-            }),
-
-
-            "home_parish": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'Enter home parish',
-            }),
-
-
-            "blood_group": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'e.g., A+, O-',
-            }),
-
-
-            "address": forms.Textarea(attrs={
-                'class': 'form-control-modern',
-                'rows': 3,
-                'placeholder': 'Enter residential or office address',
-            }),
-
-
-            "phone": forms.TextInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'e.g., +1234567890',
-            }),
-
-
-            "email": forms.EmailInput(attrs={
-                'class': 'form-control-modern',
-                'placeholder': 'priest@example.com',
-            }),
-
-
-            "image": forms.FileInput(attrs={
-                'class': 'form-control-modern',
-            }),
-        }
-class ParishForm(forms.ModelForm):
-
     description = forms.CharField(
         widget=CKEditorUploadingWidget(attrs={
             'class': 'form-control-modern',
@@ -128,6 +23,80 @@ class ParishForm(forms.ModelForm):
         }),
         label='',
         required=False,
+    )
+    
+    pastoral_experience = forms.CharField(
+        widget=CKEditorUploadingWidget(attrs={
+            'class': 'form-control-modern',
+            'style': 'width: 100%; min-height: 150px;',
+        }),
+        label='',
+        required=False,
+    )
+
+    class Meta:
+        model = Priest
+        fields = [
+            'first_name', 'last_name', 'position', 'home_parish',
+            'blood_group', 'ordained_on', 'retired_on',
+            'pastoral_experience', 'address', 'phone', 'email',
+            'image', 'description'
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter first name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter last name'}),
+            'home_parish': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter home parish'}),
+            'position': forms.Select(attrs={'class': 'form-control-modern'}),
+            'blood_group': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'e.g., A+, O-'}),
+            'ordained_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
+            'retired_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
+            'address': forms.Textarea(attrs={'class': 'form-control-modern', 'rows': 3, 'placeholder': 'Enter address'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'e.g., +1234567890'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control-modern', 'placeholder': 'priest@example.com'}),
+        }
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import Parish, Priest
+import re
+from django.db import models
+# Add this import at the top of forms.py if not already there
+import re
+from django.core.validators import RegexValidator
+import re
+from django import forms
+from django.core.validators import RegexValidator
+from .models import Parish, Priest
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+class ParishForm(forms.ModelForm):
+    description = forms.CharField(
+        widget=CKEditorUploadingWidget(attrs={
+            'class': 'form-control-modern',
+            'style': 'width: 100%; min-height: 150px;',
+            'placeholder': 'Enter a brief description or history of the parish...'  # <-- Added placeholder
+        }),
+        label='',
+        required=False,
+    )
+
+    # Phone field with validation
+    phone = forms.CharField(
+        required=False,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{10}$',
+                message='Phone number must be exactly 10 digits.',
+                code='invalid_phone'
+            )
+        ],
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-modern',
+            'placeholder': 'Enter 10 digit phone number',
+            'maxlength': '10',
+            'pattern': '\d{10}',
+            'title': 'Please enter exactly 10 digits'
+        })
     )
 
     class Meta:
@@ -142,6 +111,11 @@ class ParishForm(forms.ModelForm):
             'established_year',
             'district',
             'phone',
+            'whatsapp_number',
+            'facebook_id',
+            'facebook_url',
+            'instagram_id',
+            'instagram_url',
             'trustee',
             'secretary',
             'number_of_families',
@@ -149,36 +123,351 @@ class ParishForm(forms.ModelForm):
         ]
 
         labels = {
+            'name': 'Parish Name',
+            'image': 'Parish Image',
+            'location': 'Location',
+            'map_url': 'Google Maps URL',
+            'vicar': 'Vicar',
+            'assistant_vicar': 'Assistant Vicar',
+            'established_year': 'Established Year',
+            'district': 'District',
+            'phone': 'Phone Number',
+            'whatsapp_number': 'WhatsApp Number',
+            'facebook_id': 'Facebook ID/Username',
+            'facebook_url': 'Facebook Page URL (Optional)',
+            'instagram_id': 'Instagram Username',
+            'instagram_url': 'Instagram Profile URL (Optional)',
+            'trustee': 'Trustee',
+            'secretary': 'Secretary',
+            'number_of_families': 'Number of Families',
             'description': '',
         }
 
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control-modern',
+                'placeholder': 'Enter parish name',
             }),
-
+            'location': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter location',
+            }),
+            'map_url': forms.URLInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'https://maps.google.com/...',
+            }),
             'vicar': forms.Select(attrs={
                 'class': 'form-control-modern',
             }),
-
             'assistant_vicar': forms.Select(attrs={
                 'class': 'form-control-modern',
             }),
+            'established_year': forms.NumberInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'e.g., 1950',
+            }),
+            'district': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter district',
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter 10 digit phone number',
+                'maxlength': '10',
+                'pattern': '\d{10}',
+                'title': 'Please enter exactly 10 digits'
+            }),
+            'whatsapp_number': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'e.g., +1234567890',
+            }),
+            'facebook_id': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'e.g., parishname or 123456789',
+            }),
+            'facebook_url': forms.URLInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'https://www.facebook.com/yourpage (optional)',
+            }),
+            'instagram_id': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'e.g., parishname (without @)',
+            }),
+            'instagram_url': forms.URLInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'https://www.instagram.com/yourpage/ (optional)',
+            }),
+            'trustee': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter trustee name',
+            }),
+            'secretary': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter secretary name',
+            }),
+            'number_of_families': forms.NumberInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': '0',
+            }),
         }
 
+        help_texts = {
+            'phone': 'Enter exactly 10 digits (e.g., 9876543210)',
+            'whatsapp_number': 'Include country code (e.g., +1234567890)',
+            'facebook_id': 'Can be page ID (numbers) or username',
+            'instagram_id': 'Username without the @ symbol',
+            'facebook_url': 'Leave blank to auto-generate from ID',
+            'instagram_url': 'Leave blank to auto-generate from username',
+            'map_url': 'Paste the Google Maps share link',
+        }
 
-    # ADD THIS PART
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Show priests in dropdown
-        self.fields['vicar'].queryset = Priest.objects.all()
-
-        self.fields['assistant_vicar'].queryset = Priest.objects.all()
+        # ========================================
+        # FILTER PRIESTS - Show ONLY active priests
+        # Exclude retired_priest and seminary_student
+        # Also exclude already assigned priests
+        # ========================================
+        
+        # Get the current instance (for edit mode)
+        instance = kwargs.get('instance')
+        
+        # Get all parishes to check which priests are already assigned
+        all_parishes = Parish.objects.all()
+        
+        # Get IDs of priests already assigned as vicar or assistant vicar
+        assigned_vicar_ids = []
+        assigned_assistant_vicar_ids = []
+        
+        # If editing, exclude the current parish from the check
+        if instance and instance.pk:
+            parishes_to_check = all_parishes.exclude(pk=instance.pk)
+        else:
+            parishes_to_check = all_parishes
+        
+        # Collect IDs of priests already assigned as vicar
+        assigned_vicar_ids = list(
+            parishes_to_check.filter(vicar__isnull=False).values_list('vicar_id', flat=True)
+        )
+        
+        # Collect IDs of priests already assigned as assistant vicar
+        assigned_assistant_vicar_ids = list(
+            parishes_to_check.filter(assistant_vicar__isnull=False).values_list('assistant_vicar_id', flat=True)
+        )
+        
+        # Base queryset: Only show priests with position='priest'
+        priest_queryset = Priest.objects.filter(position='priest')
+        
+        # Exclude priests already assigned as vicar (for vicar dropdown)
+        vicar_queryset = priest_queryset.exclude(id__in=assigned_vicar_ids)
+        
+        # For assistant vicar dropdown:
+        # Exclude priests already assigned as vicar OR assistant vicar
+        # But also exclude priests who are vicars in other parishes
+        all_assigned_ids = list(set(assigned_vicar_ids + assigned_assistant_vicar_ids))
+        assistant_vicar_queryset = priest_queryset.exclude(id__in=all_assigned_ids)
+        
+        # ========================================
+        # HANDLE EDIT MODE - Include current selection
+        # ========================================
+        
+        # For Vicar field - Include current vicar if editing
+        if instance and instance.pk and instance.vicar:
+            # Add the current vicar to queryset even if they are assigned elsewhere
+            vicar_queryset = vicar_queryset | Priest.objects.filter(id=instance.vicar.id)
+            
+            # Also ensure current vicar is included in assistant vicar queryset
+            # if they are not the same person
+            if instance.assistant_vicar and instance.assistant_vicar.id != instance.vicar.id:
+                assistant_vicar_queryset = assistant_vicar_queryset | Priest.objects.filter(id=instance.assistant_vicar.id)
+        
+        # For Assistant Vicar field - Include current assistant vicar if editing
+        if instance and instance.pk and instance.assistant_vicar:
+            # Add the current assistant vicar to queryset
+            assistant_vicar_queryset = assistant_vicar_queryset | Priest.objects.filter(id=instance.assistant_vicar.id)
+        
+        # Remove duplicates and order by name
+        vicar_queryset = vicar_queryset.distinct().order_by('first_name', 'last_name')
+        assistant_vicar_queryset = assistant_vicar_queryset.distinct().order_by('first_name', 'last_name')
+        
+        # Set the filtered querysets
+        self.fields['vicar'].queryset = vicar_queryset
+        self.fields['assistant_vicar'].queryset = assistant_vicar_queryset
 
         self.fields['vicar'].empty_label = "Select Vicar"
-
         self.fields['assistant_vicar'].empty_label = "Select Assistant Vicar"
+
+        # Make fields not required
+        optional_fields = [
+            'whatsapp_number', 'facebook_id', 'facebook_url', 
+            'instagram_id', 'instagram_url', 'image', 'map_url',
+            'phone', 'trustee', 'secretary', 'description'
+        ]
+        for field in optional_fields:
+            self.fields[field].required = False
+
+        # Set default for number_of_families
+        self.fields['number_of_families'].required = False
+        if not self.instance.pk:  # If new instance
+            self.fields['number_of_families'].initial = 0
+
+        # Exclude current vicar from assistant dropdown in edit mode
+        if instance and instance.pk and instance.vicar:
+            self.fields['assistant_vicar'].queryset = assistant_vicar_queryset.exclude(
+                id=instance.vicar.id
+            )
+
+    # ========================================
+    # CLEAN METHODS - Validation
+    # ========================================
+    
+    def clean_name(self):
+        """Validate and clean parish name"""
+        name = self.cleaned_data.get('name')
+        if name:
+            name = name.strip()
+            if len(name) < 3:
+                raise forms.ValidationError("Parish name must be at least 3 characters long.")
+        return name
+
+    def clean_established_year(self):
+        """Validate established year"""
+        year = self.cleaned_data.get('established_year')
+        if year:
+            from datetime import datetime
+            current_year = datetime.now().year
+            if year < 1000 or year > current_year:
+                raise forms.ValidationError(f"Established year must be between 1000 and {current_year}.")
+        return year
+
+    def clean_phone(self):
+        """Clean phone number - only allow 10 digits"""
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            # Remove any non-digit characters
+            cleaned = re.sub(r'[^0-9]', '', phone)
+            if cleaned:
+                if len(cleaned) != 10:
+                    raise forms.ValidationError("Phone number must be exactly 10 digits.")
+                return cleaned
+        return phone
+
+    def clean_whatsapp_number(self):
+        """Clean and validate WhatsApp number"""
+        whatsapp = self.cleaned_data.get('whatsapp_number')
+        if whatsapp:
+            # Remove spaces and special characters except +
+            cleaned = re.sub(r'[^0-9+]', '', whatsapp.strip())
+            if not cleaned:
+                raise forms.ValidationError("Invalid WhatsApp number.")
+            if not cleaned.startswith('+'):
+                cleaned = '+' + cleaned
+            if len(cleaned) < 10:
+                raise forms.ValidationError("WhatsApp number must be at least 10 digits including country code.")
+            return cleaned
+        return whatsapp
+
+    def clean_instagram_id(self):
+        """Clean Instagram username"""
+        instagram = self.cleaned_data.get('instagram_id')
+        if instagram:
+            cleaned = instagram.strip().lstrip('@').rstrip('/')
+            if len(cleaned) < 2:
+                raise forms.ValidationError("Instagram username must be at least 2 characters.")
+            return cleaned
+        return instagram
+
+    def clean_facebook_id(self):
+        """Clean Facebook ID/username"""
+        facebook = self.cleaned_data.get('facebook_id')
+        if facebook:
+            facebook = facebook.strip().rstrip('/')
+            # If it's a full URL, extract the ID/username
+            if 'facebook.com' in facebook:
+                match = re.search(r'facebook\.com/(?:profile\.php\?id=)?([^/?&]+)', facebook)
+                if match:
+                    return match.group(1)
+            # If it's a profile.php? id= format
+            elif 'profile.php' in facebook:
+                match = re.search(r'profile\.php\?id=([^&]+)', facebook)
+                if match:
+                    return match.group(1)
+            return facebook
+        return facebook
+
+    def clean_map_url(self):
+        """Clean Google Maps URL"""
+        url = self.cleaned_data.get('map_url')
+        if url:
+            url = url.strip()
+            # Remove pb parameter if present
+            if '?pb=' in url:
+                url = url.split('?pb=')[0]
+            elif '&pb=' in url:
+                url = url.split('&pb=')[0]
+            # Remove trailing ? or &
+            url = re.sub(r'[&?]+$', '', url)
+            return url
+        return url
+
+    def clean_district(self):
+        """Clean district name"""
+        district = self.cleaned_data.get('district')
+        if district:
+            district = district.strip()
+            if len(district) < 2:
+                raise forms.ValidationError("District name must be at least 2 characters.")
+            return district.title()
+        return district
+
+    def clean(self):
+        """Cross-field validation"""
+        cleaned_data = super().clean()
+        
+        # Validate that vicar and assistant_vicar are not the same person
+        vicar = cleaned_data.get('vicar')
+        assistant_vicar = cleaned_data.get('assistant_vicar')
+        if vicar and assistant_vicar and vicar.id == assistant_vicar.id:
+            self.add_error('assistant_vicar', 'Assistant Vicar cannot be the same as Vicar.')
+        
+        # WhatsApp validation
+        whatsapp = cleaned_data.get('whatsapp_number')
+        if whatsapp and not re.match(r'^\+?[0-9]{10,15}$', re.sub(r'[^0-9+]', '', whatsapp)):
+            self.add_error('whatsapp_number', 'Please enter a valid WhatsApp number with country code.')
+        
+        return cleaned_data
+
+    # ========================================
+    # SAVE METHOD - Ensure slug is generated
+    # ========================================
+    
+    def save(self, commit=True):
+        """Override save to ensure slug is generated"""
+        instance = super().save(commit=False)
+        
+        # Generate slug if not exists
+        if not instance.slug or instance.slug == '':
+            from django.utils.text import slugify
+            base_slug = slugify(instance.name)
+            slug = base_slug
+            counter = 1
+            while Parish.objects.filter(slug=slug).exclude(pk=instance.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            instance.slug = slug
+        
+        # Auto-set vicar_name
+        if instance.vicar:
+            instance.vicar_name = f"{instance.vicar.first_name} {instance.vicar.last_name}"
+        elif not instance.vicar and not instance.vicar_name:
+            instance.vicar_name = "No vicar assigned"
+        
+        if commit:
+            instance.save()
+            self.save_m2m()  # Save many-to-many relationships if any
+        
+        return instance
 # ========================================
 # CONTACT FORM
 # ========================================
@@ -206,11 +495,10 @@ class ContactForm(forms.ModelForm):
                 'placeholder': 'Enter your prayer request'
             }),
         }
-
 # forms.py
 from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
-from .models import Spiritual, Officebearer, SpiritualOfficeBearer
+from .models import Spiritual, Officebearer, SpiritualOfficeBearer, Coordinator, SpiritualCoordinator, Designation
 
 # ============================================
 # SPIRITUAL FORM
@@ -245,12 +533,10 @@ class SpiritualForm(forms.ModelForm):
                 raise forms.ValidationError("A spiritual category with this title already exists.")
         return title
 
-# forms.py
 
-from django import forms
-from .models import Officebearer
-
-
+# ============================================
+# OFFICE BEARER FORM
+# ============================================
 class OfficebearerForm(forms.ModelForm):
     """
     Form for creating/editing Office Bearers (used in office bearer management)
@@ -264,7 +550,6 @@ class OfficebearerForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter full name'
             }),
-            # ✅ Changed from TextInput to Select
             'designation': forms.Select(attrs={
                 'class': 'form-control'
             }),
@@ -296,12 +581,63 @@ class OfficebearerForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Set the queryset for designation dropdown
-        from .models import Designation
         self.fields['designation'].queryset = Designation.objects.all().order_by('name')
         self.fields['designation'].empty_label = "-- Select Designation --"
         self.fields['designation'].required = False
         self.fields['designation'].help_text = "Select an official designation for this office bearer"
+
+
+# ============================================
+# COORDINATOR FORM
+# ============================================
+class CoordinatorForm(forms.ModelForm):
+    """
+    Form for creating/editing Coordinators
+    """
+    
+    class Meta:
+        model = Coordinator
+        fields = ['name', 'designation', 'image', 'phone', 'email', 'district']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter coordinator name'
+            }),
+            'designation': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter 10-digit phone number'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter email address'
+            }),
+            'district': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter district'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+        }
+
+    def clean_phone(self):
+        """Validate phone number format"""
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise forms.ValidationError("Phone number must contain only digits.")
+        if phone and len(phone) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
+        return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['designation'].queryset = Designation.objects.all().order_by('name')
+        self.fields['designation'].empty_label = "-- Select Designation --"
+        self.fields['designation'].required = False
+        self.fields['designation'].help_text = "Select an official designation for this coordinator"
 
 
 # ============================================
@@ -330,27 +666,28 @@ class SpiritualOfficeBearerForm(forms.ModelForm):
 
 
 # ============================================
-# INLINE FORMSETS
+# SPIRITUAL COORDINATOR FORM (For inline formset)
 # ============================================
-# Formset for editing spiritual office bearer associations
-SpiritualOfficeBearerFormSet = inlineformset_factory(
-    Spiritual,
-    SpiritualOfficeBearer,
-    form=SpiritualOfficeBearerForm,
-    fields=['officebearer'],
-    extra=0,  # We handle this manually in the template
-    can_delete=True,
-    min_num=0,
-    validate_min=False,
-)
+class SpiritualCoordinatorForm(forms.ModelForm):
+    """
+    Form for associating coordinators with spiritual categories
+    """
+    coordinator = forms.ModelChoiceField(
+        queryset=Coordinator.objects.all().order_by('name'),
+        required=False,
+        label="Select Existing Coordinator",
+        widget=forms.Select(attrs={
+            'class': 'form-control coordinator-select',
+        })
+    )
+    
+    class Meta:
+        model = SpiritualCoordinator
+        fields = ['coordinator']
 
-# Formset for editing office bearers (used in office bearer management)
-OfficebearerFormSet = modelformset_factory(
-    Officebearer,
-    form=OfficebearerForm,
-    extra=1,
-    can_delete=True,
-)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['coordinator'].empty_label = "-- Search or select existing --"
 
 
 # ============================================
@@ -367,17 +704,13 @@ class NewOfficeBearerForm(forms.ModelForm):
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter full name',
-                'required': False
             }),
-            'designation': forms.TextInput(attrs={
+            'designation': forms.Select(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter designation',
-                'required': False
             }),
             'phone': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter 10-digit phone number',
-                'required': False
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -392,83 +725,162 @@ class NewOfficeBearerForm(forms.ModelForm):
             }),
         }
 
+    def clean_phone(self):
+        """Validate phone number format"""
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise forms.ValidationError("Phone number must contain only digits.")
+        if phone and len(phone) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
+        return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['designation'].queryset = Designation.objects.all().order_by('name')
+        self.fields['designation'].empty_label = "-- Select Designation --"
+        self.fields['designation'].required = False
+
     def clean(self):
-        """Validate that name is provided"""
+        """Validate that name is provided if this form is being used"""
         cleaned_data = super().clean()
         name = cleaned_data.get('name')
-        if not name:
-            # If no name provided, this form is empty and should be ignored
-            # We'll handle this in the view
-            pass
+        # If no name provided, this form is empty and should be ignored
         return cleaned_data
 
 
 # ============================================
-# NEW OFFICE BEARER FORMSET
+# NEW COORDINATOR FORM (For creating from spiritual form)
 # ============================================
+class NewCoordinatorForm(forms.ModelForm):
+    """
+    Form for creating new coordinators on the fly from the spiritual form
+    """
+    class Meta:
+        model = Coordinator
+        fields = ['name', 'designation', 'phone', 'email', 'district', 'image']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter coordinator name',
+            }),
+            'designation': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter 10-digit phone number',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter email address'
+            }),
+            'district': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter district'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+        }
+
+    def clean_phone(self):
+        """Validate phone number format"""
+        phone = self.cleaned_data.get('phone')
+        if phone and not phone.isdigit():
+            raise forms.ValidationError("Phone number must contain only digits.")
+        if phone and len(phone) != 10:
+            raise forms.ValidationError("Phone number must be exactly 10 digits.")
+        return phone
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['designation'].queryset = Designation.objects.all().order_by('name')
+        self.fields['designation'].empty_label = "-- Select Designation --"
+        self.fields['designation'].required = False
+
+    def clean(self):
+        """Validate that name is provided if this form is being used"""
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        # If no name provided, this form is empty and should be ignored
+        return cleaned_data
+
+
+# ============================================
+# INLINE FORMSETS
+# ============================================
+# Formset for editing spiritual office bearer associations
+SpiritualOfficeBearerFormSet = inlineformset_factory(
+    Spiritual,
+    SpiritualOfficeBearer,
+    form=SpiritualOfficeBearerForm,
+    fields=['officebearer'],
+    extra=0,
+    can_delete=True,
+    min_num=0,
+    validate_min=False,
+)
+
+# Formset for editing spiritual coordinator associations
+SpiritualCoordinatorFormSet = inlineformset_factory(
+    Spiritual,
+    SpiritualCoordinator,
+    form=SpiritualCoordinatorForm,
+    fields=['coordinator'],
+    extra=0,
+    can_delete=True,
+    min_num=0,
+    validate_min=False,
+)
+
+# Formset for editing office bearers (used in office bearer management)
+OfficebearerFormSet = modelformset_factory(
+    Officebearer,
+    form=OfficebearerForm,
+    extra=1,
+    can_delete=True,
+)
+
+# Formset for editing coordinators (used in coordinator management)
+CoordinatorFormSet = modelformset_factory(
+    Coordinator,
+    form=CoordinatorForm,
+    extra=1,
+    can_delete=True,
+)
+
+# Formset for new office bearers (from spiritual form)
 NewOfficeBearerFormSet = modelformset_factory(
     Officebearer,
     form=NewOfficeBearerForm,
-    extra=0,  # We handle dynamically in template
+    extra=0,
+    can_delete=False,
+    can_order=False,
+)
+
+# Formset for new coordinators (from spiritual form)
+NewCoordinatorFormSet = modelformset_factory(
+    Coordinator,
+    form=NewCoordinatorForm,
+    extra=0,
     can_delete=False,
     can_order=False,
 )
 
 
+# ============================================
+# DESIGNATION FORM
+# ============================================
 class DesignationForm(forms.ModelForm):
-
     class Meta:
         model = Designation
         fields = ['name']
-
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter designation name'
             }),
         }
-
-
-
-# ============================================
-# COORDINATOR FORM (With FK to Designation)
-# ============================================
-class CoordinatorForm(forms.ModelForm):
-    """
-    Form for creating/editing Coordinators with designation dropdown
-    """
-    # ✅ Designation as ModelChoiceField (Dropdown)
-    designation = forms.ModelChoiceField(
-        queryset=Designation.objects.all().order_by('name'),
-        empty_label="-- Select Designation --",
-        required=False,
-        widget=forms.Select(attrs={
-            'class': 'form-control'
-        }),
-        help_text="Select an official designation for this coordinator"
-    )
-    
-    class Meta:
-        model = Coordinator
-        fields = ['spiritual', 'name', 'designation', 'district', 'phone']
-        widgets = {
-            'spiritual': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            'name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter coordinator name'
-            }),
-            'district': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter district'
-            }),
-            'phone': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter 10-digit phone number'
-            }),
-        }
-
 
         # forms.py
 from django import forms
@@ -675,10 +1087,7 @@ class PublicationForm(forms.ModelForm):
                 raise forms.ValidationError("Image size must be under 20MB.")
         return image
 
-
-
-#GALLERYfrom django import forms
-from .models import Gallery
+# forms.py
 from django import forms
 from .models import Gallery
 
@@ -720,6 +1129,22 @@ class GalleryForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Get the instance if it exists (for edit mode)
+        instance = kwargs.get('instance')
+        
+        # Make image field NOT required initially
+        self.fields['image'].required = False
+        
+        # If it's a new item (no instance), set default media type
+        if not instance:
+            self.fields['media_type'].initial = 'image'
+        
+        # If it's an existing item with an image, don't require a new image
+        if instance and instance.image:
+            self.fields['image'].required = False
+
     def clean(self):
         cleaned_data = super().clean()
         media_type = cleaned_data.get('media_type')
@@ -727,14 +1152,40 @@ class GalleryForm(forms.ModelForm):
         video_url = cleaned_data.get('video_url')
         video_file = cleaned_data.get('video_file')
         video_embed_code = cleaned_data.get('video_embed_code')
+        
+        # Get the instance to check if it exists
+        instance = getattr(self, 'instance', None)
 
         if media_type == 'image':
+            # For image type, we need either a new image or an existing one
             if not image:
-                self.add_error('image', 'An image file is required when media type is Image.')
+                # Check if the instance already has an image (edit mode)
+                if instance and instance.image:
+                    # Keep the existing image - no error
+                    pass
+                else:
+                    # No image provided and no existing image (new item)
+                    self.add_error('image', 'An image file is required when media type is Image.')
+            else:
+                # A new image was uploaded, validate it
+                if image:
+                    allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+                    extension = image.name.split('.')[-1].lower()
+                    if extension not in allowed_extensions:
+                        self.add_error('image', 'Only JPG, JPEG, PNG, GIF, and WebP images are allowed.')
+                    if image.size > 20 * 1024 * 1024:
+                        self.add_error('image', 'Image size must be under 20MB.')
 
         elif media_type == 'video':
             # At least one of video_url, video_file, or video_embed_code must be provided
-            if not video_url and not video_file and not video_embed_code:
+            has_video_source = video_url or video_file or video_embed_code
+            
+            # Check if instance already has video sources (edit mode)
+            has_existing_video = False
+            if instance:
+                has_existing_video = instance.video_url or instance.video_file or instance.video_embed_code
+            
+            if not has_video_source and not has_existing_video:
                 self.add_error('video_url', 'Please provide a video URL, upload a video file, or paste embed code.')
             
             # If video_url is provided, validate it
@@ -743,6 +1194,15 @@ class GalleryForm(forms.ModelForm):
                 url_pattern = r'^https?://[^\s]+$'
                 if not re.match(url_pattern, video_url):
                     self.add_error('video_url', 'Please enter a valid URL.')
+            
+            # Validate video file if uploaded
+            if video_file:
+                allowed_extensions = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv']
+                extension = video_file.name.split('.')[-1].lower()
+                if extension not in allowed_extensions:
+                    self.add_error('video_file', 'Only MP4, WebM, OGG, MOV, AVI, and MKV files are allowed.')
+                if video_file.size > 200 * 1024 * 1024:
+                    self.add_error('video_file', 'Video file size must be under 200MB.')
 
         return cleaned_data
 
@@ -755,7 +1215,6 @@ class GalleryForm(forms.ModelForm):
                 raise forms.ValidationError(
                     "Only MP4, WebM, OGG, MOV, AVI, and MKV files are allowed."
                 )
-            # Limit to 200MB
             if video_file.size > 200 * 1024 * 1024:
                 raise forms.ValidationError("Video file size must be under 200MB.")
         return video_file

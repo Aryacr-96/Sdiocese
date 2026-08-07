@@ -365,6 +365,33 @@
             margin-right: 4px;
         }
 
+        /* Social media preview badges */
+        .social-icon-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 6px;
+        }
+        .social-icon-preview.whatsapp {
+            background: #25D366;
+            color: #fff;
+        }
+        .social-icon-preview.facebook {
+            background: #1877F2;
+            color: #fff;
+        }
+        .social-icon-preview.instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #fff;
+        }
+        .social-icon-preview i {
+            font-size: 0.9rem;
+        }
+
         /* Image preview */
         .image-preview-modern {
             display: none;
@@ -435,6 +462,40 @@
             margin: 0;
             color: #64748b;
         }
+        .map-preview-modern .map-link-button {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            background: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .map-preview-modern .map-link-button i {
+            font-size: 2.5rem;
+            color: #4f46e5;
+        }
+        .map-preview-modern .map-link-button .btn-map-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #fff;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-preview-modern .map-link-button .btn-map-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            color: #fff;
+        }
 
         /* HIDE DESCRIPTION LABEL - FIX */
         .form-group-modern label[for="id_description"] {
@@ -503,6 +564,39 @@
             .file-upload-area-modern {
                 padding: 1.2rem;
                 min-height: 100px;
+            }
+            .map-preview-modern iframe,
+            .map-preview-modern .map-placeholder,
+            .map-preview-modern .map-link-button {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header-custom .header-title h1 {
+                font-size: 1.2rem;
+            }
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+            .section-heading-modern {
+                font-size: 0.9rem;
+            }
+            .btn-primary-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            .btn-outline-modern {
+                padding: 0.6rem 1.8rem;
+                font-size: 0.85rem;
+            }
+            select.form-control-modern-django {
+                padding-right: 2rem !important;
+                background-position: right 0.8rem center !important;
+                background-size: 10px !important;
+            }
+            .content-header-custom .breadcrumb-custom {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -733,6 +827,105 @@
                                 </div>
 
                                 <!-- ========================================
+                                   SOCIAL MEDIA SECTION - NEW
+                                ======================================== -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-share-alt"></i> Social Media &amp; Digital Presence
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.whatsapp_number.id_for_label }}">
+                                                <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp Number
+                                            </label>
+                                            {{ form.whatsapp_number }}
+                                            {% if form.whatsapp_number.errors %}
+                                            <ul class="errorlist-modern">{{ form.whatsapp_number.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Include country code (e.g., +1234567890)
+                                            </div>
+                                            <div id="whatsappPreview" class="social-icon-preview whatsapp" style="display:none;">
+                                                <i class="fab fa-whatsapp"></i>
+                                                <span id="whatsappDisplay">+1234567890</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.facebook_id.id_for_label }}">
+                                                <i class="fab fa-facebook" style="color:#1877F2;"></i> Facebook ID / Username
+                                            </label>
+                                            {{ form.facebook_id }}
+                                            {% if form.facebook_id.errors %}
+                                            <ul class="errorlist-modern">{{ form.facebook_id.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Page ID (numbers) or username (e.g., parishname)
+                                            </div>
+                                            <div id="facebookPreview" class="social-icon-preview facebook" style="display:none;">
+                                                <i class="fab fa-facebook"></i>
+                                                <span id="facebookDisplay">parishname</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.facebook_url.id_for_label }}">
+                                                <i class="fas fa-link"></i> Facebook Page URL (Optional)
+                                            </label>
+                                            {{ form.facebook_url }}
+                                            {% if form.facebook_url.errors %}
+                                            <ul class="errorlist-modern">{{ form.facebook_url.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Full URL (leave blank to auto-generate from ID)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.instagram_id.id_for_label }}">
+                                                <i class="fab fa-instagram" style="color:#bc1888;"></i> Instagram Username
+                                            </label>
+                                            {{ form.instagram_id }}
+                                            {% if form.instagram_id.errors %}
+                                            <ul class="errorlist-modern">{{ form.instagram_id.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Username without @ (e.g., parishname)
+                                            </div>
+                                            <div id="instagramPreview" class="social-icon-preview instagram" style="display:none;">
+                                                <i class="fab fa-instagram"></i>
+                                                <span id="instagramDisplay">parishname</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+                                            <label for="{{ form.instagram_url.id_for_label }}">
+                                                <i class="fas fa-link"></i> Instagram Profile URL (Optional)
+                                            </label>
+                                            {{ form.instagram_url }}
+                                            {% if form.instagram_url.errors %}
+                                            <ul class="errorlist-modern">{{ form.instagram_url.errors }}</ul>
+                                            {% endif %}
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i> Full URL (leave blank to auto-generate from username)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ========================================
                                    DESCRIPTION - FIXED
                                 ======================================== -->
                                 <div class="section-heading-modern">
@@ -836,17 +1029,14 @@
                                 <!-- ========================================
                                    FORM ACTIONS
                                 ======================================== -->
-                              <div class="card-footer-modern">
-
-    <a href="{% url 'admin_parishes' %}" class="btn-outline-modern">
-        <i class="fas fa-times"></i> Cancel
-    </a>
-
-    <button type="submit" class="btn-primary-modern">
-        <i class="fas fa-save"></i> Update Parish
-    </button>
-
-</div>
+                                <div class="card-footer-modern">
+                                    <a href="{% url 'admin_parishes' %}" class="btn-outline-modern">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn-primary-modern">
+                                        <i class="fas fa-save"></i> Update Parish
+                                    </button>
+                                </div>
 
                             </form>
 
@@ -925,6 +1115,65 @@
             }, 100);
         }
 
+        // ===== SOCIAL MEDIA PREVIEWS =====
+        function updateSocialPreviews() {
+            // WhatsApp
+            const whatsappInput = document.getElementById('id_whatsapp_number');
+            const whatsappPreview = document.getElementById('whatsappPreview');
+            const whatsappDisplay = document.getElementById('whatsappDisplay');
+            if (whatsappInput && whatsappPreview && whatsappDisplay) {
+                const val = whatsappInput.value.trim();
+                if (val) {
+                    whatsappDisplay.textContent = val;
+                    whatsappPreview.style.display = 'inline-flex';
+                } else {
+                    whatsappPreview.style.display = 'none';
+                }
+            }
+
+            // Facebook
+            const facebookInput = document.getElementById('id_facebook_id');
+            const facebookPreview = document.getElementById('facebookPreview');
+            const facebookDisplay = document.getElementById('facebookDisplay');
+            if (facebookInput && facebookPreview && facebookDisplay) {
+                const val = facebookInput.value.trim();
+                if (val) {
+                    facebookDisplay.textContent = val;
+                    facebookPreview.style.display = 'inline-flex';
+                } else {
+                    facebookPreview.style.display = 'none';
+                }
+            }
+
+            // Instagram
+            const instagramInput = document.getElementById('id_instagram_id');
+            const instagramPreview = document.getElementById('instagramPreview');
+            const instagramDisplay = document.getElementById('instagramDisplay');
+            if (instagramInput && instagramPreview && instagramDisplay) {
+                const val = instagramInput.value.trim();
+                if (val) {
+                    instagramDisplay.textContent = val.replace('@', '');
+                    instagramPreview.style.display = 'inline-flex';
+                } else {
+                    instagramPreview.style.display = 'none';
+                }
+            }
+        }
+
+        // Add event listeners for social media previews
+        document.addEventListener('DOMContentLoaded', function() {
+            const socialInputs = ['id_whatsapp_number', 'id_facebook_id', 'id_instagram_id'];
+            socialInputs.forEach(function(id) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updateSocialPreviews);
+                    el.addEventListener('change', updateSocialPreviews);
+                }
+            });
+            // Initial update with delay to ensure fields are populated
+            setTimeout(updateSocialPreviews, 300);
+        });
+
         // ===== MAP PREVIEW =====
         const mapUrlInput = document.getElementById('id_map_url');
         const mapPreview = document.getElementById('mapPreview');
@@ -950,7 +1199,8 @@
             const isValidGoogleMaps = (
                 url.includes('google.com/maps') || 
                 url.includes('maps.app.goo.gl') || 
-                url.includes('goo.gl/maps')
+                url.includes('goo.gl/maps') ||
+                url.includes('embed/v1/')
             );
             
             if (!isValidGoogleMaps) {
@@ -974,13 +1224,17 @@
             
             if (cleanUrl.includes('maps.app.goo.gl') || cleanUrl.includes('goo.gl/maps')) {
                 mapPreview.innerHTML = `
-                    <div class="map-placeholder">
-                        <i class="fas fa-external-link-alt" style="color:#4f46e5;"></i>
+                    <div class="map-link-button">
+                        <i class="fas fa-external-link-alt"></i>
                         <p><strong>Google Maps Shortened URL</strong></p>
-                        <small class="text-muted">Shortened URLs cannot be embedded directly.</small>
-                        <a href="${cleanUrl}" target="_blank" style="display:inline-block;margin-top:8px;padding:0.5rem 1.5rem;background:linear-gradient(135deg,#4f46e5,#6366f1);border:none;border-radius:50px;font-weight:600;font-size:0.85rem;color:#fff;text-decoration:none;">
+                        <p class="small text-muted">Shortened URLs cannot be embedded directly.</p>
+                        <a href="${cleanUrl}" target="_blank" class="btn-map-modern">
                             <i class="fas fa-map-marked-alt"></i> Open in Google Maps
                         </a>
+                        <p class="small text-muted">
+                            <i class="fas fa-lightbulb" style="color:#f59e0b;"></i>
+                            Tip: Use "Share" → "Embed a map" for an embeddable URL.
+                        </p>
                     </div>
                 `;
                 return;

@@ -687,61 +687,55 @@
             }
         }
 
-
-
-
-
-
-
-          .file-upload-area.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        border-color: #ccc !important;
-        background: #f8fafc;
-    }
-    
-    .file-upload-area.disabled:hover {
-        border-color: #ccc !important;
-        background: #f8fafc;
-    }
-    
-    .file-upload-area.disabled .file-upload-area p {
-        color: #94a3b8;
-    }
-    
-    .file-info {
-        margin-top: 8px;
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        color: #94a3b8;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-    }
-    
-    .file-info i {
-        font-size: 16px;
-        color: #94a3b8;
-    }
-    
-    .file-info.has-file {
-        color: #16a34a;
-        border-color: #86efac;
-        background: #f0fdf4;
-    }
-    
-    .file-info.has-file i {
-        color: #16a34a;
-    }
-    
-    .file-info.disabled {
-        color: #94a3b8;
-        border-color: #e2e8f0;
-        background: #f1f5f9;
-    }
+        .file-upload-area.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ccc !important;
+            background: #f8fafc;
+        }
+        
+        .file-upload-area.disabled:hover {
+            border-color: #ccc !important;
+            background: #f8fafc;
+        }
+        
+        .file-upload-area.disabled .file-upload-area p {
+            color: #94a3b8;
+        }
+        
+        .file-info {
+            margin-top: 8px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .file-info i {
+            font-size: 16px;
+            color: #94a3b8;
+        }
+        
+        .file-info.has-file {
+            color: #16a34a;
+            border-color: #86efac;
+            background: #f0fdf4;
+        }
+        
+        .file-info.has-file i {
+            color: #16a34a;
+        }
+        
+        .file-info.disabled {
+            color: #94a3b8;
+            border-color: #e2e8f0;
+            background: #f1f5f9;
+        }
     </style>
 </head>
 <body>
@@ -879,85 +873,67 @@
                         </div>
 
                         <!-- ====== VIDEO FIELDS ====== -->
-                      <div class="media-fields video-fields" id="videoFields">
-    <div class="section-heading">
-        <i class="fas fa-video"></i> Video
-        <span class="line-spacer"></span>
-    </div>
+                        <div class="media-fields video-fields" id="videoFields">
+                            <div class="section-heading">
+                                <i class="fas fa-video"></i> Video
+                                <span class="line-spacer"></span>
+                            </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="{{ form.video_url.id_for_label }}">
-                    <i class="fas fa-link"></i> Video URL
-                </label>
-                {{ form.video_url }}
-                {% if form.video_url.errors %}
-                <ul class="errorlist">{{ form.video_url.errors }}</ul>
-                {% endif %}
-                <div class="help-text">
-                    <i class="fas fa-info-circle"></i> YouTube, Vimeo, or other video platform URL
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="{{ form.video_file.id_for_label }}">
-                    <i class="fas fa-upload"></i> Local Video File
-                </label>
-                <div class="file-upload-area" id="videoDropZone">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p><strong>Click to upload</strong> or drag and drop</p>
-                    <small>MP4, WebM, OGG</small>
-                    {{ form.video_file }}
-                </div>
-                {% if form.video_file.errors %}
-                <ul class="errorlist">{{ form.video_file.errors }}</ul>
-                {% endif %}
-                <div class="help-text">
-                    <i class="fas fa-info-circle"></i> Upload a video file (MP4, WebM, OGG)
-                </div>
-                <div class="file-info" id="videoFileInfoContainer">
-                    <i class="fas fa-check-circle"></i>
-                    <span id="videoFileInfoText">No file selected</span>
-                </div>
-                {% if gallery_item and gallery_item.video_file %}
-                <div class="current-file">
-                    <i class="fas fa-video"></i>
-                    <span>Current: <a href="{{ gallery_item.video_file.url }}" target="_blank">{{ gallery_item.video_file.name }}</a></span>
-                </div>
-                <div class="video-preview">
-                    <span class="current-label"><i class="fas fa-video"></i> Current Video</span>
-                    <video controls>
-                        <source src="{{ gallery_item.video_file.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-
-                            <!-- <div class="row">
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="{{ form.video_embed_code.id_for_label }}">
-                                            <i class="fas fa-code"></i> Video Embed Code
+                                        <label for="{{ form.video_url.id_for_label }}">
+                                            <i class="fas fa-link"></i> Video URL
                                         </label>
-                                        {{ form.video_embed_code }}
-                                        {% if form.video_embed_code.errors %}
-                                        <ul class="errorlist">{{ form.video_embed_code.errors }}</ul>
+                                        {{ form.video_url }}
+                                        {% if form.video_url.errors %}
+                                        <ul class="errorlist">{{ form.video_url.errors }}</ul>
                                         {% endif %}
                                         <div class="help-text">
-                                            <i class="fas fa-info-circle"></i> Paste embed code from YouTube, Vimeo, or other platforms (optional)
+                                            <i class="fas fa-info-circle"></i> YouTube, Vimeo, or other video platform URL
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.video_file.id_for_label }}">
+                                            <i class="fas fa-upload"></i> Local Video File
+                                        </label>
+                                        <div class="file-upload-area" id="videoDropZone">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p><strong>Click to upload</strong> or drag and drop</p>
+                                            <small>MP4, WebM, OGG</small>
+                                            {{ form.video_file }}
+                                        </div>
+                                        {% if form.video_file.errors %}
+                                        <ul class="errorlist">{{ form.video_file.errors }}</ul>
+                                        {% endif %}
+                                        <div class="help-text">
+                                            <i class="fas fa-info-circle"></i> Upload a video file (MP4, WebM, OGG)
+                                        </div>
+                                        <div class="file-info" id="videoFileInfoContainer">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span id="videoFileInfoText">No file selected</span>
+                                        </div>
+                                        {% if gallery_item and gallery_item.video_file %}
+                                        <div class="current-file">
+                                            <i class="fas fa-video"></i>
+                                            <span>Current: <a href="{{ gallery_item.video_file.url }}" target="_blank">{{ gallery_item.video_file.name }}</a></span>
+                                        </div>
+                                        <div class="video-preview">
+                                            <span class="current-label"><i class="fas fa-video"></i> Current Video</span>
+                                            <video controls>
+                                                <source src="{{ gallery_item.video_file.url }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="video-preview" id="videoUrlPreview" style="display:none;">
                                 <span class="current-label"><i class="fas fa-video"></i> Video Preview</span>
@@ -993,14 +969,6 @@
                             <a href="{% url 'admin_gallery_list' %}" class="btn-outline">
                                 <i class="fas fa-times"></i> Cancel
                             </a>
-                            <!-- {% if not is_edit %}
-                            <button type="submit" name="save_and_add_another" class="btn-success">
-                                <i class="fas fa-plus-circle"></i> Save & Add Another
-                            </button>
-                            {% endif %} -->
-                            <!-- <button type="submit" name="save_and_continue" class="btn-outline">
-                                <i class="fas fa-edit"></i> Save & Continue
-                            </button> -->
                             <button type="submit" class="btn-primary">
                                 <i class="fas fa-save"></i> {% if is_edit %}Update{% else %}Save{% endif %}
                             </button>
@@ -1292,15 +1260,15 @@
     })();
 </script>
 
-
-
+<!-- FIXED: UPDATED VIDEO VALIDATION - Only validates when media type is VIDEO -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const videoUrlInput = document.querySelector('#{{ form.video_url.id_for_label }}');
-    const videoFileInput = document.querySelector('#{{ form.video_file.id_for_label }}');
+    const videoUrlInput = document.querySelector('#id_video_url');
+    const videoFileInput = document.querySelector('#id_video_file');
     const videoDropZone = document.getElementById('videoDropZone');
     const videoFileInfoText = document.getElementById('videoFileInfoText');
     const videoFileInfoContainer = document.getElementById('videoFileInfoContainer');
+    const mediaTypeSelect = document.getElementById('id_media_type');
 
     // ===== FUNCTION: DISABLE VIDEO FILE UPLOAD =====
     function disableVideoFile(disable) {
@@ -1317,6 +1285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (videoFileInfoText) {
                 videoFileInfoText.textContent = 'File upload disabled (URL selected)';
                 videoFileInfoContainer.style.color = '#94a3b8';
+                videoFileInfoContainer.style.borderColor = '#e2e8f0';
             }
         } else {
             videoFileInput.disabled = false;
@@ -1332,6 +1301,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (videoFileInfoText) {
                     videoFileInfoText.textContent = 'No file selected';
                     videoFileInfoContainer.style.color = '#94a3b8';
+                    videoFileInfoContainer.style.borderColor = '#e2e8f0';
                 }
             }
         }
@@ -1345,7 +1315,6 @@ document.addEventListener('DOMContentLoaded', function() {
             videoUrlInput.style.cursor = 'not-allowed';
             videoUrlInput.style.background = '#f1f5f9';
             videoUrlInput.required = false;
-            // Add a visual indicator
             const helpText = videoUrlInput.closest('.form-group').querySelector('.help-text');
             if (helpText) {
                 helpText.innerHTML = '<i class="fas fa-info-circle"></i> URL input disabled (file selected)';
@@ -1361,7 +1330,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 helpText.innerHTML = '<i class="fas fa-info-circle"></i> YouTube, Vimeo, or other video platform URL';
                 helpText.style.color = '#64748b';
             }
-            // Check if URL is empty
             if (!videoUrlInput.value.trim()) {
                 videoUrlInput.required = false;
             }
@@ -1369,91 +1337,88 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===== VIDEO URL CHANGE EVENT =====
-    videoUrlInput.addEventListener('input', function() {
-        const url = this.value.trim();
-        if (url !== '') {
-            // URL has content - disable file upload
-            disableVideoFile(true);
-            // Check if file is selected and clear it
-            if (videoFileInput.files.length > 0) {
-                videoFileInput.value = '';
-                if (videoFileInfoText) {
-                    videoFileInfoText.textContent = 'File cleared (URL selected)';
-                    videoFileInfoContainer.style.color = '#94a3b8';
+    if (videoUrlInput) {
+        videoUrlInput.addEventListener('input', function() {
+            const url = this.value.trim();
+            if (url !== '') {
+                disableVideoFile(true);
+                if (videoFileInput.files.length > 0) {
+                    videoFileInput.value = '';
+                    if (videoFileInfoText) {
+                        videoFileInfoText.textContent = 'File cleared (URL selected)';
+                        videoFileInfoContainer.style.color = '#94a3b8';
+                        videoFileInfoContainer.style.borderColor = '#e2e8f0';
+                    }
+                }
+            } else {
+                disableVideoFile(false);
+                if (videoFileInput.files.length === 0) {
+                    disableVideoUrl(false);
                 }
             }
-        } else {
-            // URL is empty - enable file upload
-            disableVideoFile(false);
-            // Re-enable URL input if not disabled by file
-            if (videoFileInput.files.length === 0) {
-                disableVideoUrl(false);
-            }
-        }
-    });
+        });
+    }
 
     // ===== VIDEO FILE CHANGE EVENT =====
-    videoFileInput.addEventListener('change', function() {
-        if (this.files.length > 0) {
-            // File selected - disable URL input
-            disableVideoUrl(true);
-            // Clear URL if it has content
-            if (videoUrlInput.value.trim() !== '') {
-                videoUrlInput.value = '';
+    if (videoFileInput) {
+        videoFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                disableVideoUrl(true);
+                if (videoUrlInput.value.trim() !== '') {
+                    videoUrlInput.value = '';
+                }
+                if (videoFileInfoText) {
+                    const fileName = this.files[0].name;
+                    const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
+                    videoFileInfoText.textContent = `${fileName} (${fileSize} MB)`;
+                    videoFileInfoContainer.style.color = '#16a34a';
+                    videoFileInfoContainer.style.borderColor = '#86efac';
+                    videoFileInfoContainer.style.background = '#f0fdf4';
+                    videoFileInfoContainer.querySelector('i').className = 'fas fa-check-circle';
+                    videoFileInfoContainer.querySelector('i').style.color = '#16a34a';
+                }
+                if (videoDropZone) {
+                    const fileName = this.files[0].name;
+                    videoDropZone.querySelector('p').innerHTML = `<strong>${fileName}</strong> (selected)`;
+                    videoDropZone.querySelector('i').className = 'fas fa-check-circle';
+                    videoDropZone.querySelector('i').style.color = '#16a34a';
+                }
+            } else {
+                disableVideoUrl(false);
+                if (videoFileInfoText) {
+                    videoFileInfoText.textContent = 'No file selected';
+                    videoFileInfoContainer.style.color = '#94a3b8';
+                    videoFileInfoContainer.style.borderColor = '#e2e8f0';
+                    videoFileInfoContainer.style.background = '#f8fafc';
+                    videoFileInfoContainer.querySelector('i').className = 'fas fa-check-circle';
+                    videoFileInfoContainer.querySelector('i').style.color = '#94a3b8';
+                }
+                if (videoDropZone) {
+                    videoDropZone.querySelector('p').innerHTML = '<strong>Click to upload</strong> or drag and drop';
+                    videoDropZone.querySelector('i').className = 'fas fa-cloud-upload-alt';
+                    videoDropZone.querySelector('i').style.color = '#94a3b8';
+                }
+                if (videoUrlInput.value.trim() !== '') {
+                    disableVideoFile(true);
+                }
             }
-            // Update file info
-            if (videoFileInfoText) {
-                const fileName = this.files[0].name;
-                const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
-                videoFileInfoText.textContent = `${fileName} (${fileSize} MB)`;
-                videoFileInfoContainer.style.color = '#16a34a';
-                videoFileInfoContainer.querySelector('i').className = 'fas fa-check-circle';
-                videoFileInfoContainer.querySelector('i').style.color = '#16a34a';
-            }
-            // Update drop zone text
-            if (videoDropZone) {
-                const fileName = this.files[0].name;
-                videoDropZone.querySelector('p').innerHTML = `<strong>${fileName}</strong> (selected)`;
-                videoDropZone.querySelector('i').className = 'fas fa-check-circle';
-                videoDropZone.querySelector('i').style.color = '#16a34a';
-            }
-        } else {
-            // No file selected - enable URL input
-            disableVideoUrl(false);
-            // Reset file info
-            if (videoFileInfoText) {
-                videoFileInfoText.textContent = 'No file selected';
-                videoFileInfoContainer.style.color = '#94a3b8';
-                videoFileInfoContainer.querySelector('i').className = 'fas fa-check-circle';
-                videoFileInfoContainer.querySelector('i').style.color = '#94a3b8';
-            }
-            // Reset drop zone
-            if (videoDropZone) {
-                videoDropZone.querySelector('p').innerHTML = '<strong>Click to upload</strong> or drag and drop';
-                videoDropZone.querySelector('i').className = 'fas fa-cloud-upload-alt';
-                videoDropZone.querySelector('i').style.color = '#94a3b8';
-            }
-            // Check if URL has content to re-disable file
-            if (videoUrlInput.value.trim() !== '') {
-                disableVideoFile(true);
-            }
-        }
-    });
+        });
+    }
 
     // ===== INITIAL STATE CHECK =====
-    // On page load, check if URL or file is pre-filled
-    if (videoUrlInput.value.trim() !== '') {
+    if (videoUrlInput && videoUrlInput.value.trim() !== '') {
         disableVideoFile(true);
     }
-    if (videoFileInput.files.length > 0) {
+    if (videoFileInput && videoFileInput.files.length > 0) {
         disableVideoUrl(true);
-        // Update file info if file is pre-selected
         if (videoFileInput.files.length > 0) {
             const fileName = videoFileInput.files[0].name;
             const fileSize = (videoFileInput.files[0].size / 1024 / 1024).toFixed(2);
             if (videoFileInfoText) {
                 videoFileInfoText.textContent = `${fileName} (${fileSize} MB)`;
                 videoFileInfoContainer.style.color = '#16a34a';
+                videoFileInfoContainer.style.borderColor = '#86efac';
+                videoFileInfoContainer.style.background = '#f0fdf4';
             }
             if (videoDropZone) {
                 videoDropZone.querySelector('p').innerHTML = `<strong>${fileName}</strong> (selected)`;
@@ -1463,28 +1428,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ===== FORM VALIDATION =====
-    const form = videoUrlInput.closest('form');
+    // ===== FORM VALIDATION - ONLY FOR VIDEO MEDIA TYPE =====
+    const form = document.getElementById('galleryForm');
     if (form) {
         form.addEventListener('submit', function(e) {
-            const url = videoUrlInput.value.trim();
-            const hasFile = videoFileInput.files.length > 0;
+            // Get current media type
+            const mediaType = mediaTypeSelect ? mediaTypeSelect.value : 'image';
             
-            // Check if both are empty
-            if (!url && !hasFile) {
-                e.preventDefault();
-                alert('Please provide either a Video URL or upload a Video File.');
-                // Highlight the fields
-                videoUrlInput.style.borderColor = '#ef4444';
-                videoFileInput.closest('.file-upload-area').style.borderColor = '#ef4444';
-                return false;
-            }
-            
-            // Check if both are provided
-            if (url && hasFile) {
-                e.preventDefault();
-                alert('Please provide only ONE video source: either a URL OR a file, not both.');
-                return false;
+            // Only validate video fields if media type is 'video'
+            if (mediaType === 'video') {
+                const url = videoUrlInput ? videoUrlInput.value.trim() : '';
+                const hasFile = videoFileInput ? videoFileInput.files.length > 0 : false;
+                
+                // Check if both are empty
+                if (!url && !hasFile) {
+                    e.preventDefault();
+                    alert('Please provide either a Video URL or upload a Video File.');
+                    if (videoUrlInput) {
+                        videoUrlInput.style.borderColor = '#ef4444';
+                        videoUrlInput.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
+                    }
+                    if (videoFileInput && videoFileInput.closest('.file-upload-area')) {
+                        videoFileInput.closest('.file-upload-area').style.borderColor = '#ef4444';
+                        videoFileInput.closest('.file-upload-area').style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
+                    }
+                    return false;
+                }
+                
+                // Check if both are provided
+                if (url && hasFile) {
+                    e.preventDefault();
+                    alert('Please provide only ONE video source: either a URL OR a file, not both.');
+                    return false;
+                }
             }
             
             return true;
@@ -1492,21 +1468,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===== CLEAR ERROR HIGHLIGHTS ON INPUT =====
-    videoUrlInput.addEventListener('input', function() {
-        this.style.borderColor = '';
-        if (videoFileInput.closest('.file-upload-area')) {
-            videoFileInput.closest('.file-upload-area').style.borderColor = '';
-        }
-    });
+    if (videoUrlInput) {
+        videoUrlInput.addEventListener('input', function() {
+            this.style.borderColor = '';
+            this.style.boxShadow = '';
+            if (videoFileInput && videoFileInput.closest('.file-upload-area')) {
+                videoFileInput.closest('.file-upload-area').style.borderColor = '';
+                videoFileInput.closest('.file-upload-area').style.boxShadow = '';
+            }
+        });
+    }
 
-    videoFileInput.addEventListener('change', function() {
-        if (this.closest('.file-upload-area')) {
-            this.closest('.file-upload-area').style.borderColor = '';
-        }
-        if (videoUrlInput) {
-            videoUrlInput.style.borderColor = '';
-        }
-    });
+    if (videoFileInput) {
+        videoFileInput.addEventListener('change', function() {
+            if (this.closest('.file-upload-area')) {
+                this.closest('.file-upload-area').style.borderColor = '';
+                this.closest('.file-upload-area').style.boxShadow = '';
+            }
+            if (videoUrlInput) {
+                videoUrlInput.style.borderColor = '';
+                videoUrlInput.style.boxShadow = '';
+            }
+        });
+    }
+
+    // Also clear errors when media type changes
+    if (mediaTypeSelect) {
+        mediaTypeSelect.addEventListener('change', function() {
+            if (videoUrlInput) {
+                videoUrlInput.style.borderColor = '';
+                videoUrlInput.style.boxShadow = '';
+            }
+            if (videoFileInput && videoFileInput.closest('.file-upload-area')) {
+                videoFileInput.closest('.file-upload-area').style.borderColor = '';
+                videoFileInput.closest('.file-upload-area').style.boxShadow = '';
+            }
+        });
+    }
 
 });
 </script>

@@ -11,34 +11,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ========================================
+           DASHBOARD MATCHING STYLES
+        ======================================== */
         :root {
-            --bg-main: #f4f7fb;
+            --bg-main: #f0f4f9;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --primary-light: #eff6ff;
-            --success: #16a34a;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #eef2ff;
+            --success: #22c55e;
             --success-light: #dcfce7;
             --warning: #f59e0b;
             --warning-light: #fef3c7;
             --danger: #dc2626;
             --danger-light: #fef2f2;
             --danger-hover: #b91c1c;
-            --info: #0891b2;
-            --info-light: #cffafe;
+            --info: #06b6d4;
+            --info-light: #ecfeff;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 20px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
-            --shadow-card-hover: 0 25px 30px -5px rgba(15, 23, 42, 0.08), 0 12px 15px -6px rgba(15, 23, 42, 0.04);
-            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-card-hover: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+            --radius-lg: 14px;
             --radius-md: 10px;
             --radius-pill: 9999px;
         }
@@ -57,80 +56,107 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ----- EXPANDED CONTENT WRAPPER ----- */
+        /* Content wrapper - matches dashboard */
         .content-wrapper {
-            flex: 1;
             max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            width: 100%;
+            margin: 0 auto !important;
+            padding: 16px 24px 40px !important;
+            background: #f0f4f9;
+            min-height: calc(100vh - 70px);
+            padding-top: 16px !important;
         }
 
-        /* ----- Page Header (Expanded) ----- */
-        .content-header {
+        /* Override any margin from header */
+        .wrapper .content-wrapper {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-top: 16px !important;
+            margin-top: -10px !important;
+        }
+
+        /* ----- Page Header (Dashboard Style) ----- */
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--card-bg);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
         }
-        .content-header h1 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            color: var(--text-main);
-            letter-spacing: -0.02em;
+
+        .page-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-header .header-left .greeting-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .page-header .header-left h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .page-header .header-left h1 small {
+            font-weight: 400;
+            font-size: 14px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0;
+        }
+
+        .page-header .header-right {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 0;
         }
-        .content-header h1 i {
-            color: var(--primary);
-            font-size: 1.6rem;
-        }
-        .content-header .header-stats {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-        .content-header .header-stats .stat-badge {
-            background: var(--primary-light);
-            padding: 0.4rem 1.2rem;
-            border-radius: var(--radius-pill);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
+
+        .page-header .header-right .stat-badge {
+            font-size: 13px;
+            color: #64748b;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
-        .content-header .header-stats .stat-badge i {
-            font-size: 0.9rem;
+
+        .page-header .header-right .stat-badge i {
+            color: #6366f1;
         }
 
         .btn-primary-custom {
-            background: var(--primary);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border: none;
             border-radius: var(--radius-pill);
-            padding: 0.6rem 2rem;
+            padding: 0.6rem 1.8rem;
             font-weight: 600;
             font-size: 0.9rem;
             color: #ffffff;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -138,33 +164,54 @@
             cursor: pointer;
         }
         .btn-primary-custom:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
             color: #ffffff;
         }
         .btn-primary-custom i {
             font-size: 0.9rem;
         }
 
-        /* ----- Card (Expanded) ----- */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--border-color);
+        /* ----- Card (Dashboard Style) ----- */
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
-        .card:hover {
-            box-shadow: var(--shadow-card-hover);
+        .dashboard-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
         }
-        .card .card-body {
+        .dashboard-card .card-body {
             padding: 0;
             overflow-x: auto;
         }
 
-        /* ----- Table (Expanded) ----- */
+        /* ----- Section Title (Dashboard Style) ----- */
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #6366f1;
+        }
+
+        .section-title .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* ----- Table (Dashboard Style) ----- */
         .table {
             margin-bottom: 0;
             font-size: 0.9rem;
@@ -174,7 +221,6 @@
             border-bottom: 2px solid var(--border-color);
         }
         .table thead th {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -200,7 +246,7 @@
             border: none;
         }
 
-        /* ----- Publication Thumbnail ----- */
+        /* ----- Publication Thumbnail (Dashboard Style) ----- */
         .publication-thumbnail {
             width: 80px;
             height: 80px;
@@ -227,7 +273,7 @@
             border: 2px solid var(--border-color);
         }
 
-        /* ----- Publication Title ----- */
+        /* ----- Publication Title (Dashboard Style) ----- */
         .publication-title {
             font-weight: 600;
             color: var(--text-main);
@@ -241,7 +287,7 @@
             margin-top: 2px;
         }
 
-        /* ----- File Badge ----- */
+        /* ----- File Badge (Dashboard Style) ----- */
         .file-badge {
             display: inline-flex;
             align-items: center;
@@ -282,7 +328,7 @@
             color: #475569;
         }
 
-        /* ----- File Info ----- */
+        /* ----- File Info (Dashboard Style) ----- */
         .file-info {
             display: flex;
             flex-direction: column;
@@ -310,7 +356,7 @@
             text-decoration: underline;
         }
 
-        /* ----- Action Buttons (Expanded) ----- */
+        /* ----- Action Buttons (Dashboard Style) ----- */
         .action-buttons {
             display: flex;
             gap: 6px;
@@ -369,7 +415,7 @@
             transform: translateY(-1px);
         }
 
-        /* ----- Empty State (Expanded) ----- */
+        /* ----- Empty State (Dashboard Style) ----- */
         .empty-state {
             padding: 4rem 2rem;
             text-align: center;
@@ -380,7 +426,6 @@
             margin-bottom: 1rem;
         }
         .empty-state h5 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 1.3rem;
             color: var(--text-main);
@@ -392,7 +437,7 @@
             margin: 0.5rem auto 1.5rem;
         }
 
-        /* ----- Table Footer (Expanded) ----- */
+        /* ----- Table Footer (Dashboard Style) ----- */
         .table-footer {
             padding: 1rem 1.5rem;
             background: #f8fafc;
@@ -408,23 +453,23 @@
             color: var(--text-muted);
         }
 
-        /* ===== DELETE MODAL STYLES ===== */
+        /* ===== DELETE MODAL (Dashboard Style) ===== */
         .modal-content {
-            border-radius: var(--radius-lg);
-            border: none;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
         }
         .modal-header {
             border-bottom: 2px solid var(--danger-light);
             padding: 1.5rem 2rem;
         }
         .modal-header .modal-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 12px;
+            color: #0f172a;
         }
         .modal-header .modal-title i {
             color: var(--danger);
@@ -453,7 +498,6 @@
             color: var(--danger);
         }
         .modal-body h5 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
@@ -509,35 +553,39 @@
             margin-right: 6px;
         }
 
-        /* ----- Responsive ----- */
+        /* ----- Responsive (Dashboard Style) ----- */
         @media (max-width: 992px) {
-            .content-header {
+            .content-wrapper {
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
+            }
+            .page-header {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 1.5rem;
+                gap: 10px;
             }
-            .content-header .header-stats {
+            .page-header .header-left h1 {
+                font-size: 20px;
+            }
+            .page-header .header-left h1 small {
+                font-size: 13px;
+            }
+            .page-header .header-right {
                 width: 100%;
-                justify-content: space-between;
-            }
-            .content-wrapper {
-                padding: 0 1.5rem;
             }
         }
         @media (max-width: 768px) {
             .content-wrapper {
-                padding: 0 1rem;
-                margin: 1rem auto;
+                padding: 12px 16px 30px !important;
+                padding-top: 12px !important;
             }
-            .content-header {
-                padding: 1rem 1.2rem;
+            .page-header .header-left .greeting-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
-            .content-header h1 {
-                font-size: 1.3rem;
-            }
-            .content-header .header-stats .stat-badge {
-                font-size: 0.75rem;
-                padding: 0.25rem 0.8rem;
+            .page-header .header-left h1 {
+                font-size: 18px;
             }
             .table tbody td {
                 padding: 0.8rem 1rem;
@@ -569,14 +617,17 @@
             }
         }
         @media (max-width: 576px) {
-            .content-header h1 {
-                font-size: 1.1rem;
-            }
-            .content-header .header-stats {
-                flex-wrap: wrap;
-            }
             .content-wrapper {
-                padding: 0 0.8rem;
+                padding: 10px 12px 24px !important;
+                padding-top: 10px !important;
+            }
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+            .page-header .header-left .greeting-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
             }
             .table thead th {
                 font-size: 0.65rem;
@@ -607,191 +658,196 @@
             .modal-body .delete-icon-wrapper i {
                 font-size: 2rem;
             }
+            .btn-primary-custom {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .btn-primary-custom i {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="app-wrapper">
 
-    <div class="content-wrapper">
+<!-- ========================================
+     CONTENT WRAPPER (Dashboard Style)
+======================================== -->
+<div class="content-wrapper">
 
-        <!-- ===== PAGE HEADER ===== -->
-        <section class="content-header">
+    <!-- ===== PAGE HEADER (Dashboard Style) ===== -->
+    <div class="page-header">
+        <div class="header-left">
+            <div class="greeting-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
             <div>
                 <h1>
-                    <i class="fas fa-book-open"></i>
                     Publications
+                    <small>Manage all publications including prayer books, spiritual resources, and official documents</small>
                 </h1>
             </div>
-            <div class="header-stats">
-                <span class="stat-badge">
-                    <i class="fas fa-file-alt"></i>
-                    {{ publications|length }}
-                </span>
-                <a href="{% url 'add_publication' %}" class="btn-primary-custom">
-                    <i class="fas fa-plus-circle"></i>
-                    Add Publication
-                </a>
-            </div>
-        </section>
-
-        <!-- ===== PUBLICATIONS TABLE ===== -->
-        <section class="content">
-            <div class="card">
-                <div class="card-body">
-
-                    {% if publications %}
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="width: 100px;">Image</th>
-                                    <th>Title</th>
-                                    <th>File</th>
-                                    <th>Uploaded</th>
-                                    <th style="width: 280px;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for publication in publications %}
-                                <tr>
-                                    <!-- Image -->
-                                    <td>
-                                        {% if publication.image %}
-                                            <img src="{{ publication.image.url }}"
-                                                 alt="{{ publication.title }}"
-                                                 class="publication-thumbnail">
-                                        {% else %}
-                                            <div class="publication-thumbnail-placeholder">
-                                                <i class="fas fa-file-image"></i>
-                                            </div>
-                                        {% endif %}
-                                    </td>
-
-                                    <!-- Title -->
-                                    <td>
-                                        <div class="publication-title">
-                                            {{ publication.title }}
-                                            <small>
-                                                <i class="fas fa-link"></i>
-                                                slug: {{ publication.slug }}
-                                            </small>
-                                        </div>
-                                    </td>
-
-                                    <!-- File -->
-                                    <td>
-                                        <div class="file-info">
-                                            <span class="file-item">
-                                                <i class="fas fa-file"></i>
-                                                <a href="{{ publication.file.url }}" target="_blank">
-                                                    {{ publication.file.name|slice:"15:" }}
-                                                </a>
-                                            </span>
-                                            <!-- File type badge -->
-                                            {% with file_ext=publication.file.name|slice:"-3:"|lower %}
-                                                {% if file_ext == 'pdf' %}
-                                                    <span class="file-badge pdf">
-                                                        <i class="fas fa-file-pdf"></i> PDF
-                                                    </span>
-                                                {% elif file_ext == 'doc' or file_ext == 'docx' %}
-                                                    <span class="file-badge doc">
-                                                        <i class="fas fa-file-word"></i> DOC
-                                                    </span>
-                                                {% elif file_ext == 'jpg' or file_ext == 'jpeg' or file_ext == 'png' or file_ext == 'gif' %}
-                                                    <span class="file-badge image">
-                                                        <i class="fas fa-file-image"></i> Image
-                                                    </span>
-                                                {% else %}
-                                                    <span class="file-badge other">
-                                                        <i class="fas fa-file"></i> {{ file_ext|upper }}
-                                                    </span>
-                                                {% endif %}
-                                            {% endwith %}
-                                        </div>
-                                    </td>
-
-                                    <!-- Uploaded -->
-                                    <td>
-                                        <div class="file-info">
-                                            <span class="file-item">
-                                                <i class="fas fa-calendar-alt"></i>
-                                                {{ publication.uploaded_at|date:"M d, Y" }}
-                                            </span>
-                                            <!-- <span class="file-item">
-                                                <i class="fas fa-clock"></i>
-                                                {{ publication.uploaded_at|time:"H:i" }}
-                                            </span> -->
-                                        </div>
-                                    </td>
-
-                                    <!-- Actions -->
-                                    <td>
-                                        <div class="action-buttons">
-                                            <!-- <a href="{% url 'view_publication' publication.id %}"
-                                               class="action-btn view"
-                                               title="View Publication">
-                                                <i class="fas fa-eye"></i> View
-                                            </a> -->
-                                            <a href="{% url 'edit_publication' publication.id %}"
-                                               class="action-btn edit"
-                                               title="Edit Publication">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
-                                            <a href="{{ publication.file.url }}"
-                                               class="action-btn download"
-                                               title="Download File"
-                                               download>
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
-                                            <!-- Delete button that triggers modal -->
-                                            <button type="button"
-                                                    class="action-btn delete"
-                                                    title="Delete Publication"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal"
-                                                    data-publication-id="{{ publication.id }}"
-                                                    data-publication-title="{{ publication.title }}">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                        <!-- Table Footer -->
-                        <div class="table-footer">
-                            <span class="info-text">
-                                <i class="fas fa-info-circle"></i>
-                                {{ publications|length }} publication{{ publications|length|pluralize }}
-                            </span>
-                            <span class="info-text">
-                                <i class="fas fa-clock"></i>
-                                {% now "M j, Y" %}
-                            </span>
-                        </div>
-
-                    {% else %}
-                        <!-- ===== EMPTY STATE ===== -->
-                        <div class="empty-state">
-                            <i class="fas fa-book-open"></i>
-                            <h5>No Publications Found</h5>
-                            <p>Add your first publication to get started.</p>
-                            <a href="{% url 'add_publication' %}" class="btn-primary-custom">
-                                <i class="fas fa-plus-circle"></i>
-                                Add First Publication
-                            </a>
-                        </div>
-                    {% endif %}
-
-                </div>
-            </div>
-        </section>
-
+        </div>
+        <div class="header-right">
+            <span class="stat-badge">
+                <i class="fas fa-file-alt"></i>
+                {{ publications|length }} Publication{{ publications|length|pluralize }}
+            </span>
+            <a href="{% url 'add_publication' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add Publication
+            </a>
+        </div>
     </div>
 
-    {% include 'admin/adminfooter.html' %}
+    <!-- ===== SECTION TITLE (Dashboard Style) ===== -->
+    <div class="section-title">
+        <i class="fas fa-list"></i>
+        All Publications
+        <span class="section-line"></span>
+    </div>
+
+    <!-- ===== PUBLICATIONS TABLE ===== -->
+    <div class="dashboard-card">
+        <div class="card-body">
+
+            {% if publications %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">Image</th>
+                            <th>Title</th>
+                            <th>File</th>
+                            <th>Uploaded</th>
+                            <th style="width: 280px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for publication in publications %}
+                        <tr>
+                            <!-- Image -->
+                            <td>
+                                {% if publication.image %}
+                                    <img src="{{ publication.image.url }}"
+                                         alt="{{ publication.title }}"
+                                         class="publication-thumbnail">
+                                {% else %}
+                                    <div class="publication-thumbnail-placeholder">
+                                        <i class="fas fa-file-image"></i>
+                                    </div>
+                                {% endif %}
+                            </td>
+
+                            <!-- Title -->
+                            <td>
+                                <div class="publication-title">
+                                    {{ publication.title }}
+                                    <small>
+                                        <i class="fas fa-link"></i>
+                                        {{ publication.slug }}
+                                    </small>
+                                </div>
+                            </td>
+
+                            <!-- File -->
+                            <td>
+                                <div class="file-info">
+                                    <span class="file-item">
+                                        <i class="fas fa-file"></i>
+                                        <a href="{{ publication.file.url }}" target="_blank">
+                                            {{ publication.file.name|slice:"15:" }}
+                                        </a>
+                                    </span>
+                                    <!-- File type badge -->
+                                    {% with file_ext=publication.file.name|slice:"-3:"|lower %}
+                                        {% if file_ext == 'pdf' %}
+                                            <span class="file-badge pdf">
+                                                <i class="fas fa-file-pdf"></i> PDF
+                                            </span>
+                                        {% elif file_ext == 'doc' or file_ext == 'docx' %}
+                                            <span class="file-badge doc">
+                                                <i class="fas fa-file-word"></i> DOC
+                                            </span>
+                                        {% elif file_ext == 'jpg' or file_ext == 'jpeg' or file_ext == 'png' or file_ext == 'gif' %}
+                                            <span class="file-badge image">
+                                                <i class="fas fa-file-image"></i> Image
+                                            </span>
+                                        {% else %}
+                                            <span class="file-badge other">
+                                                <i class="fas fa-file"></i> {{ file_ext|upper }}
+                                            </span>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </td>
+
+                            <!-- Uploaded -->
+                            <td>
+                                <div class="file-info">
+                                    <span class="file-item">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        {{ publication.uploaded_at|date:"M d, Y" }}
+                                    </span>
+                                </div>
+                            </td>
+
+                            <!-- Actions -->
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{% url 'edit_publication' publication.id %}"
+                                       class="action-btn edit"
+                                       title="Edit Publication">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="{{ publication.file.url }}"
+                                       class="action-btn download"
+                                       title="Download File"
+                                       download>
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                    <button type="button"
+                                            class="action-btn delete"
+                                            title="Delete Publication"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-publication-id="{{ publication.id }}"
+                                            data-publication-title="{{ publication.title }}">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Table Footer -->
+                <div class="table-footer">
+                    <span class="info-text">
+                        <i class="fas fa-info-circle"></i>
+                        Showing {{ publications|length }} publication{{ publications|length|pluralize }}
+                    </span>
+                    <span class="info-text">
+                        <i class="fas fa-clock"></i>
+                        {% now "M j, Y" %}
+                    </span>
+                </div>
+
+            {% else %}
+                <!-- ===== EMPTY STATE ===== -->
+                <div class="empty-state">
+                    <i class="fas fa-book-open"></i>
+                    <h5>No Publications Found</h5>
+                    <p>Add your first publication to get started.</p>
+                    <a href="{% url 'add_publication' %}" class="btn-primary-custom">
+                        <i class="fas fa-plus-circle"></i>
+                        Add First Publication
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
 
 </div>
 

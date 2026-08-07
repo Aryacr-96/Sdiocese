@@ -405,6 +405,65 @@
             font-weight: 400;
         }
 
+        /* ----- Social Media Badges (NEW) ----- */
+        .social-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+        }
+        .social-badge:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        .social-badge.whatsapp {
+            background: #25D366;
+            color: #ffffff;
+        }
+        .social-badge.whatsapp:hover {
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            color: #ffffff;
+        }
+        .social-badge.facebook {
+            background: #1877F2;
+            color: #ffffff;
+        }
+        .social-badge.facebook:hover {
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+            color: #ffffff;
+        }
+        .social-badge.instagram {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #ffffff;
+        }
+        .social-badge.instagram:hover {
+            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4);
+            color: #ffffff;
+        }
+        .social-badge i {
+            font-size: 1rem;
+        }
+        .social-badge .social-handle {
+            font-weight: 400;
+            opacity: 0.9;
+            font-size: 0.8rem;
+        }
+        .social-badge .social-label {
+            font-weight: 700;
+        }
+        .social-links-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
         /* ----- Vicar & Assistant Vicar Cards (Expanded) ----- */
         .priest-card {
             background: #f8fafc;
@@ -581,6 +640,10 @@
             .content-header h1 {
                 font-size: 1.5rem;
             }
+            .social-badge {
+                font-size: 0.75rem;
+                padding: 0.3rem 1rem;
+            }
         }
         @media (max-width: 768px) {
             .content-wrapper {
@@ -657,6 +720,13 @@
             }
             .priest-card .priest-details {
                 font-size: 0.8rem;
+            }
+            .social-badge {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.8rem;
+            }
+            .social-links-group {
+                gap: 6px;
             }
         }
         @media (max-width: 576px) {
@@ -752,6 +822,16 @@
             .btn-back, .btn-edit, .btn-delete {
                 font-size: 0.8rem;
                 padding: 0.6rem 1.5rem;
+            }
+            .social-badge {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .social-badge i {
+                font-size: 0.8rem;
+            }
+            .social-links-group {
+                gap: 4px;
             }
         }
     </style>
@@ -979,6 +1059,90 @@
                                         {% endif %}
                                     </td>
                                 </tr>
+
+                                <!-- ===== SOCIAL MEDIA ROWS (NEW) ===== -->
+                                <!-- WhatsApp -->
+                                <tr>
+                                    <th><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</th>
+                                    <td>
+                                        {% if parish.whatsapp_number %}
+                                            <a href="https://wa.me/{{ parish.whatsapp_number|cut:'+' }}" 
+                                               target="_blank" 
+                                               class="social-badge whatsapp">
+                                                <i class="fab fa-whatsapp"></i>
+                                                <span class="social-label">WhatsApp</span>
+                                                <span class="social-handle">{{ parish.whatsapp_number }}</span>
+                                            </a>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                                <!-- Facebook -->
+                                <tr>
+                                    <th><i class="fab fa-facebook" style="color:#1877F2;"></i> Facebook</th>
+                                    <td>
+                                        {% if parish.facebook_id or parish.facebook_url %}
+                                            <div class="social-links-group">
+                                                {% if parish.get_facebook_url %}
+                                                    <a href="{{ parish.get_facebook_url }}" 
+                                                       target="_blank" 
+                                                       class="social-badge facebook">
+                                                        <i class="fab fa-facebook"></i>
+                                                        <span class="social-label">Facebook</span>
+                                                        {% if parish.facebook_id %}
+                                                            <span class="social-handle">@{{ parish.facebook_id }}</span>
+                                                        {% endif %}
+                                                    </a>
+                                                {% endif %}
+                                                {% if parish.facebook_url and not parish.facebook_id %}
+                                                    <a href="{{ parish.facebook_url }}" 
+                                                       target="_blank" 
+                                                       class="social-badge facebook">
+                                                        <i class="fab fa-facebook"></i>
+                                                        <span class="social-label">Facebook Page</span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                                <!-- Instagram -->
+                                <tr>
+                                    <th><i class="fab fa-instagram" style="color:#bc1888;"></i> Instagram</th>
+                                    <td>
+                                        {% if parish.instagram_id or parish.instagram_url %}
+                                            <div class="social-links-group">
+                                                {% if parish.get_instagram_url %}
+                                                    <a href="{{ parish.get_instagram_url }}" 
+                                                       target="_blank" 
+                                                       class="social-badge instagram">
+                                                        <i class="fab fa-instagram"></i>
+                                                        <span class="social-label">Instagram</span>
+                                                        {% if parish.instagram_id %}
+                                                            <span class="social-handle">@{{ parish.instagram_id }}</span>
+                                                        {% endif %}
+                                                    </a>
+                                                {% endif %}
+                                                {% if parish.instagram_url and not parish.instagram_id %}
+                                                    <a href="{{ parish.instagram_url }}" 
+                                                       target="_blank" 
+                                                       class="social-badge instagram">
+                                                        <i class="fab fa-instagram"></i>
+                                                        <span class="social-label">Instagram Profile</span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        {% else %}
+                                            <span class="empty-value">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <th><i class="fas fa-handshake"></i> Trustee</th>
                                     <td>{{ parish.trustee|default:"<span class='empty-value'>Not specified</span>" }}</td>

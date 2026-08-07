@@ -1,273 +1,624 @@
-
 {% load static %}
 {% include 'header.html' %}
 
 <style>
-.project-detail{
-    margin-left: 70px;
-    margin-right: 28px;
-    margin-top: 60px;
+/* ========================================
+   PROJECT DETAIL PAGE - MODERN DESIGN
+======================================== */
+.project-detail {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 60px;
 }
 
-.project-banner{
-    position:relative;
-    border-radius:30px;
-    overflow:hidden;
-    margin-bottom:50px;
+/* ===== BANNER ===== */
+.project-banner {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    width: 100%;
+    height: 500px;   
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    flex-shrink: 0;
 }
 
-.project-banner img{
-    width:100%;
-    height:500px;
-    object-fit:cover;
-    display:block;
+.project-banner img {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 500px !important;
+    max-height: 500px !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+    transition: transform 0.8s ease;
 }
 
-.project-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
+.project-banner:hover img {
+    transform: scale(1.05);
+}
+
+.project-banner .no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: rgba(255,255,255,0.3);
+    font-size: 80px;
+}
+
+.project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
         to top,
-        rgba(0,0,0,.75),
-        rgba(0,0,0,.15)
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.4) 40%,
+        rgba(0,0,0,0.1) 100%
     );
-    display:flex;
-    align-items:flex-end;
-    padding:50px;
+    display: flex;
+    align-items: flex-end;
+    padding: 50px 60px;
 }
 
-.project-overlay h1{
-    color:#fff;
-    font-size:48px;
-    margin:0;
+.project-overlay .badge-top {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(231, 101, 20, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-.project-content{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:50px;
+.project-overlay h1 {
+    color: #fff;
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    max-width: 70%;
 }
 
-.project-description h2{
-    color:#23395d;
-    margin-bottom:20px;
+.project-overlay h1 span {
+    display: block;
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 10px;
 }
 
-.project-description p{
-    color:#666;
-    line-height:1.9;
-    margin-bottom:20px;
-    text-align:justify;
+/* ===== PROJECT CONTENT LAYOUT ===== */
+.project-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 50px;
+}
+
+/* ===== DESCRIPTION ===== */
+.project-description {
+    background: #fff;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.project-description .desc-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.project-description .desc-header i {
+    font-size: 28px;
+    color: #e76514;
+    background: rgba(231,101,20,0.1);
+    padding: 12px;
+    border-radius: 14px;
+}
+
+.project-description h2 {
+    color: #23395d;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.project-description p {
+    color: #555;
+    line-height: 2;
+    font-size: 15px;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.project-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== SIDEBAR ===== */
+.project-info {
+    position: sticky;
+    top: 100px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+/* Header - Changed to Orange/Brand Color */
+.project-info-header {
+    background: linear-gradient(135deg, #e76514, #d45a0f);
+    padding: 35px 30px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-info-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+}
+
+.project-info-header .icon-big {
+    font-size: 40px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.project-info-header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    position: relative;
+}
+
+.project-info-header p {
+    margin-top: 6px;
+    opacity: .85;
     font-size: 13px;
-}
-
-.project-info{
-    position:sticky;
-    top:100px;
-    padding:0;
-    border-radius:32px;
-    overflow:hidden;
-    background:#fff;
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.08),
-        0 8px 25px rgba(231,101,20,.08);
-}
-
-/* Header */
-.project-info-header{
-    background:linear-gradient(135deg,#2a4564,#2a4564);
-    padding:35px 30px;
-    text-align:center;
-    color:#fff;
-}
-
-.project-info-header h3{
-    margin:0;
-    font-size:24px;
-    font-weight:700;
-}
-
-.project-info-header p{
-    margin-top:8px;
-    opacity:.9;
-    font-size:14px;
+    position: relative;
 }
 
 /* Body */
-.project-info-body{
-    padding:25px;
+.project-info-body {
+    padding: 25px;
 }
 
-/* Info Cards */
-.info-item{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:18px;
-    margin-bottom:16px;
-    border-radius:20px;
-    background:#fff;
-    border:1px solid #eef2f7;
-    transition:.4s;
+/* Info Items */
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid #f0f2f5;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
 }
 
-.info-item:last-child{
-    margin-bottom:0;
+.info-item:last-child {
+    margin-bottom: 0;
 }
 
-.info-item:hover{
-    transform:translateX(8px);
-    background:#fffaf7;
-    border-color:#2a4564;
-    box-shadow:0 12px 30px rgba(231,101,20,.12);
+.info-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
 }
 
 /* Icon Circle */
-.info-icon{
-    min-width:58px;
-    width:58px;
-    height:58px;
-    border-radius:18px;
-    background:linear-gradient(135deg,#2a4564,#2a4564);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:22px;
-    box-shadow:0 10px 20px rgba(231,101,20,.25);
+.info-icon {
+    min-width: 52px;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
-/* Text */
-.info-text span{
-    display:block;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:#2a4564;
-    margin-bottom:5px;
+.info-item:hover .info-icon {
+    transform: scale(1.05) rotate(-5deg);
 }
 
-.info-text p{
-    margin:0;
-    color:#23395d;
-    font-size:16px;
-    font-weight:600;
+/* Category - Orange Theme */
+.info-item.category .info-icon {
+    background: linear-gradient(135deg, #e76514, #d45a0f);
+    box-shadow: 0 6px 20px rgba(231,101,20,0.35);
+}
+.info-item.category:hover {
+    border-color: #e76514;
+    background: #fff5ed;
 }
 
-/* Donation Box */
-.support-box{
-    margin-top:25px;
-    padding:25px;
-    text-align:center;
-    background:linear-gradient(135deg,#23395d,#2f4b7a);
-    color:#fff;
-    border-radius:24px;
+/* Location - Orange Theme */
+.info-item.location .info-icon {
+    background: linear-gradient(135deg, #f59e0b, #e76514);
+    box-shadow: 0 6px 20px rgba(231,101,20,0.35);
+}
+.info-item.location:hover {
+    border-color: #e76514;
+    background: #fff5ed;
 }
 
-.support-box h4{
-    margin-bottom:10px;
-    font-size:20px;
+/* Status - Processing */
+.info-item.status-processing .info-icon {
+    background: linear-gradient(135deg, #f59e0b, #e76514);
+    box-shadow: 0 6px 20px rgba(231,101,20,0.35);
+}
+.info-item.status-processing:hover {
+    border-color: #e76514;
+    background: #fff5ed;
 }
 
-.support-box p{
-    font-size:14px;
-    opacity:.9;
-    margin-bottom:18px;
+/* Status - Completed */
+.info-item.status-completed .info-icon {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.info-item.status-completed:hover {
+    border-color: #22c55e;
+    background: #f0fdf4;
 }
 
-.support-btn{
-    display:inline-block;
-    padding:12px 28px;
-    background:#fff;
-    color:#23395d;
-    text-decoration:none;
-    border-radius:50px;
-    font-weight:700;
-    transition:.3s;
+/* Status - Inactive */
+.info-item.status-inactive .info-icon {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 6px 20px rgba(239,68,68,0.35);
+}
+.info-item.status-inactive:hover {
+    border-color: #ef4444;
+    background: #fef2f2;
 }
 
-.support-btn:hover{
-    transform:translateY(-3px);
+/* Status - Default */
+.info-item.status-default .info-icon {
+    background: linear-gradient(135deg, #e76514, #d45a0f);
+    box-shadow: 0 6px 20px rgba(231,101,20,0.35);
 }
-@media(max-width:992px){
+.info-item.status-default:hover {
+    border-color: #e76514;
+    background: #fff5ed;
+}
 
-    .project-content{
-        grid-template-columns:1fr;
+.info-text {
+    flex: 1;
+}
+
+.info-text span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 3px;
+}
+
+.info-text p {
+    margin: 0;
+    color: #1a1a2e;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Status Text Colors */
+.status-text {
+    font-weight: 600;
+}
+.status-text.processing {
+    color: #e76514;
+}
+.status-text.completed {
+    color: #22c55e;
+}
+.status-text.inactive {
+    color: #ef4444;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 1200px) {
+    .project-detail {
+        padding: 0 40px;
     }
-
-    .project-info{
-        position:static;
+    .project-banner {
+        height: 400px;
+        min-height: 400px;
+        max-height: 400px;
     }
-
-    .project-banner img{
-        height:350px;
+    .project-banner img {
+        min-height: 400px !important;
+        max-height: 400px !important;
     }
-
-    .project-overlay h1{
-        font-size:34px;
+    .project-overlay h1 {
+        font-size: 42px;
     }
+}
 
-    .gallery-grid{
-        grid-template-columns:1fr;
+@media(max-width: 992px) {
+    .project-detail {
+        padding: 0 30px;
+        margin: 30px auto;
+    }
+    .project-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .project-info {
+        position: static;
+    }
+    .project-banner {
+        height: 350px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+    .project-banner img {
+        min-height: 350px !important;
+        max-height: 350px !important;
+    }
+    .project-overlay h1 {
+        font-size: 36px;
+        max-width: 100%;
+    }
+    .project-overlay {
+        padding: 35px 40px;
+    }
+    .project-description {
+        padding: 30px;
+    }
+}
+
+@media(max-width: 768px) {
+    .project-detail {
+        padding: 0 20px;
+        margin: 20px auto;
+    }
+    .project-banner {
+        height: 280px;
+        min-height: 280px;
+        max-height: 280px;
+        border-radius: 16px;
+    }
+    .project-banner img {
+        min-height: 280px !important;
+        max-height: 280px !important;
+    }
+    .project-overlay h1 {
+        font-size: 28px;
+    }
+    .project-overlay {
+        padding: 25px 30px;
+    }
+    .project-overlay .badge-top {
+        top: 15px;
+        right: 15px;
+        font-size: 10px;
+        padding: 5px 14px;
+    }
+    .project-description {
+        padding: 25px 20px;
+    }
+    .project-description h2 {
+        font-size: 22px;
+    }
+    .project-info-header {
+        padding: 25px 20px;
+    }
+    .project-info-header h3 {
+        font-size: 20px;
+    }
+    .project-info-body {
+        padding: 18px;
+    }
+    .info-item {
+        padding: 14px 16px;
+        gap: 14px;
+    }
+    .info-icon {
+        min-width: 44px;
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+}
+
+@media(max-width: 576px) {
+    .project-detail {
+        padding: 0 12px;
+        margin: 15px auto;
+    }
+    .project-banner {
+        height: 220px;
+        min-height: 220px;
+        max-height: 220px;
+        border-radius: 12px;
+    }
+    .project-banner img {
+        min-height: 220px !important;
+        max-height: 220px !important;
+    }
+    .project-overlay h1 {
+        font-size: 22px;
+    }
+    .project-overlay {
+        padding: 18px 20px;
+    }
+    .project-overlay .badge-top {
+        display: none;
+    }
+    .project-description {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+    .project-description h2 {
+        font-size: 20px;
+    }
+    .project-description p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+    .project-info-header {
+        padding: 20px 16px;
+    }
+    .project-info-header h3 {
+        font-size: 18px;
+    }
+    .project-info-header .icon-big {
+        font-size: 30px;
+    }
+    .project-info-body {
+        padding: 14px;
+    }
+    .info-item {
+        padding: 12px 14px;
+        gap: 12px;
+        border-radius: 12px;
+    }
+    .info-icon {
+        min-width: 40px;
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+    .info-text p {
+        font-size: 14px;
     }
 }
 </style>
+
 <section class="project-detail">
 
+    <!-- ===== BANNER ===== -->
     <div class="project-banner">
         {% if project.image %}
             <img src="{{ project.image.url }}" alt="{{ project.heading }}">
+        {% else %}
+            <div class="no-image">
+                <i class="fas fa-image"></i>
+            </div>
         {% endif %}
 
         <div class="project-overlay">
-            <h1>{{ project.heading }}</h1>
+            <h1>
+                {{ project.heading }}
+                <span>Making a difference through compassion</span>
+            </h1>
         </div>
     </div>
 
+    <!-- ===== CONTENT ===== -->
     <div class="project-content">
 
+        <!-- ===== DESCRIPTION ===== -->
         <div class="project-description">
-
-            <h2>{{ project.title }}</h2>
-
+            <div class="desc-header">
+                <i class="fas fa-align-left"></i>
+                <h2>{{ project.title }}</h2>
+            </div>
             {{ project.content|safe }}
-
         </div>
 
+        <!-- ===== SIDEBAR ===== -->
         <div class="project-info">
 
             <div class="project-info-header">
+                <span class="icon-big">📋</span>
                 <h3>Project Details</h3>
-                <p>Making a difference through compassion</p>
+                <p>Everything you need to know</p>
             </div>
 
             <div class="project-info-body">
 
-                <div class="info-item">
-                    <div class="info-icon">🏥</div>
+                <!-- Category -->
+                <div class="info-item category">
+                    <div class="info-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
                     <div class="info-text">
                         <span>Category</span>
-                        <p>{{ project.category|default:"Healthcare Support" }}</p>
+                        <p>{{ project.category.name|default:"Uncategorized" }}</p>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
+                <!-- Location -->
+                <div class="info-item location">
+                    <div class="info-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
                     <div class="info-text">
                         <span>Location</span>
-                        <p>{{ project.location|default:"Kerala, India" }}</p>
+                        <p>{{ project.project_location|default:"Not specified" }}</p>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon">🟢</div>
-                    <div class="info-text">
-                        <span>Status</span>
-                        <p>{{ project.status|default:"Ongoing" }}</p>
+                <!-- Status -->
+                {% if project.active == 'processing' %}
+                    <div class="info-item status-processing">
+                        <div class="info-icon">
+                            <i class="fas fa-spinner fa-pulse"></i>
+                        </div>
+                        <div class="info-text">
+                            <span>Status</span>
+                            <p><span class="status-text processing"><i class="fas fa-circle" style="font-size:8px; margin-right:6px;"></i>Processing</span></p>
+                        </div>
                     </div>
-                </div>
+                {% elif project.active == 'completed' %}
+                    <div class="info-item status-completed">
+                        <div class="info-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="info-text">
+                            <span>Status</span>
+                            <p><span class="status-text completed"><i class="fas fa-circle" style="font-size:8px; margin-right:6px;"></i>Completed</span></p>
+                        </div>
+                    </div>
+                {% elif project.active == 'inactive' %}
+                    <div class="info-item status-inactive">
+                        <div class="info-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="info-text">
+                            <span>Status</span>
+                            <p><span class="status-text inactive"><i class="fas fa-circle" style="font-size:8px; margin-right:6px;"></i>Inactive</span></p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="info-item status-default">
+                        <div class="info-icon">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="info-text">
+                            <span>Status</span>
+                            <p>{{ project.get_active_display|default:"Ongoing" }}</p>
+                        </div>
+                    </div>
+                {% endif %}
 
             </div>
 
@@ -276,9 +627,9 @@
     </div>
 
 </section>
-</div>
+
 {% include 'footer.html' %}
-<!-- JAVASCRIPT -->
+
 <script>
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
@@ -331,21 +682,20 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+<script>
+const historyBlocks = document.querySelectorAll('.history-block');
 
 window.addEventListener('scroll', () => {
     historyBlocks.forEach(block => {
         const rect = block.getBoundingClientRect();
-        
-        // This check defines the "active" zone (the center of your screen)
         const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
 
         if (isMiddle) {
-            // Change to active color while scrolling
             block.style.setProperty('--line-color', '#e76514');
         } else {
-            // Reset to inactive color when not scrolling over this block
             block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
         }
     });
-});</script>
+});
+</script>

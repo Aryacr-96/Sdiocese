@@ -154,6 +154,7 @@
             border-bottom: 1px solid #e2e8f0;
             padding: 0 32px;
             gap: 6px;
+            flex-wrap: wrap;
         }
 
         .card-tabs .tab {
@@ -334,8 +335,8 @@
             margin-right: 8px !important;
         }
 
-        /* ===== SELECTED BEARERS (Expanded) ===== */
-        .selected-bearers {
+        /* ===== SELECTED ITEMS (Expanded) ===== */
+        .selected-items {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -347,7 +348,7 @@
             min-height: 60px;
         }
 
-        .selected-bearers .empty-message {
+        .selected-items .empty-message {
             color: #94a3b8;
             font-size: 14px;
             width: 100%;
@@ -355,7 +356,7 @@
             padding: 10px 0;
         }
 
-        .bearer-tag {
+        .item-tag {
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -369,11 +370,11 @@
             transition: all 0.2s ease;
         }
 
-        .bearer-tag:hover {
+        .item-tag:hover {
             border-color: #6366f1;
         }
 
-        .bearer-tag .bearer-avatar {
+        .item-tag .item-avatar {
             width: 28px;
             height: 28px;
             border-radius: 50%;
@@ -387,14 +388,14 @@
             font-weight: 700;
         }
 
-        .bearer-tag .bearer-avatar img {
+        .item-tag .item-avatar img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
         }
 
-        .bearer-tag .remove-tag {
+        .item-tag .remove-tag {
             cursor: pointer;
             color: #94a3b8;
             font-size: 16px;
@@ -405,12 +406,12 @@
             padding: 0 4px;
         }
 
-        .bearer-tag .remove-tag:hover {
+        .item-tag .remove-tag:hover {
             color: #ef4444;
         }
 
-        /* ===== NEW OFFICE CARD (Expanded) ===== */
-        .new-office-card {
+        /* ===== NEW CARD (Expanded) ===== */
+        .new-card {
             background: white;
             border-radius: 16px;
             padding: 24px;
@@ -420,12 +421,12 @@
             position: relative;
         }
 
-        .new-office-card:hover {
+        .new-card:hover {
             border-color: #6366f1;
             box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
         }
 
-        .new-office-card .card-header {
+        .new-card .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -437,7 +438,7 @@
             font-size: 15px;
         }
 
-        .new-office-card .card-number {
+        .new-card .card-number {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
             width: 32px;
@@ -450,7 +451,7 @@
             font-weight: 700;
         }
 
-        .new-office-card .remove-btn {
+        .new-card .remove-btn {
             background: none;
             border: none;
             color: #94a3b8;
@@ -461,40 +462,54 @@
             font-size: 18px;
         }
 
-        .new-office-card .remove-btn:hover {
+        .new-card .remove-btn:hover {
             background: #fef2f2;
             color: #ef4444;
         }
 
-        .new-office-card .row {
+        .new-card .row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
 
-        .new-office-card .row .full {
+        .new-card .row .full {
             grid-column: 1 / -1;
         }
 
-        .new-office-card .form-group {
+        .new-card .form-group {
             margin-bottom: 0;
         }
 
-        .new-office-card .form-group label {
+        .new-card .form-group label {
             font-size: 13px;
             font-weight: 500;
             color: #64748b;
             margin-bottom: 6px;
         }
 
-        .new-office-card .form-group .form-control {
+        .new-card .form-group .form-control {
             padding: 10px 14px;
             font-size: 14px;
             border-radius: 10px;
         }
 
-        .new-office-card .form-group .form-control[type="file"] {
+        .new-card .form-group .form-control[type="file"] {
             padding: 8px;
+        }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-divider {
+            margin: 32px 0 28px 0;
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 28px;
+        }
+
+        .section-divider h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 18px;
         }
 
         /* ===== BUTTONS (Expanded) ===== */
@@ -567,7 +582,7 @@
                 padding: 20px;
             }
 
-            .new-office-card .row {
+            .new-card .row {
                 grid-template-columns: 1fr;
                 gap: 14px;
             }
@@ -616,17 +631,17 @@
                 padding: 16px;
             }
 
-            .selected-bearers {
+            .selected-items {
                 padding: 10px;
                 min-height: 45px;
             }
 
-            .bearer-tag {
+            .item-tag {
                 font-size: 12px;
                 padding: 4px 10px 4px 6px;
             }
 
-            .bearer-tag .bearer-avatar {
+            .item-tag .item-avatar {
                 width: 22px;
                 height: 22px;
                 font-size: 10px;
@@ -637,16 +652,16 @@
                 font-size: 14px;
             }
             
-            .new-office-card {
+            .new-card {
                 padding: 16px;
             }
             
-            .new-office-card .card-header {
+            .new-card .card-header {
                 margin-bottom: 14px;
                 padding-bottom: 10px;
             }
             
-            .new-office-card .form-group .form-control {
+            .new-card .form-group .form-control {
                 padding: 8px 12px;
                 font-size: 13px;
             }
@@ -684,7 +699,7 @@
             <div>
                 <h1>
                     {% if editing %}Edit{% else %}Add{% endif %} Spiritual Category
-                    <small>Manage spiritual categories and their office bearers</small>
+                    <small>Manage spiritual categories, office bearers, and coordinators</small>
                 </h1>
             </div>
         </div>
@@ -704,6 +719,9 @@
             </button>
             <button class="tab" onclick="switchTab('bearers')">
                 <i class="fa fa-user-tie"></i> Office Bearers
+            </button>
+            <button class="tab" onclick="switchTab('coordinators')">
+                <i class="fa fa-user-cog"></i> Coordinators
             </button>
         </div>
 
@@ -752,9 +770,12 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 28px; display: flex; gap: 14px; justify-content: flex-end;">
+                    <div style="margin-top: 28px; display: flex; gap: 14px; justify-content: flex-end; flex-wrap: wrap;">
                         <button type="button" class="btn btn-primary" onclick="switchTab('bearers')">
                             <i class="fa fa-user-tie"></i> Manage Office Bearers
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="switchTab('coordinators')">
+                            <i class="fa fa-user-cog"></i> Manage Coordinators
                         </button>
                     </div>
                 </div>
@@ -771,7 +792,7 @@
                         </div>
 
                         <!-- SELECT EXISTING -->
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>
                                 <i class="fa fa-search label-icon"></i>
                                 Search & Select Existing Office Bearers
@@ -788,14 +809,14 @@
                                 <i class="fa fa-info-circle"></i>
                                 Type to search and select multiple office bearers
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- SELECTED DISPLAY -->
-                        <div class="selected-bearers" id="selectedBearersDisplay">
+                        <!-- <div class="selected-items" id="selectedBearersDisplay">
                             {% for bearer in existing_bearers %}
                                 {% if bearer.id in selected_bearers %}
-                                    <span class="bearer-tag" data-bearer-id="{{ bearer.id }}">
-                                        <span class="bearer-avatar">
+                                    <span class="item-tag" data-bearer-id="{{ bearer.id }}">
+                                        <span class="item-avatar">
                                             {% if bearer.image %}
                                                 <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}">
                                             {% else %}
@@ -810,7 +831,7 @@
                             {% if not selected_bearers %}
                                 <span class="empty-message">No office bearers selected</span>
                             {% endif %}
-                        </div>
+                        </div> -->
 
                         <!-- Hidden inputs for selected bearers -->
                         <div id="selectedBearersContainer">
@@ -828,7 +849,7 @@
                                 Add New Office Bearers
                             </h4>
                             <div id="newOfficeContainer">
-                                <div class="new-office-card">
+                                <div class="new-card">
                                     <div class="card-header">
                                         <span class="card-number">1</span>
                                         <button type="button" class="remove-btn" onclick="removeNewOffice(this)">
@@ -845,7 +866,7 @@
                                         <div>
                                             <div class="form-group">
                                                 <label>Designation <span class="required">*</span></label>
-                                                <select name="new_officebearer_designation[]" class="form-control" required>
+                                                <select name="new_officebearer_designation[]" class="form-control">
                                                     <option value="">-- Select Designation --</option>
                                                     {% for designation in designations %}
                                                         <option value="{{ designation.id }}">{{ designation.name }}</option>
@@ -896,6 +917,9 @@
                         <button type="button" class="btn btn-secondary" onclick="switchTab('details')">
                             <i class="fa fa-arrow-left"></i> Back to Details
                         </button>
+                        <button type="button" class="btn btn-primary" onclick="switchTab('coordinators')">
+                            <i class="fa fa-user-cog"></i> Manage Coordinators
+                        </button>
                         <button type="submit" class="btn btn-success">
                             <i class="fa fa-save"></i>
                             {% if editing %}Update{% else %}Save{% endif %} Spiritual
@@ -903,15 +927,151 @@
                     </div>
                 </div>
 
-                <!-- ===== FORM ACTIONS (Visible when no tabs) ===== -->
-                <div class="form-actions" id="formActions" style="display: none;">
-                    <a href="{% url 'spiritual' %}" class="btn btn-secondary">
-                        <i class="fa fa-times"></i> Cancel
-                    </a>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-save"></i>
-                        {% if editing %}Update{% else %}Save{% endif %} Spiritual
-                    </button>
+                <!-- ===== TAB 3: COORDINATORS ===== -->
+                <div id="tab-coordinators" style="display: none;">
+                    <div class="office-section">
+                        <div class="section-title">
+                            <h3>
+                                <i class="fa fa-user-cog"></i>
+                                Coordinators
+                                <span class="badge" id="coordinatorCount">0</span>
+                            </h3>
+                        </div>
+
+                        <!-- SELECT EXISTING COORDINATORS -->
+                        <!-- <div class="form-group">
+                            <label>
+                                <i class="fa fa-search label-icon"></i>
+                                Search & Select Existing Coordinators
+                            </label>
+                            <select id="coordinatorSelect" class="form-control" multiple="multiple" style="width: 100%;">
+                                {% for coordinator in existing_coordinators %}
+                                    <option value="{{ coordinator.id }}" 
+                                        {% if coordinator.id in selected_coordinators %}selected{% endif %}>
+                                        {{ coordinator.name }} - {{ coordinator.designation }} ({{ coordinator.phone }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-hint">
+                                <i class="fa fa-info-circle"></i>
+                                Type to search and select multiple coordinators
+                            </div>
+                        </div> -->
+
+                        <!-- SELECTED COORDINATORS DISPLAY -->
+                        <!-- <div class="selected-items" id="selectedCoordinatorsDisplay">
+                            {% for coordinator in existing_coordinators %}
+                                {% if coordinator.id in selected_coordinators %}
+                                    <span class="item-tag" data-coordinator-id="{{ coordinator.id }}">
+                                        <span class="item-avatar">
+                                            {% if coordinator.image %}
+                                                <img src="{{ coordinator.image.url }}" alt="{{ coordinator.name }}">
+                                            {% else %}
+                                                <i class="fa fa-user"></i>
+                                            {% endif %}
+                                        </span>
+                                        {{ coordinator.name }}
+                                        <button type="button" class="remove-tag" onclick="removeSelectedCoordinator(this)">×</button>
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                            {% if not selected_coordinators %}
+                                <span class="empty-message">No coordinators selected</span>
+                            {% endif %}
+                        </div> -->
+
+                        <!-- Hidden inputs for selected coordinators -->
+                        <div id="selectedCoordinatorsContainer">
+                            {% for coordinator in existing_coordinators %}
+                                {% if coordinator.id in selected_coordinators %}
+                                    <input type="hidden" name="selected_coordinators" value="{{ coordinator.id }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <!-- ADD NEW COORDINATORS -->
+                        <div style="margin-top: 28px; border-top: 2px dashed #e2e8f0; padding-top: 24px;">
+                            <h4 style="font-size: 15px; font-weight: 600; color: #6366f1; margin-bottom: 18px;">
+                                <i class="fa fa-plus-circle"></i>
+                                Add New Coordinators
+                            </h4>
+                            <div id="newCoordinatorContainer">
+                                <div class="new-card">
+                                    <div class="card-header">
+                                        <span class="card-number">1</span>
+                                        <button type="button" class="remove-btn" onclick="removeNewCoordinator(this)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="full">
+                                            <div class="form-group">
+                                                <label>Name <span class="required">*</span></label>
+                                                <input type="text" name="new_coordinator_name[]" class="form-control" placeholder="Enter coordinator name">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Designation <span class="required">*</span></label>
+                                                <select name="new_coordinator_designation[]" class="form-control">
+                                                    <option value="">-- Select Designation --</option>
+                                                    {% for designation in designations %}
+                                                        <option value="{{ designation.id }}">{{ designation.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <div class="form-hint">
+                                                    <i class="fa fa-info-circle"></i>
+                                                    Select an official designation
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>District <span class="required">*</span></label>
+                                                <input type="text" name="new_coordinator_district[]" class="form-control" placeholder="Enter district">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Phone <span class="required">*</span></label>
+                                                <input type="text" name="new_coordinator_phone[]" class="form-control" placeholder="Enter 10-digit phone">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="email" name="new_coordinator_email[]" class="form-control" placeholder="Enter email (optional)">
+                                            </div>
+                                        </div>
+                                        <div class="full">
+                                            <div class="form-group">
+                                                <label>Image</label>
+                                                <input type="file" name="new_coordinator_image[]" class="form-control" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="add-more-btn" onclick="addNewCoordinator()">
+                                <i class="fa fa-plus"></i>
+                                Add Another New Coordinator
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 28px; display: flex; gap: 14px; justify-content: flex-end; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary" onclick="switchTab('details')">
+                            <i class="fa fa-arrow-left"></i> Back to Details
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="switchTab('bearers')">
+                            <i class="fa fa-user-tie"></i> Manage Office Bearers
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i>
+                            {% if editing %}Update{% else %}Save{% endif %} Spiritual
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -929,11 +1089,14 @@
         document.querySelectorAll('.card-tabs .tab').forEach(el => el.classList.remove('active'));
         document.getElementById('tab-details').style.display = tab === 'details' ? 'block' : 'none';
         document.getElementById('tab-bearers').style.display = tab === 'bearers' ? 'block' : 'none';
+        document.getElementById('tab-coordinators').style.display = tab === 'coordinators' ? 'block' : 'none';
         
         // Find and activate the correct tab
         document.querySelectorAll('.card-tabs .tab').forEach(el => {
-            if ((tab === 'details' && el.textContent.trim().includes('Details')) ||
-                (tab === 'bearers' && el.textContent.trim().includes('Office Bearers'))) {
+            const text = el.textContent.trim();
+            if ((tab === 'details' && text.includes('Details')) ||
+                (tab === 'bearers' && text.includes('Office Bearers')) ||
+                (tab === 'coordinators' && text.includes('Coordinators'))) {
                 el.classList.add('active');
             }
         });
@@ -949,6 +1112,16 @@
 
         $('#officeBearerSelect').on('change', function() {
             updateSelectedBearers();
+        });
+
+        $('#coordinatorSelect').select2({
+            placeholder: "Search and select coordinators...",
+            allowClear: true,
+            width: '100%'
+        });
+
+        $('#coordinatorSelect').on('change', function() {
+            updateSelectedCoordinators();
         });
     });
 
@@ -971,10 +1144,10 @@
             const name = text.split(' - ')[0];
             
             const tag = document.createElement('span');
-            tag.className = 'bearer-tag';
+            tag.className = 'item-tag';
             tag.dataset.bearerId = id;
             tag.innerHTML = `
-                <span class="bearer-avatar">
+                <span class="item-avatar">
                     <i class="fa fa-user"></i>
                 </span>
                 ${name}
@@ -995,13 +1168,60 @@
             display.innerHTML = '<span class="empty-message">No office bearers selected</span>';
         }
         
-        const newCount = document.querySelectorAll('#newOfficeContainer .new-office-card').length;
+        const newCount = document.querySelectorAll('#newOfficeContainer .new-card').length;
+        count.textContent = countNum + newCount;
+    }
+
+    // ===== UPDATE SELECTED COORDINATORS =====
+    function updateSelectedCoordinators() {
+        const select = document.getElementById('coordinatorSelect');
+        const display = document.getElementById('selectedCoordinatorsDisplay');
+        const container = document.getElementById('selectedCoordinatorsContainer');
+        const count = document.getElementById('coordinatorCount');
+        
+        display.innerHTML = '';
+        container.innerHTML = '';
+        
+        const selectedOptions = select.selectedOptions;
+        let countNum = 0;
+        
+        for (let option of selectedOptions) {
+            const id = option.value;
+            const text = option.text;
+            const name = text.split(' - ')[0];
+            
+            const tag = document.createElement('span');
+            tag.className = 'item-tag';
+            tag.dataset.coordinatorId = id;
+            tag.innerHTML = `
+                <span class="item-avatar">
+                    <i class="fa fa-user"></i>
+                </span>
+                ${name}
+                <button type="button" class="remove-tag" onclick="removeSelectedCoordinator(this)">×</button>
+            `;
+            display.appendChild(tag);
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'selected_coordinators';
+            input.value = id;
+            container.appendChild(input);
+            
+            countNum++;
+        }
+        
+        if (countNum === 0) {
+            display.innerHTML = '<span class="empty-message">No coordinators selected</span>';
+        }
+        
+        const newCount = document.querySelectorAll('#newCoordinatorContainer .new-card').length;
         count.textContent = countNum + newCount;
     }
 
     // ===== REMOVE SELECTED BEARER =====
     function removeSelectedBearer(element) {
-        const tag = element.closest('.bearer-tag');
+        const tag = element.closest('.item-tag');
         const id = tag.dataset.bearerId;
         
         const select = document.getElementById('officeBearerSelect');
@@ -1015,10 +1235,26 @@
         updateSelectedBearers();
     }
 
+    // ===== REMOVE SELECTED COORDINATOR =====
+    function removeSelectedCoordinator(element) {
+        const tag = element.closest('.item-tag');
+        const id = tag.dataset.coordinatorId;
+        
+        const select = document.getElementById('coordinatorSelect');
+        const option = select.querySelector(`option[value="${id}"]`);
+        if (option) {
+            option.selected = false;
+            $(select).trigger('change');
+        }
+        
+        tag.remove();
+        updateSelectedCoordinators();
+    }
+
     // ===== ADD NEW OFFICE =====
     function addNewOffice() {
         const container = document.getElementById('newOfficeContainer');
-        const lastCard = container.querySelector('.new-office-card:last-child');
+        const lastCard = container.querySelector('.new-card:last-child');
         const newCard = lastCard.cloneNode(true);
         
         newCard.querySelectorAll('input').forEach(function(input) {
@@ -1029,7 +1265,7 @@
             }
         });
         
-        const cards = container.querySelectorAll('.new-office-card');
+        const cards = container.querySelectorAll('.new-card');
         const cardNumber = newCard.querySelector('.card-number');
         if (cardNumber) {
             cardNumber.textContent = cards.length + 1;
@@ -1046,9 +1282,9 @@
 
     // ===== REMOVE NEW OFFICE =====
     function removeNewOffice(button) {
-        const card = button.closest('.new-office-card');
+        const card = button.closest('.new-card');
         const container = document.getElementById('newOfficeContainer');
-        const cards = container.querySelectorAll('.new-office-card');
+        const cards = container.querySelectorAll('.new-card');
         
         if (cards.length <= 1) {
             alert('At least one new office bearer form must remain.');
@@ -1056,14 +1292,59 @@
         }
         
         card.remove();
-        updateCardNumbers();
+        updateCardNumbers('newOfficeContainer');
         updateSelectedBearers();
     }
 
+    // ===== ADD NEW COORDINATOR =====
+    function addNewCoordinator() {
+        const container = document.getElementById('newCoordinatorContainer');
+        const lastCard = container.querySelector('.new-card:last-child');
+        const newCard = lastCard.cloneNode(true);
+        
+        newCard.querySelectorAll('input').forEach(function(input) {
+            if (input.type !== 'file') {
+                input.value = '';
+            } else {
+                input.value = '';
+            }
+        });
+        
+        const cards = container.querySelectorAll('.new-card');
+        const cardNumber = newCard.querySelector('.card-number');
+        if (cardNumber) {
+            cardNumber.textContent = cards.length + 1;
+        }
+        
+        const removeBtn = newCard.querySelector('.remove-btn');
+        if (removeBtn) {
+            removeBtn.onclick = function() { removeNewCoordinator(this); };
+        }
+        
+        container.appendChild(newCard);
+        updateSelectedCoordinators();
+    }
+
+    // ===== REMOVE NEW COORDINATOR =====
+    function removeNewCoordinator(button) {
+        const card = button.closest('.new-card');
+        const container = document.getElementById('newCoordinatorContainer');
+        const cards = container.querySelectorAll('.new-card');
+        
+        if (cards.length <= 1) {
+            alert('At least one new coordinator form must remain.');
+            return;
+        }
+        
+        card.remove();
+        updateCardNumbers('newCoordinatorContainer');
+        updateSelectedCoordinators();
+    }
+
     // ===== UPDATE CARD NUMBERS =====
-    function updateCardNumbers() {
-        const container = document.getElementById('newOfficeContainer');
-        const cards = container.querySelectorAll('.new-office-card');
+    function updateCardNumbers(containerId) {
+        const container = document.getElementById(containerId);
+        const cards = container.querySelectorAll('.new-card');
         cards.forEach(function(card, index) {
             const cardNumber = card.querySelector('.card-number');
             if (cardNumber) {
@@ -1077,18 +1358,27 @@
         const form = document.getElementById('spiritualForm');
         
         form.addEventListener('submit', function(e) {
-            const selectedCount = document.querySelectorAll('#selectedBearersContainer input').length;
-            let hasValidNew = false;
+            const selectedBearersCount = document.querySelectorAll('#selectedBearersContainer input').length;
+            const selectedCoordinatorsCount = document.querySelectorAll('#selectedCoordinatorsContainer input').length;
+            let hasValidNewBearer = false;
+            let hasValidNewCoordinator = false;
             
             document.querySelectorAll('input[name="new_officebearer_name[]"]').forEach(function(input) {
                 if (input.value.trim() !== '') {
-                    hasValidNew = true;
+                    hasValidNewBearer = true;
                 }
             });
             
-            if (selectedCount === 0 && !hasValidNew) {
+            document.querySelectorAll('input[name="new_coordinator_name[]"]').forEach(function(input) {
+                if (input.value.trim() !== '') {
+                    hasValidNewCoordinator = true;
+                }
+            });
+            
+            if (selectedBearersCount === 0 && !hasValidNewBearer && 
+                selectedCoordinatorsCount === 0 && !hasValidNewCoordinator) {
                 e.preventDefault();
-                alert('Please select at least one existing office bearer or add a new one.');
+                alert('Please select at least one existing office bearer/coordinator or add a new one.');
                 switchTab('bearers');
             }
         });

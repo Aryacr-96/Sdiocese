@@ -99,9 +99,17 @@ def parish(request):
     return render(request, 'diocese/parish.html', {
         'parishes': parishes,
     })
+
+
 def parish_details(request, slug):
     parish = get_object_or_404(Parish, slug=slug)
+    return render(request, 'diocese/parish_details.html', {
+        'parish': parish,
+    })
 
+# Add ID-based fallback view
+def parish_details_by_id(request, parish_id):
+    parish = get_object_or_404(Parish, id=parish_id)
     return render(request, 'diocese/parish_details.html', {
         'parish': parish,
     })
@@ -204,6 +212,11 @@ def publications(request):
         'publications': publications,
         'total_publications': publications.count(),
     })
+
+
+
+
+
 def images(request):
     """Public gallery view showing only images"""
     # Get only image type gallery items
@@ -454,19 +467,20 @@ def priests(request):
 def add_priest(request):
     if not request.user.is_authenticated:
         return redirect('admin')
-
+    
     if request.method == 'POST':
         form = PriestForm(request.POST, request.FILES)
-
         if form.is_valid():
-            form.save()
+            priest = form.save()
+            messages.success(request, f'Priest "{priest.first_name} {priest.last_name}" added successfully!')
             return redirect('admin_priests')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+            print(form.errors)  # Debug: Print errors to console
     else:
         form = PriestForm()
-
-    return render(request, 'admin/priest/addpriest.html', {
-        'form': form,
-    })
+    
+    return render(request, 'admin/priest/addpriest.html', {'form': form})
 
 
 # Edit Priest
@@ -532,7 +546,6 @@ from .forms import ParishForm
 from .models import Parish
 import re
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
-
 # PARISH ADMIN
 @never_cache
 def parishes(request):
@@ -569,6 +582,17 @@ def add_parish(request):
                 parish.map_url = clean_google_maps_url(
                     parish.map_url
                 )
+            
+            # NEW: Clean social media fields
+            if parish.whatsapp_number:
+                parish.whatsapp_number = clean_whatsapp_number(parish.whatsapp_number)
+            
+            if parish.instagram_id:
+                parish.instagram_id = clean_instagram_id(parish.instagram_id)
+            
+            if parish.facebook_id:
+                parish.facebook_id = clean_facebook_id(parish.facebook_id)
+            
             parish.save()
             messages.success(
                 request,
@@ -611,9 +635,28 @@ def edit_parish(request, parish_id):
             else:
                 parish.assistant_vicar = None
 
+            # NEW: Clean social media fields before saving
+            if parish.whatsapp_number:
+                parish.whatsapp_number = clean_whatsapp_number(parish.whatsapp_number)
+            
+            if parish.instagram_id:
+                parish.instagram_id = clean_instagram_id(parish.instagram_id)
+            
+            if parish.facebook_id:
+                parish.facebook_id = clean_facebook_id(parish.facebook_id)
+
             parish.save()
 
+            messages.success(
+                request,
+                f'Parish "{parish.name}" updated successfully!'
+            )
             return redirect('admin_parishes')
+        else:
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
 
     else:
         form = ParishForm(instance=parish)
@@ -625,6 +668,7 @@ def edit_parish(request, parish_id):
     }
 
     return render(request, 'admin/parish/editparish.html', context)
+
 # DELETE PARISH
 @never_cache
 def delete_parish(request, parish_id):
@@ -656,9 +700,17 @@ def view_parish(request, parish_id):
     if parish.map_url:
         embed_url = get_google_maps_embed_url(parish.map_url, parish.location)
 
+    # NEW: Get social media URLs
+    social_media = {
+        'facebook': parish.get_facebook_url(),
+        'instagram': parish.get_instagram_url(),
+        'whatsapp': parish.get_whatsapp_url(),
+    }
+
     return render(request, 'admin/parish/viewparish.html', {
         'parish': parish,
         'embed_url': embed_url,
+        'social_media': social_media,  # NEW
     })
 
 # Helper Functions for Google Maps
@@ -728,6 +780,68 @@ def get_map_preview_url(parish):
     
     return None
 
+# NEW: Helper Functions for Social Media Cleaning
+def clean_whatsapp_number(number):
+    """
+    Clean WhatsApp number: remove spaces and special characters, ensure + prefix
+    """
+    if not number:
+        return number
+    
+    # Remove spaces and special characters except +
+    cleaned = re.sub(r'[^0-9+]', '', number.strip())
+    
+    # Ensure it starts with +
+    if cleaned and not cleaned.startswith('+'):
+        cleaned = '+' + cleaned
+    
+    return cleaned
+
+def clean_instagram_id(username):
+    """
+    Clean Instagram username: remove @ and whitespace
+    """
+    if not username:
+        return username
+    
+    # Remove @ if present and strip whitespace
+    cleaned = username.strip().lstrip('@')
+    
+    # Remove trailing slashes
+    cleaned = cleaned.rstrip('/')
+    
+    return cleaned
+
+def clean_facebook_id(facebook_id):
+    """
+    Clean Facebook ID: extract from URL if full URL provided, remove slashes
+    """
+    if not facebook_id:
+        return facebook_id
+    
+    facebook_id = facebook_id.strip()
+    
+    # If it's a full URL, extract the ID/username
+    if 'facebook.com' in facebook_id:
+        # Try to extract from various Facebook URL formats
+        patterns = [
+            r'facebook\.com/(?:profile\.php\?id=)?([^/?&]+)',
+            r'fb\.com/([^/?&]+)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, facebook_id)
+            if match:
+                return match.group(1)
+        
+        # If no pattern matches, return as is
+        return facebook_id
+    
+    # Remove trailing slashes
+    facebook_id = facebook_id.rstrip('/')
+    
+    return facebook_id
+
 
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -736,6 +850,8 @@ from .forms import ContactForm
 
 
 # Contact List
+from django.contrib import messages
+
 def contactpage(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -746,9 +862,11 @@ def contactpage(request):
                 "Your prayer request has been submitted successfully."
             )
             return redirect('contactpage')
-
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
         form = ContactForm()
+    
     contacts = Contact.objects.all().order_by('-created_at')
     context = {
         'form': form,
@@ -766,28 +884,36 @@ def contactview(request, id):
     return render(request, 'admin/contact/contactview.html', context)
 
 
-# Contact Delete
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
+
 def contactdelete(request, id):
     contact = get_object_or_404(Contact, id=id)
+    
     if request.method == "POST":
         contact.delete()
-        return redirect('contact')
-    context = {
-        'contact': contact
-    }
-    return render(request, 'admin/contact/contactdelete.html', context)
+        messages.success(request, "Prayer request deleted successfully.")
+        return redirect('contactpage')
+    
+    # If it's a GET request, redirect to the contact page with an error
+    messages.error(request, "Invalid request method.")
+    return redirect('contactpage')
 
 # views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
 from django.http import JsonResponse
-from .models import Spiritual, Officebearer, SpiritualOfficeBearer
+from .models import Spiritual, Officebearer, SpiritualOfficeBearer, Coordinator, SpiritualCoordinator, Designation
 from .forms import (
     SpiritualForm, 
     OfficebearerForm, 
+    CoordinatorForm,
     NewOfficeBearerForm,
-    SpiritualOfficeBearerFormSet
+    NewCoordinatorForm,
+    SpiritualOfficeBearerFormSet,
+    SpiritualCoordinatorFormSet,
+    DesignationForm
 )
 
 # ============================================
@@ -798,29 +924,54 @@ def spiritual_list(request):
     """Display list of all spiritual categories"""
     spirituals = Spiritual.objects.all().order_by('-created_at')
     total_bearers = SpiritualOfficeBearer.objects.count()
+    total_coordinators = SpiritualCoordinator.objects.count()
     
     return render(request, 'admin/spiritual/spiritual.html', {
         'spirituals': spirituals,
-        'total_bearers': total_bearers
+        'total_bearers': total_bearers,
+        'total_coordinators': total_coordinators
     })
 
 def spiritual_detail(request, id):
     """Display details of a specific spiritual category"""
     spiritual = get_object_or_404(Spiritual, id=id)
     officebearers = spiritual.officebearers.all()
+    coordinators = spiritual.coordinators.all()
     
     return render(request, 'admin/spiritual/spiritual_detail.html', {
         'spiritual': spiritual,
-        'officebearers': officebearers
+        'officebearers': officebearers,
+        'coordinators': coordinators
     })
-
-# views.py# views.py
+# views.py - Complete with all imports
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db import transaction
-from .models import Spiritual, Officebearer, SpiritualOfficeBearer, Designation
-from .forms import SpiritualForm
+from django.http import JsonResponse
+from .models import (
+    Spiritual, 
+    Officebearer, 
+    SpiritualOfficeBearer, 
+    Coordinator, 
+    SpiritualCoordinator, 
+    Designation
+)
+from .forms import (
+    SpiritualForm, 
+    OfficebearerForm, 
+    CoordinatorForm,
+    NewOfficeBearerForm,
+    NewCoordinatorForm,
+    SpiritualOfficeBearerFormSet,
+    SpiritualCoordinatorFormSet,
+    DesignationForm
+)
+
+
+# ============================================
+# SPIRITUAL VIEWS
+# ============================================
 
 def add_spiritual(request):
     if request.method == "POST":
@@ -842,6 +993,19 @@ def add_spiritual(request):
                     except Officebearer.DoesNotExist:
                         pass
             
+            # Handle selected existing coordinators
+            selected_coordinators = request.POST.getlist('selected_coordinators')
+            for coord_id in selected_coordinators:
+                if coord_id:
+                    try:
+                        coordinator = Coordinator.objects.get(id=coord_id)
+                        SpiritualCoordinator.objects.create(
+                            spiritual=spiritual,
+                            coordinator=coordinator
+                        )
+                    except Coordinator.DoesNotExist:
+                        pass
+            
             # Handle new office bearers with images
             new_names = request.POST.getlist('new_officebearer_name[]')
             new_designations = request.POST.getlist('new_officebearer_designation[]')
@@ -852,8 +1016,7 @@ def add_spiritual(request):
             
             for i in range(len(new_names)):
                 name = new_names[i].strip()
-                if name:  # Only create if name is provided
-                    # ✅ Get designation object from ID
+                if name:
                     designation_id = new_designations[i] if i < len(new_designations) else None
                     designation = None
                     if designation_id:
@@ -862,44 +1025,81 @@ def add_spiritual(request):
                         except Designation.DoesNotExist:
                             messages.warning(request, f"Designation not found for {name}")
                     
-                    # Create office bearer with FK to Designation
                     officebearer = Officebearer(
                         name=name,
-                        designation=designation,  # ← Now passing FK object
+                        designation=designation,
                         phone=new_phones[i].strip() if i < len(new_phones) else '',
                         email=new_emails[i].strip() if i < len(new_emails) else '',
                         district=new_districts[i].strip() if i < len(new_districts) else '',
                     )
                     
-                    # Handle image for this office bearer
                     if i < len(new_images) and new_images[i]:
                         officebearer.image = new_images[i]
                     
                     officebearer.save()
                     
-                    # Create the association
                     SpiritualOfficeBearer.objects.create(
                         spiritual=spiritual,
                         officebearer=officebearer
+                    )
+            
+            # Handle new coordinators
+            new_coord_names = request.POST.getlist('new_coordinator_name[]')
+            new_coord_designations = request.POST.getlist('new_coordinator_designation[]')
+            new_coord_districts = request.POST.getlist('new_coordinator_district[]')
+            new_coord_phones = request.POST.getlist('new_coordinator_phone[]')
+            new_coord_emails = request.POST.getlist('new_coordinator_email[]')
+            new_coord_images = request.FILES.getlist('new_coordinator_image[]')
+            
+            for i in range(len(new_coord_names)):
+                name = new_coord_names[i].strip()
+                if name:
+                    designation_id = new_coord_designations[i] if i < len(new_coord_designations) else None
+                    designation = None
+                    if designation_id:
+                        try:
+                            designation = Designation.objects.get(id=designation_id)
+                        except Designation.DoesNotExist:
+                            messages.warning(request, f"Designation not found for {name}")
+                    
+                    coordinator = Coordinator(
+                        name=name,
+                        designation=designation,
+                        district=new_coord_districts[i].strip() if i < len(new_coord_districts) else '',
+                        phone=new_coord_phones[i].strip() if i < len(new_coord_phones) else '',
+                        email=new_coord_emails[i].strip() if i < len(new_coord_emails) else '',
+                    )
+                    
+                    if i < len(new_coord_images) and new_coord_images[i]:
+                        coordinator.image = new_coord_images[i]
+                    
+                    coordinator.save()
+                    
+                    SpiritualCoordinator.objects.create(
+                        spiritual=spiritual,
+                        coordinator=coordinator
                     )
             
             messages.success(request, "Spiritual category added successfully!")
             return redirect('spiritual')
         else:
             messages.error(request, "Please correct the errors below.")
+            # Debug: Print form errors to console
+            print("Form errors:", form.errors)
     else:
         form = SpiritualForm()
     
-    # ✅ Get all designations for dropdown
     existing_bearers = Officebearer.objects.select_related('designation').all().order_by('name')
-    selected_bearers = []
+    existing_coordinators = Coordinator.objects.select_related('designation').all().order_by('name')
     designations = Designation.objects.all().order_by('name')
     
     return render(request, 'admin/spiritual/addspiritual.html', {
         'form': form,
         'existing_bearers': existing_bearers,
-        'selected_bearers': selected_bearers,
-        'designations': designations,  # ← ADD THIS
+        'existing_coordinators': existing_coordinators,
+        'selected_bearers': [],
+        'selected_coordinators': [],
+        'designations': designations,
         'editing': False
     })
 
@@ -914,6 +1114,7 @@ def edit_spiritual(request, id):
             
             # Clear existing associations
             SpiritualOfficeBearer.objects.filter(spiritual=spiritual).delete()
+            SpiritualCoordinator.objects.filter(spiritual=spiritual).delete()
             
             # Handle selected existing office bearers
             selected_bearers = request.POST.getlist('selected_bearers')
@@ -928,7 +1129,20 @@ def edit_spiritual(request, id):
                     except Officebearer.DoesNotExist:
                         pass
             
-            # Handle new office bearers with images
+            # Handle selected existing coordinators
+            selected_coordinators = request.POST.getlist('selected_coordinators')
+            for coord_id in selected_coordinators:
+                if coord_id:
+                    try:
+                        coordinator = Coordinator.objects.get(id=coord_id)
+                        SpiritualCoordinator.objects.create(
+                            spiritual=spiritual,
+                            coordinator=coordinator
+                        )
+                    except Coordinator.DoesNotExist:
+                        pass
+            
+            # Handle new office bearers
             new_names = request.POST.getlist('new_officebearer_name[]')
             new_designations = request.POST.getlist('new_officebearer_designation[]')
             new_phones = request.POST.getlist('new_officebearer_phone[]')
@@ -939,25 +1153,22 @@ def edit_spiritual(request, id):
             for i in range(len(new_names)):
                 name = new_names[i].strip()
                 if name:
-                    # ✅ Get designation object from ID
                     designation_id = new_designations[i] if i < len(new_designations) else None
                     designation = None
                     if designation_id:
                         try:
                             designation = Designation.objects.get(id=designation_id)
                         except Designation.DoesNotExist:
-                            messages.warning(request, f"Designation not found for {name}")
+                            pass
                     
-                    # Create office bearer with FK to Designation
                     officebearer = Officebearer(
                         name=name,
-                        designation=designation,  # ← Now passing FK object
+                        designation=designation,
                         phone=new_phones[i].strip() if i < len(new_phones) else '',
                         email=new_emails[i].strip() if i < len(new_emails) else '',
                         district=new_districts[i].strip() if i < len(new_districts) else '',
                     )
                     
-                    # Handle image for this office bearer
                     if i < len(new_images) and new_images[i]:
                         officebearer.image = new_images[i]
                     
@@ -968,30 +1179,82 @@ def edit_spiritual(request, id):
                         officebearer=officebearer
                     )
             
+            # Handle new coordinators
+            new_coord_names = request.POST.getlist('new_coordinator_name[]')
+            new_coord_designations = request.POST.getlist('new_coordinator_designation[]')
+            new_coord_districts = request.POST.getlist('new_coordinator_district[]')
+            new_coord_phones = request.POST.getlist('new_coordinator_phone[]')
+            new_coord_emails = request.POST.getlist('new_coordinator_email[]')
+            new_coord_images = request.FILES.getlist('new_coordinator_image[]')
+            
+            for i in range(len(new_coord_names)):
+                name = new_coord_names[i].strip()
+                if name:
+                    designation_id = new_coord_designations[i] if i < len(new_coord_designations) else None
+                    designation = None
+                    if designation_id:
+                        try:
+                            designation = Designation.objects.get(id=designation_id)
+                        except Designation.DoesNotExist:
+                            pass
+                    
+                    coordinator = Coordinator(
+                        name=name,
+                        designation=designation,
+                        district=new_coord_districts[i].strip() if i < len(new_coord_districts) else '',
+                        phone=new_coord_phones[i].strip() if i < len(new_coord_phones) else '',
+                        email=new_coord_emails[i].strip() if i < len(new_coord_emails) else '',
+                    )
+                    
+                    if i < len(new_coord_images) and new_coord_images[i]:
+                        coordinator.image = new_coord_images[i]
+                    
+                    coordinator.save()
+                    
+                    SpiritualCoordinator.objects.create(
+                        spiritual=spiritual,
+                        coordinator=coordinator
+                    )
+            
             messages.success(request, "Spiritual category updated successfully!")
             return redirect('spiritual')
         else:
             messages.error(request, "Please correct the errors below.")
+            print("Form errors:", form.errors)
     else:
         form = SpiritualForm(instance=spiritual)
     
-    # ✅ Get all designations for dropdown
+    # ===== GET ALL DATA FOR TEMPLATE =====
+    # Get all office bearers
     existing_bearers = Officebearer.objects.select_related('designation').all().order_by('name')
+    
+    # Get all coordinators
+    existing_coordinators = Coordinator.objects.select_related('designation').all().order_by('name')
+    
+    # Get selected office bearer IDs for this spiritual
     selected_bearers = spiritual.officebearers.values_list('id', flat=True)
+    print(f"Selected Bearers: {list(selected_bearers)}")  # Debug
+    
+    # Get selected coordinator IDs for this spiritual
+    selected_coordinators = spiritual.coordinators.values_list('id', flat=True)
+    print(f"Selected Coordinators: {list(selected_coordinators)}")  # Debug
+    
+    # Get all designations for dropdowns
     designations = Designation.objects.all().order_by('name')
     
-    return render(request, 'admin/spiritual/addspiritual.html', {
+    return render(request, 'admin/spiritual/editspiritual.html', {
         'form': form,
+        'spiritual': spiritual,
         'existing_bearers': existing_bearers,
+        'existing_coordinators': existing_coordinators,
         'selected_bearers': list(selected_bearers),
-        'designations': designations,  # ← ADD THIS
+        'selected_coordinators': list(selected_coordinators),
+        'designations': designations,
         'editing': True,
-        'spiritual': spiritual
     })
 
 def view_spiritual(request, id):
     """View Spiritual Category"""
-
     spiritual = get_object_or_404(
         Spiritual.objects.prefetch_related(
             'officebearers',
@@ -1001,7 +1264,7 @@ def view_spiritual(request, id):
     )
 
     officebearers = spiritual.officebearers.select_related('designation').all()
-    coordinators = spiritual.coordinators.all()
+    coordinators = spiritual.coordinators.select_related('designation').all()
 
     return render(
         request,
@@ -1026,30 +1289,21 @@ def delete_spiritual(request, id):
     return render(request, 'admin/spiritual/deletespiritual.html', {
         'spiritual': spiritual
     })
+
+
 # ============================================
 # OFFICE BEARER VIEWS
 # ============================================
-# views.py
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Officebearer, Designation, Spiritual
-from .forms import OfficebearerForm
-
 
 def officebearer_list(request):
     """Display list of all office bearers with designation filter"""
-    # Get filter parameter from request
     designation_filter = request.GET.get('designation', '')
     
-    # Start with all office bearers
     officebearers = Officebearer.objects.select_related('designation').all().order_by('-created_at')
     
-    # Apply filter if designation is selected
     if designation_filter:
         officebearers = officebearers.filter(designation_id=designation_filter)
     
-    # Get all designations for dropdown
     designations = Designation.objects.all().order_by('name')
     
     return render(request, 'admin/spiritual/officebearer/officebearer.html', {
@@ -1074,7 +1328,7 @@ def add_officebearer(request):
     
     return render(request, 'admin/spiritual/officebearer/addoffice.html', {
         'form': form,
-        'designations': Designation.objects.all().order_by('name'),  # ← ADD THIS
+        'designations': Designation.objects.all().order_by('name'),
     })
 
 
@@ -1096,7 +1350,7 @@ def edit_officebearer(request, id):
     return render(request, 'admin/spiritual/officebearer/editoffice.html', {
         'form': form,
         'officebearer': officebearer,
-        'designations': Designation.objects.all().order_by('name'),  # ← ADD THIS
+        'designations': Designation.objects.all().order_by('name'),
     })
 
 
@@ -1122,6 +1376,107 @@ def officebearer_detail(request, id):
     
     return render(request, 'admin/spiritual/officebearer/officebearer_detail.html', {
         'officebearer': officebearer,
+        'spiritual_categories': spiritual_categories,
+    })
+
+
+# ============================================
+# COORDINATOR VIEWS (Updated - Many-to-Many)
+# ============================================
+
+def coordinator_list(request):
+    """Display list of all coordinators with filters"""
+    designation_filter = request.GET.get('designation', '')
+    spiritual_filter = request.GET.get('spiritual', '')
+    
+    # Start with all coordinators
+    coordinators = Coordinator.objects.select_related('designation').all().order_by('name')
+    
+    # Apply filters
+    if designation_filter:
+        coordinators = coordinators.filter(designation_id=designation_filter)
+    
+    if spiritual_filter:
+        coordinators = coordinators.filter(spiritual_categories__id=spiritual_filter)
+    
+    # Get data for dropdowns
+    designations = Designation.objects.all().order_by('name')
+    spirituals = Spiritual.objects.all().order_by('category_title')
+    
+    return render(request, 'admin/spiritual/coordinators/coord.html', {
+        'coordinators': coordinators,
+        'designations': designations,
+        'spirituals': spirituals,
+        'selected_designation_id': designation_filter,
+        'selected_spiritual_id': spiritual_filter,
+    })
+
+
+def add_coordinator(request):
+    """Add a new coordinator"""
+    if request.method == "POST":
+        form = CoordinatorForm(request.POST, request.FILES)
+        if form.is_valid():
+            coordinator = form.save()
+            messages.success(request, f"Coordinator '{coordinator.name}' added successfully!")
+            return redirect('coordinator_list')
+        else:
+            messages.error(request, "Please correct the errors below.")
+            print(form.errors)  # Debug
+    else:
+        form = CoordinatorForm()
+    
+    return render(request, 'admin/spiritual/coordinators/addcoord.html', {
+        'form': form,
+        'designations': Designation.objects.all().order_by('name'),
+    })
+
+
+def edit_coordinator(request, id):
+    """Edit an existing coordinator"""
+    coordinator = get_object_or_404(Coordinator, id=id)
+    
+    if request.method == "POST":
+        form = CoordinatorForm(request.POST, request.FILES, instance=coordinator)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Coordinator '{coordinator.name}' updated successfully!")
+            return redirect('coordinator_list')
+        else:
+            messages.error(request, "Please correct the errors below.")
+            print(form.errors)  # Debug
+    else:
+        form = CoordinatorForm(instance=coordinator)
+    
+    return render(request, 'admin/spiritual/coordinators/editcoord.html', {
+        'form': form,
+        'coordinator': coordinator,
+        'designations': Designation.objects.all().order_by('name'),
+    })
+
+
+def delete_coordinator(request, id):
+    """Delete a coordinator"""
+    coordinator = get_object_or_404(Coordinator, id=id)
+    
+    if request.method == "POST":
+        name = coordinator.name
+        coordinator.delete()
+        messages.success(request, f"Coordinator '{name}' has been deleted successfully.")
+        return redirect('coordinator_list')
+    
+    return render(request, 'admin/spiritual/coordinators/deletecoord.html', {
+        'coordinator': coordinator
+    })
+
+
+def coordinator_detail(request, id):
+    """Display details of a specific coordinator"""
+    coordinator = get_object_or_404(Coordinator.objects.select_related('designation'), id=id)
+    spiritual_categories = coordinator.spiritual_categories.all()
+    
+    return render(request, 'admin/spiritual/coordinators/coordinator_detail.html', {
+        'coordinator': coordinator,
         'spiritual_categories': spiritual_categories,
     })
 # ============================================
@@ -1285,103 +1640,7 @@ def delete_designation(request,id):
             'designation':designation
         }
     )
-# views.py
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Coordinator, Designation, Spiritual
-from .forms import CoordinatorForm
-
-
-# ============================================
-# COORDINATOR VIEWS
-# ============================================
-
-def coordinator_list(request):
-    """Display list of all coordinators with filters"""
-    # Get filter parameters
-    designation_filter = request.GET.get('designation', '')
-    spiritual_filter = request.GET.get('spiritual', '')
-    
-    # Start with all coordinators
-    coordinators = Coordinator.objects.select_related('spiritual', 'designation').all().order_by('name')
-    
-    # Apply filters
-    if designation_filter:
-        coordinators = coordinators.filter(designation_id=designation_filter)
-    
-    if spiritual_filter:
-        coordinators = coordinators.filter(spiritual_id=spiritual_filter)
-    
-    # Get data for dropdowns
-    designations = Designation.objects.all().order_by('name')
-    spirituals = Spiritual.objects.all().order_by('category_title')
-    
-    return render(request, 'admin/spiritual/coordinators/coord.html', {
-        'coordinators': coordinators,
-        'designations': designations,
-        'spirituals': spirituals,
-        'selected_designation_id': designation_filter,
-        'selected_spiritual_id': spiritual_filter,
-    })
-
-
-def add_coordinator(request):
-    """Add a new coordinator"""
-    if request.method == "POST":
-        form = CoordinatorForm(request.POST)
-        if form.is_valid():
-            coordinator = form.save()
-            messages.success(request, f"Coordinator '{coordinator.name}' added successfully!")
-            return redirect('coordinator_list')
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = CoordinatorForm()
-    
-    return render(request, 'admin/spiritual/coordinators/addcoord.html', {
-        'form': form,
-        'spirituals': Spiritual.objects.all().order_by('category_title'),
-        'designations': Designation.objects.all().order_by('name'),
-    })
-
-
-def edit_coordinator(request, id):
-    """Edit an existing coordinator"""
-    coordinator = get_object_or_404(Coordinator, id=id)
-    
-    if request.method == "POST":
-        form = CoordinatorForm(request.POST, instance=coordinator)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"Coordinator '{coordinator.name}' updated successfully!")
-            return redirect('coordinator_list')
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = CoordinatorForm(instance=coordinator)
-    
-    return render(request, 'admin/spiritual/coordinators/editcoord.html', {
-        'form': form,
-        'coordinator': coordinator,
-        'spirituals': Spiritual.objects.all().order_by('category_title'),
-        'designations': Designation.objects.all().order_by('name'),
-    })
-
-
-def delete_coordinator(request, id):
-    """Delete a coordinator"""
-    coordinator = get_object_or_404(Coordinator, id=id)
-    
-    if request.method == "POST":
-        name = coordinator.name
-        coordinator.delete()
-        messages.success(request, f"Coordinator '{name}' has been deleted successfully.")
-        return redirect('coordinator_list')
-    
-    return render(request, 'admin/spiritual/coordinators/deletecoord.html', {
-        'coordinator': coordinator
-    })
 
 #KARUNYA SPARSHAM
 from django.shortcuts import render, redirect, get_object_or_404
@@ -1876,7 +2135,6 @@ def admin_gallery_list(request):
     }
     return render(request, 'admin/gallery/gallery.html', context)
 
-
 @staff_member_required
 def admin_gallery_add(request):
     if request.method == 'POST':
@@ -1887,12 +2145,14 @@ def admin_gallery_add(request):
             return redirect('admin_gallery_list')
         else:
             messages.error(request, 'Please correct the errors below.')
+            print(form.errors)  # For debugging
     else:
         form = GalleryForm()
     
     context = {
         'form': form,
         'is_edit': False,
+        'title': 'Add Gallery Item',
     }
     return render(request, 'admin/gallery/addgallery.html', context)
 
@@ -1904,11 +2164,17 @@ def admin_gallery_edit(request, pk):
     if request.method == 'POST':
         form = GalleryForm(request.POST, request.FILES, instance=gallery_item)
         if form.is_valid():
+            # Check if the image field was cleared (using ClearableFileInput)
+            if 'image' in request.POST and request.POST.get('image-clear', False):
+                gallery_item.image.delete(save=False)
+                gallery_item.image = None
+            
             form.save()
             messages.success(request, f'Gallery item "{gallery_item.title}" updated successfully!')
             return redirect('admin_gallery_list')
         else:
             messages.error(request, 'Please correct the errors below.')
+            print(form.errors)  # For debugging
     else:
         form = GalleryForm(instance=gallery_item)
     
@@ -1916,6 +2182,7 @@ def admin_gallery_edit(request, pk):
         'form': form,
         'gallery_item': gallery_item,
         'is_edit': True,
+        'title': 'Edit Gallery Item',
     }
     return render(request, 'admin/gallery/editgallery.html', context)
 
