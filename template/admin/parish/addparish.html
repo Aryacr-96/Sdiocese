@@ -1226,12 +1226,13 @@
 <!-- ========================================
    SCRIPTS
 ======================================== -->
+
 <script>
     (function() {
         // Add class to Django form fields for consistent styling
         document.addEventListener('DOMContentLoaded', function() {
             // Add class to all Django form fields
-            document.querySelectorAll('#parishForm input, #parishForm select, #parishForm textarea').forEach(function(el) {
+            document.querySelectorAll('#parishForm input, #parishForm select').forEach(function(el) {
                 if (!el.closest('.file-upload-area-modern')) {
                     el.classList.add('form-control-modern-django');
                 }
@@ -1349,7 +1350,8 @@
                     el.addEventListener('change', updateSocialPreviews);
                 }
             });
-            // Initial update
+
+            // Initial update with delay to ensure fields are populated
             setTimeout(updateSocialPreviews, 300);
         });
 
@@ -1552,6 +1554,7 @@
 
     })();
 
+
     // ========================================
     // HIDE DESCRIPTION LABEL - With Delay
     // ========================================
@@ -1582,22 +1585,26 @@
         }, 200);
     });
 
+
     // ========================================
     // PHONE NUMBER VALIDATION
     // ========================================
     document.addEventListener('DOMContentLoaded', function() {
         const phoneInput = document.getElementById('id_phone');
         if (phoneInput) {
+
             // Allow only numbers
             phoneInput.addEventListener('input', function() {
                 this.value = this.value.replace(/\D/g, '').slice(0, 10);
                 
                 // Remove error state while typing
                 this.classList.remove('error', 'success');
+
                 const errorMsg = this.parentElement.querySelector('.phone-error');
                 if (errorMsg) {
                     errorMsg.remove();
                 }
+
                 this.style.borderColor = '';
                 this.style.boxShadow = '';
             });
@@ -1627,6 +1634,7 @@
                     errorMsg.className = 'phone-error';
                     errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Phone number must be exactly 10 digits.';
                     errorContainer.appendChild(errorMsg);
+
                 } else if (val && /^\d{10}$/.test(val)) {
                     this.classList.add('success');
                     this.style.borderColor = '#22c55e';
@@ -1636,6 +1644,5 @@
         }
     });
 </script>
-
 </body>
 </html>

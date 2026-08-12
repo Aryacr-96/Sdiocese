@@ -12,10 +12,19 @@ class adminform(forms.Form):
 # PRIEST FORM - FIXED
 # ========================================
 from django import forms
+from django.core.validators import RegexValidator
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from .models import Priest
+from .models import Priest, Parish
+import re
 
 class PriestForm(forms.ModelForm):
+    # Phone number validator - exactly 10 digits
+    phone_validator = RegexValidator(
+        regex=r'^\d{10}$',
+        message='Phone number must be exactly 10 digits and contain only numbers.',
+        code='invalid_phone'
+    )
+    
     description = forms.CharField(
         widget=CKEditorUploadingWidget(attrs={
             'class': 'form-control-modern',
@@ -33,6 +42,21 @@ class PriestForm(forms.ModelForm):
         label='',
         required=False,
     )
+    
+    # Override phone field with validation
+    phone = forms.CharField(
+        validators=[phone_validator],
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-modern',
+            'placeholder': 'Enter 10-digit phone number',
+            'maxlength': '10',
+            'pattern': '[0-9]{10}',
+            'inputmode': 'numeric',
+            'oninput': 'this.value = this.value.replace(/[^0-9]/g, "").slice(0, 10)'
+        }),
+        required=True,
+        help_text='Enter exactly 10 digits (numbers only)'
+    )
 
     class Meta:
         model = Priest
@@ -45,36 +69,237 @@ class PriestForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter first name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter last name'}),
-            'home_parish': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter home parish'}),
+            'home_parish': forms.Select(attrs={'class': 'form-control-modern'}),
             'position': forms.Select(attrs={'class': 'form-control-modern'}),
-            'blood_group': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'e.g., A+, O-'}),
+            'blood_group': forms.Select(attrs={'class': 'form-control-modern'}),
             'ordained_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
             'retired_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
             'address': forms.Textarea(attrs={'class': 'form-control-modern', 'rows': 3, 'placeholder': 'Enter address'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'e.g., +1234567890'}),
             'email': forms.EmailInput(attrs={'class': 'form-control-modern', 'placeholder': 'priest@example.com'}),
         }
-from django import forms
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
-from .models import Parish, Priest
-import re
-from django.db import models
-# Add this import at the top of forms.py if not already there
-import re
-from django.core.validators import RegexValidator
-import re
-from django import forms
-from django.core.validators import RegexValidator
-from .models import Parish, Priest
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'position': 'Position',
+            'home_parish': 'Home Parish',
+            'blood_group': 'Blood Group',
+            'ordained_on': 'Ordained On',
+            'retired_on': 'Retired On',
+            'pastoral_experience': 'Pastoral Experience',
+            'address': 'Address',
+            'phone': 'Phone Number',
+            'email': 'Email Address',
+            'image': 'Photo',
+            'description': 'Description',
+        }
+        help_texts = {
+            'phone': 'Enter exactly 10 digits (numbers only)',
+            'email': 'Enter a valid email address',
+            'ordained_on': 'Date of ordination (Required)',
+            'retired_on': 'Retirement date (Required for retired priests)',
+        }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # ========================================
+        # PREVENT DUPLICATE PRIEST ASSIGNMENTS
+        # ========================================
+        
+        instance = kwargs.get('instance')
+        all_parishes = Parish.objects.all()
+        
+        if instance and instance.pk:
+            parishes_to_check = all_parishes
+        else:
+            parishes_to_check = all_parishes
+        
+        assigned_vicar_ids = list(
+            parishes_to_check.filter(vicar__isnull=False).values_list('vicar_id', flat=True)
+        )
+        
+        assigned_assistant_vicar_ids = list(
+            parishes_to_check.filter(assistant_vicar__isnull=False).values_list('assistant_vicar_id', flat=True)
+        )
+        
+        all_assigned_ids = list(set(assigned_vicar_ids + assigned_assistant_vicar_ids))
+        
+        if instance and instance.pk:
+            if instance.pk in all_assigned_ids:
+                all_assigned_ids.remove(instance.pk)
+        
+        priest_queryset = Priest.objects.all().order_by('first_name', 'last_name')
+        available_priests = priest_queryset.exclude(id__in=all_assigned_ids)
+        
+        if instance and instance.pk:
+            available_priests = available_priests | Priest.objects.filter(pk=instance.pk)
+            available_priests = available_priests.distinct().order_by('first_name', 'last_name')
+        
+        self.available_priests = available_priests
+
+        # ========================================
+        # FIELD REQUIREMENTS
+        # ========================================
+        
+        # Make ordained_on required
+        self.fields['ordained_on'].required = True
+        self.fields['ordained_on'].widget.attrs['required'] = 'required'
+        
+        # Make retired_on NOT required by default (will be validated in clean)
+        self.fields['retired_on'].required = False
+        self.fields['retired_on'].widget.attrs['required'] = False
+        
+        # Make other fields optional
+        optional_fields = [
+            'blood_group', 'pastoral_experience', 'address',
+            'image', 'description', 'home_parish'
+        ]
+        for field in optional_fields:
+            self.fields[field].required = False
+
+    # ========================================
+    # CLEAN METHODS - Validation
+    # ========================================
+    
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if first_name:
+            first_name = first_name.strip()
+            if len(first_name) < 2:
+                raise forms.ValidationError("First name must be at least 2 characters long.")
+            if not first_name.replace(' ', '').isalpha():
+                raise forms.ValidationError("First name should contain only letters and spaces.")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if last_name:
+            last_name = last_name.strip()
+            if len(last_name) < 2:
+                raise forms.ValidationError("Last name must be at least 2 characters long.")
+            if not last_name.replace(' ', '').isalpha():
+                raise forms.ValidationError("Last name should contain only letters and spaces.")
+        return last_name
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            cleaned = re.sub(r'[^0-9]', '', phone)
+            if cleaned:
+                if len(cleaned) != 10:
+                    raise forms.ValidationError("Phone number must be exactly 10 digits.")
+                return cleaned
+        return phone
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            email = email.strip().lower()
+            queryset = Priest.objects.filter(email=email)
+            if self.instance.pk:
+                queryset = queryset.exclude(pk=self.instance.pk)
+            if queryset.exists():
+                raise forms.ValidationError("A priest with this email already exists.")
+        return email
+
+    def clean_home_parish(self):
+        home_parish = self.cleaned_data.get('home_parish')
+        # Allow null/empty values
+        if not home_parish:
+            return None
+        return home_parish
+
+    def clean_blood_group(self):
+        blood_group = self.cleaned_data.get('blood_group')
+        if blood_group:
+            valid_blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+            if blood_group not in valid_blood_groups:
+                raise forms.ValidationError(f"Invalid blood group. Must be one of: {', '.join(valid_blood_groups)}")
+            return blood_group
+        return blood_group
+
+    def clean_ordained_on(self):
+        ordained_on = self.cleaned_data.get('ordained_on')
+        
+        if not ordained_on:
+            raise forms.ValidationError("Ordination date is required.")
+        
+        from datetime import date
+        if ordained_on > date.today():
+            raise forms.ValidationError("Ordination date cannot be in the future.")
+        
+        return ordained_on
+
+    def clean_retired_on(self):
+        """Validate retired date - Only required for retired priests"""
+        retired_on = self.cleaned_data.get('retired_on')
+        position = self.cleaned_data.get('position')
+        ordained_on = self.cleaned_data.get('ordained_on')
+        
+        # Only validate if position is retired_priest
+        if position == 'retired_priest':
+            if not retired_on:
+                raise forms.ValidationError("Retirement date is required for retired priests.")
+            
+            from datetime import date
+            if retired_on > date.today():
+                raise forms.ValidationError("Retirement date cannot be in the future.")
+            
+            if retired_on and ordained_on:
+                if retired_on < ordained_on:
+                    raise forms.ValidationError("Retirement date must be after ordination date.")
+        
+        return retired_on
+
+    def clean(self):
+        """Cross-field validation"""
+        cleaned_data = super().clean()
+        
+        position = cleaned_data.get('position')
+        ordained_on = cleaned_data.get('ordained_on')
+        retired_on = cleaned_data.get('retired_on')
+        
+        # Validate ordained_on is present
+        if not ordained_on:
+            self.add_error('ordained_on', 'Ordination date is required.')
+        
+        # Validate retired_on for retired priests
+        if position == 'retired_priest' and not retired_on:
+            self.add_error('retired_on', 'Retirement date is required for retired priests.')
+        
+        # Validate retired_on is after ordained_on
+        if retired_on and ordained_on:
+            if retired_on < ordained_on:
+                self.add_error('retired_on', 'Retirement date must be after ordination date.')
+        
+        return cleaned_data
+
+    # ========================================
+    # SAVE METHOD
+    # ========================================
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        
+        if commit:
+            instance.save()
+            self.save_m2m()
+        
+        return instance
+    
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from .models import Parish, Priest
+import re
+from django.core.validators import RegexValidator
+from django.utils.text import slugify
 
 class ParishForm(forms.ModelForm):
     description = forms.CharField(
         widget=CKEditorUploadingWidget(attrs={
             'class': 'form-control-modern',
             'style': 'width: 100%; min-height: 150px;',
-            'placeholder': 'Enter a brief description or history of the parish...'  # <-- Added placeholder
+            'placeholder': 'Enter a brief description or history of the parish...'
         }),
         label='',
         required=False,
@@ -103,6 +328,7 @@ class ParishForm(forms.ModelForm):
         model = Parish
         fields = [
             'name',
+            'slug',
             'image',
             'location',
             'map_url',
@@ -124,6 +350,7 @@ class ParishForm(forms.ModelForm):
 
         labels = {
             'name': 'Parish Name',
+            'slug': 'Slug (URL identifier)',
             'image': 'Parish Image',
             'location': 'Location',
             'map_url': 'Google Maps URL',
@@ -147,6 +374,11 @@ class ParishForm(forms.ModelForm):
             'name': forms.TextInput(attrs={
                 'class': 'form-control-modern',
                 'placeholder': 'Enter parish name',
+            }),
+            'slug': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Auto-generated from name (optional)',
+                'help_text': 'Leave blank to auto-generate from parish name',
             }),
             'location': forms.TextInput(attrs={
                 'class': 'form-control-modern',
@@ -179,7 +411,11 @@ class ParishForm(forms.ModelForm):
             }),
             'whatsapp_number': forms.TextInput(attrs={
                 'class': 'form-control-modern',
-                'placeholder': 'e.g., +1234567890',
+                'placeholder': 'Enter WhatsApp number (digits only)',
+                'maxlength': '15',
+                'pattern': '[0-9]*',
+                'title': 'Please enter only numbers',
+                'oninput': 'this.value = this.value.replace(/[^0-9]/g, "")'
             }),
             'facebook_id': forms.TextInput(attrs={
                 'class': 'form-control-modern',
@@ -212,8 +448,9 @@ class ParishForm(forms.ModelForm):
         }
 
         help_texts = {
+            'slug': 'URL-friendly version of the parish name. Leave blank to auto-generate.',
             'phone': 'Enter exactly 10 digits (e.g., 9876543210)',
-            'whatsapp_number': 'Include country code (e.g., +1234567890)',
+            'whatsapp_number': 'Enter only numbers (no +, spaces, or special characters)',
             'facebook_id': 'Can be page ID (numbers) or username',
             'instagram_id': 'Username without the @ symbol',
             'facebook_url': 'Leave blank to auto-generate from ID',
@@ -256,16 +493,22 @@ class ParishForm(forms.ModelForm):
             parishes_to_check.filter(assistant_vicar__isnull=False).values_list('assistant_vicar_id', flat=True)
         )
         
+        # Combine ALL assigned IDs (priests assigned as vicar OR assistant vicar)
+        all_assigned_ids = list(set(assigned_vicar_ids + assigned_assistant_vicar_ids))
+        
         # Base queryset: Only show priests with position='priest'
         priest_queryset = Priest.objects.filter(position='priest')
         
-        # Exclude priests already assigned as vicar (for vicar dropdown)
-        vicar_queryset = priest_queryset.exclude(id__in=assigned_vicar_ids)
+        # ========================================
+        # FOR VICAR DROPDOWN:
+        # Exclude priests who are already assigned as vicar OR assistant vicar
+        # ========================================
+        vicar_queryset = priest_queryset.exclude(id__in=all_assigned_ids)
         
-        # For assistant vicar dropdown:
-        # Exclude priests already assigned as vicar OR assistant vicar
-        # But also exclude priests who are vicars in other parishes
-        all_assigned_ids = list(set(assigned_vicar_ids + assigned_assistant_vicar_ids))
+        # ========================================
+        # FOR ASSISTANT VICAR DROPDOWN:
+        # Exclude priests who are already assigned as vicar OR assistant vicar
+        # ========================================
         assistant_vicar_queryset = priest_queryset.exclude(id__in=all_assigned_ids)
         
         # ========================================
@@ -276,11 +519,6 @@ class ParishForm(forms.ModelForm):
         if instance and instance.pk and instance.vicar:
             # Add the current vicar to queryset even if they are assigned elsewhere
             vicar_queryset = vicar_queryset | Priest.objects.filter(id=instance.vicar.id)
-            
-            # Also ensure current vicar is included in assistant vicar queryset
-            # if they are not the same person
-            if instance.assistant_vicar and instance.assistant_vicar.id != instance.vicar.id:
-                assistant_vicar_queryset = assistant_vicar_queryset | Priest.objects.filter(id=instance.assistant_vicar.id)
         
         # For Assistant Vicar field - Include current assistant vicar if editing
         if instance and instance.pk and instance.assistant_vicar:
@@ -300,6 +538,7 @@ class ParishForm(forms.ModelForm):
 
         # Make fields not required
         optional_fields = [
+            'slug',
             'whatsapp_number', 'facebook_id', 'facebook_url', 
             'instagram_id', 'instagram_url', 'image', 'map_url',
             'phone', 'trustee', 'secretary', 'description'
@@ -322,6 +561,29 @@ class ParishForm(forms.ModelForm):
     # CLEAN METHODS - Validation
     # ========================================
     
+    def clean_slug(self):
+        """Validate slug uniqueness"""
+        slug = self.cleaned_data.get('slug')
+        instance = self.instance
+        
+        if slug:
+            # Clean the slug
+            slug = slug.strip().lower()
+            # Replace spaces with hyphens
+            slug = re.sub(r'[-\s]+', '-', slug)
+            # Remove any characters that aren't alphanumeric, underscore, or hyphen
+            slug = re.sub(r'[^a-z0-9_-]', '', slug)
+            
+            # Check for uniqueness
+            queryset = Parish.objects.filter(slug=slug)
+            if instance.pk:
+                queryset = queryset.exclude(pk=instance.pk)
+            if queryset.exists():
+                raise forms.ValidationError(f'A parish with the slug "{slug}" already exists. Please choose a different slug.')
+            
+            return slug
+        return slug
+
     def clean_name(self):
         """Validate and clean parish name"""
         name = self.cleaned_data.get('name')
@@ -354,17 +616,17 @@ class ParishForm(forms.ModelForm):
         return phone
 
     def clean_whatsapp_number(self):
-        """Clean and validate WhatsApp number"""
+        """Clean WhatsApp number - only allow digits"""
         whatsapp = self.cleaned_data.get('whatsapp_number')
         if whatsapp:
-            # Remove spaces and special characters except +
-            cleaned = re.sub(r'[^0-9+]', '', whatsapp.strip())
+            # Remove any non-digit characters
+            cleaned = re.sub(r'[^0-9]', '', whatsapp.strip())
             if not cleaned:
                 raise forms.ValidationError("Invalid WhatsApp number.")
-            if not cleaned.startswith('+'):
-                cleaned = '+' + cleaned
             if len(cleaned) < 10:
-                raise forms.ValidationError("WhatsApp number must be at least 10 digits including country code.")
+                raise forms.ValidationError("WhatsApp number must be at least 10 digits.")
+            if len(cleaned) > 15:
+                raise forms.ValidationError("WhatsApp number cannot exceed 15 digits.")
             return cleaned
         return whatsapp
 
@@ -431,11 +693,6 @@ class ParishForm(forms.ModelForm):
         if vicar and assistant_vicar and vicar.id == assistant_vicar.id:
             self.add_error('assistant_vicar', 'Assistant Vicar cannot be the same as Vicar.')
         
-        # WhatsApp validation
-        whatsapp = cleaned_data.get('whatsapp_number')
-        if whatsapp and not re.match(r'^\+?[0-9]{10,15}$', re.sub(r'[^0-9+]', '', whatsapp)):
-            self.add_error('whatsapp_number', 'Please enter a valid WhatsApp number with country code.')
-        
         return cleaned_data
 
     # ========================================
@@ -446,12 +703,12 @@ class ParishForm(forms.ModelForm):
         """Override save to ensure slug is generated"""
         instance = super().save(commit=False)
         
-        # Generate slug if not exists
+        # Generate slug if not exists or if it's empty
         if not instance.slug or instance.slug == '':
-            from django.utils.text import slugify
             base_slug = slugify(instance.name)
             slug = base_slug
             counter = 1
+            # Check for uniqueness
             while Parish.objects.filter(slug=slug).exclude(pk=instance.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
@@ -465,9 +722,10 @@ class ParishForm(forms.ModelForm):
         
         if commit:
             instance.save()
-            self.save_m2m()  # Save many-to-many relationships if any
+            self.save_m2m()
         
         return instance
+    
 # ========================================
 # CONTACT FORM
 # ========================================
@@ -1509,8 +1767,7 @@ class EventForm(forms.ModelForm):
 
 #DOWNLOADS
 
-from django import forms
-from .models import Download
+
 
 from django import forms
 from .models import Download

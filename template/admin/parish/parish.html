@@ -770,30 +770,24 @@
 
                             <!-- Vicar -->
                             <td>
-                                {% if parish.vicar %}
-                                    <div class="vicar-info">
-                                        {% if parish.vicar.image %}
-                                            <img src="{{ parish.vicar.image.url }}" 
-                                                 alt="{{ parish.vicar.get_full_name }}"
-                                                 class="vicar-avatar">
-                                        {% endif %}
-                                        <span class="vicar-name">
-                                            {{ parish.vicar.get_full_name }}
-                                        </span>
-                                    </div>
-                                {% elif parish.vicar_name %}
-                                    <span class="vicar-name">
-                                        {{ parish.vicar_name }}
-                                    </span>
-                                {% else %}
-                                    <span class="vicar-name">
-                                        <span class="no-vicar">
-                                            <i class="fas fa-minus"></i> No vicar
-                                        </span>
-                                    </span>
-                                {% endif %}
-                            </td>
-
+    {% if parish.vicar %}
+        <span class="vicar-name">
+            <i class="fas fa-user" style="color: #6366f1; margin-right: 6px;"></i>
+            {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
+        </span>
+    {% elif parish.vicar_name %}
+        <span class="vicar-name">
+            <i class="fas fa-user" style="color: #6366f1; margin-right: 6px;"></i>
+            {{ parish.vicar_name }}
+        </span>
+    {% else %}
+        <span class="vicar-name">
+            <span class="no-vicar">
+                <i class="fas fa-minus"></i> No vicar
+            </span>
+        </span>
+    {% endif %}
+</td>
                             <!-- District -->
                             <td>
                                 <span class="info-badge district">

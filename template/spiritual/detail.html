@@ -3,21 +3,21 @@
 
 <style>
 /* ========================================
-   ADDITIONAL STYLES FOR OFFICE BEARERS
+   OFFICE BEARER PLACEHOLDER
 ======================================== */
 .leader-img-placeholder {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #dd7e43, #c96a32);
+    background: linear-gradient(135deg, #e7e9ec, #cfd3d8);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #5f6872;
     font-size: 24px;
     font-weight: 700;
     border: 3px solid #fff;
-    box-shadow: 0 2px 10px rgba(221, 126, 67, 0.3);
+    box-shadow: 0 4px 12px rgba(80, 90, 100, 0.15);
     flex-shrink: 0;
 }
 
@@ -27,138 +27,769 @@
     letter-spacing: 0.5px;
 }
 
-.leader-img-placeholder .icon-placeholder {
-    font-size: 28px;
-    opacity: 0.7;
+/* =====================================================
+   COORDINATOR TABLE
+===================================================== */
+
+.district-table-wrapper {
+    margin-top: 50px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e8edf2;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.07);
+    overflow: hidden;
+}
+
+.district-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =====================================================
+   DISTRICT HEADER
+===================================================== */
+
+.district-header-row td {
+    padding: 28px 28px 14px;
+    background: #ffffff;
+    border: none;
+}
+
+.district-header {
+    width: 100%;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px;
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        90deg,
+        #fff7f1 0%,
+        #fffaf7 55%,
+        #ffffff 100%
+    );
+
+    border-left: 5px solid #dd7e43;
+    border-radius: 12px;
+
+    color: #263238;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+
+    box-shadow: 0 3px 12px rgba(221, 126, 67, 0.08);
+}
+
+.district-header .district-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #dd7e43;
+    color: #ffffff;
+
+    border-radius: 10px;
+    font-size: 14px;
+
+    box-shadow: 0 5px 12px rgba(221, 126, 67, 0.22);
+
+    transition: all 0.25s ease;
+}
+
+.district-header:hover .district-icon {
+    transform: rotate(-5deg) scale(1.05);
+}
+
+/* =====================================================
+   COORDINATOR ROW
+===================================================== */
+
+.coordinator-row {
+    position: relative;
+    background: #ffffff;
+    transition: all 0.25s ease;
+}
+
+.coordinator-row td {
+    padding: 18px 28px;
+    border-bottom: 1px solid #edf1f4;
+    color: #475569;
+    font-size: 14px;
+    vertical-align: middle;
+    transition: all 0.25s ease;
+}
+
+.coordinator-row:last-child td {
+    border-bottom: none;
+}
+
+.coordinator-row:hover {
+    background: #fffaf7;
+}
+
+.coordinator-row:hover td {
+    border-bottom-color: #f3e2d7;
+}
+
+/* =====================================================
+   NAME
+===================================================== */
+
+.coordinator-row td:first-child {
+    width: 40%;
+    color: #172033;
+    font-size: 15px;
+    font-weight: 700;
+    padding-left: 32px;
+}
+
+.coordinator-row td:first-child::before {
+    content: '';
+
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 12px;
+
+    background: #dd7e43;
+    border-radius: 50%;
+
+    vertical-align: middle;
+
+    opacity: 0;
+    transform: scale(0.5);
+
+    transition: all 0.25s ease;
+}
+
+.coordinator-row:hover td:first-child::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* =====================================================
+   DESIGNATION - NEW STYLE
+===================================================== */
+
+.designation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 7px 13px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    border: 1px solid transparent;
+
+    position: relative;
+
+    transition: all 0.25s ease;
+}
+
+/* Vertical indicator */
+.designation-badge::before {
+    content: '';
+
+    width: 3px;
+    height: 18px;
+
+    border-radius: 3px;
+
+    display: inline-block;
+}
+
+/* =====================================================
+   PRESIDENT
+===================================================== */
+
+.designation-badge.president {
+    background: #fff5f5;
+    color: #a83a3a;
+    border-color: #f1d2d2;
+}
+
+.designation-badge.president::before {
+    background: #c94b4b;
+}
+
+.designation-badge.president:hover {
+    background: #ffeaea;
+    border-color: #e7baba;
+    transform: translateX(3px);
+    box-shadow: 0 4px 10px rgba(201, 75, 75, 0.08);
+}
+
+/* =====================================================
+   COORDINATOR
+===================================================== */
+
+.designation-badge.coordinator {
+    background: #fff8f2;
+    color: #b45c24;
+    border-color: #f0d7c3;
+}
+
+.designation-badge.coordinator::before {
+    background: #dd7e43;
+}
+
+.designation-badge.coordinator:hover {
+    background: #fff0e5;
+    border-color: #e5b998;
+    transform: translateX(3px);
+    box-shadow: 0 4px 10px rgba(221, 126, 67, 0.10);
+}
+
+/* =====================================================
+   SECRETARY
+===================================================== */
+
+.designation-badge.secretary {
+    background: #f4f7fc;
+    color: #48648d;
+    border-color: #d8e1ef;
+}
+
+.designation-badge.secretary::before {
+    background: #5c7eaa;
+}
+
+.designation-badge.secretary:hover {
+    background: #eaf0f9;
+    border-color: #bfcde0;
+    transform: translateX(3px);
+    box-shadow: 0 4px 10px rgba(72, 100, 141, 0.08);
+}
+
+/* =====================================================
+   DEFAULT
+===================================================== */
+
+.designation-badge.default {
+    background: #f6f7f8;
+    color: #5f6872;
+    border-color: #e1e5e9;
+}
+
+.designation-badge.default::before {
+    background: #89939d;
+}
+
+.designation-badge.default:hover {
+    background: #eceff2;
+    border-color: #d1d6db;
+    transform: translateX(3px);
+    box-shadow: 0 4px 10px rgba(95, 104, 114, 0.08);
+}
+
+/* =====================================================
+   PHONE
+===================================================== */
+
+.phone-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px 13px;
+
+    color: #475569;
+    background: #f8fafc;
+
+    border: 1px solid #e5eaf0;
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+.phone-link i {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff1e8;
+    color: #dd7e43;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    transition: all 0.25s ease;
+}
+
+.phone-link:hover {
+    color: #c26325;
+    background: #fffaf7;
+    border-color: #edcbb6;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 14px rgba(221, 126, 67, 0.12);
+}
+
+.phone-link:hover i {
+    background: #dd7e43;
+    color: #ffffff;
+}
+
+.no-phone {
+    color: #b6c0ca;
+    font-size: 14px;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .district-table-wrapper {
+        margin-top: 35px;
+        border-radius: 16px;
+        overflow-x: auto;
+    }
+
+    .district-table {
+        min-width: 620px;
+    }
+
+    .district-header-row td {
+        padding: 22px 18px 12px;
+    }
+
+    .district-header {
+        min-height: 48px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .district-header .district-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 12px;
+    }
+
+    .coordinator-row td {
+        padding: 15px 18px;
+        font-size: 13px;
+    }
+
+    .coordinator-row td:first-child {
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    .designation-badge {
+        padding: 6px 10px;
+        gap: 7px;
+        font-size: 10px;
+    }
+
+    .designation-badge::before {
+        width: 3px;
+        height: 15px;
+    }
+
+    .phone-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .phone-link i {
+        width: 23px;
+        height: 23px;
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .district-table-wrapper {
+        margin-top: 28px;
+        border-radius: 14px;
+    }
+
+    .district-table {
+        min-width: 570px;
+    }
+
+    .district-header-row td {
+        padding: 18px 12px 10px;
+    }
+
+    .district-header {
+        min-height: 44px;
+        padding: 7px 11px;
+        gap: 9px;
+        font-size: 12px;
+        border-left-width: 4px;
+    }
+
+    .district-header .district-icon {
+        width: 29px;
+        height: 29px;
+        min-width: 29px;
+        font-size: 10px;
+        border-radius: 8px;
+    }
+
+    .coordinator-row td {
+        padding: 13px 12px;
+        font-size: 12px;
+    }
+
+    .coordinator-row td:first-child {
+        padding-left: 14px;
+        font-size: 13px;
+    }
+
+    .coordinator-row td:first-child::before {
+        width: 5px;
+        height: 5px;
+        margin-right: 8px;
+    }
+
+    .designation-badge {
+        padding: 5px 8px;
+        gap: 6px;
+        font-size: 9px;
+    }
+
+    .designation-badge::before {
+        width: 2px;
+        height: 13px;
+    }
+
+    .phone-link {
+        padding: 5px 8px;
+        gap: 6px;
+        font-size: 11px;
+    }
+
+    .phone-link i {
+        width: 21px;
+        height: 21px;
+        font-size: 9px;
+    }
+
+    .no-phone {
+        font-size: 12px;
+    }
 }
 </style>
 
+
 <section class="sangam-section">
+
     <div class="sangam-container">
-        
+
         <!-- Left: Description -->
         <div class="text-side">
+
             <h2>{{ spiritual.category_title }}</h2>
+
             <p>{{ spiritual.content|safe }}</p>
+
         </div>
+
 
         <!-- Right: Profile Photos Column -->
         <div class="photo-side">
+
             {% if officebearers %}
+
                 {% for bearer in officebearers %}
+
                 <div class="leader-card">
+
                     {% if bearer.image %}
-                        <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}" class="leader-img">
+
+                        <img src="{{ bearer.image.url }}"
+                             alt="{{ bearer.name }}"
+                             class="leader-img">
+
                     {% else %}
-                        <!-- ✅ Beautiful Placeholder with Initials -->
+
                         <div class="leader-img-placeholder">
-                            <span class="initials">{{ bearer.name|slice:":1"|upper }}</span>
+
+                            <span class="initials">
+                                {{ bearer.name|slice:":1"|upper }}
+                            </span>
+
                         </div>
+
                     {% endif %}
+
+
                     <div class="leader-info">
+
                         <span class="role-badge">
+
                             {% if bearer.designation %}
                                 {{ bearer.designation.name }}
                             {% else %}
                                 No Designation
                             {% endif %}
+
                         </span>
+
+
                         <h3>{{ bearer.name }}</h3>
+
+
                         {% if bearer.district %}
+
                             <p style="font-size: 0.8rem; margin: 5px 0 0 0; color: #94a3b8;">
-                                <i class="fas fa-map-pin" style="color: #dd7e43; margin-right: 4px;"></i>
+
+                                <i class="fas fa-map-pin"
+                                   style="color: #dd7e43; margin-right: 4px;">
+                                </i>
+
                                 {{ bearer.district }}
+
                             </p>
+
                         {% endif %}
+
                     </div>
+
                 </div>
+
                 {% endfor %}
+
             {% else %}
-                <p style="color: #64748b; text-align: center; padding: 20px 0;">No office bearers assigned to this category.</p>
+
+                <p style="color: #64748b; text-align: center; padding: 20px 0;">
+                    No office bearers assigned to this category.
+                </p>
+
             {% endif %}
+
         </div>
+
     </div>
 
-    <!-- ===== DISTRICT TABLE ===== -->
+
+    <!-- ==========================================
+         COORDINATOR TABLE
+    =========================================== -->
+
     {% if spiritual.coordinators.all %}
+
     <div class="district-table-wrapper">
+
         <table class="district-table">
-            <thead>
-                <tr>
-                    <th>District</th>
-                    <th>Designation</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                </tr>
-            </thead>
+
             <tbody>
-                {% for coordinator in spiritual.coordinators.all %}
-                <tr>
-                    <td class="district-name">
-                        <i class="fas fa-map-pin"></i>
-                        {{ coordinator.district }}
-                    </td>
-                    <td class="designation">
-                        <span class="designation-badge 
-                            {% if 'President' in coordinator.designation.name %}president
-                            {% elif 'Co-Ordinator' in coordinator.designation.name or 'Coordinator' in coordinator.designation.name %}coordinator
-                            {% else %}default{% endif %}">
-                            {{ coordinator.designation.name }}
-                        </span>
-                    </td>
-                    <td>{{ coordinator.name }}</td>
-                    <td>
-                        {% if coordinator.phone %}
-                            <a href="tel:{{ coordinator.phone }}" class="phone-link">
-                                <i class="fas fa-phone"></i>
-                                {{ coordinator.phone }}
-                            </a>
-                        {% else %}
-                            <span class="no-phone">---</span>
-                        {% endif %}
-                    </td>
-                </tr>
+
+                {% regroup spiritual.coordinators.all by district as district_list %}
+
+                {% for district in district_list %}
+
+
+                    <!-- DISTRICT HEADER -->
+
+                    <tr class="district-header-row">
+
+                        <td colspan="3">
+
+                            <div class="district-header">
+
+                                <span class="district-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </span>
+
+                                <span>
+                                    {{ district.grouper }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- COORDINATORS -->
+
+                    {% for coordinator in district.list %}
+
+                    <tr class="coordinator-row">
+
+
+                        <!-- NAME -->
+
+                        <td>
+                            {{ coordinator.name }}
+                        </td>
+
+
+                        <!-- DESIGNATION -->
+
+                        <td>
+
+                            {% if coordinator.designation %}
+
+                                <span class="designation-badge
+
+                                    {% if 'President' in coordinator.designation.name %}
+                                        president
+
+                                    {% elif 'Co-Ordinator' in coordinator.designation.name or 'Coordinator' in coordinator.designation.name %}
+                                        coordinator
+
+                                    {% elif 'Secretary' in coordinator.designation.name %}
+                                        secretary
+
+                                    {% else %}
+                                        default
+                                    {% endif %}">
+
+                                    {{ coordinator.designation.name }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-phone">
+                                    —
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- PHONE -->
+
+                        <td>
+
+                            {% if coordinator.phone %}
+
+                                <a href="tel:{{ coordinator.phone }}"
+                                   class="phone-link">
+
+                                    <i class="fas fa-phone"></i>
+
+                                    {{ coordinator.phone }}
+
+                                </a>
+
+                            {% else %}
+
+                                <span class="no-phone">
+                                    —
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
                 {% endfor %}
+
             </tbody>
+
         </table>
+
     </div>
-    {% else %}
-    <!-- <div class="empty-coordinators">
-        <i class="fas fa-user-cog"></i>
-        No district coordinators assigned to this spiritual category.
-    </div> -->
+
     {% endif %}
+
 </section>
+
+
 </div>
+
+
 <!-- JAVASCRIPT -->
+
 <script>
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
 const overlay = document.getElementById('sidebarOverlay');
 
 function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
+
+    if (sidebar) {
+        sidebar.classList.add('open');
+    }
+
+    if (overlay) {
+        overlay.classList.add('active');
+    }
+
+    if (toggleBtn) {
+        toggleBtn.classList.add('active');
+    }
+
     document.body.style.overflow = 'hidden';
 }
 
 function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
+
+    if (sidebar) {
+        sidebar.classList.remove('open');
+    }
+
+    if (overlay) {
+        overlay.classList.remove('active');
+    }
+
+    if (toggleBtn) {
+        toggleBtn.classList.remove('active');
+    }
+
     document.body.style.overflow = '';
 }
 
 if (toggleBtn) {
+
     toggleBtn.addEventListener('click', (e) => {
+
         e.stopPropagation();
-        if (sidebar.classList.contains('open')) {
+
+        if (sidebar && sidebar.classList.contains('open')) {
             closeSidebar();
         } else {
             openSidebar();
         }
+
     });
+
 }
 
 if (overlay) {
@@ -166,92 +797,38 @@ if (overlay) {
 }
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
 
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
-
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
-            }
-        });
-
-        dropdown.classList.toggle("active");
-    });
-});
-</script>
-
-
-
-<!-- JAVASCRIPT -->
-<script>const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
-
-function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-toggleBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
-
-// Overlay click
-overlay.addEventListener('click', closeSidebar);
-
-// Click outside sidebar
-document.addEventListener('click', function (e) {
     if (
-        sidebar.classList.contains('open') &&
-        !sidebar.contains(e.target) &&
-        !toggleBtn.contains(e.target)
+        e.key === 'Escape' &&
+        sidebar &&
+        sidebar.classList.contains('open')
     ) {
         closeSidebar();
     }
+
 });
 
-// ESC key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-</script>
 
-<script>
 document.querySelectorAll(".menu-link").forEach(link => {
+
     link.addEventListener("click", function () {
+
         const dropdown = this.parentElement;
 
         document.querySelectorAll(".dropdown").forEach(item => {
+
             if (item !== dropdown) {
                 item.classList.remove("active");
             }
+
         });
 
         dropdown.classList.toggle("active");
+
     });
+
 });
 </script>
+
+
 {% include 'footer.html' %}

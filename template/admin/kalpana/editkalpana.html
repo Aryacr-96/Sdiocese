@@ -800,9 +800,9 @@
                                     <i class="fas fa-eye"></i> View
                                 </a>
                                 {% endif %}
-                                <button type="button" class="btn-sm btn-danger-sm" onclick="deleteFile({{ file.id }})">
+                                <!-- <button type="button" class="btn-sm btn-danger-sm" onclick="deleteFile({{ file.id }})">
                                     <i class="fas fa-trash-alt"></i> Remove
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                         {% endfor %}
@@ -845,11 +845,13 @@
                                     <i class="fas fa-cloud-upload-alt" style="color: #94a3b8; display: block; margin-bottom: 4px;"></i>
                                     <small><strong>Click to upload</strong> or drag and drop files for this description</small>
                                     <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                                    <input type="file" class="pair-file-input" name="files" multiple 
+                                    <input type="file" class="pair-file-input" name="file_0" multiple 
                                            accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                                           onchange="handlePairFiles(this)">
+                                           onchange="handlePairFiles(this, 0)">
                                 </div>
-                                <div class="pair-file-list" id="fileList_0"></div>
+                                <div class="pair-file-list" id="fileList_0">
+                                    <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -913,11 +915,13 @@
                     <i class="fas fa-cloud-upload-alt" style="color: #94a3b8; display: block; margin-bottom: 4px;"></i>
                     <small><strong>Click to upload</strong> or drag and drop files for this description</small>
                     <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                    <input type="file" class="pair-file-input" name="files" multiple 
+                    <input type="file" class="pair-file-input" name="file_${newIndex}" multiple 
                            accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                           onchange="handlePairFiles(this)">
+                           onchange="handlePairFiles(this, ${newIndex})">
                 </div>
-                <div class="pair-file-list" id="fileList_${newIndex}"></div>
+                <div class="pair-file-list" id="fileList_${newIndex}">
+                    <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
+                </div>
             </div>
         `;
         container.appendChild(div);
@@ -940,7 +944,7 @@
     }
 
     // ============================================================
-    // UPDATE PAIR NUMBERS
+    // UPDATE PAIR NUMBERS & NAMES
     // ============================================================
     function updatePairNumbers() {
         const pairs = document.querySelectorAll('.pair-card');
@@ -953,6 +957,13 @@
             if (fileList) {
                 fileList.id = `fileList_${index}`;
             }
+            
+            // FIX: Dynamically update the name attribute of the file input
+            const fileInput = pair.querySelector('.pair-file-input');
+            if (fileInput) {
+                fileInput.name = `file_${index}`;
+                fileInput.setAttribute('onchange', `handlePairFiles(this, ${index})`);
+            }
             pair.dataset.pairIndex = index;
         });
     }
@@ -960,9 +971,10 @@
     // ============================================================
     // HANDLE FILES FOR A PAIR
     // ============================================================
-    function handlePairFiles(input) {
+    function handlePairFiles(input, index) {
         const pairCard = input.closest('.pair-card');
-        const fileListDiv = pairCard.querySelector('.pair-file-list');
+        const fileListDiv = document.getElementById(`fileList_${index}`);
+        if (!fileListDiv) return;
         
         fileListDiv.innerHTML = '';
 
@@ -982,7 +994,7 @@
                 <i class="${icon}"></i>
                 ${escapeHtml(file.name)}
                 <span style="color:#94a3b8; font-size:0.7rem;">(${size})</span>
-                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this)">
+                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this, ${index})">
                     <i class="fas fa-times-circle"></i>
                 </button>
             `;
@@ -993,9 +1005,9 @@
     // ============================================================
     // REMOVE FILE FROM PAIR
     // ============================================================
-    function removeFileFromPair(btn) {
+    function removeFileFromPair(btn, index) {
         const pill = btn.closest('.pair-file-pill');
-        const fileList = pill.closest('.pair-file-list');
+        const fileList = document.getElementById(`fileList_${index}`);
         
         pill.remove();
         
@@ -1093,11 +1105,6 @@
                 el.classList.add('form-control-modern-django');
             }
         });
-
-        const firstFileList = document.getElementById('fileList_0');
-        if (firstFileList) {
-            firstFileList.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
-        }
     });
 </script>
 

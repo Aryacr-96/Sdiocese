@@ -4948,18 +4948,16 @@ body{
 
 
 /*================= PRIEST DIRECTORY================= */
-    
-.priest-dir-grid {
+    .priest-dir-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     padding: 40px;
-    margin-left: 28px;
-     margin-right: -12px;
-   
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.priest-dir-card{
+.priest-dir-card {
     width: 100%;
     max-width: 680px;
     height: 320px;          /* Fixed card height */
@@ -4972,13 +4970,14 @@ body{
     gap: 20px;
     transition: .3s;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 .priest-dir-card:hover {
     transform: translateY(-5px);
 }
 
-.priest-dir-img-box{
+.priest-dir-img-box {
     width: 220px;
     height: 270px;
     flex-shrink: 0;
@@ -4987,32 +4986,37 @@ body{
     background: #f5f5f5;
 }
 
-.priest-dir-img-box img{
+.priest-dir-img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover;     /* All images same size */
+    object-fit: cover;
     object-position: center;
 }
+
 .priest-dir-info-box {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.priest-dir-info-box p{
+.priest-dir-info-box p {
     font-size: 13px;
 }
+
 .priest-dir-name {
     font-size: 1.25rem;
     margin: 0 0 15px 0;
-    padding-bottom: 8px; 
+    padding-bottom: 8px;
     color: #2a4564;
     font-weight: 700;
     display: inline-block;
     width: 100%;
-    border-bottom: 1px solid #2a4564; 
+    border-bottom: 1px solid #2a4564;
 }
 
 /* Added a small margin to individual text items for better readability */
-.priest-dir-text{
+.priest-dir-text {
     display: flex;
     align-items: flex-start;
     gap: 12px;
@@ -5021,7 +5025,7 @@ body{
     color: #636e72;
 }
 
-.priest-dir-text i{
+.priest-dir-text i {
     width: 20px;
     min-width: 20px;
     text-align: center;
@@ -5029,9 +5033,10 @@ body{
     color: #2a4564;
 }
 
-.priest-dir-text span{
+.priest-dir-text span {
     flex: 1;
 }
+
 .priest-dir-label {
     font-size: 0.7rem;
     color: #e76514;
@@ -5047,130 +5052,288 @@ body{
     color: #636e72;
     margin: 2px 0 0 0;
 }
-.priest-dir-text i{
+
+.priest-dir-text i {
     margin-right: 10px;
     width: 20px;
     font-size: 16px;
 }
 
 /* Church */
-.church-icon{
-    color: #2a4564; 
+.church-icon {
+    color: #2a4564;
 }
 
 /* Address */
-.location-icon{
-    color: #2a4564; 
+.location-icon {
+    color: #2a4564;
 }
 
 /* Phone */
-.phone-icon{
-    color: #2a4564; 
+.phone-icon {
+    color: #2a4564;
 }
 
-.priest-dir-role{
+/* ========================================
+   PRIEST ROLE BADGE - REDUCED WIDTH
+======================================== */
+.priest-dir-role {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     background: linear-gradient(135deg, #e76514, #ff9f43);
     color: #fff;
-    padding: 6px 14px;
+    padding: 4px 12px;          /* Reduced padding from 6px 14px to 4px 12px */
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.75rem;         /* Reduced from 0.85rem */
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 12px;        /* Reduced from 15px */
     box-shadow: 0 3px 10px rgba(231, 101, 20, 0.25);
+    max-width: fit-content;     /* Makes badge only as wide as content */
 }
 
-.priest-dir-role i{
-    font-size: 0.8rem;
+.priest-dir-role i {
+    font-size: 0.7rem;          /* Reduced from 0.8rem */
 }
+
+/* ========================================
+   PROFILE BUTTON - FIXED POSITION AT BOTTOM
+======================================== */
 .priest-dir-profile-btn {
     display: inline-block;
-    background: #2a4564; 
+    background: #2a4564;
     color: #fff;
     padding: 8px 22px;
     border-radius: 20px;
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: auto;
+    align-self: flex-start;
     transition: background 0.3s;
 }
 
 .priest-dir-profile-btn:hover {
     background: #c2540d;
 }
-.priest-section{
+
+.priest-section {
     margin-bottom: 60px;
     margin-top: 60px;
 }
 
-
-.section-title-priest{
-    font-size:32px;
-    font-weight:600;
-    color:#2a4564;
-    position:relative;
-    display:inline-block;
-    margin-bottom:50px;
-    margin-left: 550px;
+/* ========================================
+   SECTION TITLES - CENTERED
+======================================== */
+.section-title-priest {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
 }
 
-.section-title-priest::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    width:70px;
-    height:4px;
-    background:#e76514;
-    transform:translateX(-50%);
-    border-radius:20px;
-}
-.section-title-retired{
-    font-size:32px;
-    font-weight:600;
-    color:#2a4564;
-    position:relative;
-    display:inline-block;
-    margin-bottom:50px;
-    margin-left: 570px;
+.section-title-priest::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
 }
 
-.section-title-retired::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    width:70px;
-    height:4px;
-    background:#e76514;
-    transform:translateX(-50%);
-    border-radius:20px;
-}
-.section-title-students{
-    font-size:32px;
-    font-weight:600;
-    color:#2a4564;
-    position:relative;
-    display:inline-block;
-    margin-bottom:50px;
-     margin-left: 435px;
+.section-title-retired {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
 }
 
-.section-title-students::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    width:70px;
-    height:4px;
-    background:#e76514;
-    transform:translateX(-50%);
-    border-radius:20px;
+.section-title-retired::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
 }
 
+.section-title-students {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.section-title-students::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 1024px) {
+    .priest-dir-grid {
+        gap: 20px;
+        padding: 30px;
+    }
+    
+    .priest-dir-card {
+        height: 300px;
+    }
+    
+    .priest-dir-img-box {
+        width: 180px;
+        height: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .priest-dir-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 20px;
+    }
+    
+    .priest-dir-card {
+        height: 280px;
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    .priest-dir-img-box {
+        width: 140px;
+        height: 200px;
+    }
+    
+    .priest-dir-name {
+        font-size: 1rem;
+        margin: 0 0 10px 0;
+    }
+    
+    .priest-dir-role {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+        margin-bottom: 8px;
+    }
+    
+    .priest-dir-text {
+        font-size: 0.75rem;
+        gap: 8px;
+        margin-bottom: 4px;
+    }
+    
+    .priest-dir-text i {
+        font-size: 12px;
+        width: 16px;
+        min-width: 16px;
+    }
+    
+    .priest-dir-profile-btn {
+        font-size: 0.7rem;
+        padding: 6px 16px;
+    }
+    
+    .section-title-priest,
+    .section-title-retired,
+    .section-title-students {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .priest-dir-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 12px;
+    }
+    
+    .priest-dir-card {
+        height: auto;
+        min-height: 260px;
+        flex-direction: column;
+        padding: 16px;
+        gap: 14px;
+        max-width: 100%;
+    }
+    
+    .priest-dir-img-box {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .priest-dir-info-box {
+        height: auto;
+    }
+    
+    .priest-dir-name {
+        font-size: 1.1rem;
+        margin: 0 0 8px 0;
+    }
+    
+    .priest-dir-role {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+        margin-bottom: 8px;
+    }
+    
+    .priest-dir-text {
+        font-size: 0.85rem;
+        gap: 10px;
+        margin-bottom: 4px;
+    }
+    
+    .priest-dir-text i {
+        font-size: 14px;
+        width: 18px;
+        min-width: 18px;
+    }
+    
+    .priest-dir-profile-btn {
+        font-size: 0.75rem;
+        padding: 8px 20px;
+        margin-top: 10px;
+    }
+    
+    .section-title-priest,
+    .section-title-retired,
+    .section-title-students {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .section-title-priest::after,
+    .section-title-retired::after,
+    .section-title-students::after {
+        width: 50px;
+        bottom: -10px;
+    }
+}
 
 /*+++++++++++++++++++++++++ SPIRITUAL++++++++++++++++++++++ */
 

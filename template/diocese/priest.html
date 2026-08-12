@@ -1,24 +1,39 @@
 {% load static %}
 {% include 'header.html' %}
 
-
+<style>.priest-initial {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #555555;
+    background: #e5e5e5;
+    border-radius: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}</style>
 <!-- CURRENT PRIESTS -->
 <section class="priest-section">
-         <h2 class="section-title-priest">
+         <h1 class="section-title-priest">
             Priests Directory
-         </h2>
+         </h1>
             <div class="priest-dir-grid">
         {% for priest in priests %}
             <div class="priest-dir-card">
             <div class="priest-dir-img-box">
-                {% if priest.image %}
-                    <img src="{{ priest.image.url }}" 
-                         alt="{{ priest.first_name }}">
-                {% else %}
-                    <img src="{% static 'images/member.jpg' %}" 
-                         alt="Profile">
-                {% endif %}
-            </div>
+    {% if priest.image %}
+        <img src="{{ priest.image.url }}" 
+             alt="{{ priest.first_name }}">
+    {% else %}
+        <div class="priest-initial">
+            {{ priest.first_name|first|upper }}
+        </div>
+    {% endif %}
+</div>
             <div class="priest-dir-info-box">
                 <h2 class="priest-dir-name">
                     Rev. {{ priest.first_name }} {{ priest.last_name }}
@@ -67,7 +82,9 @@
         {% if priest.image %}
             <img src="{{ priest.image.url }}"alt="{{ priest.first_name }}">
         {% else %}
-            <img src="{% static 'images/member.jpg' %}"alt="Profile">
+           <div class="priest-initial">
+            {{ priest.first_name|first|upper }}
+        </div>
         {% endif %}
     </div>
     <div class="priest-dir-info-box">
@@ -111,7 +128,9 @@
 {% if priest.image %}
 <img src="{{ priest.image.url }}"alt="{{ priest.first_name }}">
 {% else %}
-<img src="{% static 'images/member2.jpg' %}"alt="Profile">
+   <div class="priest-initial">
+    {{ priest.first_name|first|upper }}
+   </div>
 {% endif %}
 </div>
 <div class="priest-dir-info-box">

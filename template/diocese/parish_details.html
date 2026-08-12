@@ -108,9 +108,117 @@
             padding: 50px 60px;
         }
 
+        /* ========================================
+           HERO PLACEHOLDER - WHEN NO IMAGE
+        ======================================== */
+        .hero-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(221, 126, 67, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(221, 126, 67, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-placeholder .placeholder-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-placeholder .placeholder-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(221, 126, 67, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            border: 3px solid rgba(221, 126, 67, 0.3);
+        }
+
+        .hero-placeholder .placeholder-icon i {
+            font-size: 60px;
+            color: var(--primary);
+            opacity: 0.9;
+        }
+
+        .hero-placeholder h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .hero-placeholder .placeholder-location {
+            font-size: 18px;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .hero-placeholder .placeholder-location i {
+            color: var(--primary);
+        }
+
+        .hero-placeholder .placeholder-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero-placeholder .placeholder-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-placeholder .placeholder-stat i {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .hero-placeholder .placeholder-stat span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .hero-placeholder .placeholder-stat strong {
+            font-weight: 700;
+        }
+
         .hero-content {
             max-width: 700px;
             color: #fff;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-content .hero-badge {
@@ -203,6 +311,11 @@
             color: #fff;
         }
 
+        .hero-stat a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         .hero-social {
             display: flex;
             gap: 12px;
@@ -254,31 +367,6 @@
             color: #fff;
         }
 
-        .hero-placeholder {
-            width: 100%;
-            height: 450px;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 20px;
-            color: #fff;
-            padding: 40px;
-            text-align: center;
-        }
-
-        .hero-placeholder i {
-            font-size: 80px;
-            color: var(--primary);
-            opacity: 0.5;
-        }
-
-        .hero-placeholder h2 {
-            font-size: 36px;
-            font-weight: 800;
-        }
-
         /* ========================================
            SECTION TITLE
         ======================================== */
@@ -315,7 +403,7 @@
            ABOUT SECTION - FULL WIDTH
         ======================================== */
         .about-section-wrapper {
-            width:1250px;
+            width: 1250px;
             margin-left: -75px;
             margin-right: 10px;
             margin-bottom: 40px;
@@ -341,6 +429,7 @@
             line-height: 1.9;
             font-size: 15px;
             width: 100%;
+            margin-top: 5px;
         }
 
         .about-content p {
@@ -396,7 +485,6 @@
             opacity: 1;
         }
 
-        /* Card Icon */
         .info-card .card-icon {
             width: 72px;
             height: 72px;
@@ -450,7 +538,6 @@
             color: var(--primary);
         }
 
-        /* Phone card special */
         .info-card.phone-card p a {
             color: var(--primary);
             font-weight: 700;
@@ -458,44 +545,6 @@
 
         .info-card.phone-card p a:hover {
             color: var(--primary-dark);
-        }
-
-        /* Location card special */
-        .info-card.location-card {
-            background: linear-gradient(135deg, #fff, #fef8f5);
-            border-color: rgba(234, 67, 53, 0.12);
-        }
-
-        .info-card.location-card .card-icon {
-            background: rgba(234, 67, 53, 0.1);
-            color: #ea4335;
-        }
-
-        .info-card.location-card:hover .card-icon {
-            background: linear-gradient(135deg, #ea4335, #c62828);
-            color: #fff;
-        }
-
-        .info-card.location-card .location-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-            padding: 8px 20px;
-            background: linear-gradient(135deg, #ea4335, #c62828);
-            color: #fff;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: var(--transition);
-            text-decoration: none;
-            border: none;
-        }
-
-        .info-card.location-card .location-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 8px 25px rgba(234, 67, 53, 0.4);
-            color: #fff;
         }
 
         /* ========================================
@@ -568,52 +617,6 @@
             border: 0;
         }
 
-        .map-container .map-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 40px;
-            text-align: center;
-        }
-
-        .map-container .map-placeholder i {
-            font-size: 60px;
-            color: #cbd5e1;
-        }
-
-        .map-container .map-placeholder p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 400px;
-        }
-
-        .map-container .map-placeholder .btn-google {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 32px;
-            background: linear-gradient(135deg, #ea4335, #c62828);
-            color: #fff;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .map-container .map-placeholder .btn-google:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(234, 67, 53, 0.4);
-        }
-
         .map-footer {
             padding: 16px 35px;
             background: #f8fafc;
@@ -649,6 +652,11 @@
                 grid-template-columns: repeat(4, 1fr);
                 gap: 18px;
             }
+            .about-section-wrapper {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
         }
 
         @media (max-width: 992px) {
@@ -667,6 +675,14 @@
 
             .hero-content h1 {
                 font-size: 38px;
+            }
+
+            .hero-placeholder {
+                height: 380px;
+            }
+
+            .hero-placeholder h2 {
+                font-size: 34px;
             }
 
             .map-container {
@@ -717,6 +733,27 @@
 
             .hero-social-btn i {
                 font-size: 1rem;
+            }
+
+            .hero-placeholder {
+                height: 340px;
+            }
+
+            .hero-placeholder .placeholder-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .hero-placeholder .placeholder-icon i {
+                font-size: 40px;
+            }
+
+            .hero-placeholder h2 {
+                font-size: 28px;
+            }
+
+            .hero-placeholder .placeholder-location {
+                font-size: 15px;
             }
 
             .info-cards-grid {
@@ -839,6 +876,32 @@
                 font-size: 0.8rem;
             }
 
+            .hero-placeholder {
+                height: 300px;
+            }
+
+            .hero-placeholder .placeholder-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .hero-placeholder .placeholder-icon i {
+                font-size: 30px;
+            }
+
+            .hero-placeholder h2 {
+                font-size: 22px;
+            }
+
+            .hero-placeholder .placeholder-location {
+                font-size: 13px;
+            }
+
+            .hero-placeholder .placeholder-stat {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+
             .info-cards-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
@@ -863,11 +926,6 @@
 
             .info-card p {
                 font-size: 12px;
-            }
-
-            .info-card.location-card .location-btn {
-                font-size: 0.7rem;
-                padding: 5px 14px;
             }
 
             .about-section {
@@ -909,18 +967,6 @@
             .map-footer .directions-link {
                 font-size: 0.8rem;
             }
-
-            .hero-placeholder {
-                height: 300px;
-            }
-
-            .hero-placeholder i {
-                font-size: 50px;
-            }
-
-            .hero-placeholder h2 {
-                font-size: 22px;
-            }
         }
     </style>
 </head>
@@ -933,7 +979,8 @@
 
     <!-- ===== HERO SECTION ===== -->
     <div class="church-hero">
-        {% if parish.image %}
+        {% if parish.image and parish.image.url %}
+            <!-- WITH IMAGE -->
             <div class="church-hero-bg">
                 <img src="{{ parish.image.url }}" alt="{{ parish.name }}">
                 <div class="hero-overlay">
@@ -958,11 +1005,11 @@
                         <div class="hero-stats">
                             <div class="hero-stat">
                                 <i class="fas fa-users"></i>
-                                <span><strong>{{ parish.number_of_families }}</strong> Families</span>
+                                <span><strong>{{ parish.number_of_families|default:"0" }}</strong> Families</span>
                             </div>
                             <div class="hero-stat">
                                 <i class="fas fa-calendar-alt"></i>
-                                <span>Est. <strong>{{ parish.established_year }}</strong></span>
+                                <span>Est. <strong>{{ parish.established_year|default:"N/A" }}</strong></span>
                             </div>
                             {% if parish.phone %}
                             <div class="hero-stat">
@@ -1014,10 +1061,79 @@
                 </div>
             </div>
         {% else %}
+            <!-- WITHOUT IMAGE - SHOW PLACEHOLDER -->
             <div class="hero-placeholder">
-                <i class="fas fa-church"></i>
-                <h2>{{ parish.name }}</h2>
-                <p style="opacity: 0.7; font-size: 16px;">{{ parish.district }} · Established {{ parish.established_year }}</p>
+                <div class="placeholder-content">
+                    <div class="placeholder-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h2>{{ parish.name }}</h2>
+                    <p class="placeholder-location">
+                        <i class="fas fa-location-dot"></i>
+                        {{ parish.location|default:"Location not specified" }}
+                    </p>
+                    <div class="placeholder-stats">
+                        <div class="placeholder-stat">
+                            <i class="fas fa-users"></i>
+                            <span><strong>{{ parish.number_of_families|default:"0" }}</strong> Families</span>
+                        </div>
+                        <div class="placeholder-stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Est. <strong>{{ parish.established_year|default:"N/A" }}</strong></span>
+                        </div>
+                        {% if parish.district %}
+                        <div class="placeholder-stat">
+                            <i class="fas fa-city"></i>
+                            <span>{{ parish.district }}</span>
+                        </div>
+                        {% endif %}
+                        {% if parish.phone %}
+                        <div class="placeholder-stat">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ parish.phone }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Social Media Buttons for Placeholder -->
+                    <div class="hero-social" style="justify-content: center; margin-top: 30px;">
+                        {% if parish.whatsapp_number %}
+                            <a href="https://wa.me/{{ parish.whatsapp_number|cut:'+' }}" 
+                               target="_blank" 
+                               class="hero-social-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </a>
+                        {% endif %}
+
+                        {% if parish.get_facebook_url %}
+                            <a href="{{ parish.get_facebook_url }}" 
+                               target="_blank" 
+                               class="hero-social-btn facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                Facebook
+                            </a>
+                        {% endif %}
+
+                        {% if parish.get_instagram_url %}
+                            <a href="{{ parish.get_instagram_url }}" 
+                               target="_blank" 
+                               class="hero-social-btn instagram">
+                                <i class="fab fa-instagram"></i>
+                                Instagram
+                            </a>
+                        {% endif %}
+
+                        {% if parish.map_url %}
+                            <a href="{{ parish.map_url }}" 
+                               target="_blank" 
+                               class="hero-social-btn maps">
+                                <i class="fas fa-directions"></i>
+                                Directions
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         {% endif %}
     </div>
@@ -1097,14 +1213,14 @@
         <div class="info-card">
             <div class="card-icon"><i class="fas fa-house-user"></i></div>
             <h3>Families</h3>
-            <p><strong>{{ parish.number_of_families }}</strong></p>
+            <p><strong>{{ parish.number_of_families|default:"0" }}</strong></p>
         </div>
 
         <!-- District -->
         <div class="info-card">
             <div class="card-icon"><i class="fas fa-city"></i></div>
             <h3>District</h3>
-            <p>{{ parish.district }}</p>
+            <p>{{ parish.district|default:"Not specified" }}</p>
         </div>
 
         <!-- Phone -->
@@ -1120,123 +1236,18 @@
             </p>
         </div>
 
-        <!-- Location -->
-        <!-- <div class="info-card location-card">
-            <div class="card-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <h3>Location</h3>
-            <p>{{ parish.location }}</p>
-            {% if parish.map_url %}
-                <a href="{{ parish.map_url }}" target="_blank" class="location-btn">
-                    <i class="fas fa-directions"></i> Get Directions
-                </a>
-            {% endif %}
-        </div> -->
+        <!-- Established Year -->
+        <div class="info-card">
+            <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+            <h3>Established</h3>
+            <p>{{ parish.established_year|default:"Not specified" }}</p>
+        </div>
 
     </div>
-
-    <!-- ===== MAP SECTION ===== -->
-    <!-- {% if parish.map_url %}
-    <div class="map-section">
-        <div class="map-header">
-            <h3>
-                <i class="fas fa-map-marked-alt"></i>
-                Church Location
-            </h3>
-            <span class="map-address">
-                <i class="fas fa-location-dot"></i>
-                {{ parish.location }}
-            </span>
-        </div>
-        
-        <div class="map-container">
-            <iframe
-                src="{{ parish.map_url }}"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-
-        <div class="map-footer">
-            <span style="color: var(--text-muted); font-size: 14px;">
-                <i class="fas fa-info-circle"></i> Click the map to explore
-            </span>
-            <a href="{{ parish.map_url }}" target="_blank" class="directions-link">
-                <i class="fas fa-external-link-alt"></i>
-                Open in Google Maps
-                <i class="fas fa-arrow-right" style="font-size: 12px;"></i>
-            </a>
-        </div>
-    </div>
-    {% endif %} -->
 
 </section>
 </div>
 {% include 'footer.html' %}
-
-<!-- ========================================
-   SCRIPTS
-======================================== -->
-<script>
-    // Sidebar toggle functionality
-    const toggleBtn = document.getElementById('sidebarToggleBtn');
-    const sidebar = document.getElementById('sidebarPanel');
-    const overlay = document.getElementById('sidebarOverlay');
-
-    function openSidebar() {
-        if (sidebar) sidebar.classList.add('open');
-        if (overlay) overlay.classList.add('active');
-        if (toggleBtn) toggleBtn.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeSidebar() {
-        if (sidebar) sidebar.classList.remove('open');
-        if (overlay) overlay.classList.remove('active');
-        if (toggleBtn) toggleBtn.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (sidebar && sidebar.classList.contains('open')) {
-                closeSidebar();
-            } else {
-                openSidebar();
-            }
-        });
-    }
-
-    if (overlay) {
-        overlay.addEventListener('click', closeSidebar);
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-            closeSidebar();
-        }
-    });
-
-    // Dropdown menu toggle
-    document.querySelectorAll(".menu-link").forEach(link => {
-        link.addEventListener("click", function () {
-            const dropdown = this.parentElement;
-            document.querySelectorAll(".dropdown").forEach(item => {
-                if (item !== dropdown) {
-                    item.classList.remove("active");
-                }
-            });
-            dropdown.classList.toggle("active");
-        });
-    });
-</script>
-
-
-
 
 <!-- JAVASCRIPT -->
 <script>const toggleBtn = document.getElementById('sidebarToggleBtn');
@@ -1304,5 +1315,6 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
+
 </body>
 </html>

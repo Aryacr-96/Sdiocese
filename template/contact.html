@@ -74,6 +74,11 @@
     gap: 12px;
 }
 
+.card-title i {
+    color: var(--accent);
+    font-size: 32px;
+}
+
 /* ===== CONTACT ITEMS ===== */
 .contact-details-list {
     display: flex;
@@ -103,13 +108,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
+    color: var(--accent);
 }
 
-.contact-icon-wrapper svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--accent);
+.contact-icon-wrapper i {
+    font-size: 18px;
+    color: var(--accent);
 }
 
 .contact-label {
@@ -158,6 +163,12 @@
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+.form-label i {
+    color: var(--accent);
+    font-size: 16px;
+    width: 20px;
 }
 
 .required-star {
@@ -215,6 +226,11 @@ textarea.input-field-style {
     margin-top: 4px;
 }
 
+.form-hint i {
+    color: var(--accent);
+    margin-right: 4px;
+}
+
 .form-error {
     color: #dc2626;
     font-size: 0.75rem;
@@ -223,6 +239,10 @@ textarea.input-field-style {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.form-error i {
+    font-size: 14px;
 }
 
 .alert {
@@ -234,6 +254,10 @@ textarea.input-field-style {
     gap: 8px;
     border: none;
     margin-bottom: 16px;
+}
+
+.alert i {
+    font-size: 18px;
 }
 
 .alert-success {
@@ -284,6 +308,10 @@ textarea.input-field-style {
     transition: all 0.3s ease;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
     margin-top: 8px;
+}
+
+.btn-submit-action i {
+    font-size: 18px;
 }
 
 .btn-submit-action:hover:not(:disabled) {
@@ -348,6 +376,11 @@ textarea.input-field-style {
     align-items: center;
 }
 
+.prayer-info-banner i {
+    font-size: 22px;
+    color: var(--accent);
+}
+
 /* ===== CONFIDENTIAL ===== */
 .confidential-badge {
     margin-top: auto;
@@ -356,7 +389,13 @@ textarea.input-field-style {
     color: #94a3b8;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 8px;
+}
+
+.confidential-badge i {
+    font-size: 16px;
+    color: var(--accent);
 }
 
 /* ===== ANIMATION ===== */
@@ -394,6 +433,9 @@ textarea.input-field-style {
     .card-title {
         font-size: 24px;
     }
+    .card-title i {
+        font-size: 24px;
+    }
     .input-field-style {
         padding: 12px 14px;
         font-size: 0.85rem;
@@ -412,6 +454,9 @@ textarea.input-field-style {
     .card-title {
         font-size: 20px;
     }
+    .card-title i {
+        font-size: 20px;
+    }
     .input-field-style {
         padding: 10px 12px;
         font-size: 0.8rem;
@@ -426,7 +471,10 @@ textarea.input-field-style {
     .contact-icon-wrapper {
         width: 34px;
         height: 34px;
-        font-size: 16px;
+        font-size: 14px;
+    }
+    .contact-icon-wrapper i {
+        font-size: 14px;
     }
 }
 </style>
@@ -436,12 +484,12 @@ textarea.input-field-style {
 
         <!-- LEFT CARD -->
         <div class="contact-info-card">
-            <h2 class="card-title">ℹ️ Get in Touch</h2>
+            <h2 class="card-title"><i class="fas fa-info-circle"></i> Get in Touch</h2>
 
             <div class="contact-details-list">
 
                 <div class="contact-item">
-                    <div class="contact-icon-wrapper">📍</div>
+                    <div class="contact-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
                     <div>
                         <div class="contact-label">Address</div>
                         <div class="contact-value">
@@ -453,7 +501,7 @@ textarea.input-field-style {
                 </div>
 
                 <div class="contact-item">
-                    <div class="contact-icon-wrapper">📞</div>
+                    <div class="contact-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
                     <div>
                         <div class="contact-label">Phone</div>
                         <div class="contact-value">+91 98765 43210</div>
@@ -461,7 +509,7 @@ textarea.input-field-style {
                 </div>
 
                 <div class="contact-item">
-                    <div class="contact-icon-wrapper">✉️</div>
+                    <div class="contact-icon-wrapper"><i class="fas fa-envelope"></i></div>
                     <div>
                         <div class="contact-label">Email</div>
                         <div class="contact-value">diocese@wayanad.in</div>
@@ -479,20 +527,21 @@ textarea.input-field-style {
 
         <!-- RIGHT CARD -->
         <div class="prayer-form-card">
-            <h2 class="card-title">🙏 Prayer Request</h2>
+            <h2 class="card-title"><i class="fas fa-hands-praying"></i> Prayer Request</h2>
 
             <div class="prayer-info-banner">
-                🙏 Your intentions will be kept in prayer
+                <i class="fas fa-candle"></i>
+                Your intentions will be kept in prayer
             </div>
 
-            {% if messages %}
+            <!-- {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-success">
                         <i class="fas fa-check-circle"></i>
                         {{ message }}
                     </div>
                 {% endfor %}
-            {% endif %}
+            {% endif %} -->
 
             {% if form.non_field_errors %}
                 <div class="alert alert-danger">
@@ -518,7 +567,7 @@ textarea.input-field-style {
                            required
                            autofocus>
                     {% if form.full_name.errors %}
-                        <div class="form-error">{{ form.full_name.errors.0 }}</div>
+                        <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ form.full_name.errors.0 }}</div>
                     {% endif %}
                 </div>
 
@@ -533,7 +582,7 @@ textarea.input-field-style {
                            placeholder="your@email.com" 
                            value="{{ form.email.value|default:'' }}">
                     {% if form.email.errors %}
-                        <div class="form-error">{{ form.email.errors.0 }}</div>
+                        <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ form.email.errors.0 }}</div>
                     {% endif %}
                 </div>
 
@@ -552,9 +601,9 @@ textarea.input-field-style {
                            minlength="10"
                            required
                            title="Please enter a valid 10-digit phone number">
-                    <small class="form-hint">Format: 1234567890 (10 digits)</small>
+                    <small class="form-hint"><i class="fas fa-info-circle"></i> Format: 1234567890 (10 digits)</small>
                     {% if form.phone.errors %}
-                        <div class="form-error">{{ form.phone.errors.0 }}</div>
+                        <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ form.phone.errors.0 }}</div>
                     {% endif %}
                 </div>
 
@@ -572,7 +621,7 @@ textarea.input-field-style {
                         <span id="charCount">0</span> characters
                     </div>
                     {% if form.prayer_request.errors %}
-                        <div class="form-error">{{ form.prayer_request.errors.0 }}</div>
+                        <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ form.prayer_request.errors.0 }}</div>
                     {% endif %}
                 </div>
 
@@ -582,7 +631,7 @@ textarea.input-field-style {
             </form>
 
             <div class="confidential-badge">
-                <span>🔒</span> All prayer requests are kept confidential
+                <i class="fas fa-lock"></i> All prayer requests are kept confidential
             </div>
         </div>
 
@@ -815,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!errorEl) {
                     const error = document.createElement('div');
                     error.className = 'form-error';
-                    error.textContent = 'Please enter a valid 10-digit phone number';
+                    error.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid 10-digit phone number';
                     this.parentElement.appendChild(error);
                 }
                 this.style.borderColor = '#dc2626';
@@ -844,7 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!errorEl) {
                     errorEl = document.createElement('div');
                     errorEl.className = 'form-error';
-                    errorEl.textContent = 'Please enter a valid 10-digit phone number';
+                    errorEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid 10-digit phone number';
                     phone.parentElement.appendChild(errorEl);
                 }
 
@@ -864,7 +913,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!errorEl) {
                     errorEl = document.createElement('div');
                     errorEl.className = 'form-error';
-                    errorEl.textContent = 'Please enter your prayer request';
+                    errorEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter your prayer request';
                     prayerReq.parentElement.appendChild(errorEl);
                 }
                 return false;

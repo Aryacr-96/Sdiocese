@@ -11,7 +11,6 @@
 
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -292,72 +291,41 @@
             font-weight: 600;
         }
 
-        .select2-container--default .select2-selection--multiple {
-            border: 1.5px solid #e2e8f0 !important;
-            border-radius: 12px !important;
-            min-height: 50px;
-            padding: 4px;
-        }
-
-        .select2-container--default.select2-container--focus .select2-selection--multiple {
-            border-color: #f59e0b !important;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-            color: white !important;
-            border: none !important;
-            padding: 4px 12px !important;
-            border-radius: 20px !important;
-            font-size: 13px !important;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            color: white !important;
-            margin-right: 6px !important;
-        }
-
-        .selected-items {
+        .existing-list {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+            flex-direction: column;
+            gap: 10px;
             padding: 12px;
             background: white;
             border-radius: 12px;
-            border: 1.5px dashed #e2e8f0;
-            min-height: 50px;
+            border: 1.5px solid #e2e8f0;
+            margin-bottom: 16px;
         }
 
-        .selected-items .empty-message {
-            color: #94a3b8;
-            font-size: 13px;
-            width: 100%;
-            text-align: center;
-            padding: 8px 0;
-        }
-
-        .item-tag {
-            display: inline-flex;
+        .existing-item {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            background: #f1f5f9;
-            padding: 4px 10px 4px 6px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #0f172a;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-radius: 10px;
             border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
 
-        .item-tag:hover {
+        .existing-item:hover {
             border-color: #f59e0b;
         }
 
-        .item-tag .item-avatar {
-            width: 24px;
-            height: 24px;
+        .existing-item .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .existing-item .item-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             object-fit: cover;
             background: #f59e0b;
@@ -365,30 +333,66 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 700;
+            flex-shrink: 0;
         }
 
-        .item-tag .item-avatar img {
+        .existing-item .item-avatar img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
         }
 
-        .item-tag .remove-tag {
-            cursor: pointer;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-left: 2px;
-            transition: color 0.2s ease;
-            background: none;
-            border: none;
-            padding: 0 2px;
+        .existing-item .item-details {
+            display: flex;
+            flex-direction: column;
         }
 
-        .item-tag .remove-tag:hover {
+        .existing-item .item-details .item-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0f172a;
+        }
+
+        .existing-item .item-details .item-sub {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .existing-item .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .existing-item .btn-remove {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .existing-item .btn-remove:hover {
+            background: #fef2f2;
             color: #ef4444;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state i {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+            color: #cbd5e1;
         }
 
         .new-card {
@@ -510,19 +514,6 @@
             flex-wrap: wrap;
         }
 
-        .section-divider {
-            margin: 30px 0 24px 0;
-            border-top: 2px dashed #e2e8f0;
-            padding-top: 24px;
-        }
-
-        .section-divider h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #f59e0b;
-            margin-bottom: 16px;
-        }
-
         .django-ckeditor-widget {
             margin-top: 0 !important;
             padding-top: 0 !important;
@@ -613,20 +604,13 @@
                 padding: 16px;
             }
 
-            .selected-items {
-                padding: 8px;
-                min-height: 40px;
+            .existing-item {
+                flex-wrap: wrap;
+                gap: 8px;
             }
 
-            .item-tag {
-                font-size: 12px;
-                padding: 3px 8px 3px 4px;
-            }
-
-            .item-tag .item-avatar {
-                width: 20px;
-                height: 20px;
-                font-size: 8px;
+            .existing-item .item-actions {
+                margin-left: auto;
             }
         }
     </style>
@@ -737,55 +721,47 @@
                             </h3>
                         </div>
 
-                        <!-- SELECT EXISTING -->
-                        <div class="form-group">
-                            <label>
-                                <i class="fa fa-search label-icon"></i>
-                                Search & Select Existing Office Bearers
+                        <!-- EXISTING OFFICE BEARERS -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="font-weight: 600; font-size: 13px; color: #334155; display: block; margin-bottom: 8px;">
+                                <i class="fa fa-users label-icon"></i>
+                                Existing Office Bearers
                             </label>
-                            <select id="officeBearerSelect" class="form-control" multiple="multiple" style="width: 100%;">
-                                {% for bearer in existing_bearers %}
-                                    <option value="{{ bearer.id }}" 
-                                        {% if bearer.id in selected_bearers %}selected{% endif %}>
-                                        {{ bearer.name }} - {{ bearer.designation.name }} ({{ bearer.phone }})
-                                    </option>
-                                {% endfor %}
-                            </select>
-                            <div class="form-hint">
-                                <i class="fa fa-info-circle"></i>
-                                Type to search and select multiple office bearers
+                            <div class="existing-list" id="existingBearersList">
+                                {% if existing_bearers %}
+                                    {% for bearer in existing_bearers %}
+                                        {% if bearer.id in selected_bearers %}
+                                            <div class="existing-item" data-bearer-id="{{ bearer.id }}">
+                                                <div class="item-info">
+                                                    <span class="item-avatar">
+                                                        {% if bearer.image %}
+                                                            <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}">
+                                                        {% else %}
+                                                            <i class="fa fa-user"></i>
+                                                        {% endif %}
+                                                    </span>
+                                                    <div class="item-details">
+                                                        <span class="item-name">{{ bearer.name }}</span>
+                                                        <span class="item-sub">{{ bearer.designation.name }} · {{ bearer.phone }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="item-actions">
+                                                    <button type="button" class="btn-remove" onclick="removeExistingBearer(this)" title="Remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                    <input type="hidden" name="selected_bearers" value="{{ bearer.id }}">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if not selected_bearers %}
+                                    <div class="empty-state">
+                                        <i class="fa fa-user-tie"></i>
+                                        <p>No office bearers selected</p>
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-
-                        <!-- SELECTED DISPLAY -->
-                        <div class="selected-items" id="selectedBearersDisplay">
-                            {% for bearer in existing_bearers %}
-                                {% if bearer.id in selected_bearers %}
-                                    <span class="item-tag" data-bearer-id="{{ bearer.id }}">
-                                        <span class="item-avatar">
-                                            {% if bearer.image %}
-                                                <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}">
-                                            {% else %}
-                                                <i class="fa fa-user"></i>
-                                            {% endif %}
-                                        </span>
-                                        {{ bearer.name }}
-                                        <button type="button" class="remove-tag" onclick="removeSelectedBearer(this)">×</button>
-                                    </span>
-                                {% endif %}
-                            {% endfor %}
-                            {% if not selected_bearers %}
-                                <span class="empty-message">No office bearers selected</span>
-                            {% endif %}
-                        </div>
-
-                        <!-- Hidden inputs for selected bearers -->
-                        <div id="selectedBearersContainer">
-                            {% for bearer in existing_bearers %}
-                                {% if bearer.id in selected_bearers %}
-                                    <input type="hidden" name="selected_bearers" value="{{ bearer.id }}">
-                                {% endif %}
-                            {% endfor %}
                         </div>
 
                         <!-- ADD NEW -->
@@ -806,13 +782,13 @@
                                         <div class="full">
                                             <div class="form-group">
                                                 <label>Name <span class="required">*</span></label>
-                                                <input type="text" name="new_officebearer_name[]" class="form-control" placeholder="Enter full name">
+                                                <input type="text" name="new_officebearer_name[]" class="form-control" placeholder="Enter full name" required>
                                             </div>
                                         </div>
                                         <div>
                                             <div class="form-group">
                                                 <label>Designation <span class="required">*</span></label>
-                                                <select name="new_officebearer_designation[]" class="form-control">
+                                                <select name="new_officebearer_designation[]" class="form-control" required>
                                                     <option value="">-- Select Designation --</option>
                                                     {% for designation in designations %}
                                                         <option value="{{ designation.id }}">{{ designation.name }}</option>
@@ -823,7 +799,7 @@
                                         <div>
                                             <div class="form-group">
                                                 <label>Phone <span class="required">*</span></label>
-                                                <input type="text" name="new_officebearer_phone[]" class="form-control" placeholder="Enter 10-digit phone">
+                                                <input type="text" name="new_officebearer_phone[]" class="form-control phone-input" placeholder="Enter 10-digit phone" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                                             </div>
                                         </div>
                                         <div>
@@ -879,55 +855,47 @@
                             </h3>
                         </div>
 
-                        <!-- SELECT EXISTING COORDINATORS -->
-                        <div class="form-group">
-                            <label>
-                                <i class="fa fa-search label-icon"></i>
-                                Search & Select Existing Coordinators
+                        <!-- EXISTING COORDINATORS -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="font-weight: 600; font-size: 13px; color: #334155; display: block; margin-bottom: 8px;">
+                                <i class="fa fa-users label-icon"></i>
+                                Existing Coordinators
                             </label>
-                            <select id="coordinatorSelect" class="form-control" multiple="multiple" style="width: 100%;">
-                                {% for coordinator in existing_coordinators %}
-                                    <option value="{{ coordinator.id }}" 
-                                        {% if coordinator.id in selected_coordinators %}selected{% endif %}>
-                                        {{ coordinator.name }} - {{ coordinator.designation.name }} ({{ coordinator.phone }})
-                                    </option>
-                                {% endfor %}
-                            </select>
-                            <div class="form-hint">
-                                <i class="fa fa-info-circle"></i>
-                                Type to search and select multiple coordinators
+                            <div class="existing-list" id="existingCoordinatorsList">
+                                {% if existing_coordinators %}
+                                    {% for coordinator in existing_coordinators %}
+                                        {% if coordinator.id in selected_coordinators %}
+                                            <div class="existing-item" data-coordinator-id="{{ coordinator.id }}">
+                                                <div class="item-info">
+                                                    <span class="item-avatar">
+                                                        {% if coordinator.image %}
+                                                            <img src="{{ coordinator.image.url }}" alt="{{ coordinator.name }}">
+                                                        {% else %}
+                                                            <i class="fa fa-user"></i>
+                                                        {% endif %}
+                                                    </span>
+                                                    <div class="item-details">
+                                                        <span class="item-name">{{ coordinator.name }}</span>
+                                                        <span class="item-sub">{{ coordinator.designation.name }} · {{ coordinator.phone }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="item-actions">
+                                                    <button type="button" class="btn-remove" onclick="removeExistingCoordinator(this)" title="Remove">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                    <input type="hidden" name="selected_coordinators" value="{{ coordinator.id }}">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if not selected_coordinators %}
+                                    <div class="empty-state">
+                                        <i class="fa fa-user-cog"></i>
+                                        <p>No coordinators selected</p>
+                                    </div>
+                                {% endif %}
                             </div>
-                        </div>
-
-                        <!-- SELECTED COORDINATORS DISPLAY -->
-                        <div class="selected-items" id="selectedCoordinatorsDisplay">
-                            {% for coordinator in existing_coordinators %}
-                                {% if coordinator.id in selected_coordinators %}
-                                    <span class="item-tag" data-coordinator-id="{{ coordinator.id }}">
-                                        <span class="item-avatar">
-                                            {% if coordinator.image %}
-                                                <img src="{{ coordinator.image.url }}" alt="{{ coordinator.name }}">
-                                            {% else %}
-                                                <i class="fa fa-user"></i>
-                                            {% endif %}
-                                        </span>
-                                        {{ coordinator.name }}
-                                        <button type="button" class="remove-tag" onclick="removeSelectedCoordinator(this)">×</button>
-                                    </span>
-                                {% endif %}
-                            {% endfor %}
-                            {% if not selected_coordinators %}
-                                <span class="empty-message">No coordinators selected</span>
-                            {% endif %}
-                        </div>
-
-                        <!-- Hidden inputs for selected coordinators -->
-                        <div id="selectedCoordinatorsContainer">
-                            {% for coordinator in existing_coordinators %}
-                                {% if coordinator.id in selected_coordinators %}
-                                    <input type="hidden" name="selected_coordinators" value="{{ coordinator.id }}">
-                                {% endif %}
-                            {% endfor %}
                         </div>
 
                         <!-- ADD NEW COORDINATORS -->
@@ -948,13 +916,13 @@
                                         <div class="full">
                                             <div class="form-group">
                                                 <label>Name <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_name[]" class="form-control" placeholder="Enter coordinator name">
+                                                <input type="text" name="new_coordinator_name[]" class="form-control" placeholder="Enter coordinator name" required>
                                             </div>
                                         </div>
                                         <div>
                                             <div class="form-group">
                                                 <label>Designation <span class="required">*</span></label>
-                                                <select name="new_coordinator_designation[]" class="form-control">
+                                                <select name="new_coordinator_designation[]" class="form-control" required>
                                                     <option value="">-- Select Designation --</option>
                                                     {% for designation in designations %}
                                                         <option value="{{ designation.id }}">{{ designation.name }}</option>
@@ -965,13 +933,13 @@
                                         <div>
                                             <div class="form-group">
                                                 <label>District <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_district[]" class="form-control" placeholder="Enter district">
+                                                <input type="text" name="new_coordinator_district[]" class="form-control" placeholder="Enter district" required>
                                             </div>
                                         </div>
                                         <div>
                                             <div class="form-group">
                                                 <label>Phone <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_phone[]" class="form-control" placeholder="Enter 10-digit phone">
+                                                <input type="text" name="new_coordinator_phone[]" class="form-control phone-input" placeholder="Enter 10-digit phone" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                                             </div>
                                         </div>
                                         <div>
@@ -1016,9 +984,6 @@
 
 {% include 'admin/adminfooter.html' %}
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
     // ===== TAB SWITCHING =====
     function switchTab(tab) {
@@ -1037,153 +1002,64 @@
         });
     }
 
-    // ===== SELECT2 INIT =====
-    $(document).ready(function() {
-        $('#officeBearerSelect').select2({
-            placeholder: "Search and select office bearers...",
-            allowClear: true,
-            width: '100%'
-        });
-
-        $('#officeBearerSelect').on('change', function() {
-            updateSelectedBearers();
-        });
-
-        $('#coordinatorSelect').select2({
-            placeholder: "Search and select coordinators...",
-            allowClear: true,
-            width: '100%'
-        });
-
-        $('#coordinatorSelect').on('change', function() {
-            updateSelectedCoordinators();
-        });
-    });
-
-    // ===== UPDATE SELECTED BEARERS =====
-    function updateSelectedBearers() {
-        const select = document.getElementById('officeBearerSelect');
-        const display = document.getElementById('selectedBearersDisplay');
-        const container = document.getElementById('selectedBearersContainer');
-        const count = document.getElementById('bearerCount');
+    // ===== REMOVE EXISTING BEARER =====
+    function removeExistingBearer(element) {
+        const item = element.closest('.existing-item');
+        const id = item.dataset.bearerId;
         
-        display.innerHTML = '';
-        container.innerHTML = '';
+        // Remove the hidden input
+        const hiddenInput = item.querySelector('input[name="selected_bearers"]');
+        if (hiddenInput) {
+            hiddenInput.remove();
+        }
         
-        const selectedOptions = select.selectedOptions;
-        let countNum = 0;
+        // Remove the item from display
+        item.remove();
         
-        for (let option of selectedOptions) {
-            const id = option.value;
-            const text = option.text;
-            const name = text.split(' - ')[0];
-            
-            const tag = document.createElement('span');
-            tag.className = 'item-tag';
-            tag.dataset.bearerId = id;
-            tag.innerHTML = `
-                <span class="item-avatar">
-                    <i class="fa fa-user"></i>
-                </span>
-                ${name}
-                <button type="button" class="remove-tag" onclick="removeSelectedBearer(this)">×</button>
+        // Update count
+        const count = document.querySelectorAll('#existingBearersList .existing-item').length;
+        document.getElementById('bearerCount').textContent = count + document.querySelectorAll('#newOfficeContainer .new-card').length;
+        
+        // Show empty state if no items
+        if (count === 0) {
+            const list = document.getElementById('existingBearersList');
+            list.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa fa-user-tie"></i>
+                    <p>No office bearers selected</p>
+                </div>
             `;
-            display.appendChild(tag);
-            
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'selected_bearers';
-            input.value = id;
-            container.appendChild(input);
-            
-            countNum++;
         }
-        
-        if (countNum === 0) {
-            display.innerHTML = '<span class="empty-message">No office bearers selected</span>';
-        }
-        
-        const newCount = document.querySelectorAll('#newOfficeContainer .new-card').length;
-        count.textContent = countNum + newCount;
     }
 
-    // ===== UPDATE SELECTED COORDINATORS =====
-    function updateSelectedCoordinators() {
-        const select = document.getElementById('coordinatorSelect');
-        const display = document.getElementById('selectedCoordinatorsDisplay');
-        const container = document.getElementById('selectedCoordinatorsContainer');
-        const count = document.getElementById('coordinatorCount');
+    // ===== REMOVE EXISTING COORDINATOR =====
+    function removeExistingCoordinator(element) {
+        const item = element.closest('.existing-item');
+        const id = item.dataset.coordinatorId;
         
-        display.innerHTML = '';
-        container.innerHTML = '';
+        // Remove the hidden input
+        const hiddenInput = item.querySelector('input[name="selected_coordinators"]');
+        if (hiddenInput) {
+            hiddenInput.remove();
+        }
         
-        const selectedOptions = select.selectedOptions;
-        let countNum = 0;
+        // Remove the item from display
+        item.remove();
         
-        for (let option of selectedOptions) {
-            const id = option.value;
-            const text = option.text;
-            const name = text.split(' - ')[0];
-            
-            const tag = document.createElement('span');
-            tag.className = 'item-tag';
-            tag.dataset.coordinatorId = id;
-            tag.innerHTML = `
-                <span class="item-avatar">
-                    <i class="fa fa-user"></i>
-                </span>
-                ${name}
-                <button type="button" class="remove-tag" onclick="removeSelectedCoordinator(this)">×</button>
+        // Update count
+        const count = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
+        document.getElementById('coordinatorCount').textContent = count + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
+        
+        // Show empty state if no items
+        if (count === 0) {
+            const list = document.getElementById('existingCoordinatorsList');
+            list.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa fa-user-cog"></i>
+                    <p>No coordinators selected</p>
+                </div>
             `;
-            display.appendChild(tag);
-            
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'selected_coordinators';
-            input.value = id;
-            container.appendChild(input);
-            
-            countNum++;
         }
-        
-        if (countNum === 0) {
-            display.innerHTML = '<span class="empty-message">No coordinators selected</span>';
-        }
-        
-        const newCount = document.querySelectorAll('#newCoordinatorContainer .new-card').length;
-        count.textContent = countNum + newCount;
-    }
-
-    // ===== REMOVE SELECTED BEARER =====
-    function removeSelectedBearer(element) {
-        const tag = element.closest('.item-tag');
-        const id = tag.dataset.bearerId;
-        
-        const select = document.getElementById('officeBearerSelect');
-        const option = select.querySelector(`option[value="${id}"]`);
-        if (option) {
-            option.selected = false;
-            $(select).trigger('change');
-        }
-        
-        tag.remove();
-        updateSelectedBearers();
-    }
-
-    // ===== REMOVE SELECTED COORDINATOR =====
-    function removeSelectedCoordinator(element) {
-        const tag = element.closest('.item-tag');
-        const id = tag.dataset.coordinatorId;
-        
-        const select = document.getElementById('coordinatorSelect');
-        const option = select.querySelector(`option[value="${id}"]`);
-        if (option) {
-            option.selected = false;
-            $(select).trigger('change');
-        }
-        
-        tag.remove();
-        updateSelectedCoordinators();
     }
 
     // ===== ADD NEW OFFICE =====
@@ -1192,10 +1068,11 @@
         const lastCard = container.querySelector('.new-card:last-child');
         const newCard = lastCard.cloneNode(true);
         
-        newCard.querySelectorAll('input').forEach(function(input) {
-            if (input.type !== 'file') {
+        // Clear all input values in the cloned card
+        newCard.querySelectorAll('input, select').forEach(function(input) {
+            if (input.type !== 'file' && input.type !== 'hidden') {
                 input.value = '';
-            } else {
+            } else if (input.type === 'file') {
                 input.value = '';
             }
         });
@@ -1212,7 +1089,10 @@
         }
         
         container.appendChild(newCard);
-        updateSelectedBearers();
+        
+        // Update count
+        const bearerCount = document.querySelectorAll('#existingBearersList .existing-item').length;
+        document.getElementById('bearerCount').textContent = bearerCount + document.querySelectorAll('#newOfficeContainer .new-card').length;
     }
 
     // ===== REMOVE NEW OFFICE =====
@@ -1228,7 +1108,10 @@
         
         card.remove();
         updateCardNumbers('newOfficeContainer');
-        updateSelectedBearers();
+        
+        // Update count
+        const bearerCount = document.querySelectorAll('#existingBearersList .existing-item').length;
+        document.getElementById('bearerCount').textContent = bearerCount + document.querySelectorAll('#newOfficeContainer .new-card').length;
     }
 
     // ===== ADD NEW COORDINATOR =====
@@ -1237,10 +1120,11 @@
         const lastCard = container.querySelector('.new-card:last-child');
         const newCard = lastCard.cloneNode(true);
         
-        newCard.querySelectorAll('input').forEach(function(input) {
-            if (input.type !== 'file') {
+        // Clear all input values in the cloned card
+        newCard.querySelectorAll('input, select').forEach(function(input) {
+            if (input.type !== 'file' && input.type !== 'hidden') {
                 input.value = '';
-            } else {
+            } else if (input.type === 'file') {
                 input.value = '';
             }
         });
@@ -1257,7 +1141,10 @@
         }
         
         container.appendChild(newCard);
-        updateSelectedCoordinators();
+        
+        // Update count
+        const coordinatorCount = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
+        document.getElementById('coordinatorCount').textContent = coordinatorCount + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
     }
 
     // ===== REMOVE NEW COORDINATOR =====
@@ -1273,7 +1160,10 @@
         
         card.remove();
         updateCardNumbers('newCoordinatorContainer');
-        updateSelectedCoordinators();
+        
+        // Update count
+        const coordinatorCount = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
+        document.getElementById('coordinatorCount').textContent = coordinatorCount + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
     }
 
     // ===== UPDATE CARD NUMBERS =====
@@ -1293,8 +1183,8 @@
         const form = document.getElementById('spiritualForm');
         
         form.addEventListener('submit', function(e) {
-            const selectedBearersCount = document.querySelectorAll('#selectedBearersContainer input').length;
-            const selectedCoordinatorsCount = document.querySelectorAll('#selectedCoordinatorsContainer input').length;
+            const selectedBearersCount = document.querySelectorAll('#existingBearersList input[name="selected_bearers"]').length;
+            const selectedCoordinatorsCount = document.querySelectorAll('#existingCoordinatorsList input[name="selected_coordinators"]').length;
             let hasValidNewBearer = false;
             let hasValidNewCoordinator = false;
             
@@ -1310,6 +1200,7 @@
                 }
             });
             
+            // Check if at least one bearer OR coordinator is selected or added
             if (selectedBearersCount === 0 && !hasValidNewBearer && 
                 selectedCoordinatorsCount === 0 && !hasValidNewCoordinator) {
                 e.preventDefault();

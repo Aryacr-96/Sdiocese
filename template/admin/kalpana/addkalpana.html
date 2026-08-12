@@ -496,16 +496,16 @@
                                 <textarea class="form-control pair-description" 
                                           name="descriptions[]" 
                                           placeholder="Enter description for this Kalpana..." 
-                                          rows="2">Download official documents, notices and publications</textarea>
+                                          rows="2"></textarea>
                                 
-                                <!-- File Upload for this description -->
+                                <!-- File Upload for this description (UNIQUE NAME) -->
                                 <div class="pair-file-area">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                     <small><strong>Click to upload</strong> or drag and drop files for this description</small>
                                     <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                                    <input type="file" class="pair-file-input" name="files" multiple 
+                                    <input type="file" class="pair-file-input" name="file_0" multiple 
                                            accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                                           onchange="handlePairFiles(this)">
+                                           onchange="handlePairFiles(this, 0)">
                                 </div>
                                 <div class="pair-file-list" id="fileList_0">
                                     <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
@@ -565,9 +565,9 @@
                     <i class="fas fa-cloud-upload-alt"></i>
                     <small><strong>Click to upload</strong> or drag and drop files for this description</small>
                     <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                    <input type="file" class="pair-file-input" name="files" multiple 
+                    <input type="file" class="pair-file-input" name="file_${newIndex}" multiple 
                            accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                           onchange="handlePairFiles(this)">
+                           onchange="handlePairFiles(this, ${newIndex})">
                 </div>
                 <div class="pair-file-list" id="fileList_${newIndex}">
                     <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
@@ -594,7 +594,7 @@
     }
 
     // ============================================================
-    // UPDATE PAIR NUMBERS
+    // UPDATE PAIR NUMBERS & NAMES
     // ============================================================
     function updatePairNumbers() {
         const pairs = document.querySelectorAll('.pair-card');
@@ -603,9 +603,18 @@
             if (numberSpan) {
                 numberSpan.innerHTML = `<i class="fas fa-hashtag"></i> Description #${index + 1}`;
             }
+            
+            // FORCE the File List ID to match the index
             const fileList = pair.querySelector('.pair-file-list');
             if (fileList) {
                 fileList.id = `fileList_${index}`;
+            }
+
+            // FORCE the File Input name and onchange to match the index
+            const fileInput = pair.querySelector('.pair-file-input');
+            if (fileInput) {
+                fileInput.name = `file_${index}`;
+                fileInput.setAttribute('onchange', `handlePairFiles(this, ${index})`);
             }
             pair.dataset.pairIndex = index;
         });
@@ -614,11 +623,11 @@
     // ============================================================
     // HANDLE FILES FOR A PAIR
     // ============================================================
-    function handlePairFiles(input) {
-        const pairCard = input.closest('.pair-card');
-        const fileListDiv = pairCard.querySelector('.pair-file-list');
-        const pairIndex = pairCard.dataset.pairIndex;
-        
+    function handlePairFiles(input, index) {
+        // Directly target the list by ID to avoid DOM traversal errors
+        const fileListDiv = document.getElementById(`fileList_${index}`);
+        if (!fileListDiv) return;
+
         // Clear existing file list
         fileListDiv.innerHTML = '';
 
@@ -638,7 +647,7 @@
                 <i class="${icon}"></i>
                 ${escapeHtml(file.name)}
                 <span style="color:#94a3b8; font-size:0.7rem;">(${size})</span>
-                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this)">
+                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this, ${index})">
                     <i class="fas fa-times-circle"></i>
                 </button>
             `;
@@ -649,11 +658,9 @@
     // ============================================================
     // REMOVE FILE FROM PAIR
     // ============================================================
-    function removeFileFromPair(btn) {
+    function removeFileFromPair(btn, index) {
         const pill = btn.closest('.pair-file-pill');
-        const fileList = pill.closest('.pair-file-list');
-        const pairCard = fileList.closest('.pair-card');
-        const fileInput = pairCard.querySelector('.pair-file-input');
+        const fileList = document.getElementById(`fileList_${index}`);
         
         // Remove the pill
         pill.remove();

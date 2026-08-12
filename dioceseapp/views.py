@@ -347,8 +347,34 @@ def kalpanadetail(request, slug):
         'kalpana': kalpana,
         'files': files
     })
-def guideline(request):
-    return render(request,'downloads/guidelines.html')
+
+def downloads(request):
+    all_downloads = Download.objects.all()
+
+    church_account_manual = Download.objects.filter(
+        document_type='church_account_manual'
+    ).first()
+
+    constitution_1934 = Download.objects.filter(
+        document_type='constitution_1934'
+    ).first()
+
+    guidelines = Download.objects.filter(
+        document_type='guidelines'
+    ).first()
+
+    context = {
+        'downloads': all_downloads,
+        'church_account_manual': church_account_manual,
+        'constitution_1934': constitution_1934,
+        'guidelines': guidelines,
+        'page_title': 'Downloads',
+        'additional_info': 'Download our resources and documents',
+    }
+
+    return render(request, 'media/downloads.html', context)
+
+
 def prayerbook(request):
     """Public view for prayer books"""
     books = PrayerBook.objects.all().order_by('title')
@@ -443,6 +469,8 @@ def logoutadmin(request):
 
 
 # ================= PRIEST ADMIN =================from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.views.decorators.cache import never_cache
 
 from .models import Priest
@@ -500,7 +528,11 @@ def edit_priest(request, priest_id):
 
         if form.is_valid():
             form.save()
+            messages.success(request, f'Priest "{priest.first_name} {priest.last_name}" updated successfully!')
             return redirect('admin_priests')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+            print(form.errors)
     else:
         form = PriestForm(instance=priest)
 
@@ -519,7 +551,9 @@ def delete_priest(request, priest_id):
     priest = get_object_or_404(Priest, pk=priest_id)
 
     if request.method == 'POST':
+        priest_name = f"{priest.first_name} {priest.last_name}"
         priest.delete()
+        messages.success(request, f'Priest "{priest_name}" deleted successfully!')
         return redirect('admin_priests')
 
     return render(request, 'admin/priest/deletepriest.html', {
@@ -1102,7 +1136,6 @@ def add_spiritual(request):
         'designations': designations,
         'editing': False
     })
-
 def edit_spiritual(request, id):
     spiritual = get_object_or_404(Spiritual, id=id)
     
@@ -1232,15 +1265,22 @@ def edit_spiritual(request, id):
     existing_coordinators = Coordinator.objects.select_related('designation').all().order_by('name')
     
     # Get selected office bearer IDs for this spiritual
-    selected_bearers = spiritual.officebearers.values_list('id', flat=True)
-    print(f"Selected Bearers: {list(selected_bearers)}")  # Debug
+    selected_bearers = SpiritualOfficeBearer.objects.filter(
+        spiritual=spiritual
+    ).values_list('officebearer_id', flat=True)
     
     # Get selected coordinator IDs for this spiritual
-    selected_coordinators = spiritual.coordinators.values_list('id', flat=True)
-    print(f"Selected Coordinators: {list(selected_coordinators)}")  # Debug
+    selected_coordinators = SpiritualCoordinator.objects.filter(
+        spiritual=spiritual
+    ).values_list('coordinator_id', flat=True)
     
     # Get all designations for dropdowns
     designations = Designation.objects.all().order_by('name')
+    
+    # Debug prints
+    print(f"Spiritual ID: {spiritual.id}")
+    print(f"Selected Bearers: {list(selected_bearers)}")
+    print(f"Selected Coordinators: {list(selected_coordinators)}")
     
     return render(request, 'admin/spiritual/editspiritual.html', {
         'form': form,
@@ -1840,7 +1880,32 @@ def category_list(request):
     return render(request, 'admin/karunyam/category/category.html', context)
 
 # Create View
-@login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.http import JsonResponse
+from django.db.models import Q
+from .models import Category
+from .forms import CategoryForm
+
+# List View with Search (No Pagination)
+def category_list(request):
+    categories = Category.objects.all()
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        categories = categories.filter(
+            Q(name__icontains=search_query) |
+            Q(slug__icontains=search_query)
+        )
+    
+    context = {
+        'categories': categories,
+        'search_query': search_query,
+        'total_count': categories.count(),
+    }
+    return render(request, 'admin/karunyam/category/category.html', context)
+
+# Create View - Authentication Removed
 def category_create(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST, request.FILES)
@@ -1859,13 +1924,7 @@ def category_create(request):
         'button_text': 'Create Category'
     })
 
-
-
-
-
-# Update View
-# Update View
-@login_required
+# Update View - Authentication Removed
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
     
@@ -1879,7 +1938,6 @@ def category_update(request, pk):
                     category.image = None
             category = form.save()
             messages.success(request, f'Category "{category.name}" updated successfully!')
-            # This will go to /category_id/ (e.g., /2/)
             return redirect('category_list')
         else:
             messages.error(request, 'Please correct the errors below.')
@@ -1893,8 +1951,7 @@ def category_update(request, pk):
         'button_text': 'Update Category'
     })
 
-# Delete View
-@login_required
+# Delete View - Authentication Removed
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     
@@ -1909,8 +1966,7 @@ def category_delete(request, pk):
     
     return render(request, 'admin/karunyam/category/deletecategory.html', {'category': category})
 
-# Bulk Delete View
-@login_required
+# Bulk Delete View - Authentication Removed
 def category_bulk_delete(request):
     if request.method == 'POST':
         category_ids = request.POST.getlist('category_ids')
@@ -2313,7 +2369,6 @@ def kalpana_list(request):
         'kalpanas': kalpanas,
         'total_count': kalpanas.count()
     })
-
 def kalpana_create(request):
     """Create new Kalpana with multiple descriptions and files"""
     if request.method == 'POST':
@@ -2325,43 +2380,22 @@ def kalpana_create(request):
             # Get all descriptions
             descriptions = request.POST.getlist('descriptions[]')
             
-            # Get all files (all files from all descriptions)
-            files = request.FILES.getlist('files')
-            
             file_count = 0
-            # For each description, create a KalpanaFile
+            # CRITICAL FIX: Loop through each description by its index.
+            # The frontend sends files as 'file_0', 'file_1', 'file_2', etc.
             for index, desc in enumerate(descriptions):
                 if desc.strip():
-                    # Check if we have a file for this description index
-                    if index < len(files):
-                        kalpana_file = KalpanaFile(
+                    # Fetch files specifically for this index (e.g., 'file_0')
+                    uploaded_files = request.FILES.getlist(f'file_{index}')
+                    
+                    for uploaded_file in uploaded_files:
+                        KalpanaFile.objects.create(
                             kalpana=kalpana,
-                            file=files[index],
+                            file=uploaded_file,
                             description=desc,
-                            file_name=files[index].name
+                            file_name=uploaded_file.name
                         )
-                        kalpana_file.save()
                         file_count += 1
-                    else:
-                        # No file for this description
-                        kalpana_file = KalpanaFile(
-                            kalpana=kalpana,
-                            description=desc,
-                            file_name="No file"
-                        )
-                        kalpana_file.save()
-            
-            # If there are extra files (more files than descriptions)
-            # Create files without descriptions
-            for i in range(len(descriptions), len(files)):
-                kalpana_file = KalpanaFile(
-                    kalpana=kalpana,
-                    file=files[i],
-                    file_name=files[i].name,
-                    description="Additional file"
-                )
-                kalpana_file.save()
-                file_count += 1
             
             messages.success(request, f'Kalpana "{kalpana.title}" created successfully with {file_count} file(s)!')
             return redirect('kalpana_list')
@@ -2384,6 +2418,7 @@ def kalpana_create(request):
             'button_text': 'Create Kalpana',
             'kalpana': None
         })
+
 
 def kalpana_update(request, slug):
     """Update existing Kalpana"""
@@ -2410,19 +2445,21 @@ def kalpana_update(request, slug):
                     file.file_name = new_file_name or file.file.name
                     file.save()
             
-            # Handle new files
-            files = request.FILES.getlist('files[]')
-            file_descriptions = request.POST.getlist('file_descriptions[]')
+            # CRITICAL FIX: Handle new files using dynamic indexing
+            descriptions = request.POST.getlist('descriptions[]')
             
-            for index, file in enumerate(files):
-                if file:
-                    description = file_descriptions[index] if index < len(file_descriptions) else ''
-                    KalpanaFile.objects.create(
-                        kalpana=kalpana,
-                        file=file,
-                        file_name=file.name,
-                        description=description
-                    )
+            for index, desc in enumerate(descriptions):
+                if desc.strip():
+                    # Fetch files specifically for this index (e.g., 'file_0')
+                    uploaded_files = request.FILES.getlist(f'file_{index}')
+                    
+                    for uploaded_file in uploaded_files:
+                        KalpanaFile.objects.create(
+                            kalpana=kalpana,
+                            file=uploaded_file,
+                            description=desc,
+                            file_name=uploaded_file.name
+                        )
             
             messages.success(request, f'Kalpana "{kalpana.title}" updated successfully!')
             return redirect('kalpana_list')
@@ -2601,99 +2638,198 @@ from .forms import DownloadForm
 
 # ==================== PUBLIC VIEWS ====================
 # views.py (updated)
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import Download
+from .forms import DownloadForm
 
 def downloads(request):
     """Public downloads page"""
-    # The context processor already provides downloads data
-    # But we can still use it in the view
+
+    # Get all downloads from database
+    all_downloads = Download.objects.all()
+
+    # Get specific document types
+    church_account_manual = Download.objects.filter(
+        document_type='church_account_manual'
+    ).first()
+
+    constitution_1934 = Download.objects.filter(
+        document_type='constitution_1934'
+    ).first()
+
+    guidelines = Download.objects.filter(
+        document_type='guidelines'
+    ).first()
+
     context = {
-        # 'downloads', 'church_account_manual', etc. are already in context
-        # We can add page-specific data here
+        'downloads': all_downloads,
+        'church_account_manual': church_account_manual,
+        'constitution_1934': constitution_1934,
+        'guidelines': guidelines,
         'page_title': 'Downloads',
         'additional_info': 'Download our resources and documents',
     }
+
     return render(request, 'media/downloads.html', context)
+
 
 # ==================== ADMIN VIEWS ====================
 
 @staff_member_required
 def admin_download_list(request):
     """Admin: List all downloads"""
+
     downloads = Download.objects.all().order_by('document_type')
-    
+
     search_query = request.GET.get('search', '')
+
     if search_query:
         downloads = downloads.filter(
             Q(document_type__icontains=search_query) |
             Q(file__icontains=search_query)
         )
-    
+
     paginator = Paginator(downloads, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
     context = {
         'downloads': page_obj,
         'search_query': search_query,
         'total_items': Download.objects.count(),
     }
-    return render(request, 'admin/downloads/downloads.html', context)
+
+    return render(
+        request,
+        'admin/downloads/downloads.html',
+        context
+    )
+
 
 @staff_member_required
 def admin_download_add(request):
     """Admin: Add new download"""
+
     if request.method == 'POST':
         form = DownloadForm(request.POST, request.FILES)
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Download added successfully!')
-            return redirect('admin_download_list')  # ← NO namespace
+            messages.success(
+                request,
+                'Download added successfully!'
+            )
+            return redirect('admin_download_list')
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
     else:
         form = DownloadForm()
-    
+
     context = {
         'form': form,
         'is_edit': False,
         'title': 'Add New Download',
         'download': None,
     }
-    return render(request, 'admin/downloads/adddownloads.html', context)
+
+    return render(
+        request,
+        'admin/downloads/adddownloads.html',
+        context
+    )
+
 
 @staff_member_required
 def admin_download_edit(request, pk):
     """Admin: Edit download"""
+
     download = get_object_or_404(Download, pk=pk)
-    
+
     if request.method == 'POST':
-        form = DownloadForm(request.POST, request.FILES, instance=download)
+        form = DownloadForm(
+            request.POST,
+            request.FILES,
+            instance=download
+        )
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Download updated successfully!')
-            return redirect('admin_download_list')  # ← NO namespace
+            messages.success(
+                request,
+                'Download updated successfully!'
+            )
+            return redirect('admin_download_list')
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
     else:
         form = DownloadForm(instance=download)
-    
+
     context = {
         'form': form,
         'is_edit': True,
         'title': 'Edit Download',
         'download': download,
     }
-    return render(request, 'admin/downloads/editdownloads.html', context)
+
+    return render(
+        request,
+        'admin/downloads/editdownloads.html',
+        context
+    )
+
 
 @staff_member_required
 def admin_download_delete(request, pk):
     """Admin: Delete download"""
+
     download = get_object_or_404(Download, pk=pk)
-    
+
     if request.method == 'POST':
+
+        # Delete the file from storage
+        if download.file:
+            download.file.delete(save=False)
+
         download.delete()
-        messages.success(request, 'Download deleted successfully!')
-        return redirect('admin_download_list')  # ← NO namespace
-    
-    context = {'download': download}
-    return render(request, 'admin/download_confirm_delete.html', context)
+
+        messages.success(
+            request,
+            'Download deleted successfully!'
+        )
+
+        return redirect('admin_download_list')
+
+    context = {
+        'download': download
+    }
+
+    return render(
+        request,
+        'admin/downloads/delete_confirm.html',
+        context
+    )
+
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+
+def guideline(request):
+    guideline_file = get_object_or_404(
+        Download,
+        document_type='guidelines'
+    )
+
+    return FileResponse(
+        guideline_file.file.open('rb'),
+        as_attachment=False
+    )
+

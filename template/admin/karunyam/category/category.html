@@ -782,7 +782,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th style="width: 80px;">Image</th>
+                            <!-- <th style="width: 80px;">Image</th> -->
                             <th>Category</th>
                             <th>Slug</th>
                             <th>Created</th>
@@ -794,7 +794,7 @@
                         {% for category in categories %}
                         <tr>
                             <!-- Image -->
-                            <td>
+                            <!-- <td>
                                 {% if category.image %}
                                     <img src="{{ category.image.url }}"
                                          alt="{{ category.name }}"
@@ -804,7 +804,7 @@
                                         <i class="fas fa-folder"></i>
                                     </div>
                                 {% endif %}
-                            </td>
+                            </td> -->
 
                             <!-- Category Name -->
                             <td>
@@ -827,10 +827,10 @@
                                         <i class="far fa-calendar-alt"></i>
                                         {{ category.created_at|date:"M d, Y" }}
                                     </span>
-                                    <span class="date-item">
+                                    <!-- <span class="date-item">
                                         <i class="far fa-clock"></i>
                                         {{ category.created_at|time:"H:i" }}
-                                    </span>
+                                    </span> -->
                                 </div>
                             </td>
 
@@ -841,10 +841,10 @@
                                         <i class="far fa-calendar-alt"></i>
                                         {{ category.updated_at|date:"M d, Y" }}
                                     </span>
-                                    <span class="date-item">
+                                    <!-- <span class="date-item">
                                         <i class="far fa-clock"></i>
                                         {{ category.updated_at|time:"H:i" }}
-                                    </span>
+                                    </span> -->
                                 </div>
                             </td>
 

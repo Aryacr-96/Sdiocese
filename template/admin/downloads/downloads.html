@@ -829,12 +829,19 @@
         <div class="header-right">
             <span class="stat-badge">
                 <i class="fas fa-file"></i>
-                {{ total_items }} Download{{ total_items|pluralize }}
+                {{ total_items }} of 3 Downloads
             </span>
+            {% if total_items == 3 %}
+            <span class="stat-badge" style="background: var(--success-light); color: var(--success); border-color: var(--success);">
+                <i class="fas fa-check-circle"></i>
+                Complete Set
+            </span>
+            {% else %}
             <a href="{% url 'admin_download_add' %}" class="btn-primary-custom">
                 <i class="fas fa-plus-circle"></i>
                 Add New
             </a>
+            {% endif %}
         </div>
     </div>
 
@@ -1000,7 +1007,7 @@
                 <div class="empty-state">
                     <i class="fas fa-download"></i>
                     <h5>No Downloads Found</h5>
-                    <p>Get started by adding your first downloadable document.</p>
+                    <p>All three required downloads need to be added to complete the set.</p>
                     <a href="{% url 'admin_download_add' %}" class="btn-primary-custom">
                         <i class="fas fa-plus-circle"></i>
                         Add First Download

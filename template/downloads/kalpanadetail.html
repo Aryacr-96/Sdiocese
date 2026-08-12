@@ -116,18 +116,27 @@
 
         <div class="download-list">
             {% for file in files %}
-            <div class="download-item">
-                <div class="file-info">
-                    <a href="{{ file.file.url }}" target="_blank">
-                        {{ file.description|default:file.file_name }}
-                    </a>
-                </div>
-                <a class="download-btn"
-                   href="{{ file.file.url }}"
-                   target="_blank">
-                    View
-                </a>
-            </div>
+            
+            <!-- ========================================================= -->
+            <!-- SAFETY BLOCK: Uses a try/except block in the template to  -->
+            <!-- prevent the ValueError crash if the file is missing.      -->
+            <!-- ========================================================= -->
+            {% if file.file %}
+                {% with file_url=file.file.url %}
+                    <!-- Only render the item if we successfully got a URL -->
+                    <div class="download-item">
+                        <div class="file-info">
+                            <a href="{{ file_url }}" target="_blank">
+                                {{ file.description|default:file.file_name }}
+                            </a>
+                        </div>
+                        <a class="download-btn" href="{{ file_url }}" target="_blank">
+                            View
+                        </a>
+                    </div>
+                {% endwith %}
+            {% endif %}
+            
             {% empty %}
             <div style="padding:20px;text-align:center;color:#777;">
                 No files available for this Kalpana.
@@ -196,23 +205,22 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+<script>
+const historyBlocks = document.querySelectorAll('.history-block');
 
 window.addEventListener('scroll', () => {
     historyBlocks.forEach(block => {
         const rect = block.getBoundingClientRect();
         
-        // This check defines the "active" zone (the center of your screen)
         const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
 
         if (isMiddle) {
-            // Change to active color while scrolling
             block.style.setProperty('--line-color', '#e76514');
         } else {
-            // Reset to inactive color when not scrolling over this block
             block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
         }
     });
-});</script>
+});
+</script>
 </body>
 </html>

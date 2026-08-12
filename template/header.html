@@ -170,50 +170,54 @@
                 </div>
             </div>
             
-            <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-                <i class="fa-solid fa-download menu-icon"></i>   Downloads
-                    <span class="arrow">▸</span>
-                </a>
+          <div class="dropdown">
+    <a href="javascript:void(0)" class="menu-link">
+        <i class="fa-solid fa-download menu-icon"></i>
+        Downloads
+        <span class="arrow">▸</span>
+    </a>
 
-               
-               <div class="submenu">
-    <a href="{% url 'kalpana' %}">
-        <span class="arrow">▸</span>Kalpana
-    </a>
-    <a href="{% url 'prayerbook' %}">
-        <span class="arrow">▸</span>Prayer Books
-    </a>
-    
-    {% if downloads %}
-        <div class="downloads-list">
-        
-            <!-- Church Accounts Manual -->
-            {% if church_account_manual %}
-                <a href="{{ church_account_manual.file.url }}" target="_blank">
-                    <span class="arrow">▸</span>Church Accounts Manual
-                </a>
-                <!-- <small>({{ church_account_manual.file.size|filesizeformat }})</small> -->
-            {% endif %}  <!-- ← Close church_account_manual if -->
-            
-            <!-- Guidelines -->
-            {% if guidelines %}
-                <a href="{% url 'guideline' %}">
-                    <span class="arrow">▸</span>Guidelines for Preparing Church Accounts
-                </a>
-            {% endif %}  <!-- ← Close guidelines if -->
-            
-            <!-- 1934 Constitution -->
-            {% if constitution_1934 %}
-                <a href="{{ constitution_1934.file.url }}" target="_blank">
-                    <span class="arrow">▸</span>1934 Constitution
-                </a>
-            {% endif %}  <!-- ← Close constitution_1934 if -->
-            
-        </div>
-    {% endif %}  <!-- ← Close downloads if - THIS WAS MISSING! (javascript:void(0))-->
+    <div class="submenu">
+
+        <a href="{% url 'kalpana' %}">
+            <span class="arrow">▸</span>
+            Kalpana
+        </a>
+
+        <a href="{% url 'prayerbook' %}">
+            <span class="arrow">▸</span>
+            Prayer Books
+        </a>
+
+        {% if church_account_manual %}
+        <a href="{{ church_account_manual.file.url }}"
+           target="_blank"
+           rel="noopener noreferrer">
+            <span class="arrow">▸</span>
+            Church Accounts Manual
+        </a>
+        {% endif %}
+
+        {% if guidelines %}
+        <a href="{{ guidelines.file.url }}"
+           target="_blank"
+           rel="noopener noreferrer">
+            <span class="arrow">▸</span>
+            Guidelines for Preparing Church Accounts
+        </a>
+        {% endif %}
+
+        {% if constitution_1934 %}
+        <a href="{{ constitution_1934.file.url }}"
+           target="_blank"
+           rel="noopener noreferrer">
+            <span class="arrow">▸</span>
+            1934 Constitution
+        </a>
+        {% endif %}
+
+    </div>
 </div>
-            </div>
              <div class="dropdown">
                 <a href="{% url 'admin' %}" class="menu-link">
                   <i class="fa-regular fa-user menu-icon"></i> Login

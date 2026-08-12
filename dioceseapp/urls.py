@@ -254,7 +254,8 @@ urlpatterns = [
     path('admin/kalpana_create/', views.kalpana_create, name='kalpana_create'),
     path('admin/update/<slug:slug>/', views.kalpana_update, name='kalpana_update'),
     path('admin/kalpana_delete/<slug:slug>/', views.kalpana_delete, name='kalpana_delete'),
-
+    
+    
 
     #EVENTS
     
