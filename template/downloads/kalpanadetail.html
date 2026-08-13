@@ -130,9 +130,11 @@
                                 {{ file.description|default:file.file_name }}
                             </a>
                         </div>
-                        <a class="download-btn" href="{{ file_url }}" target="_blank">
-                            View
-                        </a>
+                        <a class="download-btn"
+   href="{% url 'kalpana_view_file' file.id %}"
+   target="_blank">
+    <i class="fas fa-eye"></i> View
+</a>
                     </div>
                 {% endwith %}
             {% endif %}

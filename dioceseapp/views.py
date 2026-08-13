@@ -348,6 +348,41 @@ def kalpanadetail(request, slug):
         'files': files
     })
 
+import mimetypes
+
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404, redirect
+
+from .models import KalpanaFile
+
+
+def kalpana_view_file(request, file_id):
+    file_obj = get_object_or_404(KalpanaFile, id=file_id)
+
+    if not file_obj.file:
+        return redirect(
+            'kalpanadetail',
+            slug=file_obj.kalpana.slug
+        )
+
+    # Detect the actual file type
+    content_type, _ = mimetypes.guess_type(file_obj.file.name)
+
+    if not content_type:
+        content_type = 'application/octet-stream'
+
+    response = FileResponse(
+        file_obj.file.open('rb'),
+        content_type=content_type
+    )
+
+    # Tell browser to OPEN instead of download
+    response['Content-Disposition'] = (
+        f'inline; filename="{file_obj.file.name.split("/")[-1]}"'
+    )
+
+    return response
+
 def downloads(request):
     all_downloads = Download.objects.all()
 
