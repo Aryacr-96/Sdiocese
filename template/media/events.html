@@ -87,6 +87,22 @@
     margin-bottom:15px;
 }
 
+
+.no-image-icon {
+    width: 100%;
+    height: 200px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4f9;
+    color: #94a3b8;
+    font-size: 3rem;
+    border-radius: 8px;
+}
+
+.no-image-icon i {
+    font-size: 4rem;
+}
 /* BUTTON */
 .event-btn{
     display:inline-block;
@@ -129,10 +145,12 @@
             <!-- Event Card -->
             <div class="event-card">
                 {% if event.image %}
-                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
-                {% else %}
-                    <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.title }}">
-                {% endif %}
+    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+{% else %}
+    <div class="no-image-icon">
+        <i class="fas fa-calendar-alt"></i>
+    </div>
+{% endif %}
                 <div class="event-content">
                     <div class="event-date">{{ event.event_date|date:"d F Y" }}</div>
                     <div class="event-title">{{ event.title }}</div>

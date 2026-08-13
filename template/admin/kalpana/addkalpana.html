@@ -7,10 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Kalpana · Multiple Description & File Pairs</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
     <style>
         :root {
             --bg-main: #f4f7fb;
@@ -36,7 +42,6 @@
             color: var(--text-main);
         }
 
-        /* ===== INCREASED WIDTH ===== */
         .content-wrapper {
             max-width: 1200px;
             margin: 2rem auto;
@@ -56,6 +61,7 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
+
         .content-header h1 {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
@@ -65,21 +71,26 @@
             gap: 12px;
             margin: 0;
         }
+
         .content-header h1 i {
             color: var(--primary);
         }
+
         .content-header .breadcrumb {
             background: transparent;
             padding: 0;
             margin: 4px 0 0 0;
         }
+
         .content-header .breadcrumb-item a {
             color: var(--text-muted);
             text-decoration: none;
         }
+
         .content-header .breadcrumb-item a:hover {
             color: var(--primary);
         }
+
         .content-header .breadcrumb-item.active {
             color: var(--text-main);
             font-weight: 600;
@@ -92,11 +103,13 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
+
         .card .card-header {
             background: #f8fafc;
             padding: 1.2rem 2rem;
             border-bottom: 1px solid var(--border-color);
         }
+
         .card .card-header .card-title {
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 700;
@@ -106,12 +119,15 @@
             align-items: center;
             gap: 10px;
         }
+
         .card .card-header .card-title i {
             color: var(--primary);
         }
+
         .card .card-body {
             padding: 2.5rem;
         }
+
         .card .card-footer {
             background: #f8fafc;
             padding: 1.2rem 2rem;
@@ -122,10 +138,10 @@
             flex-wrap: wrap;
         }
 
-        /* ===== FORM STYLES ===== */
         .form-group {
             margin-bottom: 1.8rem;
         }
+
         .form-group label {
             font-weight: 600;
             font-size: 0.9rem;
@@ -135,13 +151,16 @@
             gap: 8px;
             color: var(--text-main);
         }
+
         .form-group label .required {
             color: var(--danger);
         }
+
         .form-group label i {
             color: var(--primary);
             width: 18px;
         }
+
         .form-control {
             border: 1.5px solid var(--border-color);
             border-radius: var(--radius-md);
@@ -151,22 +170,24 @@
             width: 100%;
             font-family: 'Inter', sans-serif;
         }
+
         .form-control:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(231, 101, 20, 0.08);
             outline: none;
         }
+
         .help-text {
             font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 0.3rem;
         }
+
         .help-text i {
             color: var(--primary);
             margin-right: 4px;
         }
 
-        /* ===== PAIR CARD ===== */
         .pair-card {
             background: #f8fafc;
             border: 1px solid var(--border-color);
@@ -176,16 +197,19 @@
             position: relative;
             transition: 0.2s;
         }
+
         .pair-card:hover {
             border-color: var(--primary);
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
+
         .pair-card .pair-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
+
         .pair-card .pair-header .pair-number {
             font-weight: 700;
             color: var(--primary);
@@ -194,6 +218,7 @@
             padding: 0.2rem 0.8rem;
             border-radius: var(--radius-pill);
         }
+
         .pair-card .pair-header .remove-pair-btn {
             background: var(--danger-light);
             color: var(--danger);
@@ -204,6 +229,7 @@
             font-size: 0.8rem;
             transition: 0.2s;
         }
+
         .pair-card .pair-header .remove-pair-btn:hover {
             background: var(--danger);
             color: #fff;
@@ -220,7 +246,6 @@
             resize: vertical;
         }
 
-        /* ===== FILE UPLOAD ===== */
         .pair-file-area {
             border: 2px dashed var(--border-color);
             border-radius: var(--radius-md);
@@ -231,10 +256,12 @@
             background: #fff;
             position: relative;
         }
+
         .pair-file-area:hover {
             border-color: var(--primary);
             background: var(--primary-light);
         }
+
         .pair-file-area input[type="file"] {
             position: absolute;
             top: 0;
@@ -244,10 +271,12 @@
             opacity: 0;
             cursor: pointer;
         }
+
         .pair-file-area small {
             color: var(--text-muted);
             font-size: 0.8rem;
         }
+
         .pair-file-area i {
             color: #94a3b8;
             display: block;
@@ -260,6 +289,7 @@
             gap: 8px;
             margin-top: 0.8rem;
         }
+
         .pair-file-pill {
             display: inline-flex;
             align-items: center;
@@ -270,9 +300,11 @@
             font-size: 0.8rem;
             border: 1px solid var(--border-color);
         }
+
         .pair-file-pill i {
             color: var(--primary);
         }
+
         .pair-file-pill .remove-file-btn {
             background: transparent;
             border: none;
@@ -281,11 +313,11 @@
             padding: 0 0.2rem;
             font-size: 0.9rem;
         }
+
         .pair-file-pill .remove-file-btn:hover {
             color: var(--danger);
         }
 
-        /* ===== BUTTONS ===== */
         .btn-modern {
             padding: 0.6rem 2rem;
             border-radius: var(--radius-pill);
@@ -299,22 +331,26 @@
             text-decoration: none;
             font-family: 'Inter', sans-serif;
         }
+
         .btn-primary-modern {
             background: var(--primary);
             color: #ffffff;
             box-shadow: 0 2px 8px rgba(231, 101, 20, 0.25);
         }
+
         .btn-primary-modern:hover {
             background: var(--primary-hover);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(231, 101, 20, 0.3);
         }
+
         .btn-outline-modern {
             background: transparent;
             border: 1.5px solid var(--border-color);
             color: var(--text-muted);
         }
+
         .btn-outline-modern:hover {
             background: #f1f5f9;
             color: var(--text-main);
@@ -336,13 +372,13 @@
             justify-content: center;
             font-family: 'Inter', sans-serif;
         }
+
         .btn-add-more:hover {
             background: var(--primary);
             color: #fff;
             border-color: var(--primary);
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
             .content-wrapper {
                 max-width: 100%;
@@ -355,31 +391,39 @@
                 padding: 0 1rem;
                 margin: 1rem auto;
             }
+
             .content-header {
                 padding: 1rem 1.2rem;
                 flex-direction: column;
                 align-items: flex-start;
             }
+
             .content-header h1 {
                 font-size: 1.3rem;
             }
+
             .card .card-body {
                 padding: 1.5rem;
             }
+
             .card .card-header {
                 padding: 1rem 1.2rem;
             }
+
             .card .card-footer {
                 padding: 1rem 1.2rem;
                 flex-direction: column;
             }
+
             .card .card-footer .btn-modern {
                 width: 100%;
                 justify-content: center;
             }
+
             .pair-card {
                 padding: 1rem;
             }
+
             .btn-add-more {
                 padding: 0.6rem 1.2rem;
                 font-size: 0.9rem;
@@ -391,33 +435,42 @@
                 padding: 0 0.8rem;
                 margin: 0.8rem auto;
             }
+
             .content-header h1 {
                 font-size: 1.1rem;
             }
+
             .card .card-body {
                 padding: 1.2rem;
             }
+
             .form-control {
                 font-size: 0.85rem;
                 padding: 0.5rem 0.8rem;
             }
+
             .pair-card .pair-body textarea {
                 min-height: 50px;
             }
+
             .pair-file-area {
                 padding: 0.8rem;
             }
+
             .pair-file-area small {
                 font-size: 0.7rem;
             }
+
             .btn-modern {
                 font-size: 0.85rem;
                 padding: 0.5rem 1.2rem;
             }
+
             .btn-add-more {
                 font-size: 0.8rem;
                 padding: 0.5rem 1rem;
             }
+
             .pair-file-pill {
                 font-size: 0.7rem;
                 padding: 0.2rem 0.6rem;
@@ -425,24 +478,39 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="content-wrapper">
-    <!-- Header -->
+
     <section class="content-header">
         <div>
-            <h1><i class="fas fa-scroll"></i> Add New Kalpana</h1>
+            <h1>
+                <i class="fas fa-scroll"></i>
+                Add New Kalpana
+            </h1>
+
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'kalpana_list' %}">Kalpana</a></li>
-                    <li class="breadcrumb-item active">Add New</li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'admin_dashboard' %}">Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'kalpana_list' %}">Kalpana</a>
+                    </li>
+
+                    <li class="breadcrumb-item active">
+                        Add New
+                    </li>
                 </ol>
             </nav>
         </div>
     </section>
 
+
     <div class="card">
+
         <div class="card-header">
             <div class="card-title">
                 <i class="fas fa-clipboard-list"></i>
@@ -450,248 +518,720 @@
             </div>
         </div>
 
+
         <div class="card-body">
-            <!-- ===== REMOVED SUCCESS MESSAGES ===== -->
-            <!-- Only show error messages if any -->
+
             {% if messages %}
                 {% for message in messages %}
                     {% if message.tags != 'success' %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
 
-            <form method="post" enctype="multipart/form-data" id="kalpanaForm" action="{% url 'kalpana_create' %}">
+
+            <form method="post"
+                  enctype="multipart/form-data"
+                  id="kalpanaForm"
+                  action="{% url 'kalpana_create' %}">
+
                 {% csrf_token %}
-                
-                <!-- Title -->
+
+
+                <!-- TITLE -->
                 <div class="form-group">
+
                     <label for="{{ form.title.id_for_label }}">
-                        <i class="fas fa-heading"></i> Title <span class="required">*</span>
+                        <i class="fas fa-heading"></i>
+                        Title
+                        <span class="required">*</span>
                     </label>
+
                     {{ form.title }}
-                    <div class="help-text"><i class="fas fa-info-circle"></i> Enter the title for this Kalpana</div>
+
+                    <div class="help-text">
+                        <i class="fas fa-info-circle"></i>
+                        Enter the title for this Kalpana
+                    </div>
+
                 </div>
 
-                <!-- ============================================================ -->
-                <!-- DESCRIPTION + FILE PAIRS (dynamic) -->
-                <!-- ============================================================ -->
+
+                <!-- DESCRIPTIONS AND FILES -->
                 <div class="form-group">
-                    <label><i class="fas fa-align-left"></i> Descriptions &amp; Files</label>
+
+                    <label>
+                        <i class="fas fa-align-left"></i>
+                        Descriptions &amp; Files
+                    </label>
+
                     <div class="help-text" style="margin-bottom: 1rem;">
-                        <i class="fas fa-info-circle"></i> Each description can have multiple files attached.
+                        <i class="fas fa-info-circle"></i>
+                        Each description must have one file.
                     </div>
+
 
                     <div id="pairsContainer">
-                        <!-- Pair 1 (default) -->
+
+                        <!-- FIRST PAIR -->
                         <div class="pair-card" data-pair-index="0">
+
                             <div class="pair-header">
-                                <span class="pair-number"><i class="fas fa-hashtag"></i> Description #1</span>
-                                <button type="button" class="remove-pair-btn" onclick="removePair(this)" style="display:none;">
-                                    <i class="fas fa-trash-alt"></i> Remove
+
+                                <span class="pair-number">
+                                    <i class="fas fa-hashtag"></i>
+                                    Description #1
+                                </span>
+
+                                <button type="button"
+                                        class="remove-pair-btn"
+                                        onclick="removePair(this)"
+                                        style="display:none;">
+
+                                    <i class="fas fa-trash-alt"></i>
+                                    Remove
+
                                 </button>
+
                             </div>
+
+
                             <div class="pair-body">
-                                <!-- Description -->
-                                <textarea class="form-control pair-description" 
-                                          name="descriptions[]" 
-                                          placeholder="Enter description for this Kalpana..." 
-                                          rows="2"></textarea>
-                                
-                                <!-- File Upload for this description (UNIQUE NAME) -->
+
+                                <!-- DESCRIPTION -->
+                                <textarea
+                                    class="form-control pair-description"
+                                    name="descriptions[]"
+                                    placeholder="Enter description for this Kalpana..."
+                                    rows="2"></textarea>
+
+
+                                <!-- ONE FILE -->
                                 <div class="pair-file-area">
+
                                     <i class="fas fa-cloud-upload-alt"></i>
-                                    <small><strong>Click to upload</strong> or drag and drop files for this description</small>
-                                    <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                                    <input type="file" class="pair-file-input" name="file_0" multiple 
-                                           accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                                           onchange="handlePairFiles(this, 0)">
+
+                                    <small>
+                                        <strong>Click to upload</strong>
+                                        or drag and drop one file
+                                    </small>
+
+                                    <small style="display:block;margin-top:2px;">
+                                        PDF, Word, Excel, Images (Max 10MB)
+                                    </small>
+
+                                    <input
+                                        type="file"
+                                        class="pair-file-input"
+                                        name="file_0"
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
+                                        onchange="handlePairFile(this, 0)">
+
                                 </div>
-                                <div class="pair-file-list" id="fileList_0">
-                                    <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
+
+
+                                <div class="pair-file-list"
+                                     id="fileList_0">
+
+                                    <div style="color:#94a3b8;font-size:0.8rem;">
+                                        <i class="fas fa-info-circle"></i>
+                                        No file selected.
+                                    </div>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
 
-                    <!-- Add More button -->
-                    <button type="button" class="btn-add-more" onclick="addPair()">
-                        <i class="fas fa-plus-circle"></i> Add More Description + Files
+
+                    <!-- ADD MORE -->
+                    <button type="button"
+                            class="btn-add-more"
+                            onclick="addPair()">
+
+                        <i class="fas fa-plus-circle"></i>
+                        Add More Description + File
+
                     </button>
+
                 </div>
 
-                <!-- Submit -->
+
+                <!-- FOOTER -->
                 <div class="card-footer">
-                    <a href="{% url 'kalpana_list' %}" class="btn-modern btn-outline-modern">
-                        <i class="fas fa-times"></i> Cancel
+
+                    <a href="{% url 'kalpana_list' %}"
+                       class="btn-modern btn-outline-modern">
+
+                        <i class="fas fa-times"></i>
+                        Cancel
+
                     </a>
-                    <button type="submit" class="btn-modern btn-primary-modern" id="submitBtn">
-                        <i class="fas fa-save"></i> Create Kalpana
+
+
+                    <button type="submit"
+                            class="btn-modern btn-primary-modern"
+                            id="submitBtn">
+
+                        <i class="fas fa-save"></i>
+                        Create Kalpana
+
                     </button>
+
                 </div>
+
             </form>
+
         </div>
+
     </div>
+
 </div>
 
+
 <script>
-    let pairCounter = 1;
 
-    // ============================================================
-    // ADD PAIR
-    // ============================================================
-    function addPair() {
-        const container = document.getElementById('pairsContainer');
-        const newIndex = pairCounter;
-        pairCounter++;
+let pairCounter = 1;
 
-        const div = document.createElement('div');
-        div.className = 'pair-card';
-        div.dataset.pairIndex = newIndex;
-        div.innerHTML = `
-            <div class="pair-header">
-                <span class="pair-number"><i class="fas fa-hashtag"></i> Description #${newIndex + 1}</span>
-                <button type="button" class="remove-pair-btn" onclick="removePair(this)">
-                    <i class="fas fa-trash-alt"></i> Remove
-                </button>
+
+/* =========================================
+   ADD DESCRIPTION + ONE FILE
+========================================= */
+
+function addPair() {
+
+    const container = document.getElementById('pairsContainer');
+
+    const newIndex = pairCounter;
+
+    pairCounter++;
+
+
+    const div = document.createElement('div');
+
+    div.className = 'pair-card';
+
+    div.dataset.pairIndex = newIndex;
+
+
+    div.innerHTML = `
+
+        <div class="pair-header">
+
+            <span class="pair-number">
+                <i class="fas fa-hashtag"></i>
+                Description #${newIndex + 1}
+            </span>
+
+            <button type="button"
+                    class="remove-pair-btn"
+                    onclick="removePair(this)">
+
+                <i class="fas fa-trash-alt"></i>
+                Remove
+
+            </button>
+
+        </div>
+
+
+        <div class="pair-body">
+
+            <textarea
+                class="form-control pair-description"
+                name="descriptions[]"
+                placeholder="Enter description for this Kalpana..."
+                rows="2"></textarea>
+
+
+            <div class="pair-file-area">
+
+                <i class="fas fa-cloud-upload-alt"></i>
+
+                <small>
+                    <strong>Click to upload</strong>
+                    or drag and drop one file
+                </small>
+
+                <small style="display:block;margin-top:2px;">
+                    PDF, Word, Excel, Images (Max 10MB)
+                </small>
+
+                <input
+                    type="file"
+                    class="pair-file-input"
+                    name="file_${newIndex}"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
+                    onchange="handlePairFile(this, ${newIndex})">
+
             </div>
-            <div class="pair-body">
-                <textarea class="form-control pair-description" 
-                          name="descriptions[]" 
-                          placeholder="Enter description for this Kalpana..." 
-                          rows="2"></textarea>
-                
-                <div class="pair-file-area">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <small><strong>Click to upload</strong> or drag and drop files for this description</small>
-                    <small style="display: block; margin-top: 2px;">PDF, Word, Excel, Images (Max 10MB each)</small>
-                    <input type="file" class="pair-file-input" name="file_${newIndex}" multiple 
-                           accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif"
-                           onchange="handlePairFiles(this, ${newIndex})">
+
+
+            <div class="pair-file-list"
+                 id="fileList_${newIndex}">
+
+                <div style="color:#94a3b8;font-size:0.8rem;">
+                    <i class="fas fa-info-circle"></i>
+                    No file selected.
                 </div>
-                <div class="pair-file-list" id="fileList_${newIndex}">
-                    <div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>
-                </div>
+
+            </div>
+
+        </div>
+    `;
+
+
+    container.appendChild(div);
+
+    updatePairNumbers();
+}
+
+
+/* =========================================
+   REMOVE DESCRIPTION + FILE
+========================================= */
+
+function removePair(btn) {
+
+    const pairCard = btn.closest('.pair-card');
+
+    const pairs = document.querySelectorAll('.pair-card');
+
+
+    if (pairs.length > 1) {
+
+        if (confirm('Remove this description and its file?')) {
+
+            pairCard.remove();
+
+            updatePairNumbers();
+
+        }
+
+    } else {
+
+        alert('You must have at least one description.');
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE DISPLAY NUMBERS
+========================================= */
+
+function updatePairNumbers() {
+
+    const pairs = document.querySelectorAll('.pair-card');
+
+
+    pairs.forEach((pair, index) => {
+
+        const numberSpan =
+            pair.querySelector('.pair-number');
+
+
+        if (numberSpan) {
+
+            numberSpan.innerHTML =
+                `<i class="fas fa-hashtag"></i> Description #${index + 1}`;
+
+        }
+
+        /*
+         * IMPORTANT:
+         * Do NOT change file input names here.
+         *
+         * The Django backend expects:
+         *
+         * file_0
+         * file_1
+         * file_2
+         * ...
+         *
+         * Removing a pair should not rename
+         * the remaining file inputs.
+         */
+
+
+        pair.dataset.pairIndex = index;
+
+    });
+
+}
+
+
+/* =========================================
+   DISPLAY SELECTED ONE FILE
+========================================= */
+
+function handlePairFile(input, index) {
+
+    const fileListDiv =
+        document.getElementById(`fileList_${index}`);
+
+
+    if (!fileListDiv) {
+
+        console.error(
+            `fileList_${index} not found`
+        );
+
+        return;
+
+    }
+
+
+    fileListDiv.innerHTML = '';
+
+
+    const file = input.files[0];
+
+
+    if (!file) {
+
+        fileListDiv.innerHTML = `
+            <div style="color:#94a3b8;font-size:0.8rem;">
+                <i class="fas fa-info-circle"></i>
+                No file selected.
             </div>
         `;
-        container.appendChild(div);
-        updatePairNumbers();
+
+        return;
+
     }
 
-    // ============================================================
-    // REMOVE PAIR
-    // ============================================================
-    function removePair(btn) {
-        const pairCard = btn.closest('.pair-card');
-        if (document.querySelectorAll('.pair-card').length > 1) {
-            if (confirm('Remove this description and its files?')) {
-                pairCard.remove();
-                updatePairNumbers();
-            }
-        } else {
-            alert('You must have at least one description.');
-        }
+
+    /* 10 MB validation */
+
+    if (file.size > 10 * 1024 * 1024) {
+
+        alert('File size must be under 10MB.');
+
+        input.value = '';
+
+        fileListDiv.innerHTML = `
+            <div style="color:#94a3b8;font-size:0.8rem;">
+                <i class="fas fa-info-circle"></i>
+                No file selected.
+            </div>
+        `;
+
+        return;
+
     }
 
-    // ============================================================
-    // UPDATE PAIR NUMBERS & NAMES
-    // ============================================================
-    function updatePairNumbers() {
-        const pairs = document.querySelectorAll('.pair-card');
-        pairs.forEach((pair, index) => {
-            const numberSpan = pair.querySelector('.pair-number');
-            if (numberSpan) {
-                numberSpan.innerHTML = `<i class="fas fa-hashtag"></i> Description #${index + 1}`;
-            }
-            
-            // FORCE the File List ID to match the index
-            const fileList = pair.querySelector('.pair-file-list');
-            if (fileList) {
-                fileList.id = `fileList_${index}`;
+
+    const pill =
+        document.createElement('span');
+
+    pill.className =
+        'pair-file-pill';
+
+
+    const icon =
+        getFileIcon(file.name);
+
+
+    const size =
+        formatFileSize(file.size);
+
+
+    pill.innerHTML = `
+
+        <i class="${icon}"></i>
+
+        ${escapeHtml(file.name)}
+
+        <span style="color:#94a3b8;font-size:0.7rem;">
+            (${size})
+        </span>
+
+        <button
+            type="button"
+            class="remove-file-btn"
+            onclick="removeFileFromPair(${index})">
+
+            <i class="fas fa-times-circle"></i>
+
+        </button>
+
+    `;
+
+
+    fileListDiv.appendChild(pill);
+
+}
+
+
+/* =========================================
+   REMOVE SELECTED FILE
+========================================= */
+
+function removeFileFromPair(index) {
+
+    const pair =
+        document.querySelector(
+            `.pair-card[data-pair-index="${index}"]`
+        );
+
+
+    if (!pair) {
+        return;
+    }
+
+
+    const fileInput =
+        pair.querySelector('.pair-file-input');
+
+
+    const fileList =
+        pair.querySelector('.pair-file-list');
+
+
+    if (fileInput) {
+
+        fileInput.value = '';
+
+    }
+
+
+    if (fileList) {
+
+        fileList.innerHTML = `
+            <div style="color:#94a3b8;font-size:0.8rem;">
+                <i class="fas fa-info-circle"></i>
+                No file selected.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   FILE ICON
+========================================= */
+
+function getFileIcon(filename) {
+
+    const ext =
+        filename
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+
+    if (ext === 'pdf') {
+        return 'fas fa-file-pdf';
+    }
+
+
+    if (['doc', 'docx'].includes(ext)) {
+        return 'fas fa-file-word';
+    }
+
+
+    if (['xls', 'xlsx'].includes(ext)) {
+        return 'fas fa-file-excel';
+    }
+
+
+    if (
+        ['png', 'jpg', 'jpeg', 'gif',
+         'bmp', 'svg', 'webp'].includes(ext)
+    ) {
+        return 'fas fa-file-image';
+    }
+
+
+    if (ext === 'txt') {
+        return 'fas fa-file-alt';
+    }
+
+
+    return 'fas fa-file';
+
+}
+
+
+/* =========================================
+   FILE SIZE
+========================================= */
+
+function formatFileSize(bytes) {
+
+    if (bytes < 1024) {
+
+        return bytes + ' B';
+
+    }
+
+
+    if (bytes < 1024 * 1024) {
+
+        return (bytes / 1024).toFixed(1) + ' KB';
+
+    }
+
+
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(text) {
+
+    if (!text) {
+        return '';
+    }
+
+
+    const div =
+        document.createElement('div');
+
+
+    div.textContent = text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   FORM VALIDATION
+========================================= */
+
+document
+    .getElementById('kalpanaForm')
+    .addEventListener('submit', function(e) {
+
+        const pairCards =
+            document.querySelectorAll('.pair-card');
+
+
+        let valid = true;
+
+
+        pairCards.forEach((card) => {
+
+            const description =
+                card.querySelector('.pair-description');
+
+
+            const fileInput =
+                card.querySelector('.pair-file-input');
+
+
+            /*
+             * Description and file must
+             * both exist for every pair.
+             */
+
+            if (
+                !description ||
+                !description.value.trim()
+            ) {
+
+                valid = false;
+
             }
 
-            // FORCE the File Input name and onchange to match the index
-            const fileInput = pair.querySelector('.pair-file-input');
-            if (fileInput) {
-                fileInput.name = `file_${index}`;
-                fileInput.setAttribute('onchange', `handlePairFiles(this, ${index})`);
+
+            if (
+                !fileInput ||
+                fileInput.files.length === 0
+            ) {
+
+                valid = false;
+
             }
-            pair.dataset.pairIndex = index;
+
         });
-    }
 
-    // ============================================================
-    // HANDLE FILES FOR A PAIR
-    // ============================================================
-    function handlePairFiles(input, index) {
-        // Directly target the list by ID to avoid DOM traversal errors
-        const fileListDiv = document.getElementById(`fileList_${index}`);
-        if (!fileListDiv) return;
 
-        // Clear existing file list
-        fileListDiv.innerHTML = '';
+        if (!valid) {
 
-        const files = input.files;
-        if (files.length === 0) {
-            fileListDiv.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
+            e.preventDefault();
+
+            alert(
+                'Please enter a description and select one file for every description.'
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    });
+
+
+/* =========================================
+   INITIALIZE FIRST PAIR
+========================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+        const firstPair =
+            document.querySelector('.pair-card');
+
+
+        if (!firstPair) {
             return;
         }
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const pill = document.createElement('span');
-            pill.className = 'pair-file-pill';
-            const icon = getFileIcon(file.name);
-            const size = (file.size / 1024).toFixed(1) + ' KB';
-            pill.innerHTML = `
-                <i class="${icon}"></i>
-                ${escapeHtml(file.name)}
-                <span style="color:#94a3b8; font-size:0.7rem;">(${size})</span>
-                <button type="button" class="remove-file-btn" onclick="removeFileFromPair(this, ${index})">
-                    <i class="fas fa-times-circle"></i>
-                </button>
-            `;
-            fileListDiv.appendChild(pill);
+
+        firstPair.dataset.pairIndex = 0;
+
+
+        const fileInput =
+            firstPair.querySelector('.pair-file-input');
+
+
+        if (fileInput) {
+
+            fileInput.name = 'file_0';
+
+            fileInput.setAttribute(
+                'onchange',
+                'handlePairFile(this, 0)'
+            );
+
         }
-    }
 
-    // ============================================================
-    // REMOVE FILE FROM PAIR
-    // ============================================================
-    function removeFileFromPair(btn, index) {
-        const pill = btn.closest('.pair-file-pill');
-        const fileList = document.getElementById(`fileList_${index}`);
-        
-        // Remove the pill
-        pill.remove();
-        
-        // If no files left, show message
-        if (fileList.children.length === 0) {
-            fileList.innerHTML = '<div style="color:#94a3b8; font-size:0.8rem;"><i class="fas fa-info-circle"></i> No files selected.</div>';
+
+        const fileList =
+            firstPair.querySelector('.pair-file-list');
+
+
+        if (fileList) {
+
+            fileList.id = 'fileList_0';
+
         }
-    }
 
-    // ============================================================
-    // HELPERS
-    // ============================================================
-    function getFileIcon(filename) {
-        const ext = filename.split('.').pop().toLowerCase();
-        if (['pdf'].includes(ext)) return 'fas fa-file-pdf';
-        if (['doc', 'docx'].includes(ext)) return 'fas fa-file-word';
-        if (['xls', 'xlsx'].includes(ext)) return 'fas fa-file-excel';
-        if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp'].includes(ext)) return 'fas fa-file-image';
-        if (['txt'].includes(ext)) return 'fas fa-file-alt';
-        return 'fas fa-file';
-    }
+    });
 
-    function escapeHtml(text) {
-        if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
 </script>
 
+
 {% include 'admin/adminfooter.html' %}
+
 </body>
 </html>

@@ -2352,10 +2352,8 @@ def admin_prayerbook_delete(request, pk):
         'prayer_book': prayer_book,
     }
     return render(request, 'admin/prayerbooks/deleteprayerbook.html', context)
+# KALPANA
 
-
-
-#KALPANA
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Kalpana, KalpanaFile
@@ -2363,146 +2361,299 @@ from .forms import KalpanaForm, KalpanaFileForm, KalpanaUpdateForm
 
 
 def kalpana_list(request):
-    """List all Kalpana (Admin)"""
+    """List all Kalpana"""
+
     kalpanas = Kalpana.objects.all().order_by('-created_at')
-    return render(request, 'admin/kalpana/kalpana.html', {
-        'kalpanas': kalpanas,
-        'total_count': kalpanas.count()
-    })
+
+    return render(
+        request,
+        'admin/kalpana/kalpana.html',
+        {
+            'kalpanas': kalpanas,
+            'total_count': kalpanas.count()
+        }
+    )
+
+
 def kalpana_create(request):
-    """Create new Kalpana with multiple descriptions and files"""
+    """
+    Create one Kalpana with:
+
+    One Title
+        ├── Description 1 → File 1
+        ├── Description 2 → File 2
+        ├── Description 3 → File 3
+        └── etc.
+    """
+
     if request.method == 'POST':
+
         form = KalpanaForm(request.POST)
-        
+
         if form.is_valid():
+
+            # Create title
             kalpana = form.save()
-            
-            # Get all descriptions
+
             descriptions = request.POST.getlist('descriptions[]')
-            
+
             file_count = 0
-            # CRITICAL FIX: Loop through each description by its index.
-            # The frontend sends files as 'file_0', 'file_1', 'file_2', etc.
-            for index, desc in enumerate(descriptions):
-                if desc.strip():
-                    # Fetch files specifically for this index (e.g., 'file_0')
-                    uploaded_files = request.FILES.getlist(f'file_{index}')
-                    
-                    for uploaded_file in uploaded_files:
-                        KalpanaFile.objects.create(
-                            kalpana=kalpana,
-                            file=uploaded_file,
-                            description=desc,
-                            file_name=uploaded_file.name
-                        )
-                        file_count += 1
-            
-            messages.success(request, f'Kalpana "{kalpana.title}" created successfully with {file_count} file(s)!')
+
+            # IMPORTANT:
+            # file_0 belongs to descriptions[0]
+            # file_1 belongs to descriptions[1]
+            # file_2 belongs to descriptions[2]
+
+            for index, description in enumerate(descriptions):
+
+                description = description.strip()
+
+                if not description:
+                    continue
+
+                uploaded_file = request.FILES.get(
+                    f'file_{index}'
+                )
+
+                if not uploaded_file:
+                    continue
+
+                KalpanaFile.objects.create(
+                    kalpana=kalpana,
+                    file=uploaded_file,
+                    description=description,
+                    file_name=uploaded_file.name
+                )
+
+                file_count += 1
+
+            if file_count > 0:
+
+                messages.success(
+                    request,
+                    f'Kalpana "{kalpana.title}" created successfully '
+                    f'with {file_count} file(s).'
+                )
+
+            else:
+
+                messages.warning(
+                    request,
+                    f'Kalpana "{kalpana.title}" created, '
+                    f'but no description/file pairs were added.'
+                )
+
             return redirect('kalpana_list')
+
         else:
-            messages.error(request, 'Please correct the errors below.')
-            return render(request, 'admin/kalpana/addkalpana.html', {
-                'form': form,
-                'is_edit': False,
-                'action': 'Create',
-                'button_text': 'Create Kalpana',
-                'kalpana': None
-            })
+
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
+
     else:
-        # GET request - show empty form
+
         form = KalpanaForm()
-        return render(request, 'admin/kalpana/addkalpana.html', {
+
+    return render(
+        request,
+        'admin/kalpana/addkalpana.html',
+        {
             'form': form,
             'is_edit': False,
             'action': 'Create',
             'button_text': 'Create Kalpana',
             'kalpana': None
-        })
+        }
+    )
 
 
 def kalpana_update(request, slug):
-    """Update existing Kalpana"""
-    kalpana = get_object_or_404(Kalpana, slug=slug)
-    existing_files = kalpana.files.all()
-    
+    """Update an existing Kalpana"""
+
+    kalpana = get_object_or_404(
+        Kalpana,
+        slug=slug
+    )
+
     if request.method == 'POST':
-        form = KalpanaUpdateForm(request.POST, instance=kalpana)
-        
+
+        form = KalpanaUpdateForm(
+            request.POST,
+            instance=kalpana
+        )
+
         if form.is_valid():
+
             kalpana = form.save()
-            
-            # Handle removed files
-            removed_files = request.POST.getlist('removed_files[]')
+
+            # ----------------------------------
+            # REMOVE EXISTING FILES
+            # ----------------------------------
+
+            removed_files = request.POST.getlist(
+                'removed_files[]'
+            )
+
             if removed_files:
-                KalpanaFile.objects.filter(id__in=removed_files, kalpana=kalpana).delete()
-            
-            # Update existing file descriptions
-            for file in existing_files:
-                new_description = request.POST.get(f'file_description_{file.id}', '')
-                new_file_name = request.POST.get(f'file_name_{file.id}', '')
-                if new_description != file.description or new_file_name != file.file_name:
-                    file.description = new_description
-                    file.file_name = new_file_name or file.file.name
-                    file.save()
-            
-            # CRITICAL FIX: Handle new files using dynamic indexing
-            descriptions = request.POST.getlist('descriptions[]')
-            
-            for index, desc in enumerate(descriptions):
-                if desc.strip():
-                    # Fetch files specifically for this index (e.g., 'file_0')
-                    uploaded_files = request.FILES.getlist(f'file_{index}')
-                    
-                    for uploaded_file in uploaded_files:
-                        KalpanaFile.objects.create(
-                            kalpana=kalpana,
-                            file=uploaded_file,
-                            description=desc,
-                            file_name=uploaded_file.name
-                        )
-            
-            messages.success(request, f'Kalpana "{kalpana.title}" updated successfully!')
+
+                KalpanaFile.objects.filter(
+                    id__in=removed_files,
+                    kalpana=kalpana
+                ).delete()
+
+            # ----------------------------------
+            # UPDATE EXISTING FILE DESCRIPTIONS
+            # ----------------------------------
+
+            existing_files = kalpana.files.all()
+
+            for file_obj in existing_files:
+
+                if str(file_obj.id) in removed_files:
+                    continue
+
+                new_description = request.POST.get(
+                    f'file_description_{file_obj.id}',
+                    ''
+                ).strip()
+
+                new_file_name = request.POST.get(
+                    f'file_name_{file_obj.id}',
+                    ''
+                ).strip()
+
+                file_obj.description = new_description
+
+                if new_file_name:
+                    file_obj.file_name = new_file_name
+
+                file_obj.save()
+
+            # ----------------------------------
+            # ADD NEW DESCRIPTION + FILE PAIRS
+            # ----------------------------------
+
+            descriptions = request.POST.getlist(
+                'descriptions[]'
+            )
+
+            new_file_count = 0
+
+            for index, description in enumerate(descriptions):
+
+                description = description.strip()
+
+                if not description:
+                    continue
+
+                uploaded_file = request.FILES.get(
+                    f'file_{index}'
+                )
+
+                if not uploaded_file:
+                    continue
+
+                KalpanaFile.objects.create(
+                    kalpana=kalpana,
+                    file=uploaded_file,
+                    description=description,
+                    file_name=uploaded_file.name
+                )
+
+                new_file_count += 1
+
+            messages.success(
+                request,
+                f'Kalpana "{kalpana.title}" updated successfully!'
+            )
+
             return redirect('kalpana_list')
+
         else:
-            messages.error(request, 'Please correct the errors below.')
+
+            messages.error(
+                request,
+                'Please correct the errors below.'
+            )
+
     else:
-        form = KalpanaUpdateForm(instance=kalpana)
-    
-    return render(request, 'admin/kalpana/editkalpana.html', {
-        'form': form,
-        'is_edit': True,
-        'action': 'Update',
-        'button_text': 'Update Kalpana',
-        'kalpana': kalpana,
-        'existing_files': existing_files
-    })
+
+        form = KalpanaUpdateForm(
+            instance=kalpana
+        )
+
+    existing_files = kalpana.files.all()
+
+    return render(
+        request,
+        'admin/kalpana/editkalpana.html',
+        {
+            'form': form,
+            'is_edit': True,
+            'action': 'Update',
+            'button_text': 'Update Kalpana',
+            'kalpana': kalpana,
+            'existing_files': existing_files
+        }
+    )
 
 
 def kalpana_delete(request, slug):
-    """Delete Kalpana"""
-    kalpana = get_object_or_404(Kalpana, slug=slug)
-    
+    """Delete an entire Kalpana"""
+
+    kalpana = get_object_or_404(
+        Kalpana,
+        slug=slug
+    )
+
     if request.method == 'POST':
+
         title = kalpana.title
+
         kalpana.files.all().delete()
         kalpana.delete()
-        messages.success(request, f'Kalpana "{title}" deleted successfully!')
+
+        messages.success(
+            request,
+            f'Kalpana "{title}" deleted successfully!'
+        )
+
         return redirect('kalpana_list')
-    
-    return render(request, 'admin/kalpana/deletekalpana.html', {'kalpana': kalpana})
+
+    return render(
+        request,
+        'admin/kalpana/deletekalpana.html',
+        {
+            'kalpana': kalpana
+        }
+    )
 
 
 def kalpana_delete_file(request, file_id):
-    """Delete a specific file"""
-    file_obj = get_object_or_404(KalpanaFile, id=file_id)
-    kalpana_slug = file_obj.kalpana.slug
-    
-    if request.method == 'POST':
-        file_obj.delete()
-        messages.success(request, 'File removed successfully!')
-    
-    return redirect('kalpana_update', slug=kalpana_slug)
+    """Delete one Kalpana file"""
 
+    file_obj = get_object_or_404(
+        KalpanaFile,
+        id=file_id
+    )
+
+    kalpana_slug = file_obj.kalpana.slug
+
+    if request.method == 'POST':
+
+        file_obj.delete()
+
+        messages.success(
+            request,
+            'File removed successfully!'
+        )
+
+    return redirect(
+        'kalpana_update',
+        slug=kalpana_slug
+    )
 
 # EVENTSfrom django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages

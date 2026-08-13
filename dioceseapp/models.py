@@ -1116,73 +1116,176 @@ class PrayerBook(models.Model):
         return icons.get(ext, 'fa-file')
 
 
+# KALPANA
 
-#KALPANA from django.db import models
+from django.db import models
 from django.utils.text import slugify
 import os
 
+
 class Kalpana(models.Model):
-    # ===== ONLY TITLE (with year) =====
-    title = models.CharField(max_length=200, help_text="e.g., Kalpana 2026, Kalpana 2025")
-    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    # One title for each Kalpana
+    title = models.CharField(
+        max_length=200,
+        help_text="e.g., Kalpana 2026, Kalpana 2025"
+    )
+
+    slug = models.SlugField(
+        max_length=200,
+        unique=True,
+        blank=True
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Kalpana'
         verbose_name_plural = 'Kalpana'
-    
+
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
+
+        # Create slug automatically
         if not self.slug:
-            self.slug = slugify(self.title)
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            # Make sure slug is unique
+            while Kalpana.objects.filter(
+                slug=slug
+            ).exclude(pk=self.pk).exists():
+
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
         super().save(*args, **kwargs)
 
 
 class KalpanaFile(models.Model):
-    """Each Kalpana has multiple files (PDF, Excel, Word)"""
-    kalpana = models.ForeignKey(Kalpana, on_delete=models.CASCADE, related_name='files')
-    file = models.FileField(upload_to='kalpana_files/%Y/%m/')
-    file_name = models.CharField(max_length=200, blank=True, help_text="Display name for the file")
-    description = models.TextField(blank=True, help_text="Description of this file")
-    file_type = models.CharField(max_length=20, blank=True)
-    file_size = models.CharField(max_length=20, blank=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    
+    """
+    One Kalpana can have multiple description + file pairs.
+
+    Example:
+
+    Kalpana 2026
+        Description 1 -> file1.pdf
+        Description 2 -> file2.pdf
+        Description 3 -> file3.xlsx
+    """
+
+    kalpana = models.ForeignKey(
+        Kalpana,
+        on_delete=models.CASCADE,
+        related_name='files'
+    )
+
+    # Exactly one file for each KalpanaFile record
+    file = models.FileField(
+        upload_to='kalpana_files/%Y/%m/'
+    )
+
+    # Display name
+    file_name = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Display name for the file"
+    )
+
+    # One description for this file
+    description = models.TextField(
+        blank=True,
+        help_text="Description of this file"
+    )
+
+    file_type = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
+    file_size = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
     class Meta:
         ordering = ['uploaded_at']
         verbose_name = 'Kalpana File'
         verbose_name_plural = 'Kalpana Files'
-    
+
     def __str__(self):
         return self.file_name or self.file.name
-    
+
     def save(self, *args, **kwargs):
-        if not self.file_name:
-            self.file_name = self.file.name
-        if not self.file_type:
+
+        # Automatically set file name
+        if not self.file_name and self.file:
+            self.file_name = os.path.basename(self.file.name)
+
+        # Automatically determine file type
+        if not self.file_type and self.file:
+
             ext = os.path.splitext(self.file.name)[1].lower()
+
             file_types = {
-                '.pdf': 'pdf', '.doc': 'word', '.docx': 'word',
-                '.xls': 'excel', '.xlsx': 'excel', '.csv': 'excel',
-                '.jpg': 'image', '.jpeg': 'image', '.png': 'image',
-                '.gif': 'image', '.svg': 'image', '.webp': 'image'
+                '.pdf': 'pdf',
+
+                '.doc': 'word',
+                '.docx': 'word',
+
+                '.xls': 'excel',
+                '.xlsx': 'excel',
+                '.csv': 'excel',
+
+                '.txt': 'text',
+
+                '.jpg': 'image',
+                '.jpeg': 'image',
+                '.png': 'image',
+                '.gif': 'image',
+                '.svg': 'image',
+                '.webp': 'image',
             }
-            self.file_type = file_types.get(ext, 'other')
-        if not self.file_size and self.file and hasattr(self.file, 'size'):
+
+            self.file_type = file_types.get(
+                ext,
+                'other'
+            )
+
+        # Automatically calculate file size
+        if (
+            not self.file_size
+            and self.file
+            and hasattr(self.file, 'size')
+        ):
+
             size = self.file.size
+
             if size < 1024:
+
                 self.file_size = f"{size} B"
+
             elif size < 1024 * 1024:
-                self.file_size = f"{(size / 1024):.1f} KB"
+
+                self.file_size = f"{size / 1024:.1f} KB"
+
             else:
-                self.file_size = f"{(size / (1024 * 1024)):.2f} MB"
+
+                self.file_size = (
+                    f"{size / (1024 * 1024):.2f} MB"
+                )
+
         super().save(*args, **kwargs)
-
-
 
 # EVENTS
 
