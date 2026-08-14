@@ -2,7 +2,6 @@
 {% include 'header.html' %} 
 <style>
         
-        
         /* priest section - enhanced luxury */
         .priest-detail-section {
             padding: 100px 24px;
@@ -51,41 +50,43 @@
         /* --- FIX: Image size settings corrected --- */
         .apd-img-box img {
             width: 100%;
-            height: 400px; /* Fixed height ensures a consistent rectangular shape */
+            height: 400px;
             border-radius: 32px;
             box-shadow: 0 25px 35px -12px rgba(0,0,0,0.25);
             transition: all 0.5s;
             border: 3px solid #fff;
             outline: 1px solid rgba(194,84,13,0.3);
-            object-fit: cover; /* Changed from contain to cover so it fills the box perfectly */
+            object-fit: cover;
             display: block;
         }
         
-        .apd-img-box::after {
-           
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: #dd7e43;
-            color: white;
-            font-size: 26px;
-            width: 52px;
-            height: 52px;
+        /* === EXACT STYLE FROM priest.html - MATCHING THE DIRECTORY PAGE === */
+        .priest-initial {
+            width: 100%;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 40px;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-            border: 2px solid #fff;
-            transition: 0.3s;
+            font-size: 75px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: #555555;
+            background: #e5e5e5;
+            border-radius: 32px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transition: all 0.5s;
+            border: 3px solid #fff;
+            outline: 1px solid rgba(194,84,13,0.3);
         }
+        
+        .apd-img-box:hover .priest-initial {
+            transform: scale(1.02);
+        }
+        
         .apd-img-box:hover img {
             transform: scale(1.02);
             filter: brightness(1.02);
-        }
-        .apd-img-box:hover::after {
-            transform: scale(1.08) rotate(5deg);
-            background: #dd7e43;
         }
 
 .pastoral-exp-under-img {
@@ -332,10 +333,16 @@
             .apd-name {
                 font-size: 2rem;
             }
+            .priest-initial {
+                height: 300px;
+                font-size: 60px;
+            }
+            .apd-img-box img {
+                height: 300px;
+            }
         }
 
        
-
 
            .verse-tooltip {
         animation: fadeUp 0.2s ease;
@@ -372,10 +379,13 @@
         <!-- IMAGE + PASTORAL EXPERIENCE -->
         <div class="apd-img-box">
 
+            <!-- === UPDATED: Using the EXACT same style as priest.html === -->
             {% if priest.image %}
                 <img src="{{ priest.image.url }}" alt="{{ priest.first_name }}">
             {% else %}
-                <img src="{% static 'images/member.jpg' %}" alt="Profile">
+                <div class="priest-initial">
+                    {{ priest.first_name|first|upper }}
+                </div>
             {% endif %}
 
 
