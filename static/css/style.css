@@ -252,6 +252,7 @@ body{
     margin:5px 0;
     border-radius:4px;
     transition:0.25s;
+   
 }
 
 /* Toggle animation */
@@ -568,7 +569,9 @@ body{
         font-size: 14px;
         z-index: 1200; /* Ensure it stays interactive */
     }
-
+     .toggle-icon{
+        margin-top:50px;
+     }
     /* Correct the absolute alignment of the mobile hamburger icon */
     .sidebar-toggle {
         position: absolute;
@@ -665,7 +668,7 @@ body{
         position: relative;
         right: 0;
         bottom: 0;
-        left: 15px;
+        left: 85px;
         margin-top: 10px;
         padding-bottom: 30px;
     }

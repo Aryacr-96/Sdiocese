@@ -3,123 +3,145 @@
 <style>
         
         /* priest section - enhanced luxury */
-        .priest-detail-section {
-            padding: 100px 24px;
-            position: relative;
-            overflow: hidden;
-            margin-left: 45px;
-            margin-top: -40px;
-        }
-      
+        /* =========================================================
+   PRIEST DETAIL SECTION
+========================================================= */
 
-        .apd-profile-card {
-            max-width: 1300px;
-            margin: auto;
-            display: flex;
-            gap: 60px;
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(0px);
-            padding: 45px 50px;
-            border-radius: 48px;
-            box-shadow: 0 30px 55px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(194, 84, 13, 0.12);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            position: relative;
-            z-index: 2;
-        }
-        .apd-profile-card:hover {
-            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.12);
-            transform: scale(1.01);
-        }
-        
-        /* image section with gold frame & subtle shine */
-        .apd-img-box {
-            width: 340px;
-            flex-shrink: 0;
-            position: relative;
-        }
-        .apd-img-box img {
-            width: 340px;
-            height: 400px;
-            border-radius: 32px;
-            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.25);
-            transition: all 0.5s;
-            border: 3px solid #fff;
-            outline: 1px solid rgba(194,84,13,0.3);
-            object-fit: cover;
-            display: block;
-        }
-        .vicar-description{
-    color:#666;
-    font-size:15px;
-    line-height:1.8;
-    margin:0;
-    max-width:700px;
-    
+.priest-detail-section {
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+    margin-left: 45px;
+    margin-top: -40px;
+    box-sizing: border-box;
 }
-        /* === PRIEST INITIAL - MATCHING priest.html STYLE === */
-        .priest-initial {
-            width: 340px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 75px;
-            font-weight: 700;
-            font-family: 'Poppins', sans-serif;
-            color: #555555;
-            background: #e5e5e5;
-            border-radius: 32px;
-            text-transform: uppercase;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            transition: all 0.5s;
-            border: 3px solid #fff;
-            outline: 1px solid rgba(194,84,13,0.3);
-        }
-        
-        .apd-img-box:hover .priest-initial {
-            transform: scale(1.02);
-        }
-        
-        .apd-img-box::after {
-           
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: #dd7e43;
-            color: white;
-            font-size: 26px;
-            width: 52px;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 40px;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-            border: 2px solid #fff;
-            transition: 0.3s;
-        }
-        .apd-img-box:hover img {
-            transform: scale(1.02);
-            filter: brightness(1.02);
-        }
-        .apd-img-box:hover::after {
-            transform: scale(1.08) rotate(5deg);
-            background: #dd7e43;
-        }
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.apd-profile-card {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    gap: 60px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(0px);
+    padding: 45px 50px;
+    border-radius: 48px;
+    box-shadow:
+        0 30px 55px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(194, 84, 13, 0.12);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.apd-profile-card:hover {
+    box-shadow:
+        0 40px 70px rgba(0, 0, 0, 0.12);
+    transform: scale(1.01);
+}
+
+
+/* =========================================================
+   IMAGE SECTION
+========================================================= */
+
+.apd-img-box {
+    width: 340px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.apd-img-box img {
+    width: 340px;
+    height: 400px;
+    border-radius: 32px;
+    box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.25);
+    transition: all 0.5s;
+    border: 3px solid #fff;
+    outline: 1px solid rgba(194, 84, 13, 0.3);
+    object-fit: cover;
+    display: block;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   VICAR DESCRIPTION
+========================================================= */
+
+.vicar-description {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 0;
+    max-width: 700px;
+}
+
+
+/* =========================================================
+   PRIEST INITIAL
+========================================================= */
+
+.priest-initial {
+    width: 340px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #555555;
+    background: #e5e5e5;
+    border-radius: 32px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: all 0.5s;
+    border: 3px solid #fff;
+    outline: 1px solid rgba(194, 84, 13, 0.3);
+    box-sizing: border-box;
+}
+
+.apd-img-box:hover .priest-initial {
+    transform: scale(1.02);
+}
+
+
+/* =========================================================
+   IMAGE DECORATION
+========================================================= */
+
+
+
+
+/* =========================================================
+   PASTORAL EXPERIENCE
+========================================================= */
 
 .pastoral-exp-under-img {
     margin-top: 20px;
-    background: linear-gradient(135deg, #fff8f0, #fffef8);
+    background: linear-gradient(
+        135deg,
+        #fff8f0,
+        #fffef8
+    );
     padding: 16px 18px;
     border-radius: 24px;
     border-left: 4px solid #dd7e43;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
     transition: 0.3s ease;
+    box-sizing: border-box;
 }
 
 .pastoral-exp-under-img:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(194,84,13,0.12);
+    box-shadow:
+        0 12px 24px rgba(194, 84, 13, 0.12);
 }
 
 .pastoral-header {
@@ -153,240 +175,859 @@
     font-weight: 700;
 }
 
+
+/* =========================================================
+   INFORMATION AREA
+========================================================= */
+
+.apd-info-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.apd-name {
+    font-size: 32px;
+    font-weight: 700;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: #2a4564;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+}
+
+
+/* =========================================================
+   HEADER META
+========================================================= */
+
+.apd-header-meta {
+    margin: 30px 0 40px;
+    padding: 25px 30px;
+    background: linear-gradient(
+        135deg,
+        #fff8f2,
+        #ffffff
+    );
+    border-left: 6px solid #dd7e43;
+    border-radius: 0 20px 20px 0;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.apd-header-meta::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    background: rgba(194, 84, 13, 0.05);
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   VICAR TITLE
+========================================================= */
+
+.vicar-title {
+    margin-bottom: 15px;
+}
+
+.vicar-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #e76514;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.vicar-badge i {
+    font-size: 12px;
+}
+
+.vicar-church {
+    font-size: 1.5rem;
+    color: #2a4564;
+    margin-bottom: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.apd-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.apd-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    border-radius: 28px;
+    background: #ffffff;
+    border: 1px solid #f0e7db;
+    transition: all 0.3s;
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.apd-detail-item:hover {
+    background: linear-gradient(
+        145deg,
+        #fffbf5,
+        #fff7ef
+    );
+    transform: translateY(-5px);
+    border-color: #c2540d60;
+    box-shadow:
+        0 18px 28px -12px rgba(0, 0, 0, 0.15);
+}
+
+.apd-detail-item i {
+    font-size: 32px;
+    color: #e76514;
+    min-width: 48px;
+    text-align: center;
+    background: #c2540d10;
+    padding: 10px;
+    border-radius: 40px;
+    transition: 0.2s;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.apd-detail-item:hover i {
+    background: #e76514;
+    color: white;
+    transform: scale(1.05);
+}
+
+.apd-detail-item small {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #e76514;
+    display: inline-block;
+    background: #ffede1;
+    padding: 2px 12px;
+    border-radius: 40px;
+    margin-bottom: 6px;
+}
+
+.apd-detail-item p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f3b4c;
+    margin: 4px 0 0;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    transition: 0.1s;
+}
+
+
+/* =========================================================
+   FLOATING PRAYER BUTTON
+========================================================= */
+
+.prayer-floating {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #e76514;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow:
+        0 10px 20px rgba(194, 84, 13, 0.4);
+    cursor: pointer;
+    z-index: 99;
+    transition: 0.2s;
+    border: none;
+    backdrop-filter: blur(2px);
+}
+
+.prayer-floating:hover {
+    background: #e76514;
+    transform: scale(1.1) rotate(5deg);
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-msg {
+    position: fixed;
+    bottom: 110px;
+    right: 30px;
+    background: #2a4564ee;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 60px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+    letter-spacing: 0.3px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   VERSE TOOLTIP
+========================================================= */
+
+.verse-tooltip {
+    animation: fadeUp 0.2s ease;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   VICAR TAG
+========================================================= */
+
+.vicar-tag {
+    transition: all 0.3s;
+}
+
+.vicar-tag:hover {
+    background: #e76514;
+    color: white;
+}
+
+
+/* =========================================================
+   TABLET
+   1024px AND BELOW
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    .priest-detail-section {
+        padding: 80px 20px;
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .apd-profile-card {
+        gap: 35px;
+        padding: 35px;
+        border-radius: 38px;
+    }
+
+    .apd-img-box {
+        width: 300px;
+    }
+
+    .apd-img-box img,
+    .priest-initial {
+        width: 300px;
+        height: 370px;
+    }
+
+    .apd-name {
+        font-size: 2.5rem;
+    }
+
+    .apd-header-meta {
+        margin: 25px 0 30px;
+        padding: 22px 25px;
+    }
+
+    .vicar-church {
+        font-size: 1.35rem;
+    }
+}
+
+
+/* =========================================================
+   TABLET / LARGE MOBILE
+   880px AND BELOW
+========================================================= */
+
 @media (max-width: 880px) {
+
+    .priest-detail-section {
+        margin-left: 0;
+        padding: 70px 18px;
+    }
+
+    .apd-profile-card {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .apd-img-box {
+        width: 280px;
+    }
+
+    .apd-img-box img,
+    .priest-initial {
+        width: 280px;
+        height: 350px;
+    }
+
+    .apd-name {
+        font-size: 2.1rem;
+    }
+
     .pastoral-exp-under-img {
         margin-top: 24px;
     }
-}
-        /* info area - modern & vibrant */
-        .apd-info-content {
-            flex: 1;
-        }
-        .apd-name {
-            font-size: 32px;
-            font-weight: 700;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: #2a4564;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-        .apd-header-meta{
-    margin:30px 0 40px;
-    padding:25px 30px;
-    background:linear-gradient(135deg,#fff8f2,#ffffff);
-    border-left:6px solid #dd7e43;
-    border-radius:0 20px 20px 0;
-    box-shadow:0 8px 25px rgba(0,0,0,0.06);
-    position:relative;
-    overflow:hidden;
-}
 
-.apd-header-meta::before{
-    content:'';
-    position:absolute;
-    top:-40px;
-    right:-40px;
-    width:120px;
-    height:120px;
-    background:rgba(194,84,13,0.05);
-    border-radius:50%;
-}
-
-.vicar-title{
-    margin-bottom:15px;
-}
-
-.vicar-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:#e76514;
-    color:#fff;
-    padding:8px 18px;
-    border-radius:50px;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.vicar-badge i{
-    font-size:12px;
-}
-
-.vicar-church{
-    font-size:1.5rem;
-    color:#2a4564; 
-    margin-bottom:12px;
-    font-weight:700;
-    line-height:1.4;
-}
-
-.vicar-description{
-    color:#666;
-    font-size:15px;
-    line-height:1.8;
-    margin:0;
-    max-width:700px;
-    
-}
-        /* details grid - modern cards */
-        .apd-details-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            margin-top: 20px;
-        }
-        .apd-detail-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 20px 22px;
-            border-radius: 28px;
-            background: #ffffff;
-            border: 1px solid #f0e7db;
-            transition: all 0.3s;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.02);
-        }
-        .apd-detail-item:hover {
-            background: linear-gradient(145deg, #fffbf5, #fff7ef);
-            transform: translateY(-5px);
-            border-color: #c2540d60;
-            box-shadow: 0 18px 28px -12px rgba(0,0,0,0.15);
-        }
-        .apd-detail-item i {
-            font-size: 32px;
-            color: #e76514;
-            min-width: 48px;
-            text-align: center;
-            background: #c2540d10;
-            padding: 10px;
-            border-radius: 40px;
-            transition: 0.2s;
-        }
-        .apd-detail-item:hover i {
-            background: #e76514;
-            color: white;
-            transform: scale(1.05);
-        }
-        .apd-detail-item small {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #e76514;
-            display: inline-block;
-            background: #ffede1;
-            padding: 2px 12px;
-            border-radius: 40px;
-            margin-bottom: 6px;
-        }
-        .apd-detail-item p {
-            font-size: 13px;
-            font-weight: 500;
-            color: #1f3b4c;
-            margin: 4px 0 0;
-            word-break: break-word;
-        }
-
-        /* fancy floating prayer button */
-        .prayer-floating {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #e76514;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            box-shadow: 0 10px 20px rgba(194,84,13,0.4);
-            cursor: pointer;
-            z-index: 99;
-            transition: 0.2s;
-            border: none;
-            backdrop-filter: blur(2px);
-        }
-        .prayer-floating:hover {
-            background: #e76514;
-            transform: scale(1.1) rotate(5deg);
-        }
-        .toast-msg {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            background: #2a4564;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 60px;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: opacity 0.2s;
-            pointer-events: none;
-            z-index: 100;
-            box-shadow: 0 5px 12px black(0,0,0,0.2);
-        }
-
-        /* responsive */
-        @media (max-width: 1024px) {
-            .apd-profile-card {
-                gap: 35px;
-                padding: 35px;
-            }
-            .apd-name {
-                font-size: 2.5rem;
-            }
-        }
-        @media (max-width: 550px) {
-            .priest-detail-section {
-                padding: 60px 16px;
-            }
-            .apd-profile-card {
-                padding: 20px;
-                flex-direction: column;
-            }
-            .apd-name {
-                font-size: 2rem;
-            }
-            .apd-img-box img,
-            .priest-initial {
-                width: 100%;
-                height: 300px;
-            }
-            .priest-initial {
-                font-size: 60px;
-            }
-        }
-
-
-           .verse-tooltip {
-        animation: fadeUp 0.2s ease;
+    .apd-details-grid {
+        gap: 14px;
     }
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(8px);}
-        to { opacity: 1; transform: translateY(0);}
+
+    .apd-detail-item {
+        padding: 17px;
+        gap: 14px;
     }
-    .toast-msg {
-        font-weight: 500;
-        background: #2a4564ee;
-        backdrop-filter: blur(8px);
-        border-radius: 60px;
-        letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   MOBILE
+   768px AND BELOW
+========================================================= */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
+
+    .priest-detail-section {
+        width: 100%;
+        max-width: 100%;
+        padding: 50px 15px;
+        margin-left: 0 !important;
+        margin-right: 0;
+        margin-top: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+
+    /* PROFILE CARD */
+
+    .apd-profile-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 25px 18px;
+        gap: 30px;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 28px;
+        box-sizing: border-box;
+    }
+
+    .apd-profile-card:hover {
+        transform: none;
+    }
+
+
+    /* IMAGE */
+
+    .apd-img-box {
+        width: 100%;
+        max-width: 340px;
+        flex-shrink: 1;
+        margin: 0 auto;
+    }
+
+    .apd-img-box img,
+    .priest-initial {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        min-height: 0;
+        border-radius: 24px;
+        box-sizing: border-box;
+    }
+
+    .priest-initial {
+        font-size: 60px;
+    }
+
+
+    /* REMOVE IMAGE ZOOM ON MOBILE */
+
+    .apd-img-box:hover img {
+        transform: none;
+        filter: none;
+    }
+
+    .apd-img-box:hover .priest-initial {
+        transform: none;
+    }
+
+
+    /* IMAGE BADGE */
+
+    .apd-img-box::after {
+        width: 44px;
+        height: 44px;
+        font-size: 21px;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .apd-img-box:hover::after {
+        transform: none;
+    }
+
+
+    /* INFORMATION */
+
+    .apd-info-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .apd-name {
+        width: 100%;
+        font-size: 1.7rem;
+        line-height: 1.35;
+        text-align: center;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        margin-bottom: 12px;
+    }
+
+
+    /* HEADER META */
+
+    .apd-header-meta {
+        width: 100%;
+        margin: 20px 0 25px;
+        padding: 20px 18px;
+        border-left-width: 5px;
+        border-radius: 0 16px 16px 0;
+        box-sizing: border-box;
+    }
+
+    .apd-header-meta::before {
+        width: 90px;
+        height: 90px;
+        top: -30px;
+        right: -30px;
+    }
+
+
+    /* VICAR */
+
+    .vicar-title {
+        margin-bottom: 12px;
+    }
+
+    .vicar-badge {
+        font-size: 11px;
+        padding: 7px 14px;
+        letter-spacing: 0.6px;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    .vicar-badge i {
+        font-size: 10px;
+    }
+
+    .vicar-church {
+        font-size: 1.2rem;
+        line-height: 1.45;
+        margin-bottom: 10px;
+    }
+
+    .vicar-description {
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.7;
+        text-align: justify;
+    }
+
+
+    /* DETAILS */
+
+    .apd-details-grid {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 18px;
+    }
+
+    .apd-detail-item {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px;
+        gap: 14px;
+        border-radius: 20px;
+        box-sizing: border-box;
+    }
+
+    .apd-detail-item:hover {
+        transform: none;
+    }
+
+    .apd-detail-item i {
+        font-size: 24px;
+        min-width: 40px;
+        padding: 8px;
+    }
+
+    .apd-detail-item:hover i {
+        transform: none;
+    }
+
+    .apd-detail-item small {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+        letter-spacing: 0.7px;
+    }
+
     .apd-detail-item p {
-        transition: 0.1s;
+        font-size: 12px;
+        line-height: 1.5;
     }
-    .vicar-tag {
-        transition: all 0.3s;
+
+
+    /* PASTORAL EXPERIENCE */
+
+    .pastoral-exp-under-img {
+        width: 100%;
+        margin-top: 18px;
+        padding: 15px;
+        border-radius: 18px;
+        box-sizing: border-box;
     }
-    .vicar-tag:hover {
-        background: #e76514;
-        color: white;
+
+    .pastoral-exp-under-img:hover {
+        transform: none;
     }
+
+    .pastoral-header {
+        font-size: 1rem;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .pastoral-header i {
+        font-size: 20px;
+    }
+
+    .pastoral-list p {
+        font-size: 12px;
+        line-height: 1.5;
+        padding-left: 7px;
+    }
+
+
+    /* PRAYER BUTTON */
+
+    .prayer-floating {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        right: 18px;
+        bottom: 18px;
+    }
+
+
+    /* TOAST */
+
+    .toast-msg {
+        right: 18px;
+        bottom: 85px;
+        max-width: calc(100% - 36px);
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   480px AND BELOW
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .priest-detail-section {
+        width: 100%;
+        padding: 35px 10px;
+        margin-left: 0 !important;
+        margin-top: 0;
+        box-sizing: border-box;
+    }
+
+
+    /* CARD */
+
+    .apd-profile-card {
+        width: 100%;
+        padding: 18px 14px;
+        border-radius: 22px;
+        gap: 25px;
+        box-sizing: border-box;
+    }
+
+
+    /* IMAGE */
+
+    .apd-img-box {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .apd-img-box img,
+    .priest-initial {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        border-radius: 20px;
+    }
+
+    .priest-initial {
+        font-size: 50px;
+    }
+
+    .apd-img-box::after {
+        width: 40px;
+        height: 40px;
+        font-size: 19px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+
+    /* NAME */
+
+    .apd-name {
+        font-size: 1.45rem;
+        line-height: 1.35;
+        margin-bottom: 10px;
+    }
+
+
+    /* META */
+
+    .apd-header-meta {
+        padding: 16px 14px;
+        margin: 18px 0 22px;
+        border-left-width: 4px;
+        border-radius: 0 14px 14px 0;
+    }
+
+    .vicar-badge {
+        font-size: 10px;
+        padding: 6px 11px;
+        letter-spacing: 0.4px;
+    }
+
+    .vicar-church {
+        font-size: 1.05rem;
+        line-height: 1.4;
+    }
+
+    .vicar-description {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+
+    /* DETAILS */
+
+    .apd-details-grid {
+        gap: 12px;
+    }
+
+    .apd-detail-item {
+        padding: 13px;
+        gap: 10px;
+        border-radius: 17px;
+    }
+
+    .apd-detail-item i {
+        font-size: 21px;
+        min-width: 36px;
+        padding: 7px;
+    }
+
+    .apd-detail-item small {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .apd-detail-item p {
+        font-size: 11.5px;
+        line-height: 1.45;
+    }
+
+
+    /* PASTORAL */
+
+    .pastoral-exp-under-img {
+        padding: 13px;
+        border-radius: 16px;
+    }
+
+    .pastoral-header {
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+
+    .pastoral-header i {
+        font-size: 18px;
+    }
+
+    .pastoral-list p {
+        font-size: 11.5px;
+        line-height: 1.45;
+        margin: 8px 0;
+    }
+
+
+    /* FLOATING BUTTON */
+
+    .prayer-floating {
+        width: 48px;
+        height: 48px;
+        right: 14px;
+        bottom: 14px;
+        font-size: 20px;
+    }
+
+    .toast-msg {
+        right: 14px;
+        bottom: 75px;
+        max-width: calc(100% - 28px);
+        padding: 9px 14px;
+        font-size: 0.75rem;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+   360px AND BELOW
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .priest-detail-section {
+        padding: 30px 8px;
+    }
+
+    .apd-profile-card {
+        padding: 15px 10px;
+        border-radius: 18px;
+        gap: 20px;
+    }
+
+    .apd-img-box img,
+    .priest-initial {
+        border-radius: 17px;
+    }
+
+    .priest-initial {
+        font-size: 45px;
+    }
+
+    .apd-name {
+        font-size: 1.3rem;
+    }
+
+    .apd-header-meta {
+        padding: 14px 12px;
+    }
+
+    .vicar-badge {
+        font-size: 9px;
+        padding: 5px 9px;
+    }
+
+    .vicar-church {
+        font-size: 0.98rem;
+    }
+
+    .vicar-description {
+        font-size: 12px;
+    }
+
+    .apd-detail-item {
+        padding: 11px;
+        gap: 8px;
+    }
+
+    .apd-detail-item i {
+        font-size: 19px;
+        min-width: 34px;
+        padding: 6px;
+    }
+
+    .apd-detail-item p {
+        font-size: 11px;
+    }
+
+    .pastoral-exp-under-img {
+        padding: 11px;
+    }
+
+    .pastoral-header {
+        font-size: 0.9rem;
+    }
+}  
    
     </style>
 

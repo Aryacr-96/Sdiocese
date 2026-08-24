@@ -1,0 +1,1379 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Synod · Admin</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        /* ========================================
+           DASHBOARD MATCHING STYLES
+        ======================================== */
+
+        :root {
+            --bg-main: #f0f4f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #eef2ff;
+
+            --success: #22c55e;
+            --success-light: #dcfce7;
+
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+
+            --info: #06b6d4;
+            --info-light: #ecfeff;
+
+            --border-color: #e2e8f0;
+
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========================================
+           CONTENT WRAPPER
+        ======================================== */
+
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto !important;
+            padding: 16px 24px 40px !important;
+            background: #f0f4f9;
+            min-height: calc(100vh - 70px);
+            padding-top: 16px !important;
+        }
+
+        .wrapper .content-wrapper {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-top: 16px !important;
+            margin-top: -10px !important;
+        }
+
+        /* ========================================
+           PAGE HEADER
+        ======================================== */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        .page-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-header .header-left .greeting-icon {
+            width: 48px;
+            height: 48px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            font-size: 20px;
+
+            box-shadow:
+                0 4px 16px
+                rgba(99, 102, 241, 0.3);
+
+            flex-shrink: 0;
+        }
+
+        .page-header .header-left h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .page-header .header-left h1 small {
+            font-weight: 400;
+            font-size: 14px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0;
+        }
+
+        /* ========================================
+           HEADER RIGHT
+        ======================================== */
+
+        .page-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-badge {
+            font-size: 13px;
+            color: #64748b;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            box-shadow:
+                0 1px 3px
+                rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-badge i {
+            color: #6366f1;
+        }
+
+        /* ========================================
+           PRIMARY BUTTON
+        ======================================== */
+
+        .btn-primary-custom {
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            border: none;
+            border-radius: var(--radius-pill);
+
+            padding: 0.6rem 1.8rem;
+
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+
+            transition:
+                all 0.3s
+                cubic-bezier(0.4, 0, 0.2, 1);
+
+            box-shadow:
+                0 4px 12px
+                rgba(99, 102, 241, 0.25);
+
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(99, 102, 241, 0.35);
+
+            color: #ffffff;
+        }
+
+        /* ========================================
+           SECTION TITLE
+        ======================================== */
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+
+            margin-bottom: 16px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #6366f1;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    #e2e8f0,
+                    transparent
+                );
+        }
+
+        /* ========================================
+           DASHBOARD CARD
+        ======================================== */
+
+        .dashboard-card {
+            background: white;
+
+            border-radius: 14px;
+
+            border: 1px solid #e2e8f0;
+
+            overflow: hidden;
+
+            transition:
+                all 0.3s
+                cubic-bezier(0.4, 0, 0.2, 1);
+
+            box-shadow:
+                0 1px 3px
+                rgba(0, 0, 0, 0.04);
+        }
+
+        .dashboard-card:hover {
+            border-color: #cbd5e1;
+
+            box-shadow:
+                0 12px 24px -8px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-card .card-body {
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        /* ========================================
+           TABLE
+        ======================================== */
+
+        .table {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .table thead {
+            background: #f8fafc;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .table thead th {
+            font-weight: 600;
+            font-size: 0.8rem;
+
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+
+            color: var(--text-muted);
+
+            padding: 1rem 1.5rem;
+
+            border: none;
+            white-space: nowrap;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+
+            border-bottom:
+                1px solid var(--border-color);
+        }
+
+        .table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            vertical-align: middle;
+            border: none;
+        }
+
+        /* ========================================
+           SYNOD DOCUMENT ICON
+        ======================================== */
+
+        .synod-icon {
+            width: 56px;
+            height: 56px;
+
+            border-radius: 14px;
+
+            background: #eef2ff;
+            color: #6366f1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.5rem;
+
+            border: 1px solid #e0e7ff;
+
+            transition: all 0.3s ease;
+        }
+
+        .synod-icon:hover {
+            transform: scale(1.08);
+
+            background: #6366f1;
+            color: white;
+        }
+
+        /* ========================================
+           SYNOD NAME
+        ======================================== */
+
+        .synod-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .synod-name small {
+            display: block;
+
+            font-weight: 400;
+            color: var(--text-muted);
+
+            font-size: 0.8rem;
+
+            margin-top: 4px;
+        }
+
+        /* ========================================
+           SYNOD IMAGE
+        ======================================== */
+
+        .synod-avatar {
+            width: 55px;
+            height: 55px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            display: block;
+
+            border: 1px solid #e2e8f0;
+
+            background: #f8fafc;
+
+            transition: all 0.2s ease;
+        }
+
+        .synod-avatar:hover {
+            transform: scale(1.05);
+
+            border-color: #cbd5e1;
+
+            box-shadow:
+                0 4px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        /* ========================================
+           EMAIL
+        ======================================== */
+
+        .synod-email {
+            color: #475569;
+
+            font-size: 0.85rem;
+
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+        .synod-email i {
+            color: #6366f1;
+            margin-right: 5px;
+        }
+
+        /* ========================================
+           DESCRIPTION
+        ======================================== */
+
+        .synod-description {
+            color: var(--text-muted);
+
+            font-size: 0.85rem;
+
+            max-width: 450px;
+
+            line-height: 1.5;
+        }
+
+        /* ========================================
+           FILE BADGE
+        ======================================== */
+
+        .file-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 0.35rem 0.9rem;
+
+            border-radius: var(--radius-pill);
+
+            font-size: 0.72rem;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+        }
+
+        .file-badge.pdf {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .file-badge.word {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .file-badge.excel {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .file-badge.file {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        /* ========================================
+           ACTION BUTTONS
+        ======================================== */
+
+        .action-buttons {
+            display: flex;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 0.4rem 1rem;
+
+            border-radius: var(--radius-pill);
+
+            font-size: 0.75rem;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .action-btn i {
+            font-size: 0.8rem;
+        }
+
+        /* VIEW */
+
+        .action-btn.view {
+            background: var(--info-light);
+            color: var(--info);
+        }
+
+        .action-btn.view:hover {
+            background: #0891b2;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* EDIT */
+
+        .action-btn.edit {
+            background: var(--warning-light);
+            color: #b45309;
+        }
+
+        .action-btn.edit:hover {
+            background: #b45309;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* DELETE */
+
+        .action-btn.delete {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--danger);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* ========================================
+           TABLE FOOTER
+        ======================================== */
+
+        .table-footer {
+            padding: 1rem 1.5rem;
+
+            background: #f8fafc;
+
+            border-top:
+                1px solid var(--border-color);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 0.5rem;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ========================================
+           EMPTY STATE
+        ======================================== */
+
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+
+            font-size: 1rem;
+
+            max-width: 450px;
+
+            margin:
+                0.5rem auto 1.5rem;
+        }
+
+        /* ========================================
+           DELETE MODAL
+        ======================================== */
+
+        .modal-content {
+            border-radius: 14px;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow:
+                0 12px 40px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .modal-header {
+            border-bottom:
+                2px solid var(--danger-light);
+
+            padding: 1.5rem 2rem;
+        }
+
+        .modal-title {
+            font-weight: 700;
+
+            font-size: 1.2rem;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .modal-title i {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .delete-icon-wrapper {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            background: var(--danger-light);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 1.2rem;
+        }
+
+        .delete-icon-wrapper i {
+            font-size: 2.5rem;
+            color: var(--danger);
+        }
+
+        .modal-body h5 {
+            font-weight: 700;
+
+            color: var(--text-main);
+
+            text-align: center;
+
+            font-size: 1.1rem;
+        }
+
+        .synod-name-display {
+            font-weight: 700;
+
+            color: var(--danger);
+
+            background: var(--danger-light);
+
+            padding: 0.3rem 1rem;
+
+            border-radius: var(--radius-pill);
+
+            display: inline-block;
+
+            font-size: 1.1rem;
+        }
+
+        .modal-body p {
+            color: var(--text-muted);
+
+            text-align: center;
+
+            font-size: 0.95rem;
+        }
+
+        .modal-footer {
+            border-top:
+                1px solid var(--border-color);
+
+            padding: 1.2rem 2rem;
+
+            gap: 12px;
+        }
+
+        .modal-footer .btn {
+            border-radius: var(--radius-pill);
+
+            padding: 0.6rem 2rem;
+
+            font-weight: 600;
+
+            font-size: 0.9rem;
+        }
+
+        .modal-footer .btn-secondary {
+            background: #e2e8f0;
+
+            border: none;
+
+            color: var(--text-main);
+        }
+
+        .modal-footer .btn-danger {
+            background: var(--danger);
+
+            border: none;
+
+            color: white;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 992px) {
+
+            .content-wrapper {
+                padding:
+                    12px 16px 30px !important;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-header .header-right {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .content-wrapper {
+                padding:
+                    12px 16px 30px !important;
+            }
+
+            .page-header .header-left .greeting-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .page-header .header-left h1 {
+                font-size: 20px;
+            }
+
+            .table tbody td {
+                padding:
+                    0.8rem 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .table-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .synod-avatar {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .content-wrapper {
+                padding:
+                    10px 12px 24px !important;
+            }
+
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+
+            .table thead th {
+                font-size: 0.65rem;
+
+                padding:
+                    0.6rem 0.8rem;
+            }
+
+            .table tbody td {
+                padding:
+                    0.6rem 0.8rem;
+
+                font-size: 0.8rem;
+            }
+
+            .synod-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .synod-avatar {
+                width: 45px;
+                height: 45px;
+                border-radius: 8px;
+            }
+
+            .synod-email {
+                font-size: 0.75rem;
+            }
+
+            .action-btn {
+                font-size: 0.7rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+
+    <!-- ========================================
+         PAGE HEADER
+    ======================================== -->
+
+    <div class="page-header">
+
+        <div class="header-left">
+
+            <div class="greeting-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+
+            <div>
+
+                <h1>
+                    Synod
+
+                    <small>
+                        Manage Synod documents, notices and publications
+                    </small>
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="header-right">
+
+            <span class="stat-badge">
+
+                <i class="fas fa-file-alt"></i>
+
+                {{ synods|length }}
+                Synod{{ synods|length|pluralize }}
+
+            </span>
+
+            <a href="{% url 'add_synod' %}"
+               class="btn-primary-custom">
+
+                <i class="fas fa-plus-circle"></i>
+
+                Add Synod
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================
+         SECTION TITLE
+    ======================================== -->
+
+    <div class="section-title">
+
+        <i class="fas fa-list"></i>
+
+        All Synod Documents
+
+        <span class="section-line"></span>
+
+    </div>
+
+    <!-- ========================================
+         SYNOD TABLE
+    ======================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-body">
+
+            {% if synods %}
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th style="width:80px;">
+                            File
+                        </th>
+
+                        <th>
+                            Synod
+                        </th>
+
+                        <th>
+                            Image
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th style="width:260px;">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for synod in synods %}
+
+                    <tr>
+
+                        <!-- FILE ICON -->
+
+                        <td>
+
+                            <div class="synod-icon">
+
+                                <i class="fas fa-file-alt"></i>
+
+                            </div>
+
+                        </td>
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <div class="synod-name">
+
+                                {{ synod.name|default:"Untitled Synod" }}
+
+                                <small>
+
+                                    <i class="fas fa-link"></i>
+
+                                    {{ synod.slug }}
+
+                                </small>
+
+                            </div>
+
+                        </td>
+
+                        <!-- IMAGE -->
+
+                        <td>
+
+                            <div class="synod-name">
+
+                                {% if synod.image %}
+
+                                    <img src="{{ synod.image.url }}"
+                                         alt="{{ synod.name }}"
+                                         class="synod-avatar">
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        No Image
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                        <!-- EMAIL -->
+
+                        <td>
+
+                            <div class="synod-email">
+
+                                {% if synod.email %}
+
+                                    <i class="fas fa-envelope"></i>
+
+                                    {{ synod.email }}
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        No Email
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                {% if synod.file %}
+
+                                <a href="{{ synod.file.url }}"
+                                   target="_blank"
+                                   class="action-btn view"
+                                   title="View Document">
+
+                                    <i class="fas fa-eye"></i>
+
+                                    View
+
+                                </a>
+
+                                {% endif %}
+
+                                <a href="{% url 'edit_synod' synod.slug %}"
+                                   class="action-btn edit"
+                                   title="Edit Synod">
+
+                                    <i class="fas fa-edit"></i>
+
+                                    Edit
+
+                                </a>
+
+                                <button type="button"
+                                        class="action-btn delete"
+                                        title="Delete Synod"
+
+                                        data-bs-toggle="modal"
+
+                                        data-bs-target="#deleteModal"
+
+                                        data-synod-slug="{{ synod.slug }}"
+
+                                        data-synod-name="{{ synod.name }}">
+
+                                    <i class="fas fa-trash-alt"></i>
+
+                                    Delete
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <!-- ========================================
+                 TABLE FOOTER
+            ======================================== -->
+
+            <div class="table-footer">
+
+                <span class="info-text">
+
+                    <i class="fas fa-info-circle"></i>
+
+                    Showing
+                    {{ synods|length }}
+                    Synod{{ synods|length|pluralize }}
+
+                </span>
+
+                <span class="info-text">
+
+                    <i class="fas fa-clock"></i>
+
+                    {% now "M j, Y" %}
+
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <!-- ========================================
+                 EMPTY STATE
+            ======================================== -->
+
+            <div class="empty-state">
+
+                <i class="fas fa-file-circle-xmark"></i>
+
+                <h5>
+                    No Synod Documents Found
+                </h5>
+
+                <p>
+                    Add your first Synod document to get started.
+                </p>
+
+                <a href="{% url 'add_synod' %}"
+                   class="btn-primary-custom">
+
+                    <i class="fas fa-plus-circle"></i>
+
+                    Add First Synod
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================
+     DELETE MODAL
+======================================== -->
+
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title"
+                    id="deleteModalLabel">
+
+                    <i class="fas fa-exclamation-triangle"></i>
+
+                    Confirm Deletion
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                </button>
+
+            </div>
+
+            <div class="modal-body text-center">
+
+                <div class="delete-icon-wrapper">
+
+                    <i class="fas fa-file-alt"></i>
+
+                </div>
+
+                <h5>
+                    Are you sure you want to delete
+                </h5>
+
+                <h5 class="synod-name-display"
+                    id="modalSynodName">
+
+                    Synod
+
+                </h5>
+
+                <p class="mt-3">
+
+                    This action cannot be undone.
+                    The Synod document and its associated
+                    data will be permanently removed.
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    <i class="fas fa-times"></i>
+
+                    Cancel
+
+                </button>
+
+                <form id="deleteForm"
+                      method="POST"
+                      action="">
+
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        <i class="fas fa-trash-alt"></i>
+
+                        Yes, Delete Synod
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================
+     BOOTSTRAP JS
+======================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<!-- ========================================
+     DELETE MODAL SCRIPT
+======================================== -->
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+        const deleteModal =
+            document.getElementById('deleteModal');
+
+        const modalSynodName =
+            document.getElementById('modalSynodName');
+
+        const deleteForm =
+            document.getElementById('deleteForm');
+
+        deleteModal.addEventListener(
+            'show.bs.modal',
+            function(event) {
+
+                const button =
+                    event.relatedTarget;
+
+                const synodSlug =
+                    button.getAttribute(
+                        'data-synod-slug'
+                    );
+
+                const synodName =
+                    button.getAttribute(
+                        'data-synod-name'
+                    );
+
+                modalSynodName.textContent =
+                    synodName;
+
+                deleteForm.action =
+                    "{% url 'delete_synod' 'PLACEHOLDER' %}"
+                    .replace(
+                        'PLACEHOLDER',
+                        synodSlug
+                    );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>

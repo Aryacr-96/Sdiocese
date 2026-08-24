@@ -2,335 +2,1372 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diocese</title>
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diocese</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <!-- NAVBAR -->
- <div class="navbar">
 
-    <!-- Logo -->
-    <div class="logo">
-        <div class="logo-circle">
-            <img src="{% static 'images/image.png' %}" style="height:55px;width:65px;">
-        </div>
-      
-        <h3 class="logo-title">Diocese</h3>
-    </div>
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-    <!-- Menu -->
-  
-    <div class="nav-links">
-        <a href="{% url 'index' %}">Home</a>
-       <div class="dropdown">
-        <a href="#">About Diocese</a>
-        <div class="dropdown-menu">
-            <a href="{% url 'batherydiocese' %}">  <span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
-                    <a href="{% url 'diocesehistory' %}">  <span class="arrow">▸</span>History</a>
-                    <a href="{% url 'metropolitans' %}">  <span class="arrow">▸</span>Metropolitans</a>
-                    <a href="{% url 'council' %}">  <span class="arrow">▸</span>Diocesan Council</a>
-                    <a href="{% url 'committe' %}">  <span class="arrow">▸</span>Managing Committee</a>
-        </div>
-    </div>
-        <a href="{% url 'priest' %}">Priest</a>
-        <a href="{% url 'parish' %}">Parishes</a>
-        <a href="{% url 'contact' %}">Contact</a>
-        
-           
-
-    </div>
-
-   
+    <div class="navbar">
 
 
-    <!-- Right Side -->
-    <div class="nav-right">
-        <!-- <button class="button">Login</button>   -->
-        <div class="sidebar-toggle" id="sidebarToggleBtn">
-            <div class="toggle-icon">
-                <span></span>
-                <span></span>
-                <span></span>
+        <!-- Logo -->
+
+        <div class="logo">
+
+            <div class="logo-circle">
+
+                <img src="{% static 'images/image-removebg-preview.png' %}"
+                     style="height:55px;width:65px;">
+
             </div>
+
+            <h3 class="logo-title">
+                Diocese
+            </h3>
+
         </div>
+
+
+
+        <!-- =================================================
+             DESKTOP NAVIGATION
+        ================================================== -->
+
+        <div class="nav-links">
+
+
+            <a href="{% url 'index' %}">
+                Home
+            </a>
+
+
+            <div class="dropdown">
+
+                <a href="#">
+                    About Diocese
+                </a>
+
+
+                <div class="dropdown-menu">
+
+                    
+
+                    <a href="{% url 'diocesehistory' %}">
+                        <span class="arrow">▸</span>
+                        History
+                    </a>
+                    <a href="{% url 'batherydiocese' %}">
+                        <span class="arrow">▸</span>
+                        Bathery Diocese-At a Glance
+                    </a>
+                    <a href="{% url 'metropolitans' %}">
+                        <span class="arrow">▸</span>
+                        Metropolitans
+                    </a>
+
+                    <a href="{% url 'council' %}">
+                        <span class="arrow">▸</span>
+                        Diocesan Council
+                    </a>
+
+                    <a href="{% url 'committe' %}">
+                        <span class="arrow">▸</span>
+                        Managing Committee
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <a href="{% url 'priest' %}">
+                Priest
+            </a>
+
+
+            <a href="{% url 'parish' %}">
+                Parishes
+            </a>
+
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RIGHT SIDE
+        ================================================== -->
+
+        <div class="nav-right">
+            <div class="sidebar-toggle"
+                 id="sidebarToggleBtn">
+
+                <div class="toggle-icon">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
     </div>
 
-</div>
 
-    <!-- Sidebar Overlay (click to close) -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    
-    <aside class="sidebar" id="sidebarPanel">
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+    ====================================================== -->
+
+    <div class="sidebar-overlay"
+         id="sidebarOverlay">
+    </div>
+
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar"
+           id="sidebarPanel">
+
+
         <div class="sidebar-logo">
-            <h3 class="sidebar-head">Diocese</h3>
+
+            <h3 class="sidebar-head">
+                Diocese
+            </h3>
+
         </div>
+
+
 
         <div class="nav-menu-side">
-           
-            <div class="dropdown">
-                 
-               <a href="javascript:void(0)" class="menu-link"> <i class="fa-solid fa-church menu-icon"></i>About Church<span class="arrow">▸</span></a>
-              
-                   <div class="submenu">
-                    <a href="{% url 'malankara' %}"><span class="arrow">▸</span>Malankara Orthodox Syrian Church</a>
-                    <a href="{% url 'throne' %}"><span class="arrow">▸</span>The Throne of St. Thomas</a>
-                    <a href="{% url 'believe' %}"><span class="arrow">▸</span>What Do We Believe</a>
-                    <a href="{% url 'catholicate' %}"><span class="arrow">▸</span>The Catholicate</a>
-                    <a href="{% url 'synod' %}"><span class="arrow">▸</span>Holy Synod</a>
-                    <a href="{% url 'history' %}"><span class="arrow">▸</span>History</a>
-                    </div>
-            </div>
 
-            <!-- Dropdown -->
-            <!-- <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-                    About Diocese
-                    <span class="arrow">▸</span>
+
+
+            <!-- =================================================
+                 ABOUT CHURCH
+            ================================================== -->
+
+            <div class="dropdown">
+
+
+                <a href="javascript:void(0)"
+                   class="menu-link">
+
+                    <i class="fa-solid fa-church menu-icon"></i>
+
+                    About Church
+
+                    <span class="arrow">
+                        ▸
+                    </span>
+
                 </a>
 
-                 <div class="submenu">
-                    <a href="{% url 'batherydiocese' %}">  <span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
-                    <a href="{% url 'diocesehistory' %}">  <span class="arrow">▸</span>History</a>
-                    <a href="{% url 'metropolitans' %}">  <span class="arrow">▸</span>Metropolitans</a>
-                    <a href="{% url 'priest' %}">   <span class="arrow">▸</span>Priest Directory</a>
-                    <a href="{% url 'parish' %}">  <span class="arrow">▸</span>Parish Directory</a>
-                    <a href="{% url 'council' %}">  <span class="arrow">▸</span>Diocesan Council</a>
-                    <a href="{% url 'committe' %}">  <span class="arrow">▸</span>Managing Committee</a>
-                </div> 
-            </div> -->
-
-            <div class="dropdown">
-    <a href="javascript:void(0)" class="menu-link">
-        <i class="fa-regular fa-heart menu-icon"></i>Spiritual Organisations
-        <span class="arrow">▸</span>
-    </a>
-
-    <div class="submenu">
-        {% for spiritual in spirituals %}
-            <a href="{% url 'spiritual_detail' spiritual.slug %}">
-                <span class="arrow">▸</span>{{ spiritual.category_title }}
-            </a>
-        {% empty %}
-            <a href="javascript:void(0)" style="color: #94a3b8; cursor: default;">
-                <span class="arrow">▸</span>No spiritual categories available
-            </a>
-        {% endfor %}
-    </div>
-</div>
-
-            <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-                    <i class="fa-solid fa-hands-holding-circle menu-icon"></i>Karunya Sparsam
-                    <span class="arrow">▸</span>
-                </a>
 
                 <div class="submenu">
-                    <a href="{% url 'karunyam' %}"> <span class="arrow">▸</span>About</a>
-                    <a href="{% url 'projects' %}">  <span class="arrow">▸</span>Projects</a>
-                </div>
-            </div>
-            
-            <!-- <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-                    <i class="fa-solid fa-building-columns menu-icon"></i> Institutions
-                    <span class="arrow">▸</span>
-                </a>
 
-                <div class="submenu">
-                    <a href="{% url 'school' %}">  <span class="arrow">▸</span>Schools</a>
-                    <a href="{% url 'college' %}">  <span class="arrow">▸</span>Colleges</a>
-                     <a href="{% url 'retreat' %}">  <span class="arrow">▸</span>Retreat Centres</a>
+
+                    <a href="{% url 'malankara' %}">
+                        <span class="arrow">▸</span>
+                        Malankara Orthodox Syrian Church
+                    </a>
+
+
+                    <a href="{% url 'throne' %}">
+                        <span class="arrow">▸</span>
+                        The Throne of St. Thomas
+                    </a>
+
+
+                    <a href="{% url 'believe' %}">
+                        <span class="arrow">▸</span>
+                        What Do We Believe
+                    </a>
+
+
+                    <a href="{% url 'catholicate' %}">
+                        <span class="arrow">▸</span>
+                        The Catholicate
+                    </a>
+
+
+                    <a href="{% url 'synod' %}">
+                        <span class="arrow">▸</span>
+                        Holy Synod
+                    </a>
+
+
+                    <a href="{% url 'history' %}">
+                        <span class="arrow">▸</span>
+                        History
+                    </a>
+
+
                 </div>
-            </div> -->
-            
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SPIRITUAL ORGANISATIONS
+            ================================================== -->
+
             <div class="dropdown">
-                <a href="javascript:void(0)" class="menu-link">
-               <i class="fa-regular fa-file-video menu-icon"></i> Media
-                    <span class="arrow">▸</span>
+
+
+                <a href="javascript:void(0)"
+                   class="menu-link">
+
+                    <i class="fa-regular fa-heart menu-icon"></i>
+
+                    Spiritual Organisations
+
+                    <span class="arrow">
+                        ▸
+                    </span>
+
                 </a>
 
+
                 <div class="submenu">
-                    <a href="{% url 'publications' %}">  <span class="arrow">▸</span>Publications</a>
-                    <a href="{% url 'images' %}">  <span class="arrow">▸</span>Image Gallery</a>
-                     <a href="{% url 'videos' %}">  <span class="arrow">▸</span>Video Gallery</a>
-                     <a href="{% url 'calendar' %}">  <span class="arrow">▸</span>Calendar</a>
-                     <a href="{% url 'events' %}">  <span class="arrow">▸</span>Upcoming Events</a>
+
+
+                    {% for spiritual in spirituals %}
+
+
+                    <a href="{% url 'spiritual_detail' spiritual.slug %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        {{ spiritual.category_title }}
+
+                    </a>
+
+
+                    {% empty %}
+
+
+                    <a href="javascript:void(0)"
+                       style="color:#94a3b8;cursor:default;">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        No spiritual categories available
+
+                    </a>
+
+
+                    {% endfor %}
+
+
                 </div>
+
+
             </div>
-            
-         <div class="dropdown">
-    <a href="javascript:void(0)" class="menu-link">
-        <i class="fa-solid fa-download menu-icon"></i>
-        Downloads
-        <span class="arrow">▸</span>
-    </a>
 
-    <div class="submenu">
 
-        <a href="{% url 'kalpana' %}">
-            <span class="arrow">▸</span>
-            Kalpana
-        </a>
 
-        <a href="{% url 'prayerbook' %}">
-            <span class="arrow">▸</span>
-            Prayer Books
-        </a>
+            <!-- =================================================
+                 KARUNYA SPARSAM
+            ================================================== -->
 
-        {% if church_account_manual %}
-        <a href="{{ church_account_manual.file.url }}"
-           target="_blank"
-           rel="noopener noreferrer">
-            <span class="arrow">▸</span>
-            Church Accounts Manual
-        </a>
-        {% endif %}
+            <div class="dropdown">
 
-        {% if guidelines %}
-        <a href="{{ guidelines.file.url }}"
-           target="_blank"
-           rel="noopener noreferrer">
-            <span class="arrow">▸</span>
-            Guidelines for Preparing Church Accounts
-        </a>
-        {% endif %}
 
-        {% if constitution_1934 %}
-        <a href="{{ constitution_1934.file.url }}"
-           target="_blank"
-           rel="noopener noreferrer">
-            <span class="arrow">▸</span>
-            1934 Constitution
-        </a>
-        {% endif %}
+                <a href="javascript:void(0)"
+                   class="menu-link">
 
-    </div>
-</div>
-  <div class="dropdown">
-                <a href="{% url 'admin' %}" class="menu-link">
-                  <i class="fa-regular fa-user menu-icon"></i> Login
+                    <i class="fa-solid fa-hands-holding-circle menu-icon"></i>
+
+                    Karunya Sparsam
+
+                    <span class="arrow">
+                        ▸
+                    </span>
+
+                </a>
+
+
+                <div class="submenu">
+
+
+                    <a href="{% url 'karunyam' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        About
+
+                    </a>
+
+
+                    <a href="{% url 'projects' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Projects
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MEDIA
+            ================================================== -->
+
+            <div class="dropdown">
+
+
+                <a href="javascript:void(0)"
+                   class="menu-link">
+
+                    <i class="fa-regular fa-file-video menu-icon"></i>
+
+                    Media
+
+                    <span class="arrow">
+                        ▸
+                    </span>
+
+                </a>
+
+
+                <div class="submenu">
+
+
+                    <a href="{% url 'publications' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Publications
+
+                    </a>
+
+
+                    <a href="{% url 'images' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Image Gallery
+
+                    </a>
+
+
+                    <a href="{% url 'videos' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Video Gallery
+
+                    </a>
+
+
+                    <a href="{% url 'calendar' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Calendar
+
+                    </a>
+
+
+                    <a href="{% url 'events' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Upcoming Events
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DOWNLOADS
+            ================================================== -->
+
+            <div class="dropdown">
+
+
+                <a href="javascript:void(0)"
+                   class="menu-link">
+
+                    <i class="fa-solid fa-download menu-icon"></i>
+
+                    Downloads
+
+                    <span class="arrow">
+                        ▸
+                    </span>
+
+                </a>
+
+
+                <div class="submenu">
+
+
+                    <a href="{% url 'kalpana' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Kalpana
+
+                    </a>
+
+
+                    <a href="{% url 'prayerbook' %}">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Prayer Books
+
+                    </a>
+
+
+                    {% if church_account_manual %}
+
+                    <a href="{{ church_account_manual.file.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Church Accounts Manual
+
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if guidelines %}
+
+                    <a href="{{ guidelines.file.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        Guidelines for Preparing Church Accounts
+
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if constitution_1934 %}
+
+                    <a href="{{ constitution_1934.file.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+
+                        <span class="arrow">
+                            ▸
+                        </span>
+
+                        1934 Constitution
+
+                    </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LOGIN
+            ================================================== -->
+
+            <div class="dropdown">
+
+
+                <a href="{% url 'admin' %}"
+                   class="menu-link">
+
+                    <i class="fa-regular fa-user menu-icon"></i>
+
+                    Login
+
                     <span class="arrow"></span>
+
                 </a>
+
+
             </div>
+
+
         </div>
+
+
     </aside>
 
-    <!-- HERO -->
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <div class="hero">
+
+
         <div class="hero-text">
-            <h1>Landing Page</h1>
-            <h3>Creative Design</h3>
+
+
+            <h1>
+                Landing Page
+            </h1>
+
+
+            <h3>
+                Creative Design
+            </h3>
+
+
             <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas inventore deserunt quis molestias veniam blanditiis tempore ipsa dignissimos asperiores est exercitationem in, nisi dolore sequi perferendis. Quas pariatur vel optio!
+
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Voluptas inventore deserunt quis molestias veniam blanditiis
+                tempore ipsa dignissimos asperiores est exercitationem in,
+                nisi dolore sequi perferendis. Quas pariatur vel optio!
+
             </p>
+
+
+
             <div class="ring-container">
+
                 <div class="ring"></div>
                 <div class="ring"></div>
                 <div class="ring"></div>
                 <div class="ring"></div>
+
             </div>
+
+
+
             <div class="hero-buttons">
-                <button class="btn">Trial</button>
-                <button class="btn">Premium</button>
+
+                <button class="btn">
+                    Trial
+                </button>
+
+                <button class="btn">
+                    Premium
+                </button>
+
             </div>
+
+
         </div>
+
+
     </div>
 
+
 </div>
+
+
+
+<!-- =====================================================
+     BACKGROUND GRAPHICS
+====================================================== -->
 
 <div class="bg-graphics-wrapper">
+
     <div class="circle circle4"></div>
+
     <div class="circle circle2"></div>
+
     <div class="circle circle1"></div>
+
 </div>
 
-<!-- FOOTER -->
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
 <div class="footer">
-    <span>Legal</span>
-    <span>Privacy Center</span>
-    <span>Cookie</span>
-    <span>About Ads</span>
+
+
+    <!-- =================================================
+         MOBILE ICON NAVIGATION
+         
+         ONLY ICONS ARE SHOWN
+         EACH ICON IS A CLICKABLE LINK
+    ================================================== -->
+
+    <!-- =====================================================
+     MOBILE BOTTOM NAVIGATION
+====================================================== -->
+
+<div class="bottom-mobile-menu">
+
+    <!-- HOME -->
+    <a href="{% url 'index' %}"
+       class="bottom-mobile-menu-item"
+       title="Home">
+        <i class="fa-solid fa-house"></i>
+    </a>
+
+    <!-- ABOUT DIOCESE -->
+    <a href="{% url 'batherydiocese' %}"
+       class="bottom-mobile-menu-item"
+       title="About Diocese">
+        <i class="fa-solid fa-church"></i>
+    </a>
+
+    <!-- PRIEST -->
+    <a href="{% url 'priest' %}"
+       class="bottom-mobile-menu-item"
+       title="Priest">
+        <i class="fa-solid fa-user-tie"></i>
+    </a>
+
+    <!-- PARISH -->
+    <a href="{% url 'parish' %}"
+       class="bottom-mobile-menu-item"
+       title="Parishes">
+        <i class="fa-solid fa-place-of-worship"></i>
+    </a>
+
+    <!-- CONTACT -->
+    <a href="{% url 'contact' %}"
+       class="bottom-mobile-menu-item"
+       title="Contact">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+
+</div>
+<style>
+    /* =========================================================
+   FIX HORIZONTAL SCROLL ON MOBILE
+========================================================= */
+
+/* Prevent horizontal scroll on all devices */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure container doesn't overflow */
+.container {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Hide overflow for background graphics */
+.bg-graphics-wrapper {
+    overflow: hidden;
+    pointer-events: none; /* So they don't block clicks */
+}
+
+/* Fix background circles - keep them contained */
+.bg-graphics-wrapper .circle {
+    max-width: 100vw;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+    /* Contain all elements */
+    .container,
+    .hero,
+    .hero-text,
+    .navbar,
+    .footer {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    /* Fix the hero text */
+    .hero-text {
+        padding: 0 16px;
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    /* Ensure hero buttons don't overflow */
+    .hero-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .hero-buttons .btn {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Fix footer elements */
+    .footer {
+        max-width: 100%;
+        padding: 10px 16px;
+        box-sizing: border-box;
+    }
+
+    .footer-right {
+        max-width: 100%;
+        word-wrap: break-word;
+    }
+
+    /* Fix any hidden overflows */
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Ensure images don't overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 1.8rem;
+        word-wrap: break-word;
+    }
+
+    .hero-text h3 {
+        font-size: 1.2rem;
+        word-wrap: break-word;
+    }
+
+    .hero-text p {
+        font-size: 0.95rem;
+        word-wrap: break-word;
+    }
+}
+
+    /* =========================================================
+   MOBILE BOTTOM MENU
+   HIDDEN ON DESKTOP
+========================================================= */
+
+.bottom-mobile-menu {
+    display: none;
+}
+
+
+/* =========================================================
+   MOBILE VIEW
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .bottom-mobile-menu {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+
+        height: 64px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        background: #ffffff;
+
+        border: 1px solid rgba(231, 101, 20, 0.15);
+
+        border-radius: 22px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            0 3px 10px rgba(0, 0, 0, 0.06);
+
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        z-index: 99999;
+
+        padding: 5px 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* =====================================================
+       MENU ITEM
+    ===================================================== */
+
+    .bottom-mobile-menu-item {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #2a4564;
+
+        text-decoration: none;
+
+        border-radius: 16px;
+
+        transition: all 0.25s ease;
+
+        -webkit-tap-highlight-color: transparent;
+    }
+
+
+    /* =====================================================
+       ICON
+    ===================================================== */
+
+    .bottom-mobile-menu-item i {
+        font-size: 20px;
+        transition: all 0.25s ease;
+    }
+
+
+    /* =====================================================
+       HOVER
+    ===================================================== */
+
+    .bottom-mobile-menu-item:hover {
+        background: #e76514;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .bottom-mobile-menu-item:hover i {
+        transform: scale(1.08);
+    }
+
+
+    /* =====================================================
+       CLICK
+    ===================================================== */
+
+    .bottom-mobile-menu-item:active {
+        transform: scale(0.90);
+    }
+
+
+    /* =====================================================
+       SPACE FOR FIXED MENU
+    ===================================================== */
+
+    body {
+        padding-bottom: 90px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .bottom-mobile-menu {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+
+        height: 58px;
+
+        border-radius: 19px;
+
+        padding: 4px 6px;
+    }
+
+    .bottom-mobile-menu-item {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 14px;
+    }
+
+    .bottom-mobile-menu-item i {
+        font-size: 18px;
+    }
+
+    body {
+        padding-bottom: 78px;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .bottom-mobile-menu {
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+
+        height: 54px;
+
+        border-radius: 17px;
+    }
+
+    .bottom-mobile-menu-item {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+    }
+
+    .bottom-mobile-menu-item i {
+        font-size: 17px;
+    }
+
+    body {
+        padding-bottom: 72px;
+    }
+}
+</style>
+
+  
+
+
+
+    <!-- =================================================
+         EXISTING FOOTER CONTENT
+    ================================================== -->
+
+    <div class="footer-legal">
+  Copyright © 2026 Sulthan Bathery diocese
+
+    </div>
+
+
 </div>
 
+
+
+<!-- =====================================================
+     FOOTER RIGHT
+====================================================== -->
 <div class="footer-right">
-    © 2026 Appzia Tec Solutions LLP
-</div> 
+    Designed by <a href="https://www.appziatec.com/" style="color: inherit; text-decoration: none;">Appzia Tec Solutions</a>
+</div>
 
-<!-- JAVASCRIPT -->
-<script>const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
 
-function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
 
-function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-toggleBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
-
-// Overlay click
-overlay.addEventListener('click', closeSidebar);
-
-// Click outside sidebar
-document.addEventListener('click', function (e) {
-    if (
-        sidebar.classList.contains('open') &&
-        !sidebar.contains(e.target) &&
-        !toggleBtn.contains(e.target)
-    ) {
-        closeSidebar();
-    }
-});
-
-// ESC key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-</script>
+<!-- =====================================================
+     SIDEBAR JAVASCRIPT
+====================================================== -->
 
 <script>
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
 
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
-            }
-        });
 
-        dropdown.classList.toggle("active");
-    });
-});
+const toggleBtn =
+    document.getElementById('sidebarToggleBtn');
+
+
+const sidebar =
+    document.getElementById('sidebarPanel');
+
+
+const overlay =
+    document.getElementById('sidebarOverlay');
+
+
+
+function openSidebar() {
+
+    sidebar.classList.add('open');
+
+    overlay.classList.add('active');
+
+    toggleBtn.classList.add('active');
+
+    document.body.style.overflow = 'hidden';
+
+}
+
+
+
+function closeSidebar() {
+
+    sidebar.classList.remove('open');
+
+    overlay.classList.remove('active');
+
+    toggleBtn.classList.remove('active');
+
+    document.body.style.overflow = '';
+
+}
+
+
+
+toggleBtn.addEventListener(
+    'click',
+    function (e) {
+
+        e.stopPropagation();
+
+
+        if (
+            sidebar.classList.contains('open')
+        ) {
+
+            closeSidebar();
+
+        } else {
+
+            openSidebar();
+
+        }
+
+    }
+);
+
+
+
+/* Overlay click */
+
+overlay.addEventListener(
+    'click',
+    closeSidebar
+);
+
+
+
+/* Click outside sidebar */
+
+document.addEventListener(
+    'click',
+    function (e) {
+
+        if (
+
+            sidebar.classList.contains('open') &&
+
+            !sidebar.contains(e.target) &&
+
+            !toggleBtn.contains(e.target)
+
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
+
+/* ESC key */
+
+document.addEventListener(
+    'keydown',
+    function (e) {
+
+        if (
+
+            e.key === 'Escape' &&
+
+            sidebar.classList.contains('open')
+
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+
 </script>
+
+
+
+<!-- =====================================================
+     SIDEBAR DROPDOWN JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+document
+    .querySelectorAll(".menu-link")
+    .forEach(link => {
+
+
+        link.addEventListener(
+            "click",
+            function () {
+
+
+                const dropdown =
+                    this.parentElement;
+
+
+
+                document
+                    .querySelectorAll(".nav-menu-side .dropdown")
+                    .forEach(item => {
+
+
+                        if (item !== dropdown) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+
+                    });
+
+
+
+                dropdown.classList.toggle(
+                    "active"
+                );
+
+
+            }
+        );
+
+
+    });
+
+
+</script>
+
+
+
+<!-- =====================================================
+     MOBILE FOOTER ICON STYLE
+====================================================== -->
+
+<style>
+
+
+/* =====================================================
+   HIDE MOBILE FOOTER ICONS BY DEFAULT
+====================================================== */
+
+.mobile-footer-nav {
+
+    display: none;
+
+}
+
+
+
+/* =====================================================
+   MOBILE VIEW
+====================================================== */
+
+@media (max-width: 768px) {
+
+
+    /*
+       Hide desktop top navigation.
+       Logo and hamburger remain.
+    */
+
+    .navbar .nav-links {
+
+        display: none !important;
+
+    }
+
+
+
+    /*
+       Footer navigation
+    */
+
+    .mobile-footer-nav {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 25px;
+
+        width: 100%;
+
+        padding: 12px 0;
+
+        box-sizing: border-box;
+
+    }
+
+
+
+    /*
+       ICON ONLY
+    */
+
+    .mobile-footer-icon {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: 42px;
+
+        height: 42px;
+
+        text-decoration: none;
+
+        font-size: 20px;
+
+        transition: transform 0.2s ease;
+
+    }
+
+
+
+    /*
+       Small hover/touch effect
+    */
+
+    .mobile-footer-icon:hover {
+
+        transform: translateY(-2px);
+
+    }
+
+
+
+    /*
+       Existing footer content
+    */
+
+    .footer-legal {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px;
+
+    }
+
+
+}
+
+
+
+/* =====================================================
+   DESKTOP
+====================================================== */
+
+@media (min-width: 769px) {
+
+
+    .mobile-footer-nav {
+
+        display: none !important;
+
+    }
+
+
+}
+
+</style>
+
+
+
 </body>
+
 </html>

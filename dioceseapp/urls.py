@@ -23,8 +23,17 @@ urlpatterns = [
     path('catholicate',views.catholicate,name='catholicate'),
     path('history',views.history,name='history'),
     path('malankara',views.malankara,name='malankara'),
-    path('synod',views.synod,name='synod'),
-    path('synod_detail',views.synod_detail,name='synod_detail'),
+    path(
+    'synod/',
+    views.synod,
+    name='synod'
+),
+
+path(
+    'synod/<slug:slug>/',
+    views.synod_detail,
+    name='synod_detail'
+),
     path('throne',views.throne,name='throne'),
     
     # ABOUT DIOCESE
@@ -101,6 +110,12 @@ urlpatterns = [
     path('prayerbook/',views.prayerbook,name='prayerbook'),
     path('prayerbook/',views.prayerbook,name='prayerbook'),
     
+
+#SYNOD DETAIL PAGE
+
+   
+   
+
 
 
     # CONTACT
@@ -273,6 +288,34 @@ urlpatterns = [
     path('admin/downloads/add/', views.admin_download_add, name='admin_download_add'),
     path('admin/downloads/edit/<int:pk>/', views.admin_download_edit, name='admin_download_edit'),
     path('admin/downloads/delete/<int:pk>/', views.admin_download_delete, name='admin_download_delete'),
-     
+
+
+
+      # SYNOD
+    # =====================================================
+
+    path(
+        'add-synod/',
+        views.add_synod,
+        name='add_synod'
+    ),
+
+    path(
+        'view-synod/',
+        views.view_synod,
+        name='view_synod'
+    ),
+
+    path(
+        'edit-synod/<slug:slug>/',
+        views.edit_synod,
+        name='edit_synod'
+    ),
+
+    path(
+        'delete-synod/<slug:slug>/',
+        views.delete_synod,
+        name='delete_synod'
+    ), 
 ]
     

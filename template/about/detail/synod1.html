@@ -1,0 +1,148 @@
+{% load static %}
+{% include 'header.html' %}
+
+    <section class="profile-card-container">
+        
+        <div class="profile-sidebar-sticky">
+            <div class="profile-image-frame">
+                <img src="{% static 'images/holy1.jpg' %}" alt="His Grace Stephanos Mar Theodosius">
+            </div>
+        </div>
+
+        <div class="profile-info-frame">
+            <h1>H.H. Baselios Marthoma Mathews III,</h1>
+            <div class="sub-title">The Ninth Catholicos of the East in Malankara</div>
+
+            <div class="biography-content">
+                <p>His Holiness Baselios Marthoma Mathews III was enthroned as the Catholicos of the East & Malankara Metropolitan (the Supreme Head of the Malankara Orthodox Syrian Church of India) on Friday, 15th October 2021. His Holiness is the 92nd Primate on the Apostolic Throne of St. Thomas.</p>
+
+                <div class="bio-section-divider">Early Life & Education</div>
+                
+                <p> His Holiness was born on 12 February 1949 to Mr Cherian Anthrayos of Mattathil family, being a member of St Peters Church, Vazhoor. After his school education, he joined Kerala University and passed his BSc Chemistry. After his BSc, he joined Orthodox Seminary, Kottayam, and had his GST degree. His Holiness took his BD degree from the Serampore University and did his higher studies in Theology at  Theological Academy, Leningrad, Russia. Thereupon he joined Oriental Institute, Rome, and took his MTh and PhD from there. His Holiness was ordained a deacon in 1976 and a priest in 1978 by HH Baselios Mathews I. His Holiness was escalated to the post of an Episcopa on 30 April 1991 at a function at Parumala, and metropolitan in 1993. He is a well-known teacher and a faculty member of the Orthodox Seminary, Kottayam. A philanthropist, he works relentlessly for the uplift of the poor, especially women. He has started many ventures to help give employment opportunities to women from the economically backward classes. His Holiness was  also served the Holy Episcopal Synod as its secretary.</p>
+
+               <h4 class="books-heading">
+    His Holiness has authored a few devotional and contemplative books in Malayalam.
+</h4>
+
+<div class="contact-info-card">
+
+    <div class="contact-person">
+        <i class="fa-solid fa-user"></i>
+        <span>H.H. Baselios Marthoma Mathews III</span>
+    </div>
+
+    <div class="contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+            <span>Catholicate Aramana</span>
+            <span>Devalokam P.O, Kottayam</span>
+            <span>Kerala, India</span>
+        </div>
+    </div>
+
+    <div class="contact-item">
+        <i class="fa-solid fa-phone"></i>
+        <div>
+            <span>0481 2578499</span>
+            <span>0481 2578500</span>
+        </div>
+    </div>
+
+    <div class="contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <a href="mailto:catholicos@mosc.in">
+            catholicos@mosc.in
+        </a>
+    </div>
+
+    <div class="contact-item social-facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+        <a href="https://www.facebook.com/CatholicosBaseliosMarthomaMathewsIII"
+           target="_blank">
+            Catholicos Baselios Marthoma Mathews III
+        </a>
+    </div>
+
+    <div class="contact-item social-instagram">
+        <i class="fa-brands fa-instagram"></i>
+        <span>@baseliosmarthomamathewslll</span>
+    </div>
+
+</div>
+              
+            </div>
+        <!-- div class="profile-meta-table">
+        <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-cross"></i> Ordination:</div>
+                    <div class="meta-value">October 1946 (Deacon), Consecrated Bishop on February 16, 1975</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-gopuram"></i> Headquarters:</div>
+                    <div class="meta-value">St. Thomas Ashram, Bhilai</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-users"></i> Committees:</div>
+                    <div class="meta-value">St. Thomas Mission, Calcutta Diocese Educational Council</div>
+                </div>
+            </div>
+        </div> -->
+
+    </section>
+
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>

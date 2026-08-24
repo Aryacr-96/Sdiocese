@@ -4,63 +4,58 @@
 
     <section class="directory-grid">
 
-        <div class="directory-card">
-            <div class="card-image-wrapper">
-                <img src="{% static 'images/priest.jpg' %}" alt="Profile Image">
-            </div>
-            <div class="card-details-wrapper">
-                <div class="card-text-content">
-                    <h2>Lorem ipsum dolo</h2>
-                    <h4>Lorem ipsum dolo</h4>
-                    <p>Lorem ipsum doloLoremIpsum ipsum doloLorem ipsum dolo Lorem ipsum dolo</p>
-                </div>
-                <a href="{% url 'synod_detail' %}" class="view-details-btn">View Details</a>
-            </div>
+    {% for synod in synods %}
+
+    <div class="directory-card">
+
+        <div class="card-image-wrapper">
+
+            {% if synod.image %}
+                <img src="{{ synod.image.url }}"
+                     alt="{{ synod.name }}">
+            {% else %}
+                <img src="{% static 'images/holy29.png' %}"
+                     alt="{{ synod.name }}">
+            {% endif %}
+
         </div>
 
-        <div class="directory-card">
-            <div class="card-image-wrapper">
-                <img src="{% static '/images/priest.jpg' %}" alt="Profile Image">
+
+        <div class="card-details-wrapper">
+
+            <div class="card-text-content">
+
+                <h4>
+                    {{ synod.name }}
+                </h4>
+
+                <p>
+                    {{ synod.description|default:"No description available." }}
+                </p>
+
             </div>
-            <div class="card-details-wrapper">
-                <div class="card-text-content">
-                    <h2>Lorem ipsum dolo</h2>
-                    <h4>Lorem ipsum dolo</h4>
-                    <p>Lorem ipsum doloLoremIpsum ipsum doloLorem ipsum dolo Lorem ipsum dolo</p>
-                </div>
-                <a href="{% url 'synod_detail' %}" class="view-details-btn">View Details</a>
-            </div>
+
+
+            <a href="{% url 'synod_detail' synod.slug %}"
+               class="view-details-btn">
+
+                View Details
+
+            </a>
+
         </div>
 
-        <div class="directory-card">
-            <div class="card-image-wrapper">
-                <img src="{% static  '/images/priest.jpg' %}" alt="Profile Image">
-            </div>
-            <div class="card-details-wrapper">
-                <div class="card-text-content">
-                    <h2>Lorem ipsum dolo</h2>
-                    <h4>Lorem ipsum dolo</h4>
-                    <p>Lorem ipsum doloLoremIpsum ipsum doloLorem ipsum dolo Lorem ipsum dolo</p>
-                </div>
-                <a href="{% url 'synod_detail' %}" class="view-details-btn">View Details</a>
-            </div>
+    </div>
+
+    {% empty %}
+
+        <div class="no-synod-message">
+            <p>No Synod information available.</p>
         </div>
 
-        <div class="directory-card">
-            <div class="card-image-wrapper">
-                <img src="{% static '/images/priest.jpg' %}" alt="Profile Image">
-            </div>
-            <div class="card-details-wrapper">
-                <div class="card-text-content">
-                    <h2>Lorem ipsum dolo</h2>
-                    <h4>Lorem ipsum dolo</h4>
-                    <p>Lorem ipsum doloLoremIpsum ipsum doloLorem ipsum dolo Lorem ipsum dolo</p>
-                </div>
-                <a href="{% url 'synod_detail' %}" class="view-details-btn">View Details</a>
-            </div>
-        </div>
+    {% endfor %}
 
-    </section>
+</section>
 
 </div>
 

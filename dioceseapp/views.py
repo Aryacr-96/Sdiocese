@@ -21,12 +21,41 @@ def history(request):
     return render(request,'about/history.html')
 def malankara(request):
     return render(request,'about/malankara.html')
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Synod
+
+
 def synod(request):
-    return render(request,'about/synod.html')
+    synods = Synod.objects.all()
+
+    return render(
+        request,
+        'about/synod.html',
+        {
+            'synods': synods
+        }
+    )
+
+
+def synod_detail(request, slug):
+    synod = get_object_or_404(
+        Synod,
+        slug=slug
+    )
+
+    return render(
+        request,
+        'about/synod_detail.html',
+        {
+            'synod': synod
+        }
+    )
 def throne(request):
     return render(request,'about/throne.html')
-def synod_detail(request):
-    return render(request,'about/synod_detail.html')
+
 
 # ABOUT DIOCESE
 
@@ -113,6 +142,60 @@ def parish_details_by_id(request, parish_id):
     return render(request, 'diocese/parish_details.html', {
         'parish': parish,
     })
+
+
+
+
+
+################## SYNOD DETAIL #################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # SRIRITUAL ORGANIZATIONS
@@ -2690,6 +2773,8 @@ def kalpana_delete_file(request, file_id):
         slug=kalpana_slug
     )
 
+
+
 # EVENTSfrom django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -3019,3 +3104,142 @@ def guideline(request):
         as_attachment=False
     )
 
+
+
+
+#SYNOD
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+
+from .models import Synod
+from .forms import SynodForm
+
+
+# =========================================================
+# ADD SYNOD
+# =========================================================
+
+def add_synod(request):
+
+    if request.method == 'POST':
+        form = SynodForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(
+                request,
+                'Synod added successfully.'
+            )
+
+            return redirect('view_synod')
+
+    else:
+        form = SynodForm()
+
+    return render(
+        request,
+        'admin/synod/addsynod.html',
+        {
+            'form': form
+        }
+    )
+
+
+# =========================================================
+# EDIT SYNOD
+# =========================================================
+
+def edit_synod(request, slug):
+
+    synod = get_object_or_404(
+        Synod,
+        slug=slug
+    )
+
+    if request.method == 'POST':
+
+        form = SynodForm(
+            request.POST,
+            request.FILES,
+            instance=synod
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                'Synod updated successfully.'
+            )
+
+            return redirect('view_synod')
+
+    else:
+
+        form = SynodForm(
+            instance=synod
+        )
+
+    return render(
+        request,
+        'admin/synod/editsynod.html',
+        {
+            'form': form,
+            'synod': synod
+        }
+    )
+
+
+# =========================================================
+# VIEW SYNODS
+# =========================================================
+
+def view_synod(request):
+
+    synods = Synod.objects.all().order_by('name')
+
+    return render(
+        request,
+        'admin/synod/viewsynod.html',
+        {
+            'synods': synods
+        }
+    )
+
+
+# =========================================================
+# DELETE SYNOD
+# =========================================================
+
+def delete_synod(request, slug):
+
+    synod = get_object_or_404(
+        Synod,
+        slug=slug
+    )
+
+    if request.method == 'POST':
+
+        # Delete image from storage
+        if synod.image:
+            synod.image.delete(save=False)
+
+        synod.delete()
+
+        messages.success(
+            request,
+            'Synod deleted successfully.'
+        )
+
+        return redirect('view_synod')
+
+    return render(
+        request,
+        'admin/synod/deletesynod.html',
+        {
+            'synod': synod
+        }
+    )

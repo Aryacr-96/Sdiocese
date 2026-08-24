@@ -1350,3 +1350,96 @@ class Download(models.Model):
 
     def __str__(self):
         return f"{self.get_document_type_display()}"
+
+
+
+
+
+# SYNOD
+
+from django.db import models
+from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
+
+
+class Synod(models.Model):
+
+    name = models.CharField(
+        max_length=200
+    )
+
+    image = models.ImageField(
+        upload_to='synod/',
+        blank=True,
+        null=True
+    )
+
+    description = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    content = RichTextUploadingField(
+        blank=True,
+        null=True
+    )
+
+    address = models.TextField(
+        blank=True,
+        null=True
+    )
+
+    phone_numbers = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Enter multiple phone numbers as a JSON list.'
+    )
+
+    email = models.EmailField(
+        blank=True,
+        null=True
+    )
+
+    facebook = models.URLField(
+        blank=True,
+        null=True
+    )
+
+    instagram = models.URLField(
+        blank=True,
+        null=True
+    )
+
+    slug = models.SlugField(
+        max_length=250,
+        unique=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+
+        new_slug = slugify(self.name)
+
+        base_slug = new_slug
+        counter = 1
+
+        while Synod.objects.filter(
+            slug=new_slug
+        ).exclude(
+            pk=self.pk
+        ).exists():
+
+            new_slug = f"{base_slug}-{counter}"
+            counter += 1
+
+        self.slug = new_slug
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Synod"
+        verbose_name_plural = "Synods"
+        ordering = ['name']

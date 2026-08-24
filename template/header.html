@@ -28,7 +28,7 @@
     <!-- Logo -->
     <div class="logo">
         <div class="logo-circle">
-            <img src="{% static 'images/image.png' %}" style="height:55px;width:65px;">
+            <img src="{% static 'images/image-removebg-preview.png' %}" style="height:55px;width:65px;">
         </div>
         <h3 class="logo-title">Diocese</h3>
     </div>
@@ -38,8 +38,9 @@
        <div class="dropdown">
         <a href="#">About Diocese</a>
         <div class="dropdown-menu">
+            <a href="{% url 'diocesehistory' %}">  <span class="arrow">▸</span>History</a>
             <a href="{% url 'batherydiocese' %}">  <span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
-                    <a href="{% url 'diocesehistory' %}">  <span class="arrow">▸</span>History</a>
+                    
                     <a href="{% url 'metropolitans' %}">  <span class="arrow">▸</span>Metropolitans</a>
                     <a href="{% url 'council' %}">  <span class="arrow">▸</span>Diocesan Council</a>
                     <a href="{% url 'committe' %}">  <span class="arrow">▸</span>Managing Committee</a>
@@ -52,6 +53,233 @@
            
 
     </div>
+    <!-- =====================================================
+     MOBILE BOTTOM NAVIGATION
+====================================================== -->
+
+<div class="bottom-mobile-menu">
+
+    <!-- HOME -->
+    <a href="{% url 'index' %}"
+       class="bottom-mobile-menu-item"
+       title="Home">
+        <i class="fa-solid fa-house"></i>
+    </a>
+
+    <!-- ABOUT DIOCESE -->
+    <a href="{% url 'batherydiocese' %}"
+       class="bottom-mobile-menu-item"
+       title="About Diocese">
+        <i class="fa-solid fa-church"></i>
+    </a>
+
+    <!-- PRIEST -->
+    <a href="{% url 'priest' %}"
+       class="bottom-mobile-menu-item"
+       title="Priest">
+        <i class="fa-solid fa-user-tie"></i>
+    </a>
+
+    <!-- PARISH -->
+    <a href="{% url 'parish' %}"
+       class="bottom-mobile-menu-item"
+       title="Parishes">
+        <i class="fa-solid fa-place-of-worship"></i>
+    </a>
+
+    <!-- CONTACT -->
+    <a href="{% url 'contact' %}"
+       class="bottom-mobile-menu-item"
+       title="Contact">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+
+</div>
+<style>
+    /* =========================================================
+   MOBILE BOTTOM MENU
+   HIDDEN ON DESKTOP
+========================================================= */
+
+.bottom-mobile-menu {
+    display: none;
+}
+
+
+/* =========================================================
+   MOBILE VIEW
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .bottom-mobile-menu {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+
+        height: 64px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        background: #ffffff;
+
+        border: 1px solid rgba(231, 101, 20, 0.15);
+
+        border-radius: 22px;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            0 3px 10px rgba(0, 0, 0, 0.06);
+
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        z-index: 99999;
+
+        padding: 5px 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* =====================================================
+       MENU ITEM
+    ===================================================== */
+
+    .bottom-mobile-menu-item {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #2a4564;
+
+        text-decoration: none;
+
+        border-radius: 16px;
+
+        transition: all 0.25s ease;
+
+        -webkit-tap-highlight-color: transparent;
+    }
+
+
+    /* =====================================================
+       ICON
+    ===================================================== */
+
+    .bottom-mobile-menu-item i {
+        font-size: 20px;
+        transition: all 0.25s ease;
+    }
+
+
+    /* =====================================================
+       HOVER
+    ===================================================== */
+
+    .bottom-mobile-menu-item:hover {
+        background: #e76514;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .bottom-mobile-menu-item:hover i {
+        transform: scale(1.08);
+    }
+
+
+    /* =====================================================
+       CLICK
+    ===================================================== */
+
+    .bottom-mobile-menu-item:active {
+        transform: scale(0.90);
+    }
+
+
+    /* =====================================================
+       SPACE FOR FIXED MENU
+    ===================================================== */
+
+    body {
+        padding-bottom: 90px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .bottom-mobile-menu {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+
+        height: 58px;
+
+        border-radius: 19px;
+
+        padding: 4px 6px;
+    }
+
+    .bottom-mobile-menu-item {
+        width: 44px;
+        height: 44px;
+
+        border-radius: 14px;
+    }
+
+    .bottom-mobile-menu-item i {
+        font-size: 18px;
+    }
+
+    body {
+        padding-bottom: 78px;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .bottom-mobile-menu {
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+
+        height: 54px;
+
+        border-radius: 17px;
+    }
+
+    .bottom-mobile-menu-item {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+    }
+
+    .bottom-mobile-menu-item i {
+        font-size: 17px;
+    }
+
+    body {
+        padding-bottom: 72px;
+    }
+}
+</style>
 
 
         <!-- RIGHT -->
@@ -65,6 +293,7 @@
                     <span></span>
                 </div>
             </div>
+            
 
 <!-- ================= OVERLAY ================= -->
 

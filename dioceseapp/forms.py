@@ -1805,3 +1805,118 @@ class DownloadForm(forms.ModelForm):
                     f"Unsupported file format. Please use: {', '.join(valid_extensions)}"
                 )
         return file
+
+
+
+# SYNOD
+
+from django import forms
+from .models import Synod
+import re
+
+
+class SynodForm(forms.ModelForm):
+
+    class Meta:
+        model = Synod
+
+        fields = [
+            'name',
+            'image',
+            'description',
+            'content',
+            'address',
+            'phone_numbers',
+            'email',
+            'facebook',
+            'instagram',
+            'slug',
+        ]
+
+        widgets = {
+
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Synod name',
+            }),
+
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Enter short description',
+            }),
+
+            'address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Enter address',
+            }),
+
+            'phone_numbers': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': '["9876543210", "9847012345"]',
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter email address',
+            }),
+
+            'facebook': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://www.facebook.com/yourpage',
+            }),
+
+            'instagram': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://www.instagram.com/yourpage',
+            }),
+
+            'slug': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter slug',
+            }),
+
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+
+    def clean_phone_numbers(self):
+
+        phone_numbers = self.cleaned_data.get('phone_numbers')
+
+        if not phone_numbers:
+            return []
+
+        if not isinstance(phone_numbers, list):
+            raise forms.ValidationError(
+                'Please enter phone numbers as a JSON list.'
+            )
+
+        for phone in phone_numbers:
+
+            # Convert number to string
+            phone = str(phone).strip()
+
+            # Must contain only digits
+            if not phone.isdigit():
+                raise forms.ValidationError(
+                    f'{phone} must contain numbers only.'
+                )
+
+            # Must be exactly 10 digits
+            if len(phone) != 10:
+                raise forms.ValidationError(
+                    f'{phone} must contain exactly 10 digits.'
+                )
+
+            # Indian mobile numbers should start with 6, 7, 8 or 9
+            if phone[0] not in '6789':
+                raise forms.ValidationError(
+                    f'{phone} is not a valid Indian mobile number.'
+                )
+
+        return phone_numbers

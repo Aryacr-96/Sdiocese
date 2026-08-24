@@ -1,0 +1,114 @@
+{% load static %}
+{% include 'header.html' %}
+
+    <section class="profile-card-container">
+        
+        <div class="profile-sidebar-sticky">
+            <div class="profile-image-frame">
+                <img src="{% static 'images/holy23.jpg' %}" alt="His Grace Stephanos Mar Theodosius">
+            </div>
+        </div>
+
+        <div class="profile-info-frame">
+            <h1>H.H. Baselios Marthoma Mathews III</h1>
+            <div class="sub-title">The Ninth Catholicos of the East in Malankara</div>
+
+            <div class="biography-content">
+                <p>His Grace Stephanos Mar Theodosius was born on October 2, 1924, as the fifth child of Mr. Kurian and Mrs. Mariamma of the Kayyalathu family in Kottayam. Affectionately called “Punnai,” his baptismal name, Punnoose, is the Malayalam equivalent of Stephanos. From a young age, Punnoose displayed a deep devotion to the Church, actively participating in worship and parish activities at Sleeba Orthodox Church, Pathamuttom. It was under the spiritual guidance of Very Rev. M.C. Kuriakose Ramban, the parish vicar, that his vocation to the Holy Orders flourished.</p>
+
+                <div class="bio-section-divider">Early Life & Education</div>
+                
+                <p>His early education began at St. Thomas Malayalam School, Thottakkad, and continued at St. Thomas Malayalam High School, Chingavanam. In 1942, he earned his Teacher’s Training Certificate from Changanassery, later pursuing higher studies with a B.A. from D.N. Jain College, Jabalpur, and an M.A. from Mahakoshal College, Jabalpur. Eager to deepen his theological knowledge, he studied Syriac under Ramban and went on to receive a Bachelor of Divinity from the General Theological Seminary, New York, in 1966, followed by an STM from Berkeley Divinity School in 1967. In recognition of his lifelong contributions to the Church, he was awarded an honorary Doctorate of Divinity from the General Theological Seminary in 1990.</p>
+
+                <p>Punnoose was ordained a deacon in 1946 by His Holiness Geevarghese II, Catholicos of the East, at Sleeba Orthodox Church, Pathamuttom, and a year later, he was ordained a priest. On February 16, 1975, he was consecrated as a bishop with the name Stephanos Mar Theodosius.
+                His Grace was initially entrusted with the Diocese of Madras, which included the present-day Diocese of Calcutta. When the dioceses were restructured in 1979, he became the first Metropolitan of the newly formed Diocese of Calcutta. With unwavering dedication, he saw Indian villages and cities as vibrant spaces for spiritual and social transformation, tirelessly working to uplift communities through education, healthcare, and social welfare.</p>
+
+                <div class="bio-section-divider">Visionary Leadership</div>
+
+                <p>Under his visionary leadership, the Calcutta Diocese and St. Thomas Mission flourished. More than twenty schools, colleges, and numerous balwadis were established, providing quality education to underprivileged and marginalized children. His Grace believed that education was a tool of liberation — a means to break the chains of poverty and inspire generations to rise beyond adversity. His work attracted not only lay leaders and clergy but also government officials and social activists who saw his efforts as a model for holistic community development.</p>
+
+                <p>His Grace’s compassion extended to healthcare and welfare initiatives, with the establishment of health centers, village development programs, rehabilitation centers, and children’s homes (balagrams). His approach to ministry was holistic, addressing both the spiritual and physical needs of his flock, transforming entire communities with love and service.</p>
+
+                <div class="bio-section-divider">Eternal Legacy</div>
+
+                <p>On November 5, 2007, at the age of 83, His Grace Stephanos Mar Theodosius departed to join the cloud of witnesses. His mortal remains rest at St. Thomas Ashram, Bhilai — a poignant symbol of his lifelong commitment to serving the people beyond the borders of his native Kerala. He was the first Metropolitan of Kerala origin in the Malankara Orthodox Church to be laid to rest outside Kerala, a testament to his boundless dedication to his diocese and the mission of the Church.</p>
+
+                <p>His life remains a beacon of faith, humility, and unwavering service, inspiring future generations to follow in his footsteps, carrying forward his legacy of love, education, and social upliftment.</p>
+
+              
+            </div>
+        <!-- div class="profile-meta-table">
+        <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-cross"></i> Ordination:</div>
+                    <div class="meta-value">October 1946 (Deacon), Consecrated Bishop on February 16, 1975</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-gopuram"></i> Headquarters:</div>
+                    <div class="meta-value">St. Thomas Ashram, Bhilai</div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-label"><i class="fa-solid fa-users"></i> Committees:</div>
+                    <div class="meta-value">St. Thomas Mission, Calcutta Diocese Educational Council</div>
+                </div>
+            </div>
+        </div> -->
+
+    </section>
+
+</div>
+{% include 'footer.html' %}
+<!-- JAVASCRIPT -->
+<script>
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+const sidebar = document.getElementById('sidebarPanel');
+const overlay = document.getElementById('sidebarOverlay');
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+    }
+});
+</script>
+
+<script>
+document.querySelectorAll(".menu-link").forEach(link => {
+    link.addEventListener("click", function () {
+        const dropdown = this.parentElement;
+
+        document.querySelectorAll(".dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("active");
+            }
+        });
+
+        dropdown.classList.toggle("active");
+    });
+});
+</script>
+</body>
+</html>
