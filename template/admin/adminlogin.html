@@ -347,14 +347,14 @@
         </div>
 
         <!-- Messages -->
-        {% if messages %}
+        <!-- {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}danger{% endif %}">
                     <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
                     {{ message }}
                 </div>
             {% endfor %}
-        {% endif %}
+        {% endif %} -->
 
         <!-- Login Form -->
         <form method="post" action="{% url 'admin' %}">

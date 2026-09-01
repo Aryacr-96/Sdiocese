@@ -924,7 +924,6 @@ body{
 
 /* LEFT IMAGE */
 .about-image2{
-    flex:0 0 38%;
     text-align:center;
 }
 
@@ -1817,7 +1816,7 @@ body{
 /* LEFT IMAGE */
 
 .about-image4{
-    flex: 0 0 38%;
+    
     text-align: center;
     position: sticky;
     top: 30px;
@@ -2254,6 +2253,7 @@ body{
         margin:0;
         position:static;
     } 
+
 
     .about-info{ 
         margin-left:0; 
@@ -5850,7 +5850,8 @@ body{
 /* BASKIYOMO ASSOCIATION =====BALIKA===========*/
 
 
-/* ================ BALIKA BALA SANGAM ============ */.sangam-section {
+/* ================ BALIKA BALA SANGAM ============ */
+.sangam-section {
     padding: 60px 20px;
     background: #f5f7fa;
     margin: 0; 

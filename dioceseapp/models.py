@@ -1054,77 +1054,300 @@ class Gallery(models.Model):
 
 from django.db import models
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
+import os
+
+
+# =========================================================
+# PDF FILE VALIDATOR
+# =========================================================
+
+def validate_pdf_file(value):
+    """
+    Validate that the uploaded file is a real PDF.
+
+    Checks:
+    1. File extension must be .pdf
+    2. MIME type must be application/pdf
+    3. File content must start with %PDF-
+    """
+
+    # -----------------------------------------------------
+    # CHECK FILE EXTENSION
+    # -----------------------------------------------------
+
+    extension = os.path.splitext(value.name)[1].lower()
+
+    if extension != '.pdf':
+        raise ValidationError(
+            "Only PDF files are allowed."
+        )
+
+    # -----------------------------------------------------
+    # CHECK MIME TYPE
+    # -----------------------------------------------------
+
+    content_type = getattr(
+        value,
+        'content_type',
+        None
+    )
+
+    if content_type and content_type != 'application/pdf':
+        raise ValidationError(
+            "Only PDF files are allowed."
+        )
+
+    # -----------------------------------------------------
+    # CHECK ACTUAL PDF CONTENT
+    # -----------------------------------------------------
+
+    try:
+
+        current_position = value.tell()
+
+        value.seek(0)
+
+        header = value.read(5)
+
+        value.seek(current_position)
+
+        if header != b'%PDF-':
+            raise ValidationError(
+                "The uploaded file is not a valid PDF."
+            )
+
+    except ValidationError:
+        raise
+
+    except Exception:
+
+        raise ValidationError(
+            "Unable to validate the uploaded PDF file."
+        )
+
+
+# =========================================================
+# PRAYER BOOK MODEL
+# =========================================================
 
 class PrayerBook(models.Model):
-    title = models.CharField(max_length=255, verbose_name="Title")
-    slug = models.SlugField(unique=True, blank=True, verbose_name="Slug")
+
+    # -----------------------------------------------------
+    # TITLE
+    # -----------------------------------------------------
+
+    title = models.CharField(
+        max_length=255,
+        verbose_name="Title"
+    )
+
+    # -----------------------------------------------------
+    # SLUG
+    # -----------------------------------------------------
+
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        verbose_name="Slug"
+    )
+
+    # -----------------------------------------------------
+    # BOOK COVER IMAGE
+    # -----------------------------------------------------
+
     image = models.ImageField(
         upload_to='prayer_books/',
         blank=True,
         null=True,
         verbose_name="Book Cover Image"
     )
+
+    # -----------------------------------------------------
+    # PDF FILE ONLY
+    # -----------------------------------------------------
+
     file = models.FileField(
         upload_to='prayer_books/files/',
         blank=True,
         null=True,
-        verbose_name="File (PDF, Excel, Word)"
+        verbose_name="PDF File",
+        validators=[
+            validate_pdf_file
+        ],
+        help_text="Upload PDF file only"
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At")
+
+    # -----------------------------------------------------
+    # TIMESTAMPS
+    # -----------------------------------------------------
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Created At"
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Updated At"
+    )
+
+    # -----------------------------------------------------
+    # META
+    # -----------------------------------------------------
 
     class Meta:
+
         ordering = ['title']
+
         verbose_name = "Prayer Book"
+
         verbose_name_plural = "Prayer Books"
 
+    # -----------------------------------------------------
+    # SAVE
+    # -----------------------------------------------------
+
     def save(self, *args, **kwargs):
+
+        # -----------------------------------------------
+        # VALIDATE PDF EVEN WHEN SAVED DIRECTLY
+        # -----------------------------------------------
+
+        if self.file:
+
+            validate_pdf_file(
+                self.file
+            )
+
+        # -----------------------------------------------
+        # CREATE UNIQUE SLUG
+        # -----------------------------------------------
+
         if not self.slug:
-            base_slug = slugify(self.title)
+
+            base_slug = slugify(
+                self.title
+            )
+
             slug = base_slug
+
             counter = 1
-            while PrayerBook.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+
+            while PrayerBook.objects.filter(
+                slug=slug
+            ).exclude(
+                pk=self.pk
+            ).exists():
+
                 slug = f"{base_slug}-{counter}"
+
                 counter += 1
+
             self.slug = slug
-        super().save(*args, **kwargs)
+
+        # -----------------------------------------------
+        # SAVE OBJECT
+        # -----------------------------------------------
+
+        super().save(
+            *args,
+            **kwargs
+        )
+
+    # -----------------------------------------------------
+    # STRING REPRESENTATION
+    # -----------------------------------------------------
 
     def __str__(self):
+
         return self.title
 
+    # -----------------------------------------------------
+    # GET FILE EXTENSION
+    # -----------------------------------------------------
+
     def get_file_extension(self):
-        """Get the file extension"""
+
         if self.file:
-            return self.file.name.split('.')[-1].lower()
+
+            return self.file.name.split(
+                '.'
+            )[-1].lower()
+
         return None
 
+    # -----------------------------------------------------
+    # GET FILE ICON
+    # -----------------------------------------------------
+
     def get_file_icon(self):
-        """Get Font Awesome icon based on file type"""
-        ext = self.get_file_extension()
-        icons = {
-            'pdf': 'fa-file-pdf',
-            'doc': 'fa-file-word',
-            'docx': 'fa-file-word',
-            'xls': 'fa-file-excel',
-            'xlsx': 'fa-file-excel',
-            'ppt': 'fa-file-powerpoint',
-            'pptx': 'fa-file-powerpoint',
-            'txt': 'fa-file-alt',
-            'zip': 'fa-file-archive',
-            'rar': 'fa-file-archive',
-        }
-        return icons.get(ext, 'fa-file')
+
+        # Since only PDF is allowed
+        return 'fa-file-pdf'
+
+
 
 
 # KALPANA
-
 from django.db import models
 from django.utils.text import slugify
+from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 import os
 
 
+def validate_pdf_file(value):
+    """
+    Strict PDF validation.
+    Checks:
+    1. File extension
+    2. MIME/content type
+    3. PDF magic bytes
+    """
+
+    # Check extension
+    ext = os.path.splitext(value.name)[1].lower()
+
+    if ext != '.pdf':
+        raise ValidationError(
+            'Only PDF files are allowed.'
+        )
+
+    # Check content type if available
+    content_type = getattr(value, 'content_type', None)
+
+    if content_type and content_type != 'application/pdf':
+        raise ValidationError(
+            'Only PDF files are allowed.'
+        )
+
+    # Check actual PDF file signature
+    try:
+        current_position = value.tell()
+        value.seek(0)
+
+        file_header = value.read(5)
+
+        value.seek(current_position)
+
+        if file_header != b'%PDF-':
+            raise ValidationError(
+                'The uploaded file is not a valid PDF.'
+            )
+
+    except Exception as e:
+
+        if isinstance(e, ValidationError):
+            raise
+
+        raise ValidationError(
+            'Unable to validate the uploaded PDF file.'
+        )
+
+
 class Kalpana(models.Model):
-    # One title for each Kalpana
+
     title = models.CharField(
         max_length=200,
         help_text="e.g., Kalpana 2026, Kalpana 2025"
@@ -1136,8 +1359,13 @@ class Kalpana(models.Model):
         blank=True
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
 
     class Meta:
         ordering = ['-created_at']
@@ -1149,13 +1377,12 @@ class Kalpana(models.Model):
 
     def save(self, *args, **kwargs):
 
-        # Create slug automatically
         if not self.slug:
+
             base_slug = slugify(self.title)
             slug = base_slug
             counter = 1
 
-            # Make sure slug is unique
             while Kalpana.objects.filter(
                 slug=slug
             ).exclude(pk=self.pk).exists():
@@ -1169,16 +1396,6 @@ class Kalpana(models.Model):
 
 
 class KalpanaFile(models.Model):
-    """
-    One Kalpana can have multiple description + file pairs.
-
-    Example:
-
-    Kalpana 2026
-        Description 1 -> file1.pdf
-        Description 2 -> file2.pdf
-        Description 3 -> file3.xlsx
-    """
 
     kalpana = models.ForeignKey(
         Kalpana,
@@ -1186,19 +1403,21 @@ class KalpanaFile(models.Model):
         related_name='files'
     )
 
-    # Exactly one file for each KalpanaFile record
     file = models.FileField(
-        upload_to='kalpana_files/%Y/%m/'
+        upload_to='kalpana_files/%Y/%m/',
+        validators=[
+            validate_pdf_file,
+            FileExtensionValidator(['pdf'])
+        ],
+        help_text="Upload PDF file only"
     )
 
-    # Display name
     file_name = models.CharField(
         max_length=200,
         blank=True,
         help_text="Display name for the file"
     )
 
-    # One description for this file
     description = models.TextField(
         blank=True,
         help_text="Description of this file"
@@ -1228,39 +1447,20 @@ class KalpanaFile(models.Model):
 
     def save(self, *args, **kwargs):
 
+        # Validate the file even when saved outside the form
+        if self.file:
+            validate_pdf_file(self.file)
+
         # Automatically set file name
         if not self.file_name and self.file:
-            self.file_name = os.path.basename(self.file.name)
+            self.file_name = os.path.basename(
+                self.file.name
+            )
 
         # Automatically determine file type
-        if not self.file_type and self.file:
+        if self.file:
 
-            ext = os.path.splitext(self.file.name)[1].lower()
-
-            file_types = {
-                '.pdf': 'pdf',
-
-                '.doc': 'word',
-                '.docx': 'word',
-
-                '.xls': 'excel',
-                '.xlsx': 'excel',
-                '.csv': 'excel',
-
-                '.txt': 'text',
-
-                '.jpg': 'image',
-                '.jpeg': 'image',
-                '.png': 'image',
-                '.gif': 'image',
-                '.svg': 'image',
-                '.webp': 'image',
-            }
-
-            self.file_type = file_types.get(
-                ext,
-                'other'
-            )
+            self.file_type = 'pdf'
 
         # Automatically calculate file size
         if (
@@ -1277,7 +1477,9 @@ class KalpanaFile(models.Model):
 
             elif size < 1024 * 1024:
 
-                self.file_size = f"{size / 1024:.1f} KB"
+                self.file_size = (
+                    f"{size / 1024:.1f} KB"
+                )
 
             else:
 
@@ -1286,6 +1488,7 @@ class KalpanaFile(models.Model):
                 )
 
         super().save(*args, **kwargs)
+
 
 # EVENTS
 

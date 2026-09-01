@@ -9,22 +9,25 @@ class adminform(forms.Form):
 
 
 # ========================================
-# PRIEST FORM - FIXED
+# PRIEST FORM -
 # ========================================
+
 from django import forms
 from django.core.validators import RegexValidator
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import Priest, Parish
 import re
 
+
 class PriestForm(forms.ModelForm):
+
     # Phone number validator - exactly 10 digits
     phone_validator = RegexValidator(
         regex=r'^\d{10}$',
         message='Phone number must be exactly 10 digits and contain only numbers.',
         code='invalid_phone'
     )
-    
+
     description = forms.CharField(
         widget=CKEditorUploadingWidget(attrs={
             'class': 'form-control-modern',
@@ -33,7 +36,7 @@ class PriestForm(forms.ModelForm):
         label='',
         required=False,
     )
-    
+
     pastoral_experience = forms.CharField(
         widget=CKEditorUploadingWidget(attrs={
             'class': 'form-control-modern',
@@ -42,7 +45,7 @@ class PriestForm(forms.ModelForm):
         label='',
         required=False,
     )
-    
+
     # Override phone field with validation
     phone = forms.CharField(
         validators=[phone_validator],
@@ -60,23 +63,70 @@ class PriestForm(forms.ModelForm):
 
     class Meta:
         model = Priest
+
         fields = [
-            'first_name', 'last_name', 'position', 'home_parish',
-            'blood_group', 'ordained_on', 'retired_on',
-            'pastoral_experience', 'address', 'phone', 'email',
-            'image', 'description'
+            'first_name',
+            'last_name',
+            'position',
+            'home_parish',
+            'blood_group',
+            'ordained_on',
+            'retired_on',
+            'pastoral_experience',
+            'address',
+            'phone',
+            'email',
+            'image',
+            'description'
         ]
+
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter first name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control-modern', 'placeholder': 'Enter last name'}),
-            'home_parish': forms.Select(attrs={'class': 'form-control-modern'}),
-            'position': forms.Select(attrs={'class': 'form-control-modern'}),
-            'blood_group': forms.Select(attrs={'class': 'form-control-modern'}),
-            'ordained_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
-            'retired_on': forms.DateInput(attrs={'class': 'form-control-modern', 'type': 'date'}),
-            'address': forms.Textarea(attrs={'class': 'form-control-modern', 'rows': 3, 'placeholder': 'Enter address'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control-modern', 'placeholder': 'priest@example.com'}),
+
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter first name'
+            }),
+
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'Enter last name'
+            }),
+
+            'home_parish': forms.Select(attrs={
+                'class': 'form-control-modern'
+            }),
+
+            'position': forms.Select(attrs={
+                'class': 'form-control-modern'
+            }),
+
+            'blood_group': forms.Select(attrs={
+                'class': 'form-control-modern'
+            }),
+
+            'ordained_on': forms.DateInput(attrs={
+                'class': 'form-control-modern',
+                'type': 'date'
+            }),
+
+            'retired_on': forms.DateInput(attrs={
+                'class': 'form-control-modern',
+                'type': 'date'
+            }),
+
+            'address': forms.Textarea(attrs={
+                'class': 'form-control-modern',
+                'rows': 3,
+                'placeholder': 'Enter address',
+                'required': 'required'
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control-modern',
+                'placeholder': 'priest@example.com'
+            }),
         }
+
         labels = {
             'first_name': 'First Name',
             'last_name': 'Last Name',
@@ -92,11 +142,13 @@ class PriestForm(forms.ModelForm):
             'image': 'Photo',
             'description': 'Description',
         }
+
         help_texts = {
             'phone': 'Enter exactly 10 digits (numbers only)',
             'email': 'Enter a valid email address',
             'ordained_on': 'Date of ordination (Required)',
             'retired_on': 'Retirement date (Required for retired priests)',
+            'address': 'Address is required',
         }
 
     def __init__(self, *args, **kwargs):
@@ -105,187 +157,369 @@ class PriestForm(forms.ModelForm):
         # ========================================
         # PREVENT DUPLICATE PRIEST ASSIGNMENTS
         # ========================================
-        
+
         instance = kwargs.get('instance')
         all_parishes = Parish.objects.all()
-        
+
         if instance and instance.pk:
             parishes_to_check = all_parishes
         else:
             parishes_to_check = all_parishes
-        
+
         assigned_vicar_ids = list(
-            parishes_to_check.filter(vicar__isnull=False).values_list('vicar_id', flat=True)
+            parishes_to_check.filter(
+                vicar__isnull=False
+            ).values_list(
+                'vicar_id',
+                flat=True
+            )
         )
-        
+
         assigned_assistant_vicar_ids = list(
-            parishes_to_check.filter(assistant_vicar__isnull=False).values_list('assistant_vicar_id', flat=True)
+            parishes_to_check.filter(
+                assistant_vicar__isnull=False
+            ).values_list(
+                'assistant_vicar_id',
+                flat=True
+            )
         )
-        
-        all_assigned_ids = list(set(assigned_vicar_ids + assigned_assistant_vicar_ids))
-        
+
+        all_assigned_ids = list(
+            set(
+                assigned_vicar_ids +
+                assigned_assistant_vicar_ids
+            )
+        )
+
         if instance and instance.pk:
             if instance.pk in all_assigned_ids:
-                all_assigned_ids.remove(instance.pk)
-        
-        priest_queryset = Priest.objects.all().order_by('first_name', 'last_name')
-        available_priests = priest_queryset.exclude(id__in=all_assigned_ids)
-        
+                all_assigned_ids.remove(
+                    instance.pk
+                )
+
+        priest_queryset = Priest.objects.all().order_by(
+            'first_name',
+            'last_name'
+        )
+
+        available_priests = priest_queryset.exclude(
+            id__in=all_assigned_ids
+        )
+
         if instance and instance.pk:
-            available_priests = available_priests | Priest.objects.filter(pk=instance.pk)
-            available_priests = available_priests.distinct().order_by('first_name', 'last_name')
-        
+
+            available_priests = (
+                available_priests |
+                Priest.objects.filter(
+                    pk=instance.pk
+                )
+            )
+
+            available_priests = (
+                available_priests
+                .distinct()
+                .order_by(
+                    'first_name',
+                    'last_name'
+                )
+            )
+
         self.available_priests = available_priests
 
         # ========================================
         # FIELD REQUIREMENTS
         # ========================================
-        
+
         # Make ordained_on required
         self.fields['ordained_on'].required = True
-        self.fields['ordained_on'].widget.attrs['required'] = 'required'
-        
-        # Make retired_on NOT required by default (will be validated in clean)
+
+        self.fields[
+            'ordained_on'
+        ].widget.attrs['required'] = 'required'
+
+        # Make address required
+        self.fields['address'].required = True
+
+        self.fields[
+            'address'
+        ].widget.attrs['required'] = 'required'
+
+        # Make retired_on NOT required by default
+        # It will be validated in clean()
         self.fields['retired_on'].required = False
-        self.fields['retired_on'].widget.attrs['required'] = False
-        
+
+        self.fields[
+            'retired_on'
+        ].widget.attrs.pop(
+            'required',
+            None
+        )
+
         # Make other fields optional
         optional_fields = [
-            'blood_group', 'pastoral_experience', 'address',
-            'image', 'description', 'home_parish'
+            'blood_group',
+            'pastoral_experience',
+            'image',
+            'description',
+            'home_parish'
         ]
+
         for field in optional_fields:
             self.fields[field].required = False
 
     # ========================================
     # CLEAN METHODS - Validation
     # ========================================
-    
+
     def clean_first_name(self):
-        first_name = self.cleaned_data.get('first_name')
+        first_name = self.cleaned_data.get(
+            'first_name'
+        )
+
         if first_name:
             first_name = first_name.strip()
+
             if len(first_name) < 2:
-                raise forms.ValidationError("First name must be at least 2 characters long.")
-            if not first_name.replace(' ', '').isalpha():
-                raise forms.ValidationError("First name should contain only letters and spaces.")
+                raise forms.ValidationError(
+                    "First name must be at least 2 characters long."
+                )
+
+            if not first_name.replace(
+                ' ',
+                ''
+            ).isalpha():
+                raise forms.ValidationError(
+                    "First name should contain only letters and spaces."
+                )
+
         return first_name
 
     def clean_last_name(self):
-        last_name = self.cleaned_data.get('last_name')
+        last_name = self.cleaned_data.get(
+            'last_name'
+        )
+
         if last_name:
             last_name = last_name.strip()
+
             if len(last_name) < 2:
-                raise forms.ValidationError("Last name must be at least 2 characters long.")
-            if not last_name.replace(' ', '').isalpha():
-                raise forms.ValidationError("Last name should contain only letters and spaces.")
+                raise forms.ValidationError(
+                    "Last name must be at least 2 characters long."
+                )
+
+            if not last_name.replace(
+                ' ',
+                ''
+            ).isalpha():
+                raise forms.ValidationError(
+                    "Last name should contain only letters and spaces."
+                )
+
         return last_name
 
     def clean_phone(self):
-        phone = self.cleaned_data.get('phone')
+        phone = self.cleaned_data.get(
+            'phone'
+        )
+
         if phone:
-            cleaned = re.sub(r'[^0-9]', '', phone)
+            cleaned = re.sub(
+                r'[^0-9]',
+                '',
+                phone
+            )
+
             if cleaned:
+
                 if len(cleaned) != 10:
-                    raise forms.ValidationError("Phone number must be exactly 10 digits.")
+                    raise forms.ValidationError(
+                        "Phone number must be exactly 10 digits."
+                    )
+
                 return cleaned
+
         return phone
 
     def clean_email(self):
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get(
+            'email'
+        )
+
         if email:
             email = email.strip().lower()
-            queryset = Priest.objects.filter(email=email)
+
+            queryset = Priest.objects.filter(
+                email=email
+            )
+
             if self.instance.pk:
-                queryset = queryset.exclude(pk=self.instance.pk)
+                queryset = queryset.exclude(
+                    pk=self.instance.pk
+                )
+
             if queryset.exists():
-                raise forms.ValidationError("A priest with this email already exists.")
+                raise forms.ValidationError(
+                    "A priest with this email already exists."
+                )
+
         return email
 
     def clean_home_parish(self):
-        home_parish = self.cleaned_data.get('home_parish')
+        home_parish = self.cleaned_data.get(
+            'home_parish'
+        )
+
         # Allow null/empty values
         if not home_parish:
             return None
+
         return home_parish
 
     def clean_blood_group(self):
-        blood_group = self.cleaned_data.get('blood_group')
+        blood_group = self.cleaned_data.get(
+            'blood_group'
+        )
+
         if blood_group:
-            valid_blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+
+            valid_blood_groups = [
+                'A+',
+                'A-',
+                'B+',
+                'B-',
+                'AB+',
+                'AB-',
+                'O+',
+                'O-'
+            ]
+
             if blood_group not in valid_blood_groups:
-                raise forms.ValidationError(f"Invalid blood group. Must be one of: {', '.join(valid_blood_groups)}")
+                raise forms.ValidationError(
+                    f"Invalid blood group. Must be one of: "
+                    f"{', '.join(valid_blood_groups)}"
+                )
+
             return blood_group
+
         return blood_group
 
     def clean_ordained_on(self):
-        ordained_on = self.cleaned_data.get('ordained_on')
-        
+        ordained_on = self.cleaned_data.get(
+            'ordained_on'
+        )
+
         if not ordained_on:
-            raise forms.ValidationError("Ordination date is required.")
-        
+            raise forms.ValidationError(
+                "Ordination date is required."
+            )
+
         from datetime import date
+
         if ordained_on > date.today():
-            raise forms.ValidationError("Ordination date cannot be in the future.")
-        
+            raise forms.ValidationError(
+                "Ordination date cannot be in the future."
+            )
+
         return ordained_on
 
     def clean_retired_on(self):
         """Validate retired date - Only required for retired priests"""
-        retired_on = self.cleaned_data.get('retired_on')
-        position = self.cleaned_data.get('position')
-        ordained_on = self.cleaned_data.get('ordained_on')
-        
+
+        retired_on = self.cleaned_data.get(
+            'retired_on'
+        )
+
+        position = self.cleaned_data.get(
+            'position'
+        )
+
+        ordained_on = self.cleaned_data.get(
+            'ordained_on'
+        )
+
         # Only validate if position is retired_priest
         if position == 'retired_priest':
+
             if not retired_on:
-                raise forms.ValidationError("Retirement date is required for retired priests.")
-            
+                raise forms.ValidationError(
+                    "Retirement date is required for retired priests."
+                )
+
             from datetime import date
+
             if retired_on > date.today():
-                raise forms.ValidationError("Retirement date cannot be in the future.")
-            
+                raise forms.ValidationError(
+                    "Retirement date cannot be in the future."
+                )
+
             if retired_on and ordained_on:
+
                 if retired_on < ordained_on:
-                    raise forms.ValidationError("Retirement date must be after ordination date.")
-        
+                    raise forms.ValidationError(
+                        "Retirement date must be after ordination date."
+                    )
+
         return retired_on
 
+    # ========================================
+    # ADDRESS VALIDATION
+    # ========================================
+
+    def clean_address(self):
+        address = self.cleaned_data.get(
+            'address'
+        )
+
+        if not address:
+            raise forms.ValidationError(
+                "Address is required."
+            )
+
+        address = address.strip()
+
+        if not address:
+            raise forms.ValidationError(
+                "Address is required."
+            )
+
+        return address
+
+    # ========================================
+    # CLEAN
+    # ========================================
+
     def clean(self):
-        """Cross-field validation"""
+        """
+        Cross-field validation.
+
+        The individual field validations are already handled
+        by clean_ordained_on() and clean_retired_on().
+        Keeping this empty prevents duplicate error messages.
+        """
+
         cleaned_data = super().clean()
-        
-        position = cleaned_data.get('position')
-        ordained_on = cleaned_data.get('ordained_on')
-        retired_on = cleaned_data.get('retired_on')
-        
-        # Validate ordained_on is present
-        if not ordained_on:
-            self.add_error('ordained_on', 'Ordination date is required.')
-        
-        # Validate retired_on for retired priests
-        if position == 'retired_priest' and not retired_on:
-            self.add_error('retired_on', 'Retirement date is required for retired priests.')
-        
-        # Validate retired_on is after ordained_on
-        if retired_on and ordained_on:
-            if retired_on < ordained_on:
-                self.add_error('retired_on', 'Retirement date must be after ordination date.')
-        
+
         return cleaned_data
 
     # ========================================
     # SAVE METHOD
     # ========================================
-    
+
     def save(self, commit=True):
-        instance = super().save(commit=False)
-        
+
+        instance = super().save(
+            commit=False
+        )
+
         if commit:
+
             instance.save()
+
             self.save_m2m()
-        
+
         return instance
+
+
     
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -1493,58 +1727,181 @@ class GalleryForm(forms.ModelForm):
 
 
 #PRAYER BOOKS 
+
 from django import forms
+import os
+
 from .models import PrayerBook
-from django import forms
-from .models import PrayerBook
+
+
+# =========================================================
+# PRAYER BOOK FORM
+# =========================================================
 
 class PrayerBookForm(forms.ModelForm):
+
     class Meta:
+
         model = PrayerBook
-        fields = ['title', 'image', 'file']
+
+        fields = [
+            'title',
+            'image',
+            'file'
+        ]
+
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter prayer book title'
-            }),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control-file',
-                'accept': 'image/*'
-            }),
-            'file': forms.ClearableFileInput(attrs={
-                'class': 'form-control-file',
-                'accept': '.pdf,.doc,.docx,.xls,.xlsx'
-            }),
+
+            # -----------------------------------------
+            # TITLE
+            # -----------------------------------------
+
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Enter prayer book title'
+                }
+            ),
+
+            # -----------------------------------------
+            # COVER IMAGE
+            # -----------------------------------------
+
+            'image': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control-file',
+                    'accept': 'image/*'
+                }
+            ),
+
+            # -----------------------------------------
+            # PDF FILE
+            # -----------------------------------------
+
+            'file': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control-file',
+                    'accept': '.pdf,application/pdf'
+                }
+            ),
         }
 
+    # =====================================================
+    # IMAGE VALIDATION
+    # =====================================================
+
     def clean_image(self):
-        image = self.cleaned_data.get('image')
-        if image:
-            allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
-            extension = image.name.split('.')[-1].lower()
-            if extension not in allowed_extensions:
-                raise forms.ValidationError(
-                    "Only JPG, JPEG, PNG, GIF, and WebP images are allowed."
-                )
-            # Size limit removed - no size validation
+
+        image = self.cleaned_data.get(
+            'image'
+        )
+
+        if not image:
+
+            return image
+
+        allowed_extensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'webp'
+        ]
+
+        extension = os.path.splitext(
+            image.name
+        )[1].lower().replace(
+            '.',
+            ''
+        )
+
+        if extension not in allowed_extensions:
+
+            raise forms.ValidationError(
+                "Only JPG, JPEG, PNG, GIF, and WebP "
+                "images are allowed."
+            )
+
         return image
 
+    # =====================================================
+    # PDF FILE VALIDATION
+    # =====================================================
+
     def clean_file(self):
-        file = self.cleaned_data.get('file')
-        if file:
-            allowed_extensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx']
-            extension = file.name.split('.')[-1].lower()
-            if extension not in allowed_extensions:
+
+        file = self.cleaned_data.get(
+            'file'
+        )
+
+        if not file:
+
+            return file
+
+        # -----------------------------------------
+        # CHECK EXTENSION
+        # -----------------------------------------
+
+        extension = os.path.splitext(
+            file.name
+        )[1].lower()
+
+        if extension != '.pdf':
+
+            raise forms.ValidationError(
+                "Only PDF files are allowed."
+            )
+
+        # -----------------------------------------
+        # CHECK MIME TYPE
+        # -----------------------------------------
+
+        content_type = getattr(
+            file,
+            'content_type',
+            None
+        )
+
+        if content_type != 'application/pdf':
+
+            raise forms.ValidationError(
+                "Only PDF files are allowed."
+            )
+
+        # -----------------------------------------
+        # CHECK ACTUAL PDF CONTENT
+        # -----------------------------------------
+
+        try:
+
+            file.seek(0)
+
+            header = file.read(5)
+
+            file.seek(0)
+
+            if header != b'%PDF-':
+
                 raise forms.ValidationError(
-                    "Only PDF, Word (.doc, .docx), and Excel (.xls, .xlsx) files are allowed."
+                    "The uploaded file is not a valid PDF."
                 )
-            # Size limit removed - no size validation
+
+        except forms.ValidationError:
+
+            raise
+
+        except Exception:
+
+            raise forms.ValidationError(
+                "Unable to validate the uploaded PDF file."
+            )
+
         return file
 
 
 
-#KALPANA
 
+#KALPANA
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Kalpana, KalpanaFile
@@ -1553,7 +1910,7 @@ import os
 
 class KalpanaForm(forms.ModelForm):
     """Form for creating/editing Kalpana"""
-    
+
     class Meta:
         model = Kalpana
         fields = ['title']
@@ -1563,59 +1920,104 @@ class KalpanaForm(forms.ModelForm):
                 'placeholder': 'e.g., Kalpana 2026, Kalpana 2025'
             }),
         }
-    
+
     def clean_title(self):
         title = self.cleaned_data.get('title')
         if len(title) < 5:
-            raise ValidationError('Title must be at least 5 characters long.')
+            raise ValidationError(
+                'Title must be at least 5 characters long.'
+            )
         return title
 
 
+
 class KalpanaFileForm(forms.ModelForm):
-    """Form for uploading a single file with description"""
-    
+    """Form for uploading a single PDF file with description"""
+
     class Meta:
         model = KalpanaFile
         fields = ['file', 'file_name', 'description']
+
         widgets = {
-            'file': forms.FileInput(attrs={
-                'class': 'form-control',
-                'accept': '.pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif'
-            }),
-            'file_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Display name for the file (optional)'
-            }),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 2,
-                'placeholder': 'Enter description for this file...'
-            }),
+            'file': forms.FileInput(
+                attrs={
+                    'class': 'form-control',
+                    'accept': 'application/pdf,.pdf'
+                }
+            ),
+
+            'file_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Display name for the file (optional)'
+                }
+            ),
+
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 2,
+                    'placeholder': 'Enter description for this file...'
+                }
+            ),
         }
-    
+
     def clean_file(self):
+
         file = self.cleaned_data.get('file')
-        if file:
-            # Validate file size (max 10MB)
-            if file.size > 10 * 1024 * 1024:
-                raise ValidationError('File size must be under 10MB.')
-            
-            # Validate file extension
-            valid_extensions = [
-                '.pdf', '.doc', '.docx', '.xls', '.xlsx', 
-                '.txt', '.jpg', '.jpeg', '.png', '.gif'
-            ]
-            ext = os.path.splitext(file.name)[1].lower()
-            if ext not in valid_extensions:
+
+        if not file:
+            return file
+
+        # 1. Check extension
+        ext = os.path.splitext(file.name)[1].lower()
+
+        if ext != '.pdf':
+            raise ValidationError(
+                'Only PDF files are allowed.'
+            )
+
+        # 2. Check MIME type
+        content_type = getattr(
+            file,
+            'content_type',
+            None
+        )
+
+        if content_type != 'application/pdf':
+            raise ValidationError(
+                'Only PDF files are allowed.'
+            )
+
+        # 3. Check actual PDF signature
+        try:
+            file.seek(0)
+
+            header = file.read(5)
+
+            file.seek(0)
+
+            if header != b'%PDF-':
                 raise ValidationError(
-                    f'File type not supported. Allowed: {", ".join(valid_extensions)}'
+                    'The uploaded file is not a valid PDF.'
                 )
+
+        except ValidationError:
+            raise
+
+        except Exception:
+            raise ValidationError(
+                'Unable to validate the uploaded file.'
+            )
+
         return file
+
+
 
 
 class KalpanaWithFilesForm(forms.ModelForm):
     """Combined form for Kalpana with multiple files (used in template)"""
-    
+
     class Meta:
         model = Kalpana
         fields = ['title']
@@ -1625,17 +2027,19 @@ class KalpanaWithFilesForm(forms.ModelForm):
                 'placeholder': 'e.g., Kalpana 2026, Kalpana 2025'
             }),
         }
-    
+
     def clean_title(self):
         title = self.cleaned_data.get('title')
         if len(title) < 5:
-            raise ValidationError('Title must be at least 5 characters long.')
+            raise ValidationError(
+                'Title must be at least 5 characters long.'
+            )
         return title
 
 
 class KalpanaUpdateForm(forms.ModelForm):
     """Form for updating Kalpana with existing files"""
-    
+
     class Meta:
         model = Kalpana
         fields = ['title']
@@ -1645,17 +2049,19 @@ class KalpanaUpdateForm(forms.ModelForm):
                 'placeholder': 'e.g., Kalpana 2026, Kalpana 2025'
             }),
         }
-    
+
     def clean_title(self):
         title = self.cleaned_data.get('title')
         if len(title) < 5:
-            raise ValidationError('Title must be at least 5 characters long.')
+            raise ValidationError(
+                'Title must be at least 5 characters long.'
+            )
         return title
 
 
 class KalpanaFileUpdateForm(forms.ModelForm):
     """Form for updating an existing file's description"""
-    
+
     class Meta:
         model = KalpanaFile
         fields = ['file_name', 'description']
@@ -1771,7 +2177,6 @@ class EventForm(forms.ModelForm):
 
 from django import forms
 from .models import Download
-
 class DownloadForm(forms.ModelForm):
     class Meta:
         model = Download
@@ -1796,14 +2201,42 @@ class DownloadForm(forms.ModelForm):
 
     def clean_file(self):
         file = self.cleaned_data.get('file')
+
         if file:
-            # Check file extension only (no size limit)
-            valid_extensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx']
+            # Get selected document type
+            document_type = self.cleaned_data.get('document_type')
+
+            # Get file extension
             extension = file.name.split('.')[-1].lower()
+
+            # Church Account Manual - PDF ONLY
+            if document_type == 'church_account_manual':
+                valid_extensions = ['pdf']
+
+            # 1934 Constitution - PDF ONLY
+            elif document_type == 'constitution_1934':
+                valid_extensions = ['pdf']
+
+            # Guidelines - EXCEL ONLY
+            elif document_type == 'guidelines':
+                valid_extensions = ['xls', 'xlsx']
+
+            # Other document types
+            else:
+                valid_extensions = [
+                    'pdf',
+                    'doc',
+                    'docx',
+                    'xls',
+                    'xlsx'
+                ]
+
             if extension not in valid_extensions:
                 raise forms.ValidationError(
-                    f"Unsupported file format. Please use: {', '.join(valid_extensions)}"
+                    f"Unsupported file format. Please use: "
+                    f"{', '.join(valid_extensions)}"
                 )
+
         return file
 
 

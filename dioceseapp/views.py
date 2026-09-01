@@ -492,6 +492,12 @@ def downloads(request):
 
     return render(request, 'media/downloads.html', context)
 
+import os
+import mimetypes
+from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from .models import PrayerBook
 
 def prayerbook(request):
     """Public view for prayer books"""
@@ -506,6 +512,42 @@ def prayerbook(request):
         'total_books': books.count(),
     }
     return render(request, 'downloads/prayerbooks.html', context)
+
+def prayerbook_view_file(request, file_id):
+    """View a prayer book PDF file in browser instead of downloading"""
+    # Get the PrayerBook object
+    book = get_object_or_404(PrayerBook, id=file_id)
+    
+    # Check if the book has a file
+    if not book.file:
+        return HttpResponse("No file available", status=404)
+
+    file_path = book.file.path
+    filename = os.path.basename(file_path)
+    file_ext = filename.split('.')[-1].lower()
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        return HttpResponse("File not found", status=404)
+    
+    # For PDF - view in browser
+    if file_ext == 'pdf':
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{filename}"'
+            response['Content-Type'] = 'application/pdf'
+            response['Cache-Control'] = 'public, max-age=86400'
+            return response
+    
+    # For other files - download
+    else:
+        content_type, _ = mimetypes.guess_type(file_path)
+        if not content_type:
+            content_type = 'application/octet-stream'
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type=content_type)
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
 
 
 # CONTACT
@@ -2493,8 +2535,20 @@ def kalpana_list(request):
     )
 
 
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+import os
+
+from .forms import KalpanaForm
+from .models import KalpanaFile, validate_pdf_file
+
+
 def kalpana_create(request):
     """
+
     Create one Kalpana with:
 
     One Title
@@ -2502,6 +2556,8 @@ def kalpana_create(request):
         ├── Description 2 → File 2
         ├── Description 3 → File 3
         └── etc.
+
+    Only PDF files are allowed.
     """
 
     if request.method == 'POST':
@@ -2510,17 +2566,76 @@ def kalpana_create(request):
 
         if form.is_valid():
 
-            # Create title
-            kalpana = form.save()
+            descriptions = request.POST.getlist(
+                'descriptions[]'
+            )
 
-            descriptions = request.POST.getlist('descriptions[]')
+            # -----------------------------------------
+            # VALIDATE ALL FILES BEFORE CREATING KALPANA
+            # -----------------------------------------
+
+            validation_errors = []
+
+            for index, description in enumerate(descriptions):
+
+                description = description.strip()
+
+                if not description:
+                    continue
+
+                uploaded_file = request.FILES.get(
+                    f'file_{index}'
+                )
+
+                if not uploaded_file:
+                    continue
+
+                try:
+                    # Validate extension + MIME + PDF signature
+                    validate_pdf_file(uploaded_file)
+
+                except ValidationError as e:
+
+                    validation_errors.append(
+                        f'File {index + 1} ({uploaded_file.name}): '
+                        f'{e.message}'
+                    )
+
+            # -----------------------------------------
+            # STOP IF ANY FILE IS NOT A VALID PDF
+            # -----------------------------------------
+
+            if validation_errors:
+
+                for error in validation_errors:
+                    messages.error(
+                        request,
+                        error
+                    )
+
+                return render(
+                    request,
+                    'admin/kalpana/addkalpana.html',
+                    {
+                        'form': form,
+                        'is_edit': False,
+                        'action': 'Create',
+                        'button_text': 'Create Kalpana',
+                        'kalpana': None
+                    }
+                )
+
+            # -----------------------------------------
+            # CREATE KALPANA ONLY AFTER VALIDATION
+            # -----------------------------------------
+
+            kalpana = form.save()
 
             file_count = 0
 
-            # IMPORTANT:
-            # file_0 belongs to descriptions[0]
-            # file_1 belongs to descriptions[1]
-            # file_2 belongs to descriptions[2]
+            # -----------------------------------------
+            # CREATE DESCRIPTION + FILE PAIRS
+            # -----------------------------------------
 
             for index, description in enumerate(descriptions):
 
@@ -2545,12 +2660,16 @@ def kalpana_create(request):
 
                 file_count += 1
 
+            # -----------------------------------------
+            # SUCCESS / WARNING MESSAGE
+            # -----------------------------------------
+
             if file_count > 0:
 
                 messages.success(
                     request,
                     f'Kalpana "{kalpana.title}" created successfully '
-                    f'with {file_count} file(s).'
+                    f'with {file_count} PDF file(s).'
                 )
 
             else:
@@ -2587,6 +2706,15 @@ def kalpana_create(request):
     )
 
 
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+
+from .models import Kalpana, KalpanaFile, validate_pdf_file
+from .forms import KalpanaUpdateForm
+
+
 def kalpana_update(request, slug):
     """Update an existing Kalpana"""
 
@@ -2604,11 +2732,90 @@ def kalpana_update(request, slug):
 
         if form.is_valid():
 
+            # -----------------------------------------
+            # GET NEW DESCRIPTION + FILE PAIRS
+            # -----------------------------------------
+
+            descriptions = request.POST.getlist(
+                'descriptions[]'
+            )
+
+            # -----------------------------------------
+            # VALIDATE ALL NEW FILES FIRST
+            # -----------------------------------------
+
+            validation_errors = []
+
+            for index, description in enumerate(descriptions):
+
+                description = description.strip()
+
+                if not description:
+                    continue
+
+                uploaded_file = request.FILES.get(
+                    f'file_{index}'
+                )
+
+                if not uploaded_file:
+                    continue
+
+                try:
+
+                    # Validate:
+                    # 1. Extension
+                    # 2. MIME type
+                    # 3. Actual PDF signature
+
+                    validate_pdf_file(
+                        uploaded_file
+                    )
+
+                except ValidationError as e:
+
+                    validation_errors.append(
+                        f'File {index + 1} '
+                        f'({uploaded_file.name}): '
+                        f'{e.message}'
+                    )
+
+            # -----------------------------------------
+            # STOP UPDATE IF INVALID FILE FOUND
+            # -----------------------------------------
+
+            if validation_errors:
+
+                for error in validation_errors:
+
+                    messages.error(
+                        request,
+                        error
+                    )
+
+                existing_files = kalpana.files.all()
+
+                return render(
+                    request,
+                    'admin/kalpana/editkalpana.html',
+                    {
+                        'form': form,
+                        'is_edit': True,
+                        'action': 'Update',
+                        'button_text': 'Update Kalpana',
+                        'kalpana': kalpana,
+                        'existing_files': existing_files
+                    }
+                )
+
+            # -----------------------------------------
+            # SAVE KALPANA TITLE
+            # -----------------------------------------
+
             kalpana = form.save()
 
-            # ----------------------------------
+            # -----------------------------------------
             # REMOVE EXISTING FILES
-            # ----------------------------------
+            # -----------------------------------------
 
             removed_files = request.POST.getlist(
                 'removed_files[]'
@@ -2621,14 +2828,15 @@ def kalpana_update(request, slug):
                     kalpana=kalpana
                 ).delete()
 
-            # ----------------------------------
+            # -----------------------------------------
             # UPDATE EXISTING FILE DESCRIPTIONS
-            # ----------------------------------
+            # -----------------------------------------
 
             existing_files = kalpana.files.all()
 
             for file_obj in existing_files:
 
+                # Skip files that were removed
                 if str(file_obj.id) in removed_files:
                     continue
 
@@ -2649,17 +2857,15 @@ def kalpana_update(request, slug):
 
                 file_obj.save()
 
-            # ----------------------------------
-            # ADD NEW DESCRIPTION + FILE PAIRS
-            # ----------------------------------
-
-            descriptions = request.POST.getlist(
-                'descriptions[]'
-            )
+            # -----------------------------------------
+            # ADD NEW DESCRIPTION + PDF FILE PAIRS
+            # -----------------------------------------
 
             new_file_count = 0
 
-            for index, description in enumerate(descriptions):
+            for index, description in enumerate(
+                descriptions
+            ):
 
                 description = description.strip()
 
@@ -2673,6 +2879,11 @@ def kalpana_update(request, slug):
                 if not uploaded_file:
                     continue
 
+                # Extra validation before creating
+                validate_pdf_file(
+                    uploaded_file
+                )
+
                 KalpanaFile.objects.create(
                     kalpana=kalpana,
                     file=uploaded_file,
@@ -2682,12 +2893,30 @@ def kalpana_update(request, slug):
 
                 new_file_count += 1
 
-            messages.success(
-                request,
-                f'Kalpana "{kalpana.title}" updated successfully!'
-            )
+            # -----------------------------------------
+            # SUCCESS MESSAGE
+            # -----------------------------------------
 
-            return redirect('kalpana_list')
+            if new_file_count > 0:
+
+                messages.success(
+                    request,
+                    f'Kalpana "{kalpana.title}" updated '
+                    f'successfully with '
+                    f'{new_file_count} new PDF file(s)!'
+                )
+
+            else:
+
+                messages.success(
+                    request,
+                    f'Kalpana "{kalpana.title}" '
+                    f'updated successfully!'
+                )
+
+            return redirect(
+                'kalpana_list'
+            )
 
         else:
 
@@ -2716,6 +2945,8 @@ def kalpana_update(request, slug):
             'existing_files': existing_files
         }
     )
+
+
 
 
 def kalpana_delete(request, slug):
@@ -2772,8 +3003,6 @@ def kalpana_delete_file(request, file_id):
         'kalpana_update',
         slug=kalpana_slug
     )
-
-
 
 # EVENTSfrom django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages

@@ -107,8 +107,8 @@ path(
     path('kalpanadetail/<slug:slug>/', views.kalpanadetail, name='kalpanadetail'),
     path('kalpana/file/<int:file_id>/', views.kalpana_view_file, name='kalpana_view_file'),
     path('guideline/',views.guideline,name='guideline'),
-    path('prayerbook/',views.prayerbook,name='prayerbook'),
-    path('prayerbook/',views.prayerbook,name='prayerbook'),
+    path('prayerbook/', views.prayerbook, name='prayerbook'),
+    path('prayerbook-view-file/<int:file_id>/', views.prayerbook_view_file, name='prayerbook_view_file'),
     
 
 #SYNOD DETAIL PAGE

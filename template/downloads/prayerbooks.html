@@ -106,7 +106,6 @@
 }
 
 </style>
-
 <section class="prayer-wrapper">
 
     <div class="prayer-title">
@@ -119,7 +118,7 @@
     <div class="prayer-grid">
         {% if books %}
             {% for book in books %}
-                <a href="{{ book.file.url }}" target="_blank" class="prayer-card" download>
+                <a href="{% url 'prayerbook_view_file' book.id %}" target="_blank" class="prayer-card">
                     {% if book.image %}
                         <img src="{{ book.image.url }}" alt="{{ book.title }}" loading="lazy">
                     {% else %}
@@ -127,23 +126,6 @@
                     {% endif %}
                     <div class="card-content">
                         <h3>{{ book.title }}</h3>
-                        
-                        <!-- {% if book.file %}
-                            {% with ext=book.get_file_extension %}
-                                <span class="file-type {% if ext == 'pdf' %}pdf{% elif ext == 'doc' or ext == 'docx' %}word{% elif ext == 'xls' or ext == 'xlsx' %}excel{% else %}other{% endif %}">
-                                    <i class="fas {% if ext == 'pdf' %}fa-file-pdf{% elif ext == 'doc' or ext == 'docx' %}fa-file-word{% elif ext == 'xls' or ext == 'xlsx' %}fa-file-excel{% else %}fa-file{% endif %}"></i>
-                                    {{ ext|upper }}
-                                </span>
-                            {% endwith %} -->
-                            
-                            <!-- <span class="download-btn">
-                                <i class="fas fa-download"></i> Download
-                            </span> -->
-                        {% else %}
-                            <span class="no-file">
-                                <i class="fas fa-file"></i> No file available
-                            </span>
-                        {% endif %}
                     </div>
                 </a>
             {% endfor %}
