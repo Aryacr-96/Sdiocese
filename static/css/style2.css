@@ -5497,7 +5497,7 @@ body{
 .priest-dir-img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+   
     object-position: center;
 }
 
@@ -5736,7 +5736,7 @@ body{
     
     .priest-dir-img-box {
         width: 140px;
-        height: 200px;
+        height:150px;
     }
     
     .priest-dir-name {
@@ -5792,7 +5792,7 @@ body{
     
     .priest-dir-img-box {
         width: 100%;
-        height: 200px;
+        height: 300px;
     }
     
     .priest-dir-info-box {
