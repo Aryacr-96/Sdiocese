@@ -4,32 +4,50 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Edit Spiritual · Diocese</title>
 
+
     <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+
         body {
             background: #f0f4f9;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter',
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
         }
+
 
         .content-wrapper {
             max-width: 1100px;
             margin: 30px auto;
             padding: 0 20px;
         }
+
 
         .page-header {
             display: flex;
@@ -40,24 +58,36 @@
             margin-bottom: 28px;
         }
 
+
         .page-header .header-left {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
+
         .page-header .header-left .icon-circle {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(
+                135deg,
+                #f59e0b,
+                #d97706
+            );
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 20px;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            box-shadow: 0 4px 12px rgba(
+                245,
+                158,
+                11,
+                0.3
+            );
         }
+
 
         .page-header .header-left h1 {
             font-size: 24px;
@@ -65,6 +95,7 @@
             color: #0f172a;
             margin: 0;
         }
+
 
         .page-header .header-left h1 small {
             font-weight: 400;
@@ -74,11 +105,13 @@
             margin-top: 2px;
         }
 
+
         .page-header .header-actions {
             display: flex;
             gap: 10px;
             align-items: center;
         }
+
 
         .btn {
             padding: 10px 22px;
@@ -94,11 +127,13 @@
             text-decoration: none;
         }
 
+
         .btn-secondary {
             background: white;
             color: #475569;
             border: 1px solid #e2e8f0;
         }
+
 
         .btn-secondary:hover {
             background: #f8fafc;
@@ -106,35 +141,79 @@
             transform: translateY(-1px);
         }
 
+
         .btn-primary {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(
+                135deg,
+                #f59e0b,
+                #d97706
+            );
             color: white;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            box-shadow: 0 4px 12px rgba(
+                245,
+                158,
+                11,
+                0.35
+            );
         }
+
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 6px 20px rgba(
+                245,
+                158,
+                11,
+                0.4
+            );
         }
 
+
         .btn-success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            background: linear-gradient(
+                135deg,
+                #22c55e,
+                #16a34a
+            );
             color: white;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+            box-shadow: 0 4px 12px rgba(
+                34,
+                197,
+                94,
+                0.35
+            );
         }
+
 
         .btn-success:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 6px 20px rgba(
+                34,
+                197,
+                94,
+                0.4
+            );
         }
+
 
         .main-card {
             background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+            box-shadow: 0 20px 60px rgba(
+                15,
+                23,
+                42,
+                0.06
+            );
             overflow: hidden;
-            border: 1px solid rgba(226, 232, 240, 0.6);
+            border: 1px solid rgba(
+                226,
+                232,
+                240,
+                0.6
+            );
         }
+
 
         .card-tabs {
             display: flex;
@@ -144,6 +223,7 @@
             gap: 4px;
             flex-wrap: wrap;
         }
+
 
         .card-tabs .tab {
             padding: 16px 24px;
@@ -160,17 +240,21 @@
             gap: 8px;
         }
 
+
         .card-tabs .tab i {
             font-size: 16px;
         }
+
 
         .card-tabs .tab:hover {
             color: #f59e0b;
         }
 
+
         .card-tabs .tab.active {
             color: #f59e0b;
         }
+
 
         .card-tabs .tab.active::after {
             content: '';
@@ -179,17 +263,24 @@
             left: 24px;
             right: 24px;
             height: 3px;
-            background: linear-gradient(90deg, #f59e0b, #d97706);
+            background: linear-gradient(
+                90deg,
+                #f59e0b,
+                #d97706
+            );
             border-radius: 3px 3px 0 0;
         }
+
 
         .card-body {
             padding: 30px;
         }
 
+
         .form-group {
             margin-bottom: 22px;
         }
+
 
         .form-group label {
             display: block;
@@ -199,16 +290,19 @@
             margin-bottom: 6px;
         }
 
+
         .form-group label .required {
             color: #ef4444;
             margin-left: 2px;
         }
+
 
         .form-group label .label-icon {
             color: #f59e0b;
             margin-right: 6px;
             width: 16px;
         }
+
 
         .form-control {
             width: 100%;
@@ -222,15 +316,23 @@
             color: #0f172a;
         }
 
+
         .form-control:focus {
             outline: none;
             border-color: #f59e0b;
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.08);
+            box-shadow: 0 0 0 4px rgba(
+                245,
+                158,
+                11,
+                0.08
+            );
         }
+
 
         .form-control.error {
             border-color: #ef4444;
         }
+
 
         .form-hint {
             font-size: 12px;
@@ -238,9 +340,11 @@
             margin-top: 4px;
         }
 
+
         .form-hint i {
             margin-right: 4px;
         }
+
 
         .error-message {
             color: #ef4444;
@@ -251,6 +355,7 @@
             gap: 4px;
         }
 
+
         .office-section {
             background: #f8fafc;
             border-radius: 16px;
@@ -258,6 +363,7 @@
             margin-top: 8px;
             border: 1px solid #e2e8f0;
         }
+
 
         .office-section .section-title {
             display: flex;
@@ -267,6 +373,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
+
 
         .office-section .section-title h3 {
             font-size: 16px;
@@ -278,18 +385,25 @@
             gap: 10px;
         }
 
+
         .office-section .section-title h3 i {
             color: #f59e0b;
         }
 
+
         .office-section .section-title .badge {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(
+                135deg,
+                #f59e0b,
+                #d97706
+            );
             color: white;
             padding: 4px 14px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
         }
+
 
         .existing-list {
             display: flex;
@@ -302,6 +416,7 @@
             margin-bottom: 16px;
         }
 
+
         .existing-item {
             display: flex;
             justify-content: space-between;
@@ -313,15 +428,20 @@
             transition: all 0.2s ease;
         }
 
+
         .existing-item:hover {
             border-color: #f59e0b;
         }
+
 
         .existing-item .item-info {
             display: flex;
             align-items: center;
             gap: 12px;
+            flex: 1;
+            min-width: 0;
         }
+
 
         .existing-item .item-avatar {
             width: 32px;
@@ -338,6 +458,7 @@
             flex-shrink: 0;
         }
 
+
         .existing-item .item-avatar img {
             width: 100%;
             height: 100%;
@@ -345,26 +466,59 @@
             object-fit: cover;
         }
 
+
         .existing-item .item-details {
             display: flex;
             flex-direction: column;
+            flex: 1;
+            min-width: 0;
         }
+
 
         .existing-item .item-details .item-name {
             font-weight: 600;
             font-size: 14px;
             color: #0f172a;
+            margin-bottom: 4px;
         }
+
 
         .existing-item .item-details .item-sub {
             font-size: 12px;
             color: #94a3b8;
+            margin-top: 4px;
         }
+
+
+        .existing-designation {
+            width: 220px;
+            padding: 7px 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            color: #334155;
+            font-size: 12px;
+        }
+
+
+        .existing-designation:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(
+                245,
+                158,
+                11,
+                0.08
+            );
+        }
+
 
         .existing-item .item-actions {
             display: flex;
             gap: 8px;
+            margin-left: 12px;
         }
+
 
         .existing-item .btn-remove {
             background: none;
@@ -377,10 +531,12 @@
             font-size: 14px;
         }
 
+
         .existing-item .btn-remove:hover {
             background: #fef2f2;
             color: #ef4444;
         }
+
 
         .empty-state {
             text-align: center;
@@ -388,12 +544,14 @@
             color: #94a3b8;
         }
 
+
         .empty-state i {
             font-size: 32px;
             margin-bottom: 10px;
             display: block;
             color: #cbd5e1;
         }
+
 
         .new-card {
             background: white;
@@ -405,10 +563,17 @@
             position: relative;
         }
 
+
         .new-card:hover {
             border-color: #f59e0b;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.06);
+            box-shadow: 0 4px 16px rgba(
+                245,
+                158,
+                11,
+                0.06
+            );
         }
+
 
         .new-card .card-header {
             display: flex;
@@ -422,8 +587,13 @@
             font-size: 14px;
         }
 
+
         .new-card .card-number {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(
+                135deg,
+                #f59e0b,
+                #d97706
+            );
             color: white;
             width: 28px;
             height: 28px;
@@ -434,6 +604,7 @@
             font-size: 12px;
             font-weight: 700;
         }
+
 
         .new-card .remove-btn {
             background: none;
@@ -446,10 +617,12 @@
             font-size: 16px;
         }
 
+
         .new-card .remove-btn:hover {
             background: #fef2f2;
             color: #ef4444;
         }
+
 
         .new-card .row {
             display: grid;
@@ -457,13 +630,16 @@
             gap: 14px;
         }
 
+
         .new-card .row .full {
             grid-column: 1 / -1;
         }
 
+
         .new-card .form-group {
             margin-bottom: 0;
         }
+
 
         .new-card .form-group label {
             font-size: 12px;
@@ -472,15 +648,18 @@
             margin-bottom: 4px;
         }
 
+
         .new-card .form-group .form-control {
             padding: 8px 12px;
             font-size: 13px;
             border-radius: 10px;
         }
 
+
         .new-card .form-group .form-control[type="file"] {
             padding: 6px;
         }
+
 
         .add-more-btn {
             background: white;
@@ -499,11 +678,13 @@
             justify-content: center;
         }
 
+
         .add-more-btn:hover {
             border-color: #f59e0b;
             background: #f8fafc;
             transform: translateY(-1px);
         }
+
 
         .form-actions {
             display: flex;
@@ -514,47 +695,68 @@
             flex-wrap: wrap;
         }
 
+
         .django-ckeditor-widget {
             margin-top: 0 !important;
             padding-top: 0 !important;
         }
+
+
         .cke_chrome {
             margin-top: 0 !important;
             border: 1.5px solid #e2e8f0 !important;
             border-radius: 12px !important;
             overflow: hidden !important;
         }
+
+
         .cke_chrome:focus-within {
             border-color: #f59e0b !important;
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.08) !important;
+            box-shadow: 0 0 0 4px rgba(
+                245,
+                158,
+                11,
+                0.08
+            ) !important;
         }
+
+
         .cke_top {
             background: #f8fafc !important;
             border-bottom: 1px solid #eef2f6 !important;
             padding: 6px 10px !important;
         }
+
+
         .cke_contents {
             min-height: 200px !important;
         }
+
+
         .cke_bottom {
             background: #f8fafc !important;
             border-top: 1px solid #eef2f6 !important;
         }
 
+
         @media (max-width: 768px) {
+
             .content-wrapper {
                 padding: 0 12px;
                 margin: 16px auto;
             }
 
+
             .page-header .header-left h1 {
                 font-size: 20px;
             }
+
 
             .card-tabs {
                 padding: 0 16px;
                 overflow-x: auto;
             }
+
 
             .card-tabs .tab {
                 padding: 12px 16px;
@@ -562,654 +764,1995 @@
                 white-space: nowrap;
             }
 
+
             .card-body {
                 padding: 20px;
             }
+
 
             .new-card .row {
                 grid-template-columns: 1fr;
                 gap: 12px;
             }
 
+
             .office-section {
                 padding: 16px;
             }
+
 
             .form-actions {
                 flex-direction: column;
             }
 
+
             .form-actions .btn {
                 width: 100%;
                 justify-content: center;
             }
+
+
+            .existing-item {
+                align-items: flex-start;
+            }
+
+
+            .existing-designation {
+                width: 100%;
+                max-width: 260px;
+            }
+
         }
 
+
         @media (max-width: 576px) {
+
             .page-header .header-left .icon-circle {
                 width: 40px;
                 height: 40px;
                 font-size: 16px;
             }
 
+
             .page-header .header-left h1 {
                 font-size: 18px;
             }
+
 
             .page-header .header-left h1 small {
                 font-size: 12px;
             }
 
+
             .card-body {
                 padding: 16px;
             }
+
 
             .existing-item {
                 flex-wrap: wrap;
                 gap: 8px;
             }
 
+
             .existing-item .item-actions {
                 margin-left: auto;
             }
+
+
+            .existing-designation {
+                max-width: none;
+            }
+
         }
+
     </style>
+
 </head>
+
+
 <body>
 
+
 <div class="content-wrapper">
-    <!-- ===== PAGE HEADER ===== -->
+
+
+    <!-- PAGE HEADER -->
+
     <div class="page-header">
+
         <div class="header-left">
+
             <div class="icon-circle">
+
                 <i class="fa fa-cross"></i>
+
             </div>
+
+
             <div>
+
                 <h1>
+
                     Edit Spiritual Category
-                    <small>{{ spiritual.category_title }}</small>
+
+                    <small>
+                        {{ spiritual.category_title }}
+                    </small>
+
                 </h1>
+
             </div>
+
         </div>
+
+
         <div class="header-actions">
-            <a href="{% url 'spiritual' %}" class="btn btn-secondary">
-                <i class="fa fa-arrow-left"></i> Back
+
+            <a href="{% url 'spiritual' %}"
+               class="btn btn-secondary">
+
+                <i class="fa fa-arrow-left"></i>
+
+                Back
+
             </a>
+
         </div>
+
     </div>
 
-    <!-- ===== MAIN CARD ===== -->
+
+
+    <!-- MAIN CARD -->
+
     <div class="main-card">
-        <!-- Tabs -->
+
+
+        <!-- TABS -->
+
         <div class="card-tabs">
-            <button class="tab active" onclick="switchTab('details')">
-                <i class="fa fa-info-circle"></i> Details
+
+
+            <button type="button"
+                    class="tab active"
+                    onclick="switchTab('details')">
+
+                <i class="fa fa-info-circle"></i>
+
+                Details
+
             </button>
-            <button class="tab" onclick="switchTab('bearers')">
-                <i class="fa fa-user-tie"></i> Office Bearers
-                <span class="badge" style="background: #f59e0b; color: white; padding: 2px 10px; border-radius: 20px; font-size: 11px;">{{ spiritual.officebearers.count|default:0 }}</span>
+
+
+            <button type="button"
+                    class="tab"
+                    onclick="switchTab('bearers')">
+
+                <i class="fa fa-user-tie"></i>
+
+                Office Bearers
+
+                <span class="badge"
+                      style="
+                        background:#f59e0b;
+                        color:white;
+                        padding:2px 10px;
+                        border-radius:20px;
+                        font-size:11px;
+                      ">
+
+                    {{ spiritual.officebearers.count|default:0 }}
+
+                </span>
+
             </button>
-            <button class="tab" onclick="switchTab('coordinators')">
-                <i class="fa fa-user-cog"></i> Coordinators
-                <span class="badge" style="background: #f59e0b; color: white; padding: 2px 10px; border-radius: 20px; font-size: 11px;">{{ spiritual.coordinators.count|default:0 }}</span>
+
+
+            <button type="button"
+                    class="tab"
+                    onclick="switchTab('coordinators')">
+
+                <i class="fa fa-user-cog"></i>
+
+                Coordinators
+
+                <span class="badge"
+                      style="
+                        background:#f59e0b;
+                        color:white;
+                        padding:2px 10px;
+                        border-radius:20px;
+                        font-size:11px;
+                      ">
+
+                    {{ spiritual.coordinators.count|default:0 }}
+
+                </span>
+
             </button>
+
         </div>
 
-        <!-- Body -->
+
+
+        <!-- BODY -->
+
         <div class="card-body">
-            <form method="POST" enctype="multipart/form-data" id="spiritualForm">
+
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  id="spiritualForm">
+
                 {% csrf_token %}
 
-                <!-- ===== TAB 1: DETAILS ===== -->
+
+                <!-- ================================= -->
+                <!-- DETAILS -->
+                <!-- ================================= -->
+
                 <div id="tab-details">
-                    <div class="form-group {% if form.category_title.errors %}has-error{% endif %}">
-                        <label for="{{ form.category_title.id_for_label }}">
-                            <i class="fa fa-heading label-icon"></i>
-                            Category Title
-                            <span class="required">*</span>
-                        </label>
-                        {{ form.category_title }}
+
+
+                    <div class="form-group
                         {% if form.category_title.errors %}
+                            has-error
+                        {% endif %}">
+
+
+                        <label for="{{ form.category_title.id_for_label }}">
+
+                            <i class="fa fa-heading label-icon"></i>
+
+                            Category Title
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        {{ form.category_title }}
+
+
+                        {% if form.category_title.errors %}
+
                             <div class="error-message">
+
                                 <i class="fa fa-exclamation-circle"></i>
+
                                 {{ form.category_title.errors|join:", " }}
+
                             </div>
+
                         {% endif %}
+
+
                         <div class="form-hint">
+
                             <i class="fa fa-info-circle"></i>
+
                             A unique name for this spiritual category
+
                         </div>
+
                     </div>
+
+
 
                     <div class="form-group">
+
+
                         <label for="{{ form.content.id_for_label }}">
+
                             <i class="fa fa-align-left label-icon"></i>
+
                             Content
+
                         </label>
+
+
                         {{ form.media }}
+
                         {{ form.content }}
+
+
                         {% if form.content.errors %}
+
                             <div class="error-message">
+
                                 <i class="fa fa-exclamation-circle"></i>
+
                                 {{ form.content.errors|join:", " }}
+
                             </div>
+
                         {% endif %}
+
+
                         <div class="form-hint">
+
                             <i class="fa fa-info-circle"></i>
+
                             Detailed description or content for this category
+
                         </div>
+
                     </div>
 
-                    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                        <button type="button" class="btn btn-primary" onclick="switchTab('bearers')">
-                            <i class="fa fa-user-tie"></i> Manage Office Bearers
+
+
+                    <div style="
+                        margin-top:24px;
+                        display:flex;
+                        gap:12px;
+                        justify-content:flex-end;
+                        flex-wrap:wrap;
+                    ">
+
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="switchTab('bearers')">
+
+                            <i class="fa fa-user-tie"></i>
+
+                            Manage Office Bearers
+
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="switchTab('coordinators')">
-                            <i class="fa fa-user-cog"></i> Manage Coordinators
+
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="switchTab('coordinators')">
+
+                            <i class="fa fa-user-cog"></i>
+
+                            Manage Coordinators
+
                         </button>
+
                     </div>
+
                 </div>
 
-                <!-- ===== TAB 2: OFFICE BEARERS ===== -->
-                <div id="tab-bearers" style="display: none;">
+
+
+                <!-- ================================= -->
+                <!-- OFFICE BEARERS -->
+                <!-- ================================= -->
+
+                <div id="tab-bearers"
+                     style="display:none;">
+
+
                     <div class="office-section">
+
+
                         <div class="section-title">
+
                             <h3>
+
                                 <i class="fa fa-user-tie"></i>
+
                                 Office Bearers
-                                <span class="badge" id="bearerCount">{{ spiritual.officebearers.count|default:0 }}</span>
+
+                                <span class="badge"
+                                      id="bearerCount">
+
+                                    {{ spiritual.officebearers.count|default:0 }}
+
+                                </span>
+
                             </h3>
+
                         </div>
+
+
 
                         <!-- EXISTING OFFICE BEARERS -->
-                        <div style="margin-bottom: 20px;">
-                            <label style="font-weight: 600; font-size: 13px; color: #334155; display: block; margin-bottom: 8px;">
+
+                        <div style="margin-bottom:20px;">
+
+
+                            <label style="
+                                font-weight:600;
+                                font-size:13px;
+                                color:#334155;
+                                display:block;
+                                margin-bottom:8px;
+                            ">
+
                                 <i class="fa fa-users label-icon"></i>
+
                                 Existing Office Bearers
+
                             </label>
-                            <div class="existing-list" id="existingBearersList">
+
+
+
+                            <div class="existing-list"
+                                 id="existingBearersList">
+
+
                                 {% if existing_bearers %}
+
+
                                     {% for bearer in existing_bearers %}
+
+
                                         {% if bearer.id in selected_bearers %}
-                                            <div class="existing-item" data-bearer-id="{{ bearer.id }}">
+
+
+                                            <div class="existing-item"
+                                                 data-bearer-id="{{ bearer.id }}">
+
+
                                                 <div class="item-info">
+
+
                                                     <span class="item-avatar">
+
+
                                                         {% if bearer.image %}
-                                                            <img src="{{ bearer.image.url }}" alt="{{ bearer.name }}">
+
+                                                            <img src="{{ bearer.image.url }}"
+                                                                 alt="{{ bearer.name }}">
+
                                                         {% else %}
+
                                                             <i class="fa fa-user"></i>
+
                                                         {% endif %}
+
+
                                                     </span>
+
+
+
                                                     <div class="item-details">
-                                                        <span class="item-name">{{ bearer.name }}</span>
-                                                        <span class="item-sub">{{ bearer.designation.name }} · {{ bearer.phone }}</span>
+
+
+                                                        <span class="item-name">
+
+                                                            {{ bearer.name }}
+
+                                                        </span>
+
+
+                                                        <!-- EXISTING DESIGNATION EDIT -->
+
+                                                        <select
+                                                            name="existing_officebearer_designation_{{ bearer.id }}"
+                                                            class="existing-designation">
+
+
+                                                            <option value="">
+                                                                -- None --
+                                                            </option>
+
+
+                                                            {% for designation in designations %}
+
+                                                                <option
+                                                                    value="{{ designation.id }}"
+                                                                    {% if bearer.designation_id == designation.id %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >
+
+                                                                    {{ designation.name }}
+
+                                                                </option>
+
+                                                            {% endfor %}
+
+
+                                                        </select>
+
+
+                                                        <span class="item-sub">
+
+                                                            {{ bearer.phone }}
+
+                                                        </span>
+
+
                                                     </div>
+
                                                 </div>
+
+
+
                                                 <div class="item-actions">
-                                                    <button type="button" class="btn-remove" onclick="removeExistingBearer(this)" title="Remove">
+
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn-remove"
+                                                        onclick="removeExistingBearer(this)"
+                                                        title="Remove">
+
                                                         <i class="fa fa-times"></i>
+
                                                     </button>
-                                                    <input type="hidden" name="selected_bearers" value="{{ bearer.id }}">
+
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="selected_bearers"
+                                                        value="{{ bearer.id }}">
+
+
                                                 </div>
+
                                             </div>
+
+
                                         {% endif %}
+
+
                                     {% endfor %}
+
+
                                 {% endif %}
+
+
+
                                 {% if not selected_bearers %}
+
                                     <div class="empty-state">
+
                                         <i class="fa fa-user-tie"></i>
-                                        <p>No office bearers selected</p>
+
+                                        <p>
+                                            No office bearers selected
+                                        </p>
+
                                     </div>
+
                                 {% endif %}
+
+
                             </div>
+
                         </div>
 
-                        <!-- ADD NEW -->
-                        <div style="margin-top: 24px; border-top: 2px dashed #e2e8f0; padding-top: 20px;">
-                            <h4 style="font-size: 14px; font-weight: 600; color: #f59e0b; margin-bottom: 16px;">
+
+
+                        <!-- ADD NEW OFFICE BEARERS -->
+
+                        <div style="
+                            margin-top:24px;
+                            border-top:2px dashed #e2e8f0;
+                            padding-top:20px;
+                        ">
+
+
+                            <h4 style="
+                                font-size:14px;
+                                font-weight:600;
+                                color:#f59e0b;
+                                margin-bottom:16px;
+                            ">
+
                                 <i class="fa fa-plus-circle"></i>
+
                                 Add New Office Bearers
+
                             </h4>
+
+
+
                             <div id="newOfficeContainer">
+
+
                                 <div class="new-card">
+
+
                                     <div class="card-header">
-                                        <span class="card-number">1</span>
-                                        <button type="button" class="remove-btn" onclick="removeNewOffice(this)">
+
+                                        <span class="card-number">
+                                            1
+                                        </span>
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-btn"
+                                            onclick="removeNewOffice(this)">
+
                                             <i class="fa fa-times"></i>
+
                                         </button>
+
                                     </div>
+
+
+
                                     <div class="row">
+
+
                                         <div class="full">
+
                                             <div class="form-group">
-                                                <label>Name <span class="required">*</span></label>
-                                                <input type="text" name="new_officebearer_name[]" class="form-control" placeholder="Enter full name" required>
+
+                                                <label>
+                                                    Name
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_officebearer_name[]"
+                                                    class="form-control"
+                                                    placeholder="Enter full name">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Designation <span class="required">*</span></label>
-                                                <select name="new_officebearer_designation[]" class="form-control" required>
-                                                    <option value="">-- Select Designation --</option>
+
+                                                <label>
+                                                    Designation
+                                                </label>
+
+                                                <select
+                                                    name="new_officebearer_designation[]"
+                                                    class="form-control">
+
+                                                    <option value="">
+                                                        -- None --
+                                                    </option>
+
+
                                                     {% for designation in designations %}
-                                                        <option value="{{ designation.id }}">{{ designation.name }}</option>
+
+                                                        <option value="{{ designation.id }}">
+
+                                                            {{ designation.name }}
+
+                                                        </option>
+
                                                     {% endfor %}
+
                                                 </select>
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Phone <span class="required">*</span></label>
-                                                <input type="text" name="new_officebearer_phone[]" class="form-control phone-input" placeholder="Enter 10-digit phone" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+
+                                                <label>
+                                                    Phone
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_officebearer_phone[]"
+                                                    class="form-control phone-input"
+                                                    placeholder="Enter 10-digit phone"
+                                                    maxlength="10"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="email" name="new_officebearer_email[]" class="form-control" placeholder="Enter email (optional)">
+
+                                                <label>
+                                                    Email
+                                                </label>
+
+                                                <input
+                                                    type="email"
+                                                    name="new_officebearer_email[]"
+                                                    class="form-control"
+                                                    placeholder="Enter email (optional)">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>District</label>
-                                                <input type="text" name="new_officebearer_district[]" class="form-control" placeholder="Enter district (optional)">
+
+                                                <label>
+                                                    District
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_officebearer_district[]"
+                                                    class="form-control"
+                                                    placeholder="Enter district (optional)">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div class="full">
+
                                             <div class="form-group">
-                                                <label>Image</label>
-                                                <input type="file" name="new_officebearer_image[]" class="form-control" accept="image/*">
+
+                                                <label>
+                                                    Image
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    name="new_officebearer_image[]"
+                                                    class="form-control"
+                                                    accept="image/*">
+
                                             </div>
+
                                         </div>
+
+
                                     </div>
+
                                 </div>
+
                             </div>
 
-                            <button type="button" class="add-more-btn" onclick="addNewOffice()">
+
+
+                            <button
+                                type="button"
+                                class="add-more-btn"
+                                onclick="addNewOffice()">
+
                                 <i class="fa fa-plus"></i>
+
                                 Add Another New Office Bearer
+
                             </button>
+
                         </div>
+
+
                     </div>
 
-                    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                        <button type="button" class="btn btn-secondary" onclick="switchTab('details')">
-                            <i class="fa fa-arrow-left"></i> Back to Details
+
+
+                    <div style="
+                        margin-top:24px;
+                        display:flex;
+                        gap:12px;
+                        justify-content:flex-end;
+                        flex-wrap:wrap;
+                    ">
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="switchTab('details')">
+
+                            <i class="fa fa-arrow-left"></i>
+
+                            Back to Details
+
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="switchTab('coordinators')">
-                            <i class="fa fa-user-cog"></i> Manage Coordinators
+
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            onclick="switchTab('coordinators')">
+
+                            <i class="fa fa-user-cog"></i>
+
+                            Manage Coordinators
+
                         </button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-save"></i> Update Spiritual
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            <i class="fa fa-save"></i>
+
+                            Update Spiritual
+
                         </button>
+
+
                     </div>
+
                 </div>
 
-                <!-- ===== TAB 3: COORDINATORS ===== -->
-                <div id="tab-coordinators" style="display: none;">
+
+
+                <!-- ================================= -->
+                <!-- COORDINATORS -->
+                <!-- ================================= -->
+
+                <div id="tab-coordinators"
+                     style="display:none;">
+
+
                     <div class="office-section">
+
+
                         <div class="section-title">
+
                             <h3>
+
                                 <i class="fa fa-user-cog"></i>
+
                                 Coordinators
-                                <span class="badge" id="coordinatorCount">{{ spiritual.coordinators.count|default:0 }}</span>
+
+                                <span class="badge"
+                                      id="coordinatorCount">
+
+                                    {{ spiritual.coordinators.count|default:0 }}
+
+                                </span>
+
                             </h3>
+
                         </div>
+
+
 
                         <!-- EXISTING COORDINATORS -->
-                        <div style="margin-bottom: 20px;">
-                            <label style="font-weight: 600; font-size: 13px; color: #334155; display: block; margin-bottom: 8px;">
+
+                        <div style="margin-bottom:20px;">
+
+
+                            <label style="
+                                font-weight:600;
+                                font-size:13px;
+                                color:#334155;
+                                display:block;
+                                margin-bottom:8px;
+                            ">
+
                                 <i class="fa fa-users label-icon"></i>
+
                                 Existing Coordinators
+
                             </label>
-                            <div class="existing-list" id="existingCoordinatorsList">
+
+
+
+                            <div class="existing-list"
+                                 id="existingCoordinatorsList">
+
+
                                 {% if existing_coordinators %}
+
+
                                     {% for coordinator in existing_coordinators %}
+
+
                                         {% if coordinator.id in selected_coordinators %}
-                                            <div class="existing-item" data-coordinator-id="{{ coordinator.id }}">
+
+
+                                            <div class="existing-item"
+                                                 data-coordinator-id="{{ coordinator.id }}">
+
+
                                                 <div class="item-info">
+
+
                                                     <span class="item-avatar">
+
+
                                                         {% if coordinator.image %}
-                                                            <img src="{{ coordinator.image.url }}" alt="{{ coordinator.name }}">
+
+                                                            <img
+                                                                src="{{ coordinator.image.url }}"
+                                                                alt="{{ coordinator.name }}">
+
                                                         {% else %}
+
                                                             <i class="fa fa-user"></i>
+
                                                         {% endif %}
+
+
                                                     </span>
+
+
+
                                                     <div class="item-details">
-                                                        <span class="item-name">{{ coordinator.name }}</span>
-                                                        <span class="item-sub">{{ coordinator.designation.name }} · {{ coordinator.phone }}</span>
+
+
+                                                        <span class="item-name">
+
+                                                            {{ coordinator.name }}
+
+                                                        </span>
+
+
+
+                                                        <!-- EXISTING DESIGNATION EDIT -->
+
+                                                        <select
+                                                            name="existing_coordinator_designation_{{ coordinator.id }}"
+                                                            class="existing-designation">
+
+
+                                                            <option value="">
+                                                                -- None --
+                                                            </option>
+
+
+                                                            {% for designation in designations %}
+
+                                                                <option
+                                                                    value="{{ designation.id }}"
+                                                                    {% if coordinator.designation_id == designation.id %}
+                                                                        selected
+                                                                    {% endif %}
+                                                                >
+
+                                                                    {{ designation.name }}
+
+                                                                </option>
+
+                                                            {% endfor %}
+
+
+                                                        </select>
+
+
+                                                        <span class="item-sub">
+
+                                                            {{ coordinator.phone }}
+
+                                                        </span>
+
+
                                                     </div>
+
                                                 </div>
+
+
+
                                                 <div class="item-actions">
-                                                    <button type="button" class="btn-remove" onclick="removeExistingCoordinator(this)" title="Remove">
+
+
+                                                    <button
+                                                        type="button"
+                                                        class="btn-remove"
+                                                        onclick="removeExistingCoordinator(this)"
+                                                        title="Remove">
+
                                                         <i class="fa fa-times"></i>
+
                                                     </button>
-                                                    <input type="hidden" name="selected_coordinators" value="{{ coordinator.id }}">
+
+
+                                                    <input
+                                                        type="hidden"
+                                                        name="selected_coordinators"
+                                                        value="{{ coordinator.id }}">
+
+
                                                 </div>
+
                                             </div>
+
+
                                         {% endif %}
+
+
                                     {% endfor %}
+
+
                                 {% endif %}
+
+
+
                                 {% if not selected_coordinators %}
+
                                     <div class="empty-state">
+
                                         <i class="fa fa-user-cog"></i>
-                                        <p>No coordinators selected</p>
+
+                                        <p>
+                                            No coordinators selected
+                                        </p>
+
                                     </div>
+
                                 {% endif %}
+
+
                             </div>
+
                         </div>
+
+
 
                         <!-- ADD NEW COORDINATORS -->
-                        <div style="margin-top: 24px; border-top: 2px dashed #e2e8f0; padding-top: 20px;">
-                            <h4 style="font-size: 14px; font-weight: 600; color: #f59e0b; margin-bottom: 16px;">
+
+                        <div style="
+                            margin-top:24px;
+                            border-top:2px dashed #e2e8f0;
+                            padding-top:20px;
+                        ">
+
+
+                            <h4 style="
+                                font-size:14px;
+                                font-weight:600;
+                                color:#f59e0b;
+                                margin-bottom:16px;
+                            ">
+
                                 <i class="fa fa-plus-circle"></i>
+
                                 Add New Coordinators
+
                             </h4>
+
+
+
                             <div id="newCoordinatorContainer">
+
+
                                 <div class="new-card">
+
+
                                     <div class="card-header">
-                                        <span class="card-number">1</span>
-                                        <button type="button" class="remove-btn" onclick="removeNewCoordinator(this)">
+
+                                        <span class="card-number">
+                                            1
+                                        </span>
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-btn"
+                                            onclick="removeNewCoordinator(this)">
+
                                             <i class="fa fa-times"></i>
+
                                         </button>
+
                                     </div>
+
+
+
                                     <div class="row">
+
+
                                         <div class="full">
+
                                             <div class="form-group">
-                                                <label>Name <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_name[]" class="form-control" placeholder="Enter coordinator name" required>
+
+                                                <label>
+                                                    Name
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_coordinator_name[]"
+                                                    class="form-control"
+                                                    placeholder="Enter coordinator name">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Designation <span class="required">*</span></label>
-                                                <select name="new_coordinator_designation[]" class="form-control" required>
-                                                    <option value="">-- Select Designation --</option>
+
+                                                <label>
+                                                    Designation
+                                                </label>
+
+                                                <select
+                                                    name="new_coordinator_designation[]"
+                                                    class="form-control">
+
+                                                    <option value="">
+                                                        -- None --
+                                                    </option>
+
+
                                                     {% for designation in designations %}
-                                                        <option value="{{ designation.id }}">{{ designation.name }}</option>
+
+                                                        <option value="{{ designation.id }}">
+
+                                                            {{ designation.name }}
+
+                                                        </option>
+
                                                     {% endfor %}
+
                                                 </select>
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>District <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_district[]" class="form-control" placeholder="Enter district" required>
+
+                                                <label>
+                                                    District
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_coordinator_district[]"
+                                                    class="form-control"
+                                                    placeholder="Enter district">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Phone <span class="required">*</span></label>
-                                                <input type="text" name="new_coordinator_phone[]" class="form-control phone-input" placeholder="Enter 10-digit phone" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+
+                                                <label>
+                                                    Phone
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="new_coordinator_phone[]"
+                                                    class="form-control phone-input"
+                                                    placeholder="Enter 10-digit phone"
+                                                    maxlength="10"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div>
+
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="email" name="new_coordinator_email[]" class="form-control" placeholder="Enter email (optional)">
+
+                                                <label>
+                                                    Email
+                                                </label>
+
+                                                <input
+                                                    type="email"
+                                                    name="new_coordinator_email[]"
+                                                    class="form-control"
+                                                    placeholder="Enter email (optional)">
+
                                             </div>
+
                                         </div>
+
+
+
                                         <div class="full">
+
                                             <div class="form-group">
-                                                <label>Image</label>
-                                                <input type="file" name="new_coordinator_image[]" class="form-control" accept="image/*">
+
+                                                <label>
+                                                    Image
+                                                </label>
+
+                                                <input
+                                                    type="file"
+                                                    name="new_coordinator_image[]"
+                                                    class="form-control"
+                                                    accept="image/*">
+
                                             </div>
+
                                         </div>
+
+
                                     </div>
+
                                 </div>
+
                             </div>
 
-                            <button type="button" class="add-more-btn" onclick="addNewCoordinator()">
+
+
+                            <button
+                                type="button"
+                                class="add-more-btn"
+                                onclick="addNewCoordinator()">
+
                                 <i class="fa fa-plus"></i>
+
                                 Add Another New Coordinator
+
                             </button>
+
+
                         </div>
+
+
                     </div>
 
-                    <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                        <button type="button" class="btn btn-secondary" onclick="switchTab('details')">
-                            <i class="fa fa-arrow-left"></i> Back to Details
+
+
+                    <div style="
+                        margin-top:24px;
+                        display:flex;
+                        gap:12px;
+                        justify-content:flex-end;
+                        flex-wrap:wrap;
+                    ">
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="switchTab('details')">
+
+                            <i class="fa fa-arrow-left"></i>
+
+                            Back to Details
+
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="switchTab('bearers')">
-                            <i class="fa fa-user-tie"></i> Manage Office Bearers
+
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            onclick="switchTab('bearers')">
+
+                            <i class="fa fa-user-tie"></i>
+
+                            Manage Office Bearers
+
                         </button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-save"></i> Update Spiritual
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            <i class="fa fa-save"></i>
+
+                            Update Spiritual
+
                         </button>
+
+
                     </div>
+
                 </div>
+
+
             </form>
+
         </div>
+
     </div>
+
 </div>
+
 
 {% include 'admin/adminfooter.html' %}
 
+
+
 <script>
-    // ===== TAB SWITCHING =====
-    function switchTab(tab) {
-        document.querySelectorAll('.card-tabs .tab').forEach(el => el.classList.remove('active'));
-        document.getElementById('tab-details').style.display = tab === 'details' ? 'block' : 'none';
-        document.getElementById('tab-bearers').style.display = tab === 'bearers' ? 'block' : 'none';
-        document.getElementById('tab-coordinators').style.display = tab === 'coordinators' ? 'block' : 'none';
-        
-        document.querySelectorAll('.card-tabs .tab').forEach(el => {
+
+
+// ============================================
+// TAB SWITCHING
+// ============================================
+
+function switchTab(tab) {
+
+    document
+        .querySelectorAll('.card-tabs .tab')
+        .forEach(function(el) {
+
+            el.classList.remove('active');
+
+        });
+
+
+    document.getElementById(
+        'tab-details'
+    ).style.display =
+        tab === 'details'
+            ? 'block'
+            : 'none';
+
+
+    document.getElementById(
+        'tab-bearers'
+    ).style.display =
+        tab === 'bearers'
+            ? 'block'
+            : 'none';
+
+
+    document.getElementById(
+        'tab-coordinators'
+    ).style.display =
+        tab === 'coordinators'
+            ? 'block'
+            : 'none';
+
+
+
+    document
+        .querySelectorAll('.card-tabs .tab')
+        .forEach(function(el) {
+
             const text = el.textContent.trim();
-            if ((tab === 'details' && text.includes('Details')) ||
-                (tab === 'bearers' && text.includes('Office Bearers')) ||
-                (tab === 'coordinators' && text.includes('Coordinators'))) {
+
+
+            if (
+                (tab === 'details' &&
+                 text.includes('Details')) ||
+
+                (tab === 'bearers' &&
+                 text.includes('Office Bearers')) ||
+
+                (tab === 'coordinators' &&
+                 text.includes('Coordinators'))
+            ) {
+
                 el.classList.add('active');
+
             }
+
         });
+
+}
+
+
+
+// ============================================
+// REMOVE EXISTING OFFICE BEARER
+// ============================================
+
+function removeExistingBearer(element) {
+
+    const item =
+        element.closest('.existing-item');
+
+
+    const hiddenInput =
+        item.querySelector(
+            'input[name="selected_bearers"]'
+        );
+
+
+    if (hiddenInput) {
+
+        hiddenInput.remove();
+
     }
 
-    // ===== REMOVE EXISTING BEARER =====
-    function removeExistingBearer(element) {
-        const item = element.closest('.existing-item');
-        const id = item.dataset.bearerId;
-        
-        // Remove the hidden input
-        const hiddenInput = item.querySelector('input[name="selected_bearers"]');
-        if (hiddenInput) {
-            hiddenInput.remove();
-        }
-        
-        // Remove the item from display
-        item.remove();
-        
-        // Update count
-        const count = document.querySelectorAll('#existingBearersList .existing-item').length;
-        document.getElementById('bearerCount').textContent = count + document.querySelectorAll('#newOfficeContainer .new-card').length;
-        
-        // Show empty state if no items
-        if (count === 0) {
-            const list = document.getElementById('existingBearersList');
-            list.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa fa-user-tie"></i>
-                    <p>No office bearers selected</p>
-                </div>
-            `;
-        }
+
+    item.remove();
+
+
+    updateBearerCount();
+
+
+    const remaining =
+        document.querySelectorAll(
+            '#existingBearersList .existing-item'
+        ).length;
+
+
+    if (remaining === 0) {
+
+        document.getElementById(
+            'existingBearersList'
+        ).innerHTML = `
+            <div class="empty-state">
+                <i class="fa fa-user-tie"></i>
+                <p>No office bearers selected</p>
+            </div>
+        `;
+
     }
 
-    // ===== REMOVE EXISTING COORDINATOR =====
-    function removeExistingCoordinator(element) {
-        const item = element.closest('.existing-item');
-        const id = item.dataset.coordinatorId;
-        
-        // Remove the hidden input
-        const hiddenInput = item.querySelector('input[name="selected_coordinators"]');
-        if (hiddenInput) {
-            hiddenInput.remove();
-        }
-        
-        // Remove the item from display
-        item.remove();
-        
-        // Update count
-        const count = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
-        document.getElementById('coordinatorCount').textContent = count + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
-        
-        // Show empty state if no items
-        if (count === 0) {
-            const list = document.getElementById('existingCoordinatorsList');
-            list.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa fa-user-cog"></i>
-                    <p>No coordinators selected</p>
-                </div>
-            `;
-        }
+}
+
+
+
+// ============================================
+// REMOVE EXISTING COORDINATOR
+// ============================================
+
+function removeExistingCoordinator(element) {
+
+    const item =
+        element.closest('.existing-item');
+
+
+    const hiddenInput =
+        item.querySelector(
+            'input[name="selected_coordinators"]'
+        );
+
+
+    if (hiddenInput) {
+
+        hiddenInput.remove();
+
     }
 
-    // ===== ADD NEW OFFICE =====
-    function addNewOffice() {
-        const container = document.getElementById('newOfficeContainer');
-        const lastCard = container.querySelector('.new-card:last-child');
-        const newCard = lastCard.cloneNode(true);
-        
-        // Clear all input values in the cloned card
-        newCard.querySelectorAll('input, select').forEach(function(input) {
-            if (input.type !== 'file' && input.type !== 'hidden') {
-                input.value = '';
-            } else if (input.type === 'file') {
-                input.value = '';
-            }
+
+    item.remove();
+
+
+    updateCoordinatorCount();
+
+
+    const remaining =
+        document.querySelectorAll(
+            '#existingCoordinatorsList .existing-item'
+        ).length;
+
+
+    if (remaining === 0) {
+
+        document.getElementById(
+            'existingCoordinatorsList'
+        ).innerHTML = `
+            <div class="empty-state">
+                <i class="fa fa-user-cog"></i>
+                <p>No coordinators selected</p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+
+// ============================================
+// UPDATE BEARER COUNT
+// ============================================
+
+function updateBearerCount() {
+
+    const existing =
+        document.querySelectorAll(
+            '#existingBearersList .existing-item'
+        ).length;
+
+
+    const newCards =
+        document.querySelectorAll(
+            '#newOfficeContainer .new-card'
+        ).length;
+
+
+    document.getElementById(
+        'bearerCount'
+    ).textContent =
+        existing + newCards;
+
+}
+
+
+
+// ============================================
+// UPDATE COORDINATOR COUNT
+// ============================================
+
+function updateCoordinatorCount() {
+
+    const existing =
+        document.querySelectorAll(
+            '#existingCoordinatorsList .existing-item'
+        ).length;
+
+
+    const newCards =
+        document.querySelectorAll(
+            '#newCoordinatorContainer .new-card'
+        ).length;
+
+
+    document.getElementById(
+        'coordinatorCount'
+    ).textContent =
+        existing + newCards;
+
+}
+
+
+
+// ============================================
+// ADD NEW OFFICE
+// ============================================
+
+function addNewOffice() {
+
+    const container =
+        document.getElementById(
+            'newOfficeContainer'
+        );
+
+
+    const lastCard =
+        container.querySelector(
+            '.new-card:last-child'
+        );
+
+
+    const newCard =
+        lastCard.cloneNode(true);
+
+
+    newCard
+        .querySelectorAll('input, select')
+        .forEach(function(input) {
+
+            input.value = '';
+
         });
-        
-        const cards = container.querySelectorAll('.new-card');
-        const cardNumber = newCard.querySelector('.card-number');
-        if (cardNumber) {
-            cardNumber.textContent = cards.length + 1;
-        }
-        
-        const removeBtn = newCard.querySelector('.remove-btn');
-        if (removeBtn) {
-            removeBtn.onclick = function() { removeNewOffice(this); };
-        }
-        
-        container.appendChild(newCard);
-        
-        // Update count
-        const bearerCount = document.querySelectorAll('#existingBearersList .existing-item').length;
-        document.getElementById('bearerCount').textContent = bearerCount + document.querySelectorAll('#newOfficeContainer .new-card').length;
+
+
+    const cards =
+        container.querySelectorAll(
+            '.new-card'
+        );
+
+
+    const cardNumber =
+        newCard.querySelector(
+            '.card-number'
+        );
+
+
+    if (cardNumber) {
+
+        cardNumber.textContent =
+            cards.length + 1;
+
     }
 
-    // ===== REMOVE NEW OFFICE =====
-    function removeNewOffice(button) {
-        const card = button.closest('.new-card');
-        const container = document.getElementById('newOfficeContainer');
-        const cards = container.querySelectorAll('.new-card');
-        
-        if (cards.length <= 1) {
-            alert('At least one new office bearer form must remain.');
-            return;
-        }
-        
-        card.remove();
-        updateCardNumbers('newOfficeContainer');
-        
-        // Update count
-        const bearerCount = document.querySelectorAll('#existingBearersList .existing-item').length;
-        document.getElementById('bearerCount').textContent = bearerCount + document.querySelectorAll('#newOfficeContainer .new-card').length;
+
+    const removeBtn =
+        newCard.querySelector(
+            '.remove-btn'
+        );
+
+
+    if (removeBtn) {
+
+        removeBtn.onclick =
+            function() {
+
+                removeNewOffice(this);
+
+            };
+
     }
 
-    // ===== ADD NEW COORDINATOR =====
-    function addNewCoordinator() {
-        const container = document.getElementById('newCoordinatorContainer');
-        const lastCard = container.querySelector('.new-card:last-child');
-        const newCard = lastCard.cloneNode(true);
-        
-        // Clear all input values in the cloned card
-        newCard.querySelectorAll('input, select').forEach(function(input) {
-            if (input.type !== 'file' && input.type !== 'hidden') {
+
+    container.appendChild(newCard);
+
+
+    updateBearerCount();
+
+}
+
+
+
+// ============================================
+// REMOVE NEW OFFICE
+// ============================================
+
+function removeNewOffice(button) {
+
+    const card =
+        button.closest('.new-card');
+
+
+    const container =
+        document.getElementById(
+            'newOfficeContainer'
+        );
+
+
+    const cards =
+        container.querySelectorAll(
+            '.new-card'
+        );
+
+
+    if (cards.length <= 1) {
+
+        card
+            .querySelectorAll('input, select')
+            .forEach(function(input) {
+
                 input.value = '';
-            } else if (input.type === 'file') {
-                input.value = '';
-            }
-        });
-        
-        const cards = container.querySelectorAll('.new-card');
-        const cardNumber = newCard.querySelector('.card-number');
-        if (cardNumber) {
-            cardNumber.textContent = cards.length + 1;
-        }
-        
-        const removeBtn = newCard.querySelector('.remove-btn');
-        if (removeBtn) {
-            removeBtn.onclick = function() { removeNewCoordinator(this); };
-        }
-        
-        container.appendChild(newCard);
-        
-        // Update count
-        const coordinatorCount = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
-        document.getElementById('coordinatorCount').textContent = coordinatorCount + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
-    }
 
-    // ===== REMOVE NEW COORDINATOR =====
-    function removeNewCoordinator(button) {
-        const card = button.closest('.new-card');
-        const container = document.getElementById('newCoordinatorContainer');
-        const cards = container.querySelectorAll('.new-card');
-        
-        if (cards.length <= 1) {
-            alert('At least one new coordinator form must remain.');
-            return;
-        }
-        
-        card.remove();
-        updateCardNumbers('newCoordinatorContainer');
-        
-        // Update count
-        const coordinatorCount = document.querySelectorAll('#existingCoordinatorsList .existing-item').length;
-        document.getElementById('coordinatorCount').textContent = coordinatorCount + document.querySelectorAll('#newCoordinatorContainer .new-card').length;
-    }
-
-    // ===== UPDATE CARD NUMBERS =====
-    function updateCardNumbers(containerId) {
-        const container = document.getElementById(containerId);
-        const cards = container.querySelectorAll('.new-card');
-        cards.forEach(function(card, index) {
-            const cardNumber = card.querySelector('.card-number');
-            if (cardNumber) {
-                cardNumber.textContent = index + 1;
-            }
-        });
-    }
-
-    // ===== FORM VALIDATION =====
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('spiritualForm');
-        
-        form.addEventListener('submit', function(e) {
-            const selectedBearersCount = document.querySelectorAll('#existingBearersList input[name="selected_bearers"]').length;
-            const selectedCoordinatorsCount = document.querySelectorAll('#existingCoordinatorsList input[name="selected_coordinators"]').length;
-            let hasValidNewBearer = false;
-            let hasValidNewCoordinator = false;
-            
-            document.querySelectorAll('input[name="new_officebearer_name[]"]').forEach(function(input) {
-                if (input.value.trim() !== '') {
-                    hasValidNewBearer = true;
-                }
             });
-            
-            document.querySelectorAll('input[name="new_coordinator_name[]"]').forEach(function(input) {
-                if (input.value.trim() !== '') {
-                    hasValidNewCoordinator = true;
-                }
-            });
-            
-            // Check if at least one bearer OR coordinator is selected or added
-            if (selectedBearersCount === 0 && !hasValidNewBearer && 
-                selectedCoordinatorsCount === 0 && !hasValidNewCoordinator) {
-                e.preventDefault();
-                alert('Please select at least one existing office bearer/coordinator or add a new one.');
-                switchTab('bearers');
-            }
+
+        return;
+
+    }
+
+
+    card.remove();
+
+
+    updateCardNumbers(
+        'newOfficeContainer'
+    );
+
+
+    updateBearerCount();
+
+}
+
+
+
+// ============================================
+// ADD NEW COORDINATOR
+// ============================================
+
+function addNewCoordinator() {
+
+    const container =
+        document.getElementById(
+            'newCoordinatorContainer'
+        );
+
+
+    const lastCard =
+        container.querySelector(
+            '.new-card:last-child'
+        );
+
+
+    const newCard =
+        lastCard.cloneNode(true);
+
+
+    newCard
+        .querySelectorAll('input, select')
+        .forEach(function(input) {
+
+            input.value = '';
+
         });
+
+
+    const cards =
+        container.querySelectorAll(
+            '.new-card'
+        );
+
+
+    const cardNumber =
+        newCard.querySelector(
+            '.card-number'
+        );
+
+
+    if (cardNumber) {
+
+        cardNumber.textContent =
+            cards.length + 1;
+
+    }
+
+
+    const removeBtn =
+        newCard.querySelector(
+            '.remove-btn'
+        );
+
+
+    if (removeBtn) {
+
+        removeBtn.onclick =
+            function() {
+
+                removeNewCoordinator(this);
+
+            };
+
+    }
+
+
+    container.appendChild(newCard);
+
+
+    updateCoordinatorCount();
+
+}
+
+
+
+// ============================================
+// REMOVE NEW COORDINATOR
+// ============================================
+
+function removeNewCoordinator(button) {
+
+    const card =
+        button.closest('.new-card');
+
+
+    const container =
+        document.getElementById(
+            'newCoordinatorContainer'
+        );
+
+
+    const cards =
+        container.querySelectorAll(
+            '.new-card'
+        );
+
+
+    if (cards.length <= 1) {
+
+        card
+            .querySelectorAll('input, select')
+            .forEach(function(input) {
+
+                input.value = '';
+
+            });
+
+        return;
+
+    }
+
+
+    card.remove();
+
+
+    updateCardNumbers(
+        'newCoordinatorContainer'
+    );
+
+
+    updateCoordinatorCount();
+
+}
+
+
+
+// ============================================
+// UPDATE CARD NUMBERS
+// ============================================
+
+function updateCardNumbers(containerId) {
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    const cards =
+        container.querySelectorAll(
+            '.new-card'
+        );
+
+
+    cards.forEach(function(card, index) {
+
+        const number =
+            card.querySelector(
+                '.card-number'
+            );
+
+
+        if (number) {
+
+            number.textContent =
+                index + 1;
+
+        }
+
     });
+
+}
+
+
+
+// ============================================
+// FORM SUBMISSION
+// ============================================
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+        const form =
+            document.getElementById(
+                'spiritualForm'
+            );
+
+
+        if (!form) {
+            return;
+        }
+
+
+        form.addEventListener(
+            'submit',
+            function(e) {
+
+                /*
+                 * Empty new cards are allowed.
+                 *
+                 * We only validate a new card
+                 * if the user has entered a name.
+                 */
+
+
+                const bearerNames =
+                    document.querySelectorAll(
+                        'input[name="new_officebearer_name[]"]'
+                    );
+
+
+                const coordinatorNames =
+                    document.querySelectorAll(
+                        'input[name="new_coordinator_name[]"]'
+                    );
+
+
+                let invalid = false;
+
+
+                // ========================================
+                // VALIDATE NEW OFFICE BEARERS
+                // ========================================
+
+                bearerNames.forEach(function(nameInput) {
+
+                    if (
+                        nameInput.value.trim() !== ''
+                    ) {
+
+                        const card =
+                            nameInput.closest(
+                                '.new-card'
+                            );
+
+
+                        const phone =
+                            card.querySelector(
+                                'input[name="new_officebearer_phone[]"]'
+                            );
+
+
+                        if (
+                            phone &&
+                            phone.value.trim() !== '' &&
+                            phone.value.trim().length !== 10
+                        ) {
+
+                            invalid = true;
+
+                            alert(
+                                'Office Bearer phone number must contain exactly 10 digits.'
+                            );
+
+                            phone.focus();
+
+                        }
+
+                    }
+
+                });
+
+
+                if (invalid) {
+
+                    e.preventDefault();
+
+                    return;
+
+                }
+
+
+                // ========================================
+                // VALIDATE NEW COORDINATORS
+                // ========================================
+
+                coordinatorNames.forEach(function(nameInput) {
+
+                    if (
+                        nameInput.value.trim() !== ''
+                    ) {
+
+                        const card =
+                            nameInput.closest(
+                                '.new-card'
+                            );
+
+
+                        const phone =
+                            card.querySelector(
+                                'input[name="new_coordinator_phone[]"]'
+                            );
+
+
+                        if (
+                            phone &&
+                            phone.value.trim() !== '' &&
+                            phone.value.trim().length !== 10
+                        ) {
+
+                            invalid = true;
+
+                            alert(
+                                'Coordinator phone number must contain exactly 10 digits.'
+                            );
+
+                            phone.focus();
+
+                        }
+
+                    }
+
+                });
+
+
+                if (invalid) {
+
+                    e.preventDefault();
+
+                    return;
+
+                }
+
+            }
+        );
+
+    });
+
+
 </script>
 
+
 </body>
+
 </html>

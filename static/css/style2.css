@@ -5630,6 +5630,144 @@ body{
     margin-top: 60px;
 }
 
+
+
+
+/* ================= EMPTY PRIEST STATE ================= */
+
+.priest-empty-state {
+    width: 100%;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    grid-column: 1 / -1;
+}
+
+.priest-empty-card {
+    width: 100%;
+    max-width: 620px;
+    padding: 45px 30px;
+    text-align: center;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border: 1px solid rgba(42, 69, 100, 0.12);
+    border-radius: 22px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.07),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative top line */
+.priest-empty-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        #2a4564,
+        #c2540d,
+        #2a4564
+    );
+}
+
+/* Decorative circle */
+.priest-empty-card::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(42, 69, 100, 0.035);
+    top: -70px;
+    right: -60px;
+}
+
+.priest-empty-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(42, 69, 100, 0.08);
+    color: #2a4564;
+    font-size: 34px;
+    border: 1px solid rgba(42, 69, 100, 0.12);
+}
+
+.priest-empty-icon i {
+    font-size: 34px;
+}
+
+.priest-empty-title {
+    margin: 0 0 10px;
+    font-family: "Rubik", sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #2a4564;
+}
+
+.priest-empty-text {
+    margin: 0 auto;
+    max-width: 470px;
+    font-family: "Georgia", serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #777;
+}
+
+/* Small decorative divider */
+.priest-empty-divider {
+    width: 55px;
+    height: 3px;
+    margin: 18px auto;
+    border-radius: 10px;
+    background: #c2540d;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .priest-empty-state {
+        min-height: 240px;
+        padding: 20px 12px;
+    }
+
+    .priest-empty-card {
+        padding: 38px 20px;
+        border-radius: 18px;
+    }
+
+    .priest-empty-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 18px;
+    }
+
+    .priest-empty-icon i {
+        font-size: 28px;
+    }
+
+    .priest-empty-title {
+        font-size: 21px;
+    }
+
+    .priest-empty-text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
+
+
 /* ========================================
    SECTION TITLES - CENTERED
 ======================================== */
@@ -5702,6 +5840,22 @@ body{
     border-radius: 20px;
 }
 
+
+.priest-initial {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: #555555;
+    background: #e5e5e5;
+    border-radius: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
 /* ========================================
    RESPONSIVE
 ======================================== */
@@ -5843,9 +5997,530 @@ body{
     }
 }
 
-/*+++++++++++++++++++++++++ SPIRITUAL++++++++++++++++++++++ */
+/*+++++++++++++++++++++++++ PARISH++++++++++++++++++++++ */
 
+ :root {
+            --primary: #2a4564;
+            --primary-light: #3a5a7a;
+            --primary-dark: #1a2a3a;
+            --accent: #dd7e43;
+            --accent-hover: #c96a30;
+            --accent-light: #fef3ee;
+            --bg-main: #f4f7fb;
+            --bg-white: #ffffff;
+            --text-dark: #1a2a3a;
+            --text-muted: #6b7a8a;
+            --text-light: #9aaab8;
+            --border-color: #e8edf4;
+            --shadow-sm: 0 2px 8px rgba(42, 69, 100, 0.06);
+            --shadow-md: 0 4px 20px rgba(42, 69, 100, 0.08);
+            --shadow-lg: 0 8px 40px rgba(42, 69, 100, 0.12);
+            --shadow-hover: 0 12px 48px rgba(42, 69, 100, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+       
+
+     
+
+        /* ========================================
+           CHURCH SECTION
+        ======================================== */
+        .church-section {
+            max-width: 1200px;
+            margin: 100px auto 60px;
+            padding: 0 24px;
+        }
+
+        .church-section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .church-section-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+        }
+
+        .church-section-title i {
+            color: var(--accent);
+            font-size: 38px;
+        }
+
+        .church-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+
+        .church-section-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* ========================================
+           CHURCH LIST GRID
+        ======================================== */
+        .church-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        /* ========================================
+           CHURCH CARD
+        ======================================== */
+        .church-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+            min-height: 420px;
+        }
+
+        .church-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--accent);
+        }
+
+        /* ===== IMAGE ===== */
+        .church-image-box {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--bg-main);
+        }
+
+        .church-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .church-card:hover .church-image-box img {
+            transform: scale(1.05);
+        }
+
+        /* ===== FALLBACK IMAGE ===== */
+        .church-image-box .fallback-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            position: relative;
+        }
+
+        .church-image-box .fallback-image i {
+            opacity: 0.4;
+            font-size: 72px;
+        }
+
+        .church-image-box .fallback-image .fallback-text {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ===== IMAGE OVERLAY ===== */
+        .church-image-box .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 20px 14px;
+            background: linear-gradient(transparent, rgba(26, 42, 58, 0.7));
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .church-image-box .image-overlay .church-badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            background: rgba(221, 126, 67, 0.92);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .church-image-box .image-overlay .church-badge i {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        /* ===== INFO BOX ===== */
+        .church-info-box {
+            padding: 20px 22px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* ===== CONTENT AREA ===== */
+        .church-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .church-name {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 46px;
+        }
+
+        .church-name a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .church-name a:hover {
+            color: var(--accent);
+        }
+
+        /* ===== LOCATION ===== */
+        .location-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            min-height: 20px;
+        }
+
+        .location-text i {
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 13px;
+        }
+
+        .location-text .location-address {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            max-height: 38px;
+            line-height: 1.4;
+        }
+
+        /* ===== VICAR ===== */
+        .vicar-text {
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .vicar-text i {
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .vicar-text .no-vicar {
+            color: var(--text-light);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* ===== DETAILS ROW ===== */
+        .church-details-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+            margin-top: 4px;
+            gap: 4px;
+        }
+
+        .detail-item {
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .detail-item span {
+            display: block;
+            font-size: 9px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .detail-item strong {
+            display: block;
+            font-size: 13px;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-top: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ===== BUTTON ROW ===== */
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: center;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 42px;
+        }
+
+        .btn-main:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(42, 69, 100, 0.25);
+            color: white;
+        }
+
+        .btn-main i {
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .btn-main:hover i {
+            transform: translateX(4px);
+        }
+
+        /* ========================================
+           EMPTY STATE
+        ======================================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .empty-state h4 {
+            font-size: 22px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+        @media (max-width: 992px) {
+            .church-section {
+                margin: 80px auto 40px;
+                padding: 0 20px;
+            }
+
+            .church-section-title {
+                font-size: 34px;
+            }
+
+            .church-list {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 24px;
+            }
+
+            .church-image-box {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .church-section {
+                margin: 70px auto 30px;
+                padding: 0 16px;
+            }
+
+            .church-section-title {
+                font-size: 28px;
+            }
+
+            .church-section-title i {
+                font-size: 28px;
+            }
+
+            .church-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .church-image-box {
+                height: 200px;
+            }
+
+            .church-info-box {
+                padding: 16px 18px 18px;
+            }
+
+            .church-name {
+                font-size: 17px;
+                max-height: 40px;
+            }
+
+            .church-details-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .church-section-title {
+                font-size: 22px;
+            }
+
+            .church-section-title i {
+                font-size: 22px;
+            }
+
+            .church-image-box {
+                height: 180px;
+            }
+
+            .church-info-box {
+                padding: 14px 14px 16px;
+                gap: 4px;
+            }
+
+            .church-name {
+                font-size: 15px;
+                max-height: 36px;
+            }
+
+            .church-details-row {
+                grid-template-columns: repeat(3, 1fr);
+                padding-top: 8px;
+            }
+
+            .detail-item strong {
+                font-size: 12px;
+            }
+
+            .detail-item span {
+                font-size: 8px;
+            }
+
+            .btn-row {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .btn-main {
+                font-size: 12px;
+                padding: 8px 14px;
+                min-height: 38px;
+            }
+
+            .location-text {
+                font-size: 12px;
+            }
+
+            .vicar-text {
+                font-size: 12px;
+            }
+
+            .church-image-box .image-overlay .church-badge {
+                font-size: 10px;
+                padding: 3px 12px;
+            }
+        }
 
 /* BASKIYOMO ASSOCIATION =====BALIKA===========*/
 
@@ -6566,3 +7241,8 @@ font-size:13px;
         min-width:700px;
     }
 }
+
+
+
+
+

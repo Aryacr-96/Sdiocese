@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*4@7ct8n-0mb_o_o=*4*0(n@b$_#-be=d*nuqauy&kl-akxx8)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -107,13 +107,37 @@ WSGI_APPLICATION = 'diocese.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+import os
 
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+
+if DEBUG:
+    # LOCAL / TESTING
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "diocese",
+            "USER": "root",
+            "PASSWORD": "root",
+            "HOST": "127.0.0.1",
+            "PORT": "3306",
+            
+        }
+    }
+
+else:
+    # LIVE / PRODUCTION
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("sbydiocese"),
+            "USER": os.environ.get("jbslmbrh_sbydiocese"),
+            "PASSWORD": os.environ.get("Appzia@Admin123!@#"),
+            "HOST": os.environ.get("DB_HOST"),
+            "PORT": os.environ.get("DB_PORT", "3306"),
+           
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

@@ -619,7 +619,7 @@
                                     </small>
 
                                     <small style="display:block;margin-top:2px;">
-                                        PDF, Word, Excel, Images (Max 10MB)
+                                        PDF
                                     </small>
 
                                     <input
@@ -695,7 +695,7 @@
 
 
 <script>
-
+javascript
 let pairCounter = 1;
 
 
@@ -759,7 +759,7 @@ function addPair() {
                 </small>
 
                 <small style="display:block;margin-top:2px;">
-                    PDF, Word, Excel, Images (Max 10MB)
+                    PDF, Word, Excel, Images
                 </small>
 
                 <input
@@ -789,6 +789,7 @@ function addPair() {
     container.appendChild(div);
 
     updatePairNumbers();
+
 }
 
 
@@ -843,6 +844,7 @@ function updatePairNumbers() {
                 `<i class="fas fa-hashtag"></i> Description #${index + 1}`;
 
         }
+
 
         /*
          * IMPORTANT:
@@ -908,28 +910,9 @@ function handlePairFile(input, index) {
     }
 
 
-    /* 10 MB validation */
-
-    if (file.size > 10 * 1024 * 1024) {
-
-        alert('File size must be under 10MB.');
-
-        input.value = '';
-
-        fileListDiv.innerHTML = `
-            <div style="color:#94a3b8;font-size:0.8rem;">
-                <i class="fas fa-info-circle"></i>
-                No file selected.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
     const pill =
         document.createElement('span');
+
 
     pill.className =
         'pair-file-pill';
@@ -1227,6 +1210,8 @@ document.addEventListener(
         }
 
     });
+
+
 
 </script>
 
