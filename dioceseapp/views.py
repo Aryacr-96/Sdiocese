@@ -10,8 +10,42 @@ from .forms import (SpiritualForm,
     OfficebearerFormSet
 )
 
+
 def index(request):
-    return render(request,'index.html')
+    """
+    Homepage view.
+    Provides:
+      - recent_events  : past events (most recent first) → for 'Recent Events' section
+      - events         : upcoming events → for 'Upcoming Events' section
+    """
+    now = timezone.now()
+
+    # -------------------------------------------------
+    # UPCOMING EVENTS  (today in future OR today later time)
+    # -------------------------------------------------
+    upcoming_events = Event.objects.filter(
+        Q(event_date__gt=now.date()) |
+        (Q(event_date=now.date()) & Q(event_time__gt=now.time()))
+    ).order_by('event_date', 'event_time')
+
+    # -------------------------------------------------
+    # RECENT EVENTS  (already happened — most recent first)
+    # -------------------------------------------------
+    recent_events = Event.objects.filter(
+        Q(event_date__lt=now.date()) |
+        (Q(event_date=now.date()) & Q(event_time__lte=now.time()))
+    ).order_by('-event_date', '-event_time')
+
+    context = {
+        'events': upcoming_events,          # used by Upcoming Events section
+        'recent_events': recent_events,     # used by Recent Events section
+        'upcoming_count': upcoming_events.count(),
+        'recent_count': recent_events.count(),
+        'total_events': Event.objects.count(),
+        'now': now,
+    }
+
+    return render(request, 'index.html', context)
 # ABOUT CHURCH
 def believe(request):
     return render(request,'about/believe.html')

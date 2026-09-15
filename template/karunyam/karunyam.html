@@ -94,21 +94,23 @@
 
 <section class="karunya-intro">
 
-    <div class="intro-content">
-        {% if about %}
-            <span class="section-tag">ABOUT KARUNYA SPARSHAM</span>
-            <h2>{{ about.title }}</h2>
-            <p>{{ about.content|safe }}</p>
-        {% endif %}
-    </div>
+    {% if about %}
 
-    <div class="intro-image">
+        <div class="intro-content">
+            <span class="section-tag">ABOUT KARUNYA SPARSHAM</span>
+
+            <h2>{{ about.title }}</h2>
+
+            <p>{{ about.content|safe }}</p>
+        </div>
+
         {% if about.image %}
+        <div class="intro-image">
             <img src="{{ about.image.url }}" alt="{{ about.title }}">
-        {% else %}
-            <img src="{% static 'images/default-karunya.jpg' %}" alt="Karunya Sparsham">
+        </div>
         {% endif %}
-    </div>
+
+    {% endif %}
 
 </section>
 </div>

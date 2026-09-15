@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
           rel="stylesheet">
 
@@ -41,14 +42,11 @@
 
             <div class="logo-circle">
 
-                <img src="{% static 'images/image-removebg-preview.png' %}"
-                     style="height:55px;width:65px;">
+                <img src="{% static 'images/logo.png' %}" style="height:75px;width:180px;">
 
             </div>
 
-            <h3 class="logo-title">
-                Diocese
-            </h3>
+          
 
         </div>
 
@@ -594,23 +592,18 @@
 
 
             <h1>
-                Landing Page
+                Welcome to Sulthan Bathery Diocese
             </h1>
 
 
+            
+
+
             <h3>
-                Creative Design
+
+                Learn more about our faith
+
             </h3>
-
-
-            <p>
-
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Voluptas inventore deserunt quis molestias veniam blanditiis
-                tempore ipsa dignissimos asperiores est exercitationem in,
-                nisi dolore sequi perferendis. Quas pariatur vel optio!
-
-            </p>
 
 
 
@@ -624,16 +617,210 @@
             </div>
 
 
+<style>
+    /* ========================================
+       HERO SECTION
+    ======================================== */
+
+    .hero {
+        width: 100%;
+        min-height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+
+    /* ========================================
+       HERO CONTENT
+    ======================================== */
+
+    .hero-text {
+        padding: 30px 20px;
+        text-align: center;
+        animation: heroSideScroll 7s ease-in-out infinite alternate;
+    }
+
+
+    /* ========================================
+       HERO HEADING
+    ======================================== */
+
+    .hero-text h1 {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 58px);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -1px;
+    }
+
+    .hero-text h1 span {
+        display: inline-block;
+    }
+
+
+    /* ========================================
+       HERO SUBTITLE
+    ======================================== */
+
+    .hero-text h3 {
+        margin: 14px 0 22px;
+        font-size: 18px;
+        font-weight: 400;
+        opacity: 0.85;
+    }
+
+
+    /* ========================================
+       RING CONTAINER
+    ======================================== */
+
+    .ring-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin: 18px 0 25px;
+    }
+
+
+    /* ========================================
+       RINGS
+    ======================================== */
+
+    .ring {
+        width: 9px;
+        height: 9px;
+        border: 2px;
+        border-radius: 50%;
+        animation: ringPulse 1.8s ease-in-out infinite;
+    }
+
+    .ring:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .ring:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .ring:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .ring:nth-child(4) {
+        animation-delay: 0.45s;
+    }
+
+
+    /* ========================================
+       HERO BUTTON
+    ======================================== */
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 10px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+
+    /* ========================================
+       SIDE-TO-SIDE ANIMATION
+    ======================================== */
+
+    @keyframes heroSideScroll {
+        0% {
+            transform: translateX(-18px);
+        }
+
+        50% {
+            transform: translateX(18px);
+        }
+
+        100% {
+            transform: translateX(-18px);
+        }
+    }
+
+
+    /* ========================================
+       RING PULSE ANIMATION
+    ======================================== */
+
+    @keyframes ringPulse {
+        0%,
+        100% {
+            transform: scale(0.8);
+            opacity: 0.45;
+        }
+
+        50% {
+            transform: scale(1.25);
+            opacity: 1;
+        }
+    }
+
+
+    /* ========================================
+       MOBILE RESPONSIVE
+    ======================================== */
+
+    @media (max-width: 600px) {
+
+        .hero {
+            min-height: 350px;
+        }
+
+        .hero-text {
+            padding: 25px 15px;
+            animation-duration: 6s;
+        }
+
+        .hero-text h1 {
+            font-size: 32px;
+        }
+
+        .hero-text h3 {
+            margin-top: 12px;
+            font-size: 15px;
+        }
+
+        .ring-container {
+            margin: 15px 0 20px;
+        }
+
+        .btn {
+            padding: 9px 20px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+
 
             <div class="hero-buttons">
 
                 <button class="btn">
-                    Trial
+                    Learn More
                 </button>
 
-                <button class="btn">
+                <!-- <button class="btn">
                     Premium
-                </button>
+                </button> -->
 
             </div>
 
@@ -645,8 +832,552 @@
 
 
 </div>
+<!-- =====================================================
+     ABOUT / WELCOME SECTION
+     (Left Image + Right Content with Cross Underline)
+====================================================== -->
 
+<section class="about-section">
 
+    <div class="about-container">
+
+        <!-- LEFT : IMAGE -->
+        <div class="about-image">
+            <img src="{% static 'images/catholi3.jpg' %}"
+                 alt="Sulthan Bathery Diocese Church">
+        </div>
+
+        <!-- RIGHT : CONTENT -->
+        <div class="about-content">
+
+            <h2 class="about-heading">
+               Welcome to Sulthan Bathery Diocese
+            </h2>
+
+            <!-- Cross + Underline -->
+            <div class="about-underline">
+                <span class="line"></span>
+                <i class="fa-solid fa-cross"></i>
+                <span class="line"></span>
+            </div>
+
+            <p class="about-text">
+               The diocese of Sultan Bathery lies extended in Wayanad and Kannur district of the State of Kerala & the Nilgiris of the Tamil Nadu State. Geographically, the Diocese is blessed with different levels of elevation,the hills touching the skies and being skirted round with thick rain-fed sylvan forests rendering a specific charm that fire one’s wanderlust. The Diocese Headquaters - Nirmalagiri Aramana is situated at Sulthan Bathery, (formerly known as Sultan's Battery) a town and municipality in Wayanad district of Kerala, India,having borders with Tamil Nadu and Karnataka states.The Diocese is headed by His Grace Dr. Geevarghese Mar Barnabas Metropolitan from 2022.
+            </p>
+
+           
+
+            <!-- <a href="{% url 'batherydiocese' %}" class="about-btn">
+                Discover More
+                <i class="fa-solid fa-arrow-right"></i>
+            </a> -->
+
+        </div>
+
+    </div>
+
+</section>
+<style>
+    /* =====================================================
+   ABOUT SECTION
+====================================================== */
+
+.about-section {
+    width: 100%;
+    padding: 70px 24px;
+   
+    box-sizing: border-box;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 55px;
+    align-items: center;
+}
+
+/* =====================================================
+   LEFT : IMAGE
+====================================================== */
+
+.about-image {
+    position: relative;
+}
+
+.about-image img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+    display: block;
+}
+
+/* Decorative accent behind image */
+.about-image::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: -18px;
+    width: 90px;
+    height: 90px;
+    border-top: 4px solid #e76514;
+    border-left: 4px solid #e76514;
+    border-radius: 14px 0 0 0;
+    z-index: -1;
+}
+
+/* =====================================================
+   RIGHT : CONTENT
+====================================================== */
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-heading {
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 700;
+    color: #1e3a5f;
+    line-height: 1.2;
+    margin: 0 0 18px;
+    letter-spacing: -0.5px;
+}
+
+/* =====================================================
+   CROSS + UNDERLINE
+====================================================== */
+
+.about-underline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.about-underline .line {
+    flex: 0 0 60px;
+    height: 2px;
+    background: #e76514;
+    border-radius: 2px;
+}
+
+.about-underline i {
+    color: #e76514;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* =====================================================
+   TEXT
+====================================================== */
+
+.about-text {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: #4b5563;
+    margin: 0 0 16px;
+}
+
+/* =====================================================
+   BUTTON
+====================================================== */
+
+.about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    margin-top: 10px;
+    padding: 12px 26px;
+    background: #e76514;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.28s ease;
+}
+
+.about-btn i {
+    font-size: 13px;
+    transition: transform 0.28s ease;
+}
+
+.about-btn:hover {
+    background: #c9540a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(231, 101, 20, 0.35);
+}
+
+.about-btn:hover i {
+    transform: translateX(4px);
+}
+
+/* =====================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 900px) {
+
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .about-image img {
+        height: 320px;
+    }
+
+    .about-image::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .about-section {
+        padding: 50px 18px;
+    }
+
+    .about-image img {
+        height: 240px;
+        border-radius: 14px;
+    }
+
+    .about-text {
+        font-size: 14.5px;
+    }
+
+    .about-underline .line {
+        flex: 0 0 40px;
+    }
+}
+    </style>
+    <!-- =====================================================
+     RECENT EVENTS SECTION
+     4 CARDS (2 PER ROW) + VIEW MORE
+====================================================== -->
+
+<section class="recent-events-section">
+
+    <div class="recent-events-header">
+        <h2>Recent Events</h2>
+        <p>Latest updates from our diocese</p>
+    </div>
+
+    <div class="recent-events-grid" id="recentEventsGrid">
+
+        {% for event in events %}
+        <div class="recent-event-card {% if forloop.counter > 4 %}hidden-event{% endif %}">
+
+            <!-- IMAGE -->
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+            {% else %}
+                <div class="recent-no-image">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+            {% endif %}
+
+            <!-- CONTENT -->
+            <div class="recent-event-content">
+
+                <div class="recent-event-date">
+                    {{ event.event_date|date:"d F Y" }}
+                </div>
+
+                <h3 class="recent-event-title">
+                    {{ event.title }}
+                </h3>
+
+                <p class="recent-event-desc">
+                    {{ event.description|truncatewords:14 }}
+                </p>
+
+                <div class="recent-event-meta">
+                    📍 {{ event.location }} | 🕒 {{ event.event_time|time:"g:i A" }}
+                </div>
+
+                {% if event.slug %}
+                    <a href="{% url 'kalpana_detail' event.slug %}" class="recent-event-btn">
+                        View Details
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+        {% empty %}
+            <div class="recent-no-events">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>No Recent Events</h3>
+                <p>New events will appear here soon.</p>
+            </div>
+        {% endfor %}
+
+    </div>
+
+  <!-- VIEW MORE BUTTON -->
+{% if events|length > 4 %}
+<div class="recent-events-footer">
+    <a href="{% url 'events' %}" class="view-more-btn" style="text-decoration: none;">
+        View More
+     
+    </a>
+</div>
+{% endif %}
+
+</section>
+<style>
+    /* =====================================================
+   RECENT EVENTS SECTION
+====================================================== */
+
+.recent-events-section {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+.recent-events-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.recent-events-header h2 {
+    font-size: clamp(28px, 3.5vw, 42px);
+    color: #23395d;
+    margin: 0 0 10px;
+    font-weight: 700;
+}
+
+.recent-events-header p {
+    color: #6b7280;
+    font-size: 15px;
+    margin: 0;
+}
+
+/* GRID — 2 PER ROW */
+.recent-events-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+/* CARD */
+.recent-event-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.recent-event-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* IMAGE */
+.recent-event-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+}
+
+.recent-no-image {
+    width: 100%;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4f9;
+    color: #94a3b8;
+}
+
+.recent-no-image i {
+    font-size: 3.5rem;
+}
+
+/* CONTENT */
+.recent-event-content {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.recent-event-date {
+    font-size: 13.5px;
+    color: #dd7e43;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+.recent-event-title {
+    font-size: 20px;
+    color: #23395d;
+    margin: 0 0 12px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.recent-event-desc {
+    font-size: 14.5px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0 0 14px;
+}
+
+.recent-event-meta {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.recent-event-btn {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 10px 18px;
+    background: #23395d;
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-top: auto;
+    transition: all 0.28s ease;
+}
+
+.recent-event-btn:hover {
+    background: #dd7e43;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   HIDDEN EVENTS (revealed on View More)
+====================================================== */
+
+.hidden-event {
+    display: none;
+}
+
+.hidden-event.show-event {
+    display: flex;
+    animation: fadeUp 0.45s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   NO EVENTS FALLBACK
+====================================================== */
+
+.recent-no-events {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(35, 57, 93, 0.08);
+}
+
+.recent-no-events i {
+    font-size: 3rem;
+    color: #dd7e43;
+    margin-bottom: 15px;
+}
+
+.recent-no-events h3 {
+    color: #23395d;
+    margin: 0 0 8px;
+}
+
+.recent-no-events p {
+    color: #6b7280;
+    margin: 0;
+}
+
+/* =====================================================
+   VIEW MORE BUTTON
+====================================================== */
+
+.recent-events-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.view-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 32px;
+    background: transparent;
+    color: #23395d;
+    border: 2px solid #23395d;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.view-more-btn i {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.view-more-btn:hover {
+    background: #23395d;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(35, 57, 93, 0.25);
+}
+
+.view-more-btn.active i {
+    transform: rotate(180deg);
+}
+
+/* =====================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 768px) {
+    .recent-events-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .recent-event-card img,
+    .recent-no-image {
+        height: 200px;
+    }
+
+    .recent-events-section {
+        margin: 50px auto;
+        padding: 0 18px;
+    }
+}
+    </style>
 
 <!-- =====================================================
      BACKGROUND GRAPHICS
@@ -664,11 +1395,6 @@
 
 
 
-<!-- =====================================================
-     FOOTER
-====================================================== -->
-
-<div class="footer">
 
 
     <!-- =================================================
@@ -1015,26 +1741,7 @@ html, body {
 
 
 
-    <!-- =================================================
-         EXISTING FOOTER CONTENT
-    ================================================== -->
 
-    <div class="footer-legal">
-  Copyright © 2026 Sulthan Bathery diocese
-
-    </div>
-
-
-</div>
-
-
-
-<!-- =====================================================
-     FOOTER RIGHT
-====================================================== -->
-<div class="footer-right">
-    Designed by <a href="https://www.appziatec.com/" style="color: inherit; text-decoration: none;">Appzia Tec Solutions</a>
-</div>
 
 
 
@@ -1367,7 +2074,286 @@ document
 </style>
 
 
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+<footer class="ftr">
 
-</body>
+    <div class="ftr-wrap">
 
-</html>
+        <!-- ABOUT -->
+        <div class="ftr-block ftr-brand">
+            
+         <img src="{% static 'images/logo.png' %}" alt="Church Image" style="width: 250px; height: auto"; >
+
+            <p class="ftr-desc">
+                Nirmalagiri Aramana,<br>
+                Poomala, S. Bathery P.O,<br>
+                Wayanad - 673592
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="ftr-block">
+            <h3>Diocesan Links</h3>
+
+            <ul class="ftr-nav">
+                <li><a href="{% url 'kalpana' %}">Kalpanas</a></li>
+                <li><a href="{% url 'priest' %}">Priest Directory</a></li>
+                <li><a href="{% url 'parish' %}">Parish Directory</a></li>
+                <li><a href="{% url 'images' %}">Photo Gallery</a></li>
+                <li><a href="{% url 'videos' %}">Video Gallery</a></li>
+                <li><a href="{% url 'events' %}">Upcoming Events</a></li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="ftr-block ftr-touch">
+            <h3>Contact Us</h3>
+
+            <div class="ftr-details">
+
+                <p><i class="fas fa-phone-alt"></i> 04936 220 969</p>
+
+                <p><i class="fas fa-envelope"></i>sbydiocese@gmail.com</p>
+
+                <p><i class="fas fa-map-marker-alt"></i> Sultan Bathery, Kerala</p>
+
+            </div>
+
+            <div class="ftr-icons">
+                <a href="https://youtube.com/@sbydiocese?si=0r5SxHjkbaW4_v17"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/share/1BEWpQkiao/"><i class="fab fa-facebook-f"></i></a>
+                <a href="mailto:sbydiocese@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA=="><i class="fab fa-instagram"></i></a>
+                <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<a href="https://www.threads.com/@sbydiocese" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-threads"></i>
+</a>
+
+<a href="https://x.com/sbydiocese" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-x-twitter"></i>
+</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="ftr-bottom">
+        <p>Privacy Policy | Terms of Use</p>
+    </div>
+    <style>
+        /* ======================== FOOTER ======================== */
+.ftr {
+    background: #2a4564;
+    color: #fff;
+    padding: 80px 8% 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Footer Layout */
+.ftr-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Common Column */
+.ftr-block h3,
+.ftr-touch h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.ftr-block h3::after,
+.ftr-touch h3::after {
+    content: "";
+    width: 50px;
+    height: 3px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    border-radius: 10px;
+}
+
+/* ABOUT */
+.ftr-brand {
+    max-width: 320px;
+}
+
+.ftr-brand img {
+    height: 80px;
+    width: 100px;
+}
+
+.ftr-desc {
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.9;
+    margin-top: 35px;
+}
+
+/* QUICK LINKS */
+.ftr-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ftr-nav li {
+    margin-bottom: 14px;
+}
+
+.ftr-nav a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 15px;
+    transition: 0.3s;
+    position: relative;
+}
+
+.ftr-nav a:hover {
+    color: #e76514;
+    padding-left: 8px;
+}
+
+/* CONTACT INFO */
+.ftr-touch {
+    display: flex;
+    flex-direction: column;
+}
+
+.ftr-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.ftr-details p {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.ftr-details i {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.ftr-details p:hover i {
+    background: #e76514;
+    color: #0f172a;
+    transform: translateY(-3px);
+}
+
+/* SOCIAL ICONS */
+.ftr-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.ftr-icons a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.ftr-icons a:hover {
+    background: #e76514;
+    color: #000;
+    transform: translateY(-4px);
+}
+
+/* BOTTOM BAR */
+.ftr-bottom {
+    text-align: center;
+    padding: 22px;
+}
+
+.ftr-bottom p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.1;
+}
+
+.ftr-bottom a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.ftr-bottom a:hover {
+    color: #00d4ff;
+}
+
+/* ======================== RESPONSIVE ======================== */
+@media (max-width: 768px) {
+    .ftr {
+        padding: 60px 6% 0;
+    }
+
+    .ftr-wrap {
+        gap: 40px;
+        grid-template-columns: 1fr;
+    }
+
+    .ftr-brand img {
+        height: 70px;
+        width: 90px;
+    }
+
+    .ftr-block h3,
+    .ftr-touch h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .ftr-desc,
+    .ftr-nav a,
+    .ftr-details p {
+        font-size: 14px;
+    }
+
+    .ftr-icons {
+        margin-top: 20px;
+        justify-content: flex-start;
+    }
+}
+    </style>
+
+</footer>

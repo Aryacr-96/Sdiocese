@@ -38,7 +38,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+   
     z-index: 1; /* Sits at the bottom */
     pointer-events: none;
     
@@ -436,14 +436,14 @@ body{
     width:50%;
 }
 
-.hero-text h1{
-    font-size:65px;
+.hero-text h2{
+    
     font-weight:700;
     margin-bottom:10px;
 }
 
 .hero-text h3{
-    font-size:24px;
+    
     margin-bottom:20px;
 }
 
@@ -498,10 +498,10 @@ body{
 }
 
 .circle4{
-    width:1700px;
-    height:1300px;
+    width:1650px;
+    height:1200px;
     right:-270px;
-    top:-400px;
+    top:-450px;
     background:radial-gradient(circle, rgba(229,92,7,0.9) 0%, white 80%);
     animation:float3 12s infinite ease-in-out;
 }
@@ -685,3 +685,5 @@ body{
         font-size: 13px;
     }
 }
+
+

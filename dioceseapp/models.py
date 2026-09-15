@@ -87,6 +87,7 @@ class Priest(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
 from django.db import models
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -1126,6 +1127,16 @@ def validate_pdf_file(value):
             "Unable to validate the uploaded PDF file."
         )
 
+# =========================================================
+# IMPORTS
+# =========================================================
+
+import os
+
+from django import forms
+from django.db import models
+from django.utils.text import slugify
+
 
 # =========================================================
 # PRAYER BOOK MODEL
@@ -1157,24 +1168,21 @@ class PrayerBook(models.Model):
     # -----------------------------------------------------
 
     image = models.ImageField(
-        upload_to='prayer_books/',
+        upload_to="prayer_books/",
         blank=True,
         null=True,
         verbose_name="Book Cover Image"
     )
 
     # -----------------------------------------------------
-    # PDF FILE ONLY
+    # PDF FILE
     # -----------------------------------------------------
 
     file = models.FileField(
-        upload_to='prayer_books/files/',
+        upload_to="prayer_books/files/",
         blank=True,
         null=True,
         verbose_name="PDF File",
-        validators=[
-            validate_pdf_file
-        ],
         help_text="Upload PDF file only"
     )
 
@@ -1198,7 +1206,7 @@ class PrayerBook(models.Model):
 
     class Meta:
 
-        ordering = ['title']
+        ordering = ["title"]
 
         verbose_name = "Prayer Book"
 
@@ -1210,25 +1218,13 @@ class PrayerBook(models.Model):
 
     def save(self, *args, **kwargs):
 
-        # -----------------------------------------------
-        # VALIDATE PDF EVEN WHEN SAVED DIRECTLY
-        # -----------------------------------------------
-
-        if self.file:
-
-            validate_pdf_file(
-                self.file
-            )
-
-        # -----------------------------------------------
+        # -------------------------------------------------
         # CREATE UNIQUE SLUG
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         if not self.slug:
 
-            base_slug = slugify(
-                self.title
-            )
+            base_slug = slugify(self.title)
 
             slug = base_slug
 
@@ -1246,9 +1242,9 @@ class PrayerBook(models.Model):
 
             self.slug = slug
 
-        # -----------------------------------------------
+        # -------------------------------------------------
         # SAVE OBJECT
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         super().save(
             *args,
@@ -1271,9 +1267,7 @@ class PrayerBook(models.Model):
 
         if self.file:
 
-            return self.file.name.split(
-                '.'
-            )[-1].lower()
+            return self.file.name.split(".")[-1].lower()
 
         return None
 
@@ -1283,12 +1277,173 @@ class PrayerBook(models.Model):
 
     def get_file_icon(self):
 
-        # Since only PDF is allowed
-        return 'fa-file-pdf'
+        # Only PDF files are allowed
+        return "fa-file-pdf"
 
 
+# =========================================================
+# PRAYER BOOK FORM
+# =========================================================
 
+class PrayerBookForm(forms.ModelForm):
 
+    class Meta:
+
+        model = PrayerBook
+
+        fields = [
+            "title",
+            "image",
+            "file"
+        ]
+
+        widgets = {
+
+            # ---------------------------------------------
+            # TITLE
+            # ---------------------------------------------
+
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter prayer book title"
+                }
+            ),
+
+            # ---------------------------------------------
+            # COVER IMAGE
+            # ---------------------------------------------
+
+            "image": forms.ClearableFileInput(
+                attrs={
+                    "class": "form-control-file",
+                    "accept": "image/*"
+                }
+            ),
+
+            # ---------------------------------------------
+            # PDF FILE
+            # ---------------------------------------------
+
+            "file": forms.ClearableFileInput(
+                attrs={
+                    "class": "form-control-file",
+                    "accept": ".pdf,application/pdf"
+                }
+            ),
+        }
+
+    # =====================================================
+    # IMAGE VALIDATION
+    # =====================================================
+
+    def clean_image(self):
+
+        image = self.cleaned_data.get("image")
+
+        # No image uploaded
+        if not image:
+
+            return image
+
+        # Allowed image extensions
+        allowed_extensions = [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp"
+        ]
+
+        extension = os.path.splitext(
+            image.name
+        )[1].lower().replace(
+            ".",
+            ""
+        )
+
+        if extension not in allowed_extensions:
+
+            raise forms.ValidationError(
+                "Only JPG, JPEG, PNG, GIF, and WebP "
+                "images are allowed."
+            )
+
+        return image
+
+    # =====================================================
+    # PDF FILE VALIDATION
+    # =====================================================
+
+    def clean_file(self):
+
+        file = self.cleaned_data.get("file")
+
+        # No file uploaded
+        if not file:
+
+            return file
+
+        # ---------------------------------------------
+        # CHECK FILE EXTENSION
+        # ---------------------------------------------
+
+        extension = os.path.splitext(
+            file.name
+        )[1].lower()
+
+        if extension != ".pdf":
+
+            raise forms.ValidationError(
+                "Only PDF files are allowed."
+            )
+
+        # ---------------------------------------------
+        # CHECK MIME TYPE
+        # ---------------------------------------------
+
+        content_type = getattr(
+            file,
+            "content_type",
+            None
+        )
+
+        if content_type != "application/pdf":
+
+            raise forms.ValidationError(
+                "Only PDF files are allowed."
+            )
+
+        # ---------------------------------------------
+        # CHECK ACTUAL PDF CONTENT
+        # ---------------------------------------------
+
+        try:
+
+            file.seek(0)
+
+            header = file.read(5)
+
+            file.seek(0)
+
+            if header != b"%PDF-":
+
+                raise forms.ValidationError(
+                    "The uploaded file is not a valid PDF."
+                )
+
+        except forms.ValidationError:
+
+            raise
+
+        except Exception:
+
+            raise forms.ValidationError(
+                "Unable to validate the uploaded PDF file."
+            )
+
+        return file
+    
 # KALPANA
 from django.db import models
 from django.utils.text import slugify
