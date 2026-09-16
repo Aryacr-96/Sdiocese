@@ -42,7 +42,8 @@
 
             <div class="logo-circle">
 
-                <img src="{% static 'images/logo.png' %}" style="height:75px;width:180px;">
+   <img src="{% static 'images/logo.png' %}" style="height:75px;width:180px;">
+
 
             </div>
 
@@ -589,31 +590,17 @@
 
 
         <div class="hero-text">
-
-
             <h1>
                 Welcome to Sulthan Bathery Diocese
             </h1>
-
-
-            
-
-
             <h3>
-
                 Learn more about our faith
-
             </h3>
-
-
-
-            <div class="ring-container">
-
+           <div class="ring-container">
                 <div class="ring"></div>
                 <div class="ring"></div>
                 <div class="ring"></div>
                 <div class="ring"></div>
-
             </div>
 
 
@@ -639,8 +626,8 @@
 
     .hero-text {
         padding: 30px 20px;
-        text-align: center;
-        animation: heroSideScroll 7s ease-in-out infinite alternate;
+       margin-left: -550px;
+        /* animation: heroSideScroll 7s ease-in-out infinite alternate; */
     }
 
 
@@ -680,7 +667,6 @@
     .ring-container {
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 7px;
         margin: 18px 0 25px;
     }
@@ -721,7 +707,7 @@
 
     .hero-buttons {
         display: flex;
-        justify-content: center;
+        justify-content: left;
     }
 
     .btn {
@@ -843,7 +829,7 @@
 
         <!-- LEFT : IMAGE -->
         <div class="about-image">
-            <img src="{% static 'images/catholi3.jpg' %}"
+            <img src="{% static 'images/barnabas.png' %}"
                  alt="Sulthan Bathery Diocese Church">
         </div>
 
@@ -909,12 +895,11 @@
 .about-image img {
     width: 100%;
     height: 420px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 18px;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
     display: block;
 }
-
 /* Decorative accent behind image */
 .about-image::before {
     content: "";
@@ -1378,6 +1363,222 @@
     }
 }
     </style>
+
+
+<section class="notice-wrapper">
+
+    <div class="notice-header">
+
+        <h1 class="notice-title">Kalpana</h1>
+
+        <!--
+        <p class="notice-subtitle">
+            Official documents, notices and publications from the Diocese
+        </p>
+
+        <div class="notice-stats">
+            <i class="fas fa-file-alt"></i>
+            {{ kalpanas|length }}
+            Kalpana{{ kalpanas|length|pluralize }} available
+        </div>
+        -->
+
+    </div>
+
+
+    <div class="notice-grid">
+
+        {% if kalpanas %}
+
+            {% for kalpana in kalpanas %}
+
+                <a href="{% url 'kalpanadetail' kalpana.slug %}"
+                   class="notice-card">
+
+                    <!--
+                    <div class="card-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    -->
+
+                    <h3>{{ kalpana.title }}</h3>
+
+
+                    <div class="card-meta">
+
+                        <!--
+                        <span>
+                            <i class="fas fa-file-alt"></i>
+                            {{ kalpana.files.count }}
+                            document{{ kalpana.files.count|pluralize }}
+                        </span>
+                        -->
+
+
+                        <!--
+                        <span>
+                            <i class="far fa-calendar-alt"></i>
+                            {{ kalpana.created_at|date:"M d, Y" }}
+                        </span>
+                        -->
+
+
+                        <!--
+                        {% if kalpana.files.all %}
+
+                            {% with kalpana.files.all|first as first_file %}
+
+                                <span class="file-badge">
+
+                                    <i class="fas fa-{% if first_file.file_type == 'pdf' %}
+                                        file-pdf
+                                    {% elif first_file.file_type == 'excel' %}
+                                        file-excel
+                                    {% elif first_file.file_type == 'word' %}
+                                        file-word
+                                    {% else %}
+                                        file
+                                    {% endif %}">
+                                    </i>
+
+                                    {{ first_file.file_type|default:'file'|upper }}
+
+                                </span>
+
+                            {% endwith %}
+
+                        {% endif %}
+                        -->
+
+                    </div>
+
+
+                    <!--
+                    <span class="card-footer-link">
+                        View Details
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                    -->
+
+                </a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <i class="fas fa-scroll"></i>
+
+                <h3>No Kalpana Found</h3>
+
+                <p>
+                    No official documents or notices are available at this time.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+<style>
+    .notice-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.notice-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+    margin-left: 510px;
+}
+
+.notice-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
+}
+
+
+/* GRID */
+.notice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+
+/* CARD */
+.notice-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+    cursor: pointer;
+    background: #fff;
+}
+
+.notice-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.notice-card h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #23395d;
+    font-weight: 600;
+}
+
+
+/* BUTTON */
+.notice-btn {
+    padding: 8px 16px;
+    background: #23395d;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.notice-btn:hover {
+    background: #c9500f;
+}
+
+
+/* TABLET */
+@media (max-width: 768px) {
+
+    .notice-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .notice-card {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+}
+</style>
 
 <!-- =====================================================
      BACKGROUND GRAPHICS
@@ -1979,19 +2180,12 @@ document
     .mobile-footer-nav {
 
         display: flex;
-
         align-items: center;
-
         justify-content: center;
-
         gap: 25px;
-
         width: 100%;
-
         padding: 12px 0;
-
         box-sizing: border-box;
-
     }
 
 
@@ -2001,21 +2195,13 @@ document
     */
 
     .mobile-footer-icon {
-
         display: flex;
-
         align-items: center;
-
         justify-content: center;
-
         width: 42px;
-
         height: 42px;
-
         text-decoration: none;
-
         font-size: 20px;
-
         transition: transform 0.2s ease;
 
     }
@@ -2039,16 +2225,11 @@ document
     */
 
     .footer-legal {
-
         display: flex;
-
         flex-wrap: wrap;
-
         justify-content: center;
-
         gap: 12px;
-
-    }
+   }
 
 
 }
@@ -2083,14 +2264,21 @@ document
 
         <!-- ABOUT -->
         <div class="ftr-block ftr-brand">
-            
-         <img src="{% static 'images/logo.png' %}" alt="Church Image" style="width: 250px; height: auto"; >
+
+            <div class="ftr-brand-top">
+                <img src="{% static 'images/image.png' %}" alt="Church Image">
+
+                <div class="ftr-brand-name">
+                    <p>Sulthan Bathery Malankara Orthadox Syrian Church</p>
+                </div>
+            </div>
 
             <p class="ftr-desc">
                 Nirmalagiri Aramana,<br>
                 Poomala, S. Bathery P.O,<br>
                 Wayanad - 673592
             </p>
+
         </div>
 
         <!-- QUICK LINKS -->
@@ -2115,245 +2303,355 @@ document
 
                 <p><i class="fas fa-phone-alt"></i> 04936 220 969</p>
 
-                <p><i class="fas fa-envelope"></i>sbydiocese@gmail.com</p>
+                <p>
+          <i class="fas fa-envelope"></i>
+         sbydiocese@gmail.com, Info@sbydiocese.com,   Admin@sbydiocese.com
+        </p>
+        <!-- <p>
+          <i class="fas fa-envelope"></i>
+         
+        </p>
+        <p>
+          <i class="fas fa-envelope"></i>
+        
+        </p> -->
 
                 <p><i class="fas fa-map-marker-alt"></i> Sultan Bathery, Kerala</p>
 
             </div>
 
             <div class="ftr-icons">
-                <a href="https://youtube.com/@sbydiocese?si=0r5SxHjkbaW4_v17"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.facebook.com/share/1BEWpQkiao/"><i class="fab fa-facebook-f"></i></a>
-                <a href="mailto:sbydiocese@gmail.com"><i class="fas fa-envelope"></i></a>
-                <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA=="><i class="fab fa-instagram"></i></a>
-                <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-whatsapp"></i>
-</a>
 
-<a href="https://www.threads.com/@sbydiocese" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-threads"></i>
-</a>
+                <a href="https://youtube.com/@sbydiocese?si=0r5SxHjkbaW4_v17">
+                    <i class="fab fa-youtube"></i>
+                </a>
 
-<a href="https://x.com/sbydiocese" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-x-twitter"></i>
-</a>
+                <a href="https://www.facebook.com/share/1BEWpQkiao/">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <a href="mailto:sbydiocese@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                </a>
+
+                <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA==">
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+
+                <a href="https://www.threads.com/@sbydiocese"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fab fa-threads"></i>
+                </a>
+
+                <a href="https://x.com/sbydiocese"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+
             </div>
         </div>
 
     </div>
 
+
     <!-- BOTTOM -->
     <div class="ftr-bottom">
         <p>Privacy Policy | Terms of Use</p>
     </div>
+
+
     <style>
+
         /* ======================== FOOTER ======================== */
-.ftr {
-    background: #2a4564;
-    color: #fff;
-    padding: 80px 8% 0;
-    position: relative;
-    overflow: hidden;
+
+        .ftr {
+            background: #2a4564;
+            color: #fff;
+            padding: 80px 8% 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        /* Footer Layout */
+
+        .ftr-wrap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* Common Column */
+
+        .ftr-block h3,
+        .ftr-touch h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+
+        .ftr-block h3::after,
+        .ftr-touch h3::after {
+            content: "";
+            width: 50px;
+            height: 3px;
+            background: #fff;
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            border-radius: 10px;
+        }
+
+
+        /* ABOUT */
+
+        .ftr-brand {
+            max-width: 320px;
+        }
+
+
+        /* LOGO + NAME */
+
+        .ftr-brand-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .ftr-brand img {
+            height: 80px;
+            width: 100px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+
+        .ftr-brand-name {
+            flex: 1;
+        }
+
+
+        .ftr-brand-name p {
+            margin: 0;
+            color: #fff;
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+
+        .ftr-desc {
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.9;
+            margin-top: 35px;
+        }
+
+
+        /* QUICK LINKS */
+
+        .ftr-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        .ftr-nav li {
+            margin-bottom: 14px;
+        }
+
+
+        .ftr-nav a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-size: 15px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+
+        .ftr-nav a:hover {
+            color: #e76514;
+            padding-left: 8px;
+        }
+
+
+        /* CONTACT INFO */
+
+        .ftr-touch {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .ftr-details {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+
+        .ftr-details p { 
+    display: flex; 
+    align-items: center; 
+    gap: 14px; 
+    margin: 0; 
+    color: #cbd5e1; 
+    font-size: 15px; 
+    line-height: 1.7; 
 }
 
-/* Footer Layout */
-.ftr-wrap {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px;
-    padding-bottom: 50px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-/* Common Column */
-.ftr-block h3,
-.ftr-touch h3 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    position: relative;
-}
+        .ftr-details i {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: 0.3s;
+            font-size: 15px;
+        }
 
-.ftr-block h3::after,
-.ftr-touch h3::after {
-    content: "";
-    width: 50px;
-    height: 3px;
-    background: #fff;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    border-radius: 10px;
-}
 
-/* ABOUT */
-.ftr-brand {
-    max-width: 320px;
-}
+        .ftr-details p:hover i {
+            background: #e76514;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
 
-.ftr-brand img {
-    height: 80px;
-    width: 100px;
-}
 
-.ftr-desc {
-    color: #cbd5e1;
-    font-size: 15px;
-    line-height: 1.9;
-    margin-top: 35px;
-}
+        /* SOCIAL ICONS */
 
-/* QUICK LINKS */
-.ftr-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        .ftr-icons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 14px;
+            margin-top: 30px;
+        }
 
-.ftr-nav li {
-    margin-bottom: 14px;
-}
 
-.ftr-nav a {
-    text-decoration: none;
-    color: #cbd5e1;
-    font-size: 15px;
-    transition: 0.3s;
-    position: relative;
-}
+        .ftr-icons a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
 
-.ftr-nav a:hover {
-    color: #e76514;
-    padding-left: 8px;
-}
 
-/* CONTACT INFO */
-.ftr-touch {
-    display: flex;
-    flex-direction: column;
-}
+        .ftr-icons a:hover {
+            background: #e76514;
+            color: #000;
+            transform: translateY(-4px);
+        }
 
-.ftr-details {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
 
-.ftr-details p {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin: 0;
-    color: #cbd5e1;
-    font-size: 15px;
-    line-height: 1.7;
-}
+        /* BOTTOM BAR */
 
-.ftr-details i {
-    width: 42px;
-    height: 42px;
-    min-width: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    transition: 0.3s;
-    font-size: 15px;
-}
+        .ftr-bottom {
+            text-align: center;
+            padding: 22px;
+        }
 
-.ftr-details p:hover i {
-    background: #e76514;
-    color: #0f172a;
-    transform: translateY(-3px);
-}
 
-/* SOCIAL ICONS */
-.ftr-icons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 14px;
-    margin-top: 30px;
-}
+        .ftr-bottom p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.1;
+        }
 
-.ftr-icons a {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 16px;
-}
 
-.ftr-icons a:hover {
-    background: #e76514;
-    color: #000;
-    transform: translateY(-4px);
-}
+        .ftr-bottom a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-/* BOTTOM BAR */
-.ftr-bottom {
-    text-align: center;
-    padding: 22px;
-}
 
-.ftr-bottom p {
-    margin: 0;
-    color: #94a3b8;
-    font-size: 14px;
-    line-height: 1.1;
-}
+        .ftr-bottom a:hover {
+            color: #00d4ff;
+        }
 
-.ftr-bottom a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
 
-.ftr-bottom a:hover {
-    color: #00d4ff;
-}
+        /* ======================== RESPONSIVE ======================== */
 
-/* ======================== RESPONSIVE ======================== */
-@media (max-width: 768px) {
-    .ftr {
-        padding: 60px 6% 0;
-    }
+        @media (max-width: 768px) {
 
-    .ftr-wrap {
-        gap: 40px;
-        grid-template-columns: 1fr;
-    }
+            .ftr {
+                padding: 60px 6% 0;
+            }
 
-    .ftr-brand img {
-        height: 70px;
-        width: 90px;
-    }
 
-    .ftr-block h3,
-    .ftr-touch h3 {
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
+            .ftr-wrap {
+                gap: 40px;
+                grid-template-columns: 1fr;
+            }
 
-    .ftr-desc,
-    .ftr-nav a,
-    .ftr-details p {
-        font-size: 14px;
-    }
 
-    .ftr-icons {
-        margin-top: 20px;
-        justify-content: flex-start;
-    }
-}
+            .ftr-brand img {
+                height: 70px;
+                width: 90px;
+            }
+
+
+            .ftr-brand-top {
+                gap: 12px;
+            }
+
+
+            .ftr-brand-name p {
+                font-size: 14px;
+            }
+
+
+            .ftr-block h3,
+            .ftr-touch h3 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+
+            .ftr-desc,
+            .ftr-nav a,
+            .ftr-details p {
+                font-size: 14px;
+            }
+
+
+            .ftr-icons {
+                margin-top: 20px;
+                justify-content: flex-start;
+            }
+
+        }
+
     </style>
 
 </footer>

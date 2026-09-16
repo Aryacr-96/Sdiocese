@@ -10,38 +10,57 @@ from .forms import (SpiritualForm,
     OfficebearerFormSet
 )
 
-
 def index(request):
     """
     Homepage view.
     Provides:
-      - recent_events  : past events (most recent first) → for 'Recent Events' section
-      - events         : upcoming events → for 'Upcoming Events' section
+      - recent_events  : past events
+      - events         : upcoming events
+      - kalpanas       : Kalpana entries
     """
+
     now = timezone.now()
 
     # -------------------------------------------------
-    # UPCOMING EVENTS  (today in future OR today later time)
+    # UPCOMING EVENTS
     # -------------------------------------------------
     upcoming_events = Event.objects.filter(
         Q(event_date__gt=now.date()) |
-        (Q(event_date=now.date()) & Q(event_time__gt=now.time()))
+        (
+            Q(event_date=now.date()) &
+            Q(event_time__gt=now.time())
+        )
     ).order_by('event_date', 'event_time')
 
     # -------------------------------------------------
-    # RECENT EVENTS  (already happened — most recent first)
+    # RECENT EVENTS
     # -------------------------------------------------
     recent_events = Event.objects.filter(
         Q(event_date__lt=now.date()) |
-        (Q(event_date=now.date()) & Q(event_time__lte=now.time()))
+        (
+            Q(event_date=now.date()) &
+            Q(event_time__lte=now.time())
+        )
     ).order_by('-event_date', '-event_time')
 
+    # -------------------------------------------------
+    # KALPANA
+    # -------------------------------------------------
+    kalpanas = Kalpana.objects.all().order_by('-created_at')
+
+    # -------------------------------------------------
+    # CONTEXT
+    # -------------------------------------------------
     context = {
-        'events': upcoming_events,          # used by Upcoming Events section
-        'recent_events': recent_events,     # used by Recent Events section
+        'events': upcoming_events,
+        'recent_events': recent_events,
+
         'upcoming_count': upcoming_events.count(),
         'recent_count': recent_events.count(),
         'total_events': Event.objects.count(),
+
+        'kalpanas': kalpanas,
+
         'now': now,
     }
 

@@ -1,79 +1,200 @@
 {% load static %}
-
 <footer class="footer">
 
   <div class="footer-content">
 
-    <!-- Logo & Address -->
+
+    <!-- ======================== LOGO & ADDRESS ======================== -->
+
     <div class="footer-col footer-about">
-    
-         <img src="{% static 'images/logo.png' %}" alt="Church Image" style="width: 250px; height: auto"; >
 
 
+      <!-- Logo + Church Name -->
+
+      <div class="footer-logo-row">
+
+        <img src="{% static 'images/image.png' %}" alt="Church Image">
+
+        <p class="footer-church-name">
+          Sulthan Bathery Malankara Orthodox Syrian Church
+        </p>
+
+      </div>
+
+
+      <!-- Address -->
 
       <p class="footer-text">
         Nirmalagiri Aramana,<br>
         Poomala, S. Bathery P.O,<br>
         Wayanad- 673592<br>
       </p>
+
+
     </div>
 
-    <!-- Quick Links -->
+
+    <!-- ======================== QUICK LINKS ======================== -->
+
     <div class="footer-col">
+
       <h3>Diocesan Links</h3>
 
       <ul class="footer-links">
-        <li><a href="{% url 'kalpana' %}">Kalpanas</a></li>
-        <li><a href="{% url 'priest' %}">Priest Directory</a></li>
-        <li><a href="{% url 'parish' %}">Parish Directory</a></li>
-        <li><a href="{% url 'images' %}">Photo Gallery</a></li>
-        <li><a href="{% url 'videos' %}">Video Gallery</a></li>
-        <li><a href="{% url 'events' %}">Upcoming Events</a></li>
+
+        <li>
+          <a href="{% url 'kalpana' %}">
+            Kalpanas
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'priest' %}">
+            Priest Directory
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'parish' %}">
+            Parish Directory
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'images' %}">
+            Photo Gallery
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'videos' %}">
+            Video Gallery
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'events' %}">
+            Upcoming Events
+          </a>
+        </li>
+
       </ul>
+
     </div>
 
-    <!-- Contact Info -->
-<div class="footer-contact">
-  <h3>Contact Us</h3>
 
-  <div class="contact-info">
-    <p><i class="fas fa-phone-alt"></i>  04936 220 969</p>
+    <!-- ======================== CONTACT INFO ======================== -->
 
-    <p><i class="fas fa-envelope"></i>sbydiocese@gmail.com</p>
+    <div class="footer-contact">
 
-    <p><i class="fas fa-map-marker-alt"></i> Sultan Bathery, Kerala</p>
-    <div class="footer-social">
-     
-        <a href="https://youtube.com/@nirmalagiriorthodoxmedia"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.facebook.com/share/1BEWpQkiao/"><i class="fab fa-facebook-f"></i></a>
-        <a href="mailto:sbydiocese@gmail.com"><i class="fas fa-envelope"></i></a>
-        <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA==" ><i class="fab fa-instagram"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-whatsapp"></i>
-</a>
+      <h3>Contact Us</h3>
 
-<a href="https://www.threads.com/@sbydiocese" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-threads"></i>
-</a>
 
-<a href="https://x.com/sbydiocese" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-x-twitter"></i>
-</a>
+      <div class="contact-info">
+
+
+        <!-- Phone -->
+
+        <p>
+          <i class="fas fa-phone-alt"></i>
+          04936 220 969
+        </p>
+
+
+        <!-- Email -->
+
+         <p>
+          <i class="fas fa-envelope"></i>
+         sbydiocese@gmail.com, Info@sbydiocese.com,   Admin@sbydiocese.com
+        </p>
+        <!-- <p>
+          <i class="fas fa-envelope"></i>
+         Info@sbydiocese.com
+        </p>
+        <p>
+          <i class="fas fa-envelope"></i>
+          Admin@sbydiocese.com
+        </p> -->
+
+        <!-- Location -->
+
+        <p>
+          <i class="fas fa-map-marker-alt"></i>
+          Sultan Bathery, Kerala
+        </p>
+
+
+        <!-- Social Icons -->
+
+        <div class="footer-social">
+
+
+          <a href="https://youtube.com/@nirmalagiriorthodoxmedia">
+            <i class="fab fa-youtube"></i>
+          </a>
+
+
+          <a href="https://www.facebook.com/share/1BEWpQkiao/">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+
+          <a href="mailto:sbydiocese@gmail.com">
+            <i class="fas fa-envelope"></i>
+          </a>
+
+
+          <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA==">
+            <i class="fab fa-instagram"></i>
+          </a>
+
+
+          <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <i class="fab fa-whatsapp"></i>
+
+          </a>
+
+
+          <a href="https://www.threads.com/@sbydiocese"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <i class="fab fa-threads"></i>
+
+          </a>
+
+
+          <a href="https://x.com/sbydiocese"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <i class="fab fa-x-twitter"></i>
+
+          </a>
+
+
+        </div>
+
       </div>
-  </div>
-</div>
 
-      <!-- Social -->
-      
     </div>
 
+
   </div>
 
-  <!-- Bottom -->
+
+  <!-- ======================== BOTTOM ======================== -->
+
   <div class="bottom-bar">
+
     <p>
-      Privacy Policy|Terms of Use 
+      Privacy Policy | Terms of Use
     </p>
+
   </div>
+
 
 </footer>
