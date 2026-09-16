@@ -205,52 +205,6 @@ def parish_details_by_id(request, parish_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # SRIRITUAL ORGANIZATIONS
 
 def vaidika(request):
@@ -637,46 +591,82 @@ def contact(request):
 
 # ================= ADMIN =================
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.views.decorators.cache import never_cache
-from .models import Officebearer, Priest,Parish, Spiritual
-from .forms import PriestForm,ParishForm
+
+from .models import Officebearer, Priest, Parish, Spiritual
+from .forms import PriestForm, ParishForm, adminform
 
 
 @never_cache
 def admin(request):
+
     if request.user.is_authenticated:
         return redirect('admin_dashboard')
 
     if request.method == "POST":
+
         form = adminform(request.POST)
+
         if form.is_valid():
+
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            user = authenticate(request, username=username, password=password)
-            if user:
+            user = authenticate(
+                request,
+                username=username,
+                password=password
+            )
+
+            if user is not None:
+
                 login(request, user)
+
                 return redirect('admin_dashboard')
+
             else:
-                messages.error(request, 'Invalid username or password')
-                return redirect('admin')
+
+                return render(
+                    request,
+                    'admin/adminlogin.html',
+                    {
+                        'form': form,
+                        'login_error': 'Incorrect username or password.'
+                    }
+                )
+
     else:
+
         form = adminform()
 
-    return render(request, 'admin/adminlogin.html', {'form': form})
+    return render(
+        request,
+        'admin/adminlogin.html',
+        {
+            'form': form
+        }
+    )
 
 
 @never_cache
 def admin_dashboard(request):
+
     if request.user.is_authenticated:
-        return render(request, 'admin/dashboard.html')
+        return render(
+            request,
+            'admin/dashboard.html'
+        )
+
     return redirect('admin')
 
 
 @never_cache
 def logoutadmin(request):
+
     logout(request)
+
     return redirect('admin')
 
 
