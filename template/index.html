@@ -57,69 +57,40 @@
              DESKTOP NAVIGATION
         ================================================== -->
 
-        <div class="nav-links">
+       <div class="nav-links">
 
+    <a href="{% url 'index' %}"
+       class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+        Home
+    </a>
 
-            <a href="{% url 'index' %}">
-                Home
-            </a>
-
-
-            <div class="dropdown">
-
-                <a href="#">
-                    About Diocese
-                </a>
-
-
-                <div class="dropdown-menu">
-
-                    
-
-                    <a href="{% url 'diocesehistory' %}">
-                        <span class="arrow">▸</span>
-                        History
-                    </a>
-                    <a href="{% url 'batherydiocese' %}">
-                        <span class="arrow">▸</span>
-                        Bathery Diocese-At a Glance
-                    </a>
-                    <a href="{% url 'metropolitans' %}">
-                        <span class="arrow">▸</span>
-                        Metropolitans
-                    </a>
-
-                    <a href="{% url 'council' %}">
-                        <span class="arrow">▸</span>
-                        Diocesan Council
-                    </a>
-
-                    <a href="{% url 'committe' %}">
-                        <span class="arrow">▸</span>
-                        Managing Committee
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <a href="{% url 'priest' %}">
-                Priest
-            </a>
-
-
-            <a href="{% url 'parish' %}">
-                Parishes
-            </a>
-
-
-            <a href="{% url 'contact' %}">
-                Contact
-            </a>
-
-
+    <div class="dropdown {% if request.resolver_match.url_name in 'diocesehistory,batherydiocese,metropolitans,council,committe' %}active{% endif %}">
+        <a href="#">About Diocese</a>
+        <div class="dropdown-menu">
+            <a href="{% url 'diocesehistory' %}"><span class="arrow">▸</span>History</a>
+            <a href="{% url 'batherydiocese' %}"><span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
+            <a href="{% url 'metropolitans' %}"><span class="arrow">▸</span>Metropolitans</a>
+            <a href="{% url 'council' %}"><span class="arrow">▸</span>Diocesan Council</a>
+            <a href="{% url 'committe' %}"><span class="arrow">▸</span>Managing Committee</a>
         </div>
+    </div>
+
+    <a href="{% url 'priest' %}"
+       class="{% if request.resolver_match.url_name == 'priest' %}active{% endif %}">
+        Priest
+    </a>
+
+    <a href="{% url 'parish' %}"
+       class="{% if request.resolver_match.url_name == 'parish' or request.resolver_match.url_name == 'parish_details' %}active{% endif %}">
+        Parishes
+    </a>
+
+    <a href="{% url 'contact' %}"
+       class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+        Contact
+    </a>
+
+</div>
 
 
 
@@ -531,24 +502,23 @@
          HERO
     ====================================================== -->
 
-    <div class="hero">
-
-
-        <div class="hero-text">
-            <h1>
-                Welcome to Sulthan Bathery Diocese
-            </h1>
-            <h3>
-                Learn more about our faith
-            </h3>
+   <div class="hero">
+     <div class="hero-text"> 
+        <h1> Sulthan Bathery Diocese </h1>
+         <h2> My Lord and My God </h2>
+          <p> Welcom to Sulthan Bathery Diocese. A community united in faith, committed to spiritual growth, and dedicated to serving people with love and compassion.<br> "Growing Together in Christ" </p>
            <div class="ring-container">
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-            </div>
-
-           <div class="hero-buttons">
+             <div class="ring"></div> 
+             <div class="ring"></div> 
+             <div class="ring"></div>
+              <div class="ring"></div>
+             </div> 
+            <div class="hero-explore">
+    <a href="{% url 'batherydiocese' %}" class="explore-diocese-btn">
+        Explore Diocese
+    </a>
+</div>
+           <!-- <div class="hero-buttons">
 
     <a href="https://wa.me/919876543210" class="social-icon whatsapp" target="_blank">
         <i class="fab fa-whatsapp"></i>
@@ -566,7 +536,7 @@
         <i class="fas fa-envelope"></i>
     </a>
 
-</div>
+</div> -->
 
         </div>
 
@@ -602,10 +572,11 @@
 /* IMAGE */
 
 .hero-image img {
-    height: 250px;
+    height: 430px;
     display: block;
     object-fit: cover;
    border-radius: 28px; 
+   margin-left: -80px;
 }
 
 
@@ -638,10 +609,12 @@
 
     .hero-text h1 {
         margin: 0;
-        font-size: clamp(32px, 5vw, 58px);
+        font-size: 52px;
         font-weight: 700;
         line-height: 1.08;
         letter-spacing: -1px;
+        color:#2a4564;
+
     }
 
     .hero-text h1 span {
@@ -712,7 +685,41 @@
         gap: 15px;
         margin-top: 25px;
     }
+.hero-explore {
+    margin-top: 28px;
+}
 
+.explore-diocese-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    background: #f2ad7e;
+    color: #3f4145;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+
+    box-shadow: 0 5px 15px rgba(180, 100, 55, 0.12);
+
+    transition: all 0.3s ease;
+}
+
+.explore-diocese-btn:hover {
+    background: #e76514;
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(231, 101, 20, 0.22);
+}
 
     /* ========================================
        SOCIAL ICON
@@ -937,7 +944,7 @@
 
         <!-- LEFT : IMAGE -->
         <div class="about-image">
-            <img src="{% static 'images/barnabas.png' %}"
+            <img src="{% static 'images/diosb.jpg' %}"
                  alt="Sulthan Bathery Diocese Church">
         </div>
 
@@ -1150,6 +1157,164 @@
     }
 }
     </style>
+
+
+
+<section class="parish-directory-section">
+  <div class="directory-content">
+    <p class="directory-subtitle">THE GREAT PARISHES OF SBY DIOCESE</p>
+    <h1 class="directory-title">PARISH DIRECTORY</h1>
+    
+    <form class="directory-search-form" action="{% url 'parish' %}" method="get">
+      <input 
+        type="text" 
+        name="q" 
+        class="directory-search-input" 
+        placeholder="Parish Name..."
+        autocomplete="off"
+        required
+      >
+      <button type="submit" class="directory-search-btn">
+        SEARCH PARISH
+        <!-- Inline SVG for the magnifying glass icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </form>
+  </div>
+</section>
+<style>
+    /* Section Wrapper - Handles the orange top/bottom bands */
+.parish-directory-section {
+  width: 100%;
+  /* Creates the peach/orange bands on top and bottom */
+  background: linear-gradient(
+    to bottom,
+    #f9b58e 0%, 
+    #f9b58e 12%,    /* End of top orange band */
+    #0b305c 12%,    /* Start of dark blue */
+    #0b305c 88%,    /* End of dark blue */
+    #f9b58e 88%,    /* Start of bottom orange band */
+    #f9b58e 100%
+  );
+  /* Vertical padding to give the orange bands their height */
+  padding: 35px 0; 
+}
+
+/* Inner Content - Handles the dark blue background and pattern */
+.directory-content {
+  /* Fallback solid color */
+  background-color: #2a4564;
+  
+  /* Subtle SVG pattern to mimic the background texture in the image */
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1.5'%3E%3Cpath d='M60 20v80M20 60h80M35 35l50 50M35 85l50-50'/%3E%3Ccircle cx='60' cy='60' r='25'/%3E%3C/g%3E%3C/svg%3E");
+  
+  padding: 85px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+
+/* Subtitle Text */
+.directory-subtitle {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* Main Title Text */
+.directory-title {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 45px;
+  text-transform: uppercase;
+}
+
+/* Search Bar Form Container */
+.directory-search-form {
+  display: flex;
+  width: 100%;
+  max-width: 680px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Search Input Field */
+.directory-search-input {
+  flex: 1;
+  padding: 18px 22px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: #333;
+  font-family: inherit;
+}
+
+.directory-search-input::placeholder {
+  color: #999;
+}
+
+/* Search Button */
+.directory-search-btn {
+  background-color:#e76514;  /*#9b0a1a; Deep red */
+  color: #ffffff;
+  border: none;
+  padding: 0 35px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
+}
+
+.directory-search-btn:hover {
+  background-color: #e76514;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .directory-content {
+    padding: 60px 20px;
+  }
+  
+  .directory-title {
+    font-size: 1.8rem;
+  }
+
+  .directory-search-form {
+    flex-direction: column;
+    box-shadow: none;
+    gap: 12px;
+  }
+
+  .directory-search-input {
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .directory-search-btn {
+    width: 100%;
+    padding: 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}</style>
+
+
+
     <!-- =====================================================
      RECENT EVENTS SECTION
      4 CARDS (2 PER ROW) + VIEW MORE
@@ -1472,249 +1637,791 @@
 }
     </style>
 
-
 <section class="notice-wrapper">
 
-    <div class="notice-header">
+    <!-- Top Orange Band (handled by wrapper gradient) -->
 
-        <h1 class="notice-title">Kalpana</h1>
-        <p class="notice-subtitle"> Official notices and publications from our diocese </p>
-
-        <!--
-        <p class="notice-subtitle">
-            Official documents, notices and publications from the Diocese
-        </p>
-
-        <div class="notice-stats">
-            <i class="fas fa-file-alt"></i>
-            {{ kalpanas|length }}
-            Kalpana{{ kalpanas|length|pluralize }} available
+    <div class="notice-container">
+        
+        <!-- Left Column: Images & Titles -->
+       <div class="notice-left-col">
+    <div class="image-grid">
+        <!-- Fixed the Django static tag syntax below -->
+        <div class="image-card">
+            <img src="{% static 'images/priest.jpg' %}" alt="H.H. Baselios Marthoma Mathews III">
+            <h4>H.H. Baselios Marthoma Mathews III</h4>
+            <p>Catholicos Of The East &amp; Malankara Metropolitan</p>
         </div>
-        -->
-
+        <div class="image-card">
+            <img src="{% static 'images/barnabas.png' %}" alt="H.G. Dr. Geevarghese Mar Barnabas">
+            <h4>H.G. Dr. Geevarghese Mar Barnabas</h4>
+            <p>Diocesan Metropolitan</p>
+        </div>
     </div>
+</div>
 
-
-    <div class="notice-grid">
-
-        {% if kalpanas %}
-
-            {% for kalpana in kalpanas %}
-
-                <a href="{% url 'kalpanadetail' kalpana.slug %}"
-                   class="notice-card">
-
-                    <!--
-                    <div class="card-icon">
-                        <i class="fas fa-scroll"></i>
+        <!-- Right Column: Kalpana List -->
+        <div class="notice-right-col">
+            <h2 class="notice-title">DIOCESE KALPANAS</h2>
+            
+            <div class="kalpana-list">
+                {% if kalpanas %}
+                    {% for kalpana in kalpanas %}
+                        <div class="kalpana-item">
+                            <div class="kalpana-title">
+                    {{ kalpana.title|truncatechars:35 }}
+                            </div>
+                            <a href="{% url 'kalpanadetail' kalpana.slug %}" class="download-btn">
+                                Download
+                                <i class="fas fa-arrow-up-right-from-square"></i> <!-- Using a generic icon, swap with your specific icon set -->
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <h3>No Kalpana Found</h3>
+                        <p>No official documents or notices are available at this time.</p>
                     </div>
-                    -->
-
-                    <h3>{{ kalpana.title }}</h3>
-
-
-                    <div class="card-meta">
-
-                        <!--
-                        <span>
-                            <i class="fas fa-file-alt"></i>
-                            {{ kalpana.files.count }}
-                            document{{ kalpana.files.count|pluralize }}
-                        </span>
-                        -->
-
-
-                        <!--
-                        <span>
-                            <i class="far fa-calendar-alt"></i>
-                            {{ kalpana.created_at|date:"M d, Y" }}
-                        </span>
-                        -->
-
-
-                        <!--
-                        {% if kalpana.files.all %}
-
-                            {% with kalpana.files.all|first as first_file %}
-
-                                <span class="file-badge">
-
-                                    <i class="fas fa-{% if first_file.file_type == 'pdf' %}
-                                        file-pdf
-                                    {% elif first_file.file_type == 'excel' %}
-                                        file-excel
-                                    {% elif first_file.file_type == 'word' %}
-                                        file-word
-                                    {% else %}
-                                        file
-                                    {% endif %}">
-                                    </i>
-
-                                    {{ first_file.file_type|default:'file'|upper }}
-
-                                </span>
-
-                            {% endwith %}
-
-                        {% endif %}
-                        -->
-
-                    </div>
-
-
-                    <!--
-                    <span class="card-footer-link">
-                        View Details
-                        <i class="fas fa-arrow-right"></i>
-                    </span>
-                    -->
-
-                </a>
-
-            {% endfor %}
-
-        {% else %}
-
-            <div class="empty-state">
-
-                <i class="fas fa-scroll"></i>
-
-                <h3>No Kalpana Found</h3>
-
-                <p>
-                    No official documents or notices are available at this time.
-                </p>
-
+                {% endif %}
             </div>
 
-        {% endif %}
+            <!-- Load More Button -->
+           <a href="{% url 'kalpana' %}" class="load-more-btn">
+    Load more
+    <i class="fas fa-arrow-down"></i>
+</a>
+        </div>
 
     </div>
 
 </section>
 <style>
-   .notice-wrapper {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 20px;
+/* ========================================
+   SECTION WRAPPER
+======================================== */
+.notice-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 30px 0;
+    background: linear-gradient(
+        to bottom,
+        #f9b58e 0%,
+        #f9b58e 6%,
+        #0b305c 6%,
+        #0b305c 94%,
+        #f9b58e 94%,
+        #f9b58e 100%
+    );
+    box-sizing: border-box;
+    
 }
 
+/* ========================================
+   MAIN CONTAINER
+======================================== */
+.notice-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    box-sizing: border-box;
+}
 
 /* ========================================
-   KALPANA HEADING
+   LEFT COLUMN
 ======================================== */
+.notice-left-col {
+    flex: 1;
+    min-width: 350px;
+}
+
+.image-grid {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.image-card {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+}
+
+.image-card img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.image-card h4 {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.image-card p {
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ========================================
+   RIGHT COLUMN
+======================================== */
+.notice-right-col {
+    flex: 1.2;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+}
 
 .notice-title {
-    font-size: 36px;
+    color: #ffffff;
+    font-size: 1.6rem;
     font-weight: 700;
-    color: #2a4564;
-    position: relative;
-    display: inline-block;
-    margin-left: 520px;
-
-    letter-spacing: -0.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0 0 25px;
 }
 
+.kalpana-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
 
+/* ========================================
+   KALPANA ITEM
+======================================== */
+.kalpana-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
 
+.kalpana-item:hover {
+    transform: translateX(5px);
+}
+
+.kalpana-title {
+    color: #0b305c;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex: 1;
+    min-width: 0;
+    padding-right: 15px;
+
+    /* Prevent long titles from breaking the layout */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========================================
+   DOWNLOAD BUTTON
+======================================== */
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #0b305c;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.download-btn:hover {
+    background-color: #dd7e43;
+}
+
+.download-btn i {
+    font-size: 0.8rem;
+}
+
+/* ========================================
+   LOAD MORE
+======================================== */
+.load-more-btn {
+    display: inline-flex;
+    text-decoration: none;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    background-color: #ffffff;
+    color: #0b305c;
+}
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+.empty-state {
+    text-align: center;
+    color: #ffffff;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.empty-state h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.empty-state p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
 
 
 /* ========================================
-   SUBTITLE
+   TABLET
 ======================================== */
+@media (max-width: 992px) {
 
-.notice-subtitle {
-    margin: 25px 0 50px;
+    .notice-container {
+        flex-direction: column;
+        gap: 45px;
+        padding: 35px 25px;
+    }
 
-    color: #64748b;
-
-    font-size: 16px;
-    font-weight: 400;
-
-    text-align: center;
-    line-height: 1.6;
-}
-
-
-/* GRID */
-.notice-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
-
-
-/* CARD */
-.notice-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    transition: 0.3s;
-    cursor: pointer;
-    background: #fff;
-}
-
-.notice-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-}
-
-.notice-card h3 {
-    margin: 0;
-    font-size: 20px;
-    color: #23395d;
-    font-weight: 600;
-}
-
-
-/* BUTTON */
-.notice-btn {
-    padding: 8px 16px;
-    background: #23395d;
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    white-space: nowrap;
-    transition: 0.3s;
-}
-
-.notice-btn:hover {
-    background: #c9500f;
-}
-
-
-/* TABLET */
-
-
-    @media (max-width: 768px) {
+    .notice-left-col,
+    .notice-right-col {
+        width: 100%;
+        min-width: 0;
+    }
 
     .notice-title {
-        margin-left: 0;
-        display: block;
         text-align: center;
     }
 
-    .notice-grid {
-        grid-template-columns: 1fr;
+    .load-more-btn {
+        align-self: center;
     }
 
-    .notice-card {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+    .image-card img {
+        max-width: 180px;
     }
-
-}
-
 }
 
 
+/* ========================================
+   MOBILE
+======================================== */
+@media (max-width: 576px) {
+
+    .notice-wrapper {
+        padding: 20px 0;
+    }
+
+    .notice-container {
+        padding: 25px 15px;
+        gap: 35px;
+    }
+
+    /* Keep the two people side-by-side */
+    .image-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .image-card {
+        width: 50%;
+        flex: 1;
+    }
+
+    .image-card img {
+        width: 100%;
+        max-width: 145px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .image-card h4 {
+        font-size: 0.78rem;
+        line-height: 1.25;
+        margin-bottom: 5px;
+    }
+
+    .image-card p {
+        font-size: 0.68rem;
+        line-height: 1.3;
+    }
+
+    /* Kalpana heading */
+    .notice-title {
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+        margin-bottom: 18px;
+    }
+
+    .kalpana-list {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Keep title + button in one row */
+    .kalpana-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 10px;
+        border-radius: 5px;
+    }
+
+    .kalpana-title {
+        font-size: 0.72rem;
+        letter-spacing: 0.3px;
+        padding-right: 5px;
+
+        /* One-line title */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .download-btn {
+        width: auto;
+        min-width: 82px;
+        padding: 8px 10px;
+        font-size: 0.7rem;
+        gap: 5px;
+    }
+
+    .download-btn i {
+        font-size: 0.65rem;
+    }
+
+    /* Load more */
+    .load-more-btn {
+        padding: 9px 17px;
+        font-size: 0.75rem;
+    }
+}
+
+
+/* ========================================
+   VERY SMALL MOBILE
+======================================== */
+@media (max-width: 380px) {
+
+    .notice-container {
+        padding: 20px 10px;
+    }
+
+    .image-grid {
+        gap: 7px;
+    }
+
+    .image-card img {
+        max-width: 125px;
+        height: 130px;
+    }
+
+    .image-card h4 {
+        font-size: 0.7rem;
+    }
+
+    .image-card p {
+        font-size: 0.62rem;
+    }
+
+    .notice-title {
+        font-size: 1.1rem;
+    }
+
+    .kalpana-item {
+        padding: 8px;
+    }
+
+    .kalpana-title {
+        font-size: 0.65rem;
+    }
+
+    .download-btn {
+        min-width: 70px;
+        padding: 7px 8px;
+        font-size: 0.62rem;
+    }
+}
 </style>
+    <style>
+        /* ========================================
+           SECTION WRAPPER (Orange Background)
+        ======================================== */
+        .connect-wrapper {
+            width: 100%;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f9b58e 0%, #fcd5c0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+           
+        }
 
+        /* Inner white card container */
+        .connect-container {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-sizing: border-box;
+        }
+
+        /* ========================================
+           HEADER STYLING (heading right to the icon)
+        ======================================== */
+        .connect-header {
+            display: flex;
+            justify-content: flex-end;      /* align to right */
+            align-items: center;
+            gap: 18px;                      /* space between icon and text */
+            margin-bottom: 40px;
+            padding-right: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* decorative icon beside heading */
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: rgba(249, 181, 142, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .header-icon i {
+            font-size: 2rem;
+            color: #d45d2c;
+        }
+
+        .connect-header-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;          /* right-align text */
+        }
+
+        .connect-subtitle {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .connect-title {
+            margin: 5px 0 0 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0b305c;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* ========================================
+           GRID LAYOUT
+        ======================================== */
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* ========================================
+           CARD STYLING (curved corners)
+        ======================================== */
+        .connect-card {
+            background: #fff8f3;
+            border: 1px solid rgba(249, 181, 142, 0.3);
+            border-radius: 28px;              /* larger curve */
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: left;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+        }
+
+        .connect-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+            border-color: rgba(249, 181, 142, 0.9);
+        }
+
+        /* ========================================
+           CARD TOP ROW (icon + heading side by side)
+        ======================================== */
+        .card-top {
+            display: flex;
+            align-items: center;         /* icon and heading aligned in a row */
+            gap: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        /* Icon Container */
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 0;            /* no bottom margin since heading is beside */
+            flex-shrink: 0;              /* prevents icon from squishing */
+            transition: transform 0.3s ease, border-radius 0.3s ease;
+        }
+
+        .connect-card:hover .icon-box {
+            transform: scale(1.08) rotate(-4deg);
+            border-radius: 22px;
+        }
+
+        /* Icon Specific Colors */
+        .whatsapp-icon {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.25);
+        }
+        .facebook-icon {
+            background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
+            box-shadow: 0 8px 16px rgba(24, 119, 242, 0.25);
+        }
+        .instagram-icon {
+            background: linear-gradient(135deg, #E1306C 0%, #F56040 50%, #FCAF45 100%);
+            box-shadow: 0 8px 16px rgba(225, 48, 108, 0.25);
+        }
+
+        /* Card Typography */
+        .connect-card h3 {
+            margin: 0;                   /* no bottom margin, it's inside card-top */
+            font-size: 1.3rem;
+            color: #1e293b;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .connect-card p {
+            margin: 0 0 25px 0;
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* ========================================
+           BUTTON STYLING (fully rounded)
+        ======================================== */
+        .connect-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 40px;               /* pill-shaped / very curved */
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+
+        .connect-btn i {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .connect-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Button Specific Colors */
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 6px 12px rgba(37, 211, 102, 0.2);
+        }
+        .btn-whatsapp:hover {
+            background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+            box-shadow: 0 10px 18px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-facebook {
+            background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
+            box-shadow: 0 6px 12px rgba(24, 119, 242, 0.2);
+        }
+        .btn-facebook:hover {
+            background: linear-gradient(135deg, #0d5bbd 0%, #084298 100%);
+            box-shadow: 0 10px 18px rgba(24, 119, 242, 0.3);
+        }
+
+        .btn-instagram {
+            background: linear-gradient(135deg, #E1306C 0%, #F56040 100%);
+            box-shadow: 0 6px 12px rgba(225, 48, 108, 0.2);
+        }
+        .btn-instagram:hover {
+            background: linear-gradient(135deg, #C13584 0%, #E1306C 100%);
+            box-shadow: 0 10px 18px rgba(225, 48, 108, 0.3);
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+        ======================================== */
+        @media (max-width: 992px) {
+            .connect-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .connect-header {
+                justify-content: center;
+                padding-right: 0;
+            }
+            .connect-header-text {
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .connect-container {
+                padding: 30px 20px;
+            }
+            .connect-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .connect-title {
+                font-size: 1.5rem;
+            }
+            .connect-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<section class="connect-wrapper">
+    <div class="connect-container">
+        
+        <div class="connect-header">
+           
+            <div class="connect-header-text">
+                <p class="connect-subtitle">Connect With</p>
+                <h2 class="connect-title">SBY DIOCESE</h2>
+            </div>
+        </div>
+
+        <div class="connect-grid">
+            
+            <!-- WhatsApp Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box whatsapp-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp<br> Channel</h3>
+                </div>
+                <p>Get instant updates, announcements, and event notifications directly on your phone.</p>
+                <a href="https://whatsapp.com/channel/0029VbCIZSE0rGiMmCAYxk1E" class="connect-btn btn-whatsapp">
+                    Join Channel
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Facebook Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box facebook-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <h3>Facebook<br> Page</h3>
+                </div>
+                <p>Follow us for updates, photos, and community posts from across the diocese.</p>
+                <a href="https://www.facebook.com/share/1BEWpQkiao/" class="connect-btn btn-facebook">
+                    Follow Page
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Instagram Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box instagram-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram<br> Page</h3>
+                </div>
+                <p>Explore moments, events, and visual stories capturing our community's spirit.</p>
+                <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA==" class="connect-btn btn-instagram">
+                    Follow Page
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
 <!-- =====================================================
      BACKGROUND GRAPHICS
 ====================================================== -->
@@ -1733,16 +2440,13 @@
 
 
 
-    <!-- =================================================
-         MOBILE ICON NAVIGATION
-         
-         ONLY ICONS ARE SHOWN
-         EACH ICON IS A CLICKABLE LINK
-    ================================================== -->
 
-    <!-- =====================================================
-     MOBILE BOTTOM NAVIGATION
-====================================================== -->
+<!-- =================================================
+     MOBILE ICON NAVIGATION
+     
+     ONLY ICONS ARE SHOWN
+     ABOUT DIOCESE HAS A MOBILE SUBMENU
+================================================== -->
 
 <div class="bottom-mobile-menu">
 
@@ -1753,147 +2457,253 @@
         <i class="fa-solid fa-house"></i>
     </a>
 
-    <!-- ABOUT DIOCESE -->
-    <a href="{% url 'batherydiocese' %}"
-       class="bottom-mobile-menu-item"
-       title="About Diocese">
-        <i class="fa-solid fa-church"></i>
-    </a>
+
+    <!-- =================================================
+         ABOUT DIOCESE
+    ================================================== -->
+
+    <div class="mobile-about-wrapper">
+
+        <button type="button"
+                class="bottom-mobile-menu-item mobile-about-button"
+                onclick="toggleMobileAbout()"
+                title="About Diocese">
+
+            <i class="fa-solid fa-church"></i>
+
+        </button>
+
+
+        <!-- MOBILE ABOUT SUBMENU -->
+
+        <div class="mobile-about-dropdown" id="mobileAboutDropdown">
+
+            <a href="{% url 'diocesehistory' %}">
+                <span class="mobile-arrow">▸</span>
+                <span>History</span>
+            </a>
+
+            <a href="{% url 'batherydiocese' %}">
+                <span class="mobile-arrow">▸</span>
+                <span>Bathery Diocese - At a Glance</span>
+            </a>
+
+            <a href="{% url 'metropolitans' %}">
+                <span class="mobile-arrow">▸</span>
+                <span>Metropolitans</span>
+            </a>
+
+            <a href="{% url 'council' %}">
+                <span class="mobile-arrow">▸</span>
+                <span>Diocesan Council</span>
+            </a>
+
+            <a href="{% url 'committe' %}">
+                <span class="mobile-arrow">▸</span>
+                <span>Managing Committee</span>
+            </a>
+
+        </div>
+
+    </div>
+
 
     <!-- PRIEST -->
     <a href="{% url 'priest' %}"
        class="bottom-mobile-menu-item"
        title="Priest">
+
         <i class="fa-solid fa-user-tie"></i>
+
     </a>
+
 
     <!-- PARISH -->
     <a href="{% url 'parish' %}"
        class="bottom-mobile-menu-item"
        title="Parishes">
+
         <i class="fa-solid fa-place-of-worship"></i>
+
     </a>
+
 
     <!-- CONTACT -->
     <a href="{% url 'contact' %}"
        class="bottom-mobile-menu-item"
        title="Contact">
+
         <i class="fa-solid fa-envelope"></i>
+
     </a>
 
 </div>
+
+
 <style>
-    /* =========================================================
+
+/* =========================================================
    FIX HORIZONTAL SCROLL ON MOBILE
 ========================================================= */
 
-/* Prevent horizontal scroll on all devices */
-html, body {
+html,
+body {
+
     overflow-x: hidden;
+
     width: 100%;
+
     max-width: 100%;
+
     margin: 0;
+
     padding: 0;
 }
 
-/* Ensure container doesn't overflow */
+
 .container {
+
     overflow-x: hidden;
+
     width: 100%;
+
     max-width: 100%;
 }
 
-/* Hide overflow for background graphics */
+
 .bg-graphics-wrapper {
+
     overflow: hidden;
-    pointer-events: none; /* So they don't block clicks */
+
+    pointer-events: none;
 }
 
-/* Fix background circles - keep them contained */
+
 .bg-graphics-wrapper .circle {
+
     max-width: 100vw;
 }
 
-/* Mobile specific fixes */
+
+/* =========================================================
+   MOBILE SPECIFIC FIXES
+========================================================= */
+
 @media (max-width: 768px) {
-    /* Contain all elements */
+
     .container,
     .hero,
     .hero-text,
     .navbar,
     .footer {
+
         overflow-x: hidden;
+
         max-width: 100vw;
     }
 
-    /* Fix the hero text */
+
     .hero-text {
+
         padding: 0 16px;
+
         box-sizing: border-box;
+
         max-width: 100%;
     }
 
-    /* Ensure hero buttons don't overflow */
+
     .hero-buttons {
+
         flex-wrap: wrap;
+
         gap: 10px;
     }
 
+
     .hero-buttons .btn {
+
         max-width: 100%;
+
         white-space: nowrap;
+
         overflow: hidden;
+
         text-overflow: ellipsis;
     }
 
-    /* Fix footer elements */
+
     .footer {
+
         max-width: 100%;
+
         padding: 10px 16px;
+
         box-sizing: border-box;
     }
 
+
     .footer-right {
+
         max-width: 100%;
+
         word-wrap: break-word;
     }
 
-    /* Fix any hidden overflows */
+
     * {
+
         box-sizing: border-box;
     }
 
-    /* Ensure images don't overflow */
+
     img {
+
         max-width: 100%;
+
         height: auto;
     }
 }
 
-/* Extra small devices */
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+========================================================= */
+
 @media (max-width: 480px) {
+
     .hero-text h1 {
+
         font-size: 1.8rem;
+
         word-wrap: break-word;
     }
+
 
     .hero-text h3 {
+
         font-size: 1.2rem;
+
         word-wrap: break-word;
     }
 
+
     .hero-text p {
+
         font-size: 0.95rem;
+
         word-wrap: break-word;
     }
 }
 
-    /* =========================================================
+
+/* =========================================================
    MOBILE BOTTOM MENU
    HIDDEN ON DESKTOP
 ========================================================= */
 
 .bottom-mobile-menu {
+
     display: none;
 }
 
@@ -1905,15 +2715,21 @@ html, body {
 @media (max-width: 768px) {
 
     .bottom-mobile-menu {
+
         position: fixed;
+
         left: 12px;
+
         right: 12px;
+
         bottom: 12px;
 
         height: 64px;
 
         display: flex;
+
         align-items: center;
+
         justify-content: space-around;
 
         background: #ffffff;
@@ -1927,6 +2743,7 @@ html, body {
             0 3px 10px rgba(0, 0, 0, 0.06);
 
         backdrop-filter: blur(10px);
+
         -webkit-backdrop-filter: blur(10px);
 
         z-index: 99999;
@@ -1942,11 +2759,15 @@ html, body {
     ===================================================== */
 
     .bottom-mobile-menu-item {
+
         width: 48px;
+
         height: 48px;
 
         display: flex;
+
         align-items: center;
+
         justify-content: center;
 
         color: #2a4564;
@@ -1958,6 +2779,12 @@ html, body {
         transition: all 0.25s ease;
 
         -webkit-tap-highlight-color: transparent;
+
+        border: none;
+
+        background: transparent;
+
+        cursor: pointer;
     }
 
 
@@ -1966,7 +2793,9 @@ html, body {
     ===================================================== */
 
     .bottom-mobile-menu-item i {
+
         font-size: 20px;
+
         transition: all 0.25s ease;
     }
 
@@ -1976,12 +2805,17 @@ html, body {
     ===================================================== */
 
     .bottom-mobile-menu-item:hover {
+
         background: #e76514;
+
         color: #ffffff;
+
         transform: translateY(-2px);
     }
 
+
     .bottom-mobile-menu-item:hover i {
+
         transform: scale(1.08);
     }
 
@@ -1991,7 +2825,161 @@ html, body {
     ===================================================== */
 
     .bottom-mobile-menu-item:active {
+
         transform: scale(0.90);
+    }
+
+
+    /* =====================================================
+       ABOUT WRAPPER
+    ===================================================== */
+
+    .mobile-about-wrapper {
+
+        position: relative;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+
+    /* =====================================================
+       MOBILE ABOUT DROPDOWN
+    ===================================================== */
+
+    .mobile-about-dropdown {
+
+        position: absolute;
+
+        bottom: 63px;
+
+        left: 50%;
+
+        width: 270px;
+
+        padding: 8px;
+
+        background: rgba(255, 255, 255, 0.98);
+
+        border: 1px solid rgba(231, 101, 20, 0.15);
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.18),
+            0 5px 15px rgba(0, 0, 0, 0.08);
+
+        backdrop-filter: blur(15px);
+
+        -webkit-backdrop-filter: blur(15px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transform: translateX(-50%) translateY(12px);
+
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            visibility 0.25s ease;
+
+        z-index: 100000;
+    }
+
+
+    /* =====================================================
+       SHOW DROPDOWN
+    ===================================================== */
+
+    .mobile-about-dropdown.show {
+
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        transform: translateX(-50%) translateY(0);
+    }
+
+
+    /* =====================================================
+       SUBMENU LINKS
+    ===================================================== */
+
+    .mobile-about-dropdown a {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        width: 100%;
+
+        padding: 11px 12px;
+
+        margin: 2px 0;
+
+        box-sizing: border-box;
+
+        color: #2a4564;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        font-weight: 500;
+
+        border-radius: 12px;
+
+        transition: all 0.2s ease;
+    }
+
+
+    /* =====================================================
+       ARROW
+    ===================================================== */
+
+    .mobile-arrow {
+
+        color: #e76514;
+
+        font-size: 16px;
+
+        min-width: 12px;
+    }
+
+
+    /* =====================================================
+       SUBMENU HOVER
+    ===================================================== */
+
+    .mobile-about-dropdown a:hover {
+
+        background: #fff1e8;
+
+        color: #e76514;
+
+        padding-left: 16px;
+    }
+
+
+    /* =====================================================
+       ACTIVE ABOUT ICON
+    ===================================================== */
+
+    .mobile-about-button.active {
+
+        background: #e76514;
+
+        color: #ffffff;
     }
 
 
@@ -2000,6 +2988,7 @@ html, body {
     ===================================================== */
 
     body {
+
         padding-bottom: 90px;
     }
 }
@@ -2012,8 +3001,11 @@ html, body {
 @media (max-width: 480px) {
 
     .bottom-mobile-menu {
+
         left: 8px;
+
         right: 8px;
+
         bottom: 8px;
 
         height: 58px;
@@ -2023,18 +3015,43 @@ html, body {
         padding: 4px 6px;
     }
 
+
     .bottom-mobile-menu-item {
+
         width: 44px;
+
         height: 44px;
 
         border-radius: 14px;
     }
 
+
     .bottom-mobile-menu-item i {
+
         font-size: 18px;
     }
 
+
+    .mobile-about-dropdown {
+
+        width: 250px;
+
+        bottom: 57px;
+
+        border-radius: 16px;
+    }
+
+
+    .mobile-about-dropdown a {
+
+        font-size: 13px;
+
+        padding: 10px;
+    }
+
+
     body {
+
         padding-bottom: 78px;
     }
 }
@@ -2047,8 +3064,11 @@ html, body {
 @media (max-width: 360px) {
 
     .bottom-mobile-menu {
+
         left: 6px;
+
         right: 6px;
+
         bottom: 6px;
 
         height: 54px;
@@ -2056,22 +3076,98 @@ html, body {
         border-radius: 17px;
     }
 
+
     .bottom-mobile-menu-item {
+
         width: 40px;
+
         height: 40px;
 
         border-radius: 12px;
     }
 
+
     .bottom-mobile-menu-item i {
+
         font-size: 17px;
     }
 
+
+    .mobile-about-dropdown {
+
+        width: 225px;
+
+        bottom: 52px;
+    }
+
+
+    .mobile-about-dropdown a {
+
+        font-size: 12px;
+
+        padding: 9px;
+    }
+
+
     body {
+
         padding-bottom: 72px;
     }
 }
+
 </style>
+
+
+<script>
+
+/* =========================================================
+   MOBILE ABOUT DIOCESE DROPDOWN
+========================================================= */
+
+function toggleMobileAbout() {
+
+    const dropdown =
+        document.getElementById("mobileAboutDropdown");
+
+    const button =
+        document.querySelector(".mobile-about-button");
+
+
+    dropdown.classList.toggle("show");
+
+    button.classList.toggle("active");
+
+}
+
+
+/* =========================================================
+   CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener("click", function(event) {
+
+    const wrapper =
+        document.querySelector(".mobile-about-wrapper");
+
+    const dropdown =
+        document.getElementById("mobileAboutDropdown");
+
+    const button =
+        document.querySelector(".mobile-about-button");
+
+
+    if (!wrapper.contains(event.target)) {
+
+        dropdown.classList.remove("show");
+
+        button.classList.remove("active");
+
+    }
+
+});
+
+</script>
+
 
   
 
@@ -2559,6 +3655,7 @@ document
             display: flex;
             align-items: center;
             gap: 15px;
+            
         }
 
 

@@ -33,27 +33,41 @@
         
     </div>
 
-    <!-- Menu -->  <div class="nav-links">
-       <a href="{% url 'index' %}">Home</a>
-       <div class="dropdown">
+    <!-- Menu --> <div class="nav-links">
+
+    <a href="{% url 'index' %}"
+       class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+        Home
+    </a>
+
+    <div class="dropdown {% if request.resolver_match.url_name in 'diocesehistory,batherydiocese,metropolitans,council,committe' %}active{% endif %}">
         <a href="#">About Diocese</a>
         <div class="dropdown-menu">
-            <a href="{% url 'diocesehistory' %}">  <span class="arrow">▸</span>History</a>
-            <a href="{% url 'batherydiocese' %}">  <span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
-                    
-                    <a href="{% url 'metropolitans' %}">  <span class="arrow">▸</span>Metropolitans</a>
-                    <a href="{% url 'council' %}">  <span class="arrow">▸</span>Diocesan Council</a>
-                    <a href="{% url 'committe' %}">  <span class="arrow">▸</span>Managing Committee</a>
+            <a href="{% url 'diocesehistory' %}"><span class="arrow">▸</span>History</a>
+            <a href="{% url 'batherydiocese' %}"><span class="arrow">▸</span>Bathery Diocese-At a Glance</a>
+            <a href="{% url 'metropolitans' %}"><span class="arrow">▸</span>Metropolitans</a>
+            <a href="{% url 'council' %}"><span class="arrow">▸</span>Diocesan Council</a>
+            <a href="{% url 'committe' %}"><span class="arrow">▸</span>Managing Committee</a>
         </div>
     </div>
-        <a href="{% url 'priest' %}">Priest</a>
-        <a href="{% url 'parish' %}">Parishes</a>
-        <a href="{% url 'contact' %}">Contact</a>
-        
-           
 
-    </div>
-    <!-- =====================================================
+    <a href="{% url 'priest' %}"
+       class="{% if request.resolver_match.url_name == 'priest' %}active{% endif %}">
+        Priest
+    </a>
+
+    <a href="{% url 'parish' %}"
+       class="{% if request.resolver_match.url_name == 'parish' or request.resolver_match.url_name == 'parish_details' %}active{% endif %}">
+        Parishes
+    </a>
+
+    <a href="{% url 'contact' %}"
+       class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+        Contact
+    </a>
+
+</div>
+   <!-- =====================================================
      MOBILE BOTTOM NAVIGATION
 ====================================================== -->
 
@@ -66,12 +80,49 @@
         <i class="fa-solid fa-house"></i>
     </a>
 
+
     <!-- ABOUT DIOCESE -->
-    <a href="{% url 'batherydiocese' %}"
-       class="bottom-mobile-menu-item"
-       title="About Diocese">
-        <i class="fa-solid fa-church"></i>
-    </a>
+    <div class="mobile-about-wrapper">
+
+        <button type="button"
+                class="bottom-mobile-menu-item mobile-about-btn"
+                onclick="toggleMobileAbout()"
+                title="About Diocese">
+            <i class="fa-solid fa-church"></i>
+        </button>
+
+        <!-- MOBILE ABOUT SUBMENU -->
+        <div class="mobile-about-dropdown" id="mobileAboutDropdown">
+
+            <a href="{% url 'diocesehistory' %}">
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>History</span>
+            </a>
+
+            <a href="{% url 'batherydiocese' %}">
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Bathery Diocese - At a Glance</span>
+            </a>
+
+            <a href="{% url 'metropolitans' %}">
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Metropolitans</span>
+            </a>
+
+            <a href="{% url 'council' %}">
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Diocesan Council</span>
+            </a>
+
+            <a href="{% url 'committe' %}">
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Managing Committee</span>
+            </a>
+
+        </div>
+
+    </div>
+
 
     <!-- PRIEST -->
     <a href="{% url 'priest' %}"
@@ -80,12 +131,14 @@
         <i class="fa-solid fa-user-tie"></i>
     </a>
 
+
     <!-- PARISH -->
     <a href="{% url 'parish' %}"
        class="bottom-mobile-menu-item"
        title="Parishes">
         <i class="fa-solid fa-place-of-worship"></i>
     </a>
+
 
     <!-- CONTACT -->
     <a href="{% url 'contact' %}"
@@ -95,8 +148,11 @@
     </a>
 
 </div>
+
+
 <style>
-    /* =========================================================
+
+/* =========================================================
    MOBILE BOTTOM MENU
    HIDDEN ON DESKTOP
 ========================================================= */
@@ -166,6 +222,11 @@
         transition: all 0.25s ease;
 
         -webkit-tap-highlight-color: transparent;
+
+        border: none;
+        background: transparent;
+
+        cursor: pointer;
     }
 
 
@@ -189,6 +250,7 @@
         transform: translateY(-2px);
     }
 
+
     .bottom-mobile-menu-item:hover i {
         transform: scale(1.08);
     }
@@ -200,6 +262,137 @@
 
     .bottom-mobile-menu-item:active {
         transform: scale(0.90);
+    }
+
+
+    /* =====================================================
+       ABOUT WRAPPER
+    ===================================================== */
+
+    .mobile-about-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* =====================================================
+       ABOUT MOBILE DROPDOWN
+    ===================================================== */
+
+    .mobile-about-dropdown {
+        position: absolute;
+
+        bottom: 62px;
+
+        left: 50%;
+
+        transform: translateX(-50%) translateY(10px);
+
+        width: 260px;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        border: 1px solid rgba(42, 69, 100, 0.12);
+
+        border-radius: 18px;
+
+        padding: 8px;
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.18),
+            0 5px 15px rgba(0, 0, 0, 0.08);
+
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            visibility 0.25s ease;
+
+        z-index: 100000;
+    }
+
+
+    /* =====================================================
+       SHOW DROPDOWN
+    ===================================================== */
+
+    .mobile-about-dropdown.show {
+
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        transform: translateX(-50%) translateY(0);
+    }
+
+
+    /* =====================================================
+       DROPDOWN LINKS
+    ===================================================== */
+
+    .mobile-about-dropdown a {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        padding: 11px 12px;
+
+        margin: 2px 0;
+
+        color: #2a4564;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        font-weight: 500;
+
+        border-radius: 12px;
+
+        transition: all 0.2s ease;
+    }
+
+
+    /* =====================================================
+       DROPDOWN ARROW
+    ===================================================== */
+
+    .mobile-about-dropdown a i {
+
+        font-size: 10px;
+
+        color: #e76514;
+
+        min-width: 10px;
+    }
+
+
+    /* =====================================================
+       DROPDOWN HOVER
+    ===================================================== */
+
+    .mobile-about-dropdown a:hover {
+
+        background: #fff1e8;
+
+        color: #e76514;
+
+        padding-left: 16px;
     }
 
 
@@ -220,6 +413,7 @@
 @media (max-width: 480px) {
 
     .bottom-mobile-menu {
+
         left: 8px;
         right: 8px;
         bottom: 8px;
@@ -231,18 +425,42 @@
         padding: 4px 6px;
     }
 
+
     .bottom-mobile-menu-item {
+
         width: 44px;
         height: 44px;
 
         border-radius: 14px;
     }
 
+
     .bottom-mobile-menu-item i {
+
         font-size: 18px;
     }
 
+
+    .mobile-about-dropdown {
+
+        width: 245px;
+
+        bottom: 56px;
+
+        border-radius: 16px;
+    }
+
+
+    .mobile-about-dropdown a {
+
+        font-size: 13px;
+
+        padding: 10px;
+    }
+
+
     body {
+
         padding-bottom: 78px;
     }
 }
@@ -255,6 +473,7 @@
 @media (max-width: 360px) {
 
     .bottom-mobile-menu {
+
         left: 6px;
         right: 6px;
         bottom: 6px;
@@ -264,23 +483,80 @@
         border-radius: 17px;
     }
 
+
     .bottom-mobile-menu-item {
+
         width: 40px;
         height: 40px;
 
         border-radius: 12px;
     }
 
+
     .bottom-mobile-menu-item i {
+
         font-size: 17px;
     }
 
+
+    .mobile-about-dropdown {
+
+        width: 225px;
+
+        bottom: 52px;
+    }
+
+
+    .mobile-about-dropdown a {
+
+        font-size: 12px;
+
+        padding: 9px;
+    }
+
+
     body {
+
         padding-bottom: 72px;
     }
 }
+
 </style>
 
+
+<script>
+
+function toggleMobileAbout() {
+
+    const dropdown = document.getElementById("mobileAboutDropdown");
+
+    dropdown.classList.toggle("show");
+}
+
+
+/* =========================================================
+   CLOSE WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener("click", function(event) {
+
+    const wrapper = document.querySelector(".mobile-about-wrapper");
+
+    const dropdown = document.getElementById("mobileAboutDropdown");
+
+    if (!wrapper || !dropdown) {
+        return;
+    }
+
+    if (!wrapper.contains(event.target)) {
+
+        dropdown.classList.remove("show");
+
+    }
+
+});
+
+</script>
 
         <!-- RIGHT -->
         <div class="nav-right">

@@ -9,6 +9,7 @@ from .forms import CategoryForm, OfficebearerForm, SpiritualForm, adminform
 from .forms import (SpiritualForm,
     OfficebearerFormSet
 )
+from .models import Kalpana
 
 def index(request):
     """
@@ -43,11 +44,10 @@ def index(request):
         )
     ).order_by('-event_date', '-event_time')
 
-    # -------------------------------------------------
-    # KALPANA
-    # -------------------------------------------------
-    kalpanas = Kalpana.objects.all().order_by('-created_at')
-
+   # -------------------------------------------------
+# KALPANA
+# -------------------------------------------------
+    kalpanas = Kalpana.objects.all().order_by('-created_at')[:3]
     # -------------------------------------------------
     # CONTEXT
     # -------------------------------------------------
@@ -177,7 +177,6 @@ def priestretired_details(request, slug):
     )
 def parish(request):
     parishes = Parish.objects.all().order_by('name')
-
     return render(request, 'diocese/parish.html', {
         'parishes': parishes,
     })

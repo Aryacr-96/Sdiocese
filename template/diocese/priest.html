@@ -1,15 +1,132 @@
 {% load static %}
 {% include 'header.html' %}
 
-<style></style>
+<style>
+/* =========================================
+   PRIEST SEARCH BOX  (single field)
+========================================= */
+.priest-search-box {
+    max-width: 700px;
+    margin: 40px auto 45px;        /* pushed a little below the top */
+    padding: 20px 22px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.priest-search-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.priest-search-field i {
+    position: absolute;
+    left: 15px;
+    color: #94a3b8;
+    font-size: 15px;
+    pointer-events: none;
+}
+
+.priest-search-field input {
+    width: 100%;
+    height: 46px;
+    padding: 0 15px 0 42px;
+    border: 1px solid #d7dee7;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.priest-search-field input:focus {
+    border-color: #2a4564;
+    box-shadow: 0 0 0 3px rgba(42, 69, 100, 0.10);
+}
+
+.priest-search-field input::placeholder {
+    color: #94a3b8;
+}
+
+.priest-search-reset {
+    height: 46px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 10px;
+    background: #2a4564;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.priest-search-reset:hover {
+    background: #e76514;
+    transform: translateY(-1px);
+}
+
+/* When filtering returns no results in a section, hide it entirely */
+.priest-section.is-empty {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .priest-search-box {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 25px 15px 35px;
+        padding: 18px;
+    }
+    .priest-search-reset {
+        width: 100%;
+        height: 48px;
+    }
+    .priest-search-field input {
+        height: 48px;
+    }
+}
+</style>
+
+<!-- ============================================================
+     SINGLE GLOBAL PRIEST SEARCH
+============================================================ -->
+<div class="priest-search-box">
+
+    <div class="priest-search-field">
+        <i class="fas fa-search"></i>
+        <input type="text" id="priestSearchInput"
+               placeholder="Search by name, parish, address or position...">
+    </div>
+
+  <button type="button" class="priest-search-reset" id="priestSearchReset" title="Reset Search">
+    <i class="fas fa-rotate-right"></i>
+</button>
+
+</div>
+
 <!-- CURRENT PRIESTS -->
-<section class="priest-section">
+<section class="priest-section" data-section="current">
          <h1 class="section-title-priest">
             Priests Directory
          </h1>
             <div class="priest-dir-grid">
         {% for priest in priests %}
-            <div class="priest-dir-card">
+            <div class="priest-dir-card priest-search-card"
+                 data-first-name="{{ priest.first_name|lower }}"
+                 data-last-name="{{ priest.last_name|lower }}"
+                 data-address="{{ priest.address|default:''|lower }}"
+                 data-home-parish="{{ priest.home_parish|default:''|lower }}"
+                 data-position="{{ priest.get_position_display|lower }}">
             <div class="priest-dir-img-box">
     {% if priest.image %}
         <img src="{{ priest.image.url }}" 
@@ -76,13 +193,18 @@
 
 
 <!-- RETIRED PRIESTS -->
-<section class="priest-section">
+<section class="priest-section" data-section="retired">
 <h2 class="section-title-retired">
     Retired Priests
 </h2>
 <div class="priest-dir-grid">
 {% for priest in retired_priests %}
-<div class="priest-dir-card">
+<div class="priest-dir-card priest-search-card"
+     data-first-name="{{ priest.first_name|lower }}"
+     data-last-name="{{ priest.last_name|lower }}"
+     data-address="{{ priest.address|default:''|lower }}"
+     data-home-parish="{{ priest.home_parish|default:''|lower }}"
+     data-position="{{ priest.get_position_display|lower }}">
     <div class="priest-dir-img-box">
         {% if priest.image %}
             <img src="{{ priest.image.url }}"alt="{{ priest.first_name }}">
@@ -143,11 +265,16 @@
 
 
 <!-- STUDENTS / SEMINARIANS -->
-<section class="priest-section">
+<section class="priest-section" data-section="students">
 <h2 class="section-title-students">Deacons and Seminarians</h2>
 <div class="priest-dir-grid">
 {% for priest in students %}
-<div class="priest-dir-card">
+<div class="priest-dir-card priest-search-card"
+     data-first-name="{{ priest.first_name|lower }}"
+     data-last-name="{{ priest.last_name|lower }}"
+     data-address="{{ priest.address|default:''|lower }}"
+     data-home-parish="{{ priest.home_parish|default:''|lower }}"
+     data-position="{{ priest.get_position_display|lower }}">
 <div class="priest-dir-img-box">
 {% if priest.image %}
 <img src="{{ priest.image.url }}"alt="{{ priest.first_name }}">
@@ -322,6 +449,75 @@ dropdown.classList.toggle("active");
 });
 
 
+</script>
+
+<script>
+/* ============================================================
+   SINGLE PRIEST SEARCH / FILTER
+   - One input searches first name, last name, address, parish, position
+   - Sections with zero matching cards are hidden entirely (heading + grid)
+============================================================ */
+(function () {
+
+    const searchInput = document.getElementById("priestSearchInput");
+    const resetBtn    = document.getElementById("priestSearchReset");
+
+    if (!searchInput) return;
+
+    const sections = document.querySelectorAll(".priest-section");
+
+    function filterPriests() {
+
+        const query = searchInput.value.toLowerCase().trim();
+
+        sections.forEach(function (section) {
+
+            const cards = section.querySelectorAll(".priest-search-card");
+            let visibleCount = 0;
+
+            cards.forEach(function (card) {
+
+                const haystack = [
+                    card.dataset.firstName  || "",
+                    card.dataset.lastName   || "",
+                    card.dataset.address    || "",
+                    card.dataset.homeParish || "",
+                    card.dataset.position   || ""
+                ].join(" ");
+
+                const match = !query || haystack.includes(query);
+
+                if (match) {
+                    card.style.display = "";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+
+            // Hide section entirely if it has cards but none match
+            // (keep empty-state sections visible when there was never any data)
+            if (cards.length > 0 && visibleCount === 0) {
+                section.classList.add("is-empty");
+            } else {
+                section.classList.remove("is-empty");
+            }
+
+        });
+
+    }
+
+    searchInput.addEventListener("input", filterPriests);
+
+    if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+            searchInput.value = "";
+            filterPriests();
+        });
+    }
+
+})();
 </script>
 
 

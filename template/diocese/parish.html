@@ -21,14 +21,145 @@
            ROOT VARIABLES
         ======================================== */
        
+        /* ========================================
+           PARISH SEARCH BOX
+        ======================================== */
+        .parish-search-box {
+            max-width: 700px;
+            margin: 40px auto 45px;
+            padding: 20px 22px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .parish-search-field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .parish-search-field i {
+            position: absolute;
+            left: 15px;
+            color: #94a3b8;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .parish-search-field input {
+            width: 100%;
+            height: 46px;
+            padding: 0 15px 0 42px;
+            border: 1px solid #d7dee7;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #334155;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .parish-search-field input:focus {
+            border-color: #2a4564;
+            box-shadow: 0 0 0 3px rgba(42, 69, 100, 0.10);
+        }
+
+        .parish-search-field input::placeholder {
+            color: #94a3b8;
+        }
+
+        .parish-search-reset {
+            height: 46px;
+            padding: 0 18px;
+            border: none;
+            border-radius: 10px;
+            background: #2a4564;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .parish-search-reset:hover {
+            background: #e76514;
+            transform: translateY(-1px);
+        }
+
+        /* Hide section header + list when filter yields nothing */
+        .church-section.is-empty {
+            display: none;
+        }
+
+        /* No-results message (only shown when there were cards but none match) */
+        .parish-no-results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .parish-no-results.visible {
+            display: block;
+        }
+
+        .parish-no-results i {
+            font-size: 32px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .parish-search-box {
+                flex-direction: column;
+                align-items: stretch;
+                margin: 25px 15px 35px;
+                padding: 18px;
+            }
+            .parish-search-reset {
+                width: 100%;
+                height: 48px;
+            }
+            .parish-search-field input {
+                height: 48px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <!-- =========================
+     SINGLE PARISH SEARCH
+========================= -->
+<div class="parish-search-box">
+
+    <div class="parish-search-field">
+        <i class="fas fa-search"></i>
+        <input type="text" id="parishSearchInput"
+               placeholder="Search by name, location or district..."
+               value="{{ request.GET.q|default:'' }}"
+               autocomplete="off">
+    </div>
+
+   <button type="button" class="parish-search-reset" id="parishSearchReset" title="Reset Search">
+    <i class="fas fa-rotate-right"></i>
+</button>
+</div>
+
+<!-- =========================
      CHURCH DIRECTORY
 ========================= -->
-<section class="church-section">
+<section class="church-section" data-section="parishes">
     <div class="church-section-header">
         <h1 class="church-section-title">
             <i class="fas fa-church"></i>
@@ -42,7 +173,10 @@
     <div class="church-list">
 
         {% for parish in parishes %}
-        <div class="church-card">
+        <div class="church-card parish-search-card"
+             data-name="{{ parish.name|default:''|lower }}"
+             data-location="{{ parish.location|default:''|lower }}"
+             data-district="{{ parish.district|default:''|lower }}">
 
             <!-- Image -->
             <div class="church-image-box">
@@ -139,6 +273,12 @@
         </div>
         {% endfor %}
 
+        <!-- No-results message (shown only when cards exist but none match) -->
+        <div class="parish-no-results" id="parishNoResults">
+            <i class="fas fa-search"></i>
+            No parishes match your search.
+        </div>
+
     </div>
 </section>
 </div>
@@ -228,59 +368,202 @@ document.querySelectorAll('.church-image-box img').forEach(img => {
 });
 </script>
 
-
-<!-- JAVASCRIPT -->
 <script>
-const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
+/* ============================================================
+   PARISH SEARCH / FILTER
+   Single input matches: name, location, district (combined)
+   Hides the whole section (heading + list) when nothing matches.
+   Also reads ?q= from the URL so index.html search works.
+============================================================ */
+(function () {
 
-function openSidebar() {
-    sidebar.classList.add('open');
-    overlay.classList.add('active');
-    toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
+    const searchInput = document.getElementById("parishSearchInput");
+    const resetBtn    = document.getElementById("parishSearchReset");
+    const section     = document.querySelector(".church-section");
+    const noResults   = document.getElementById("parishNoResults");
 
-function closeSidebar() {
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-}
+    if (!searchInput || !section) return;
 
-toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
+    const cards = section.querySelectorAll(".parish-search-card");
 
-overlay.addEventListener('click', closeSidebar);
+    function filterParishes() {
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-</script>
+        const query = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
 
-<script>
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
+        cards.forEach(function (card) {
 
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
+            const haystack = [
+                card.dataset.name     || "",
+                card.dataset.location || "",
+                card.dataset.district || ""
+            ].join(" ");
+
+            const match = !query || haystack.includes(query);
+
+            if (match) {
+                card.style.display = "";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
             }
+
         });
 
-        dropdown.classList.toggle("active");
-    });
+        // If there were cards but none match → hide whole section + show message
+        if (cards.length > 0 && visibleCount === 0) {
+            section.classList.add("is-empty");
+            if (noResults) noResults.classList.add("visible");
+        } else {
+            section.classList.remove("is-empty");
+            if (noResults) noResults.classList.remove("visible");
+        }
+
+    }
+
+    // ---- NEW: read ?q= from URL (arriving from index.html) ----
+    const params  = new URLSearchParams(window.location.search);
+    const initial = params.get("q");
+    if (initial) {
+        searchInput.value = initial;
+    }
+
+    // Run filter once on load so ?q=... filters immediately
+    filterParishes();
+
+    searchInput.addEventListener("input", filterParishes);
+
+    if (resetBtn) {
+        resetBtn.addEventListener("click", function () {
+            searchInput.value = "";
+            // Remove ?q= from URL so refresh doesn't refilter
+            if (window.history.replaceState) {
+                window.history.replaceState({}, "", window.location.pathname);
+            }
+            filterParishes();
+        });
+    }
+
+})();
+</script>
+
+
+<script>
+
+const toggleBtn = document.getElementById('sidebarToggleBtn');
+
+const sidebar = document.getElementById('sidebarPanel');
+
+const overlay = document.getElementById('sidebarOverlay');
+
+
+
+function openSidebar(){
+
+    sidebar.classList.add('open');
+
+    overlay.classList.add('active');
+
+    toggleBtn.classList.add('active');
+
+    document.body.style.overflow='hidden';
+
+}
+
+
+
+function closeSidebar(){
+
+    sidebar.classList.remove('open');
+
+    overlay.classList.remove('active');
+
+    toggleBtn.classList.remove('active');
+
+    document.body.style.overflow='';
+
+}
+
+
+
+toggleBtn.addEventListener('click',(e)=>{
+
+e.stopPropagation();
+
+if(sidebar.classList.contains('open')){
+
+closeSidebar();
+
+}
+
+else{
+
+openSidebar();
+
+}
+
 });
+
+
+
+overlay.addEventListener('click',closeSidebar);
+
+
+
+document.addEventListener('keydown',(e)=>{
+
+if(e.key==="Escape" && sidebar.classList.contains('open')){
+
+closeSidebar();
+
+}
+
+});
+
+
+</script>
+
+
+
+
+
+<script>
+
+
+document.querySelectorAll(".menu-link").forEach(link=>{
+
+
+link.addEventListener("click",function(){
+
+
+const dropdown=this.parentElement;
+
+
+
+document.querySelectorAll(".dropdown").forEach(item=>{
+
+
+if(item!==dropdown){
+
+item.classList.remove("active");
+
+}
+
+
+});
+
+
+
+dropdown.classList.toggle("active");
+
+
+
+});
+
+
+});
+
+
 </script>
 </body>
 </html>

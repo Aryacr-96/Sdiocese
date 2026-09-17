@@ -1,223 +1,671 @@
 {% load static %}
 {% include 'header.html' %}
 
-
 <style>
-.kalpana-wrapper{
-    max-width:1200px;
-    margin:60px auto;
-    padding:0 20px;
-}
 
-.kalpana-title{
-    font-size:32px;
-    font-weight:600;
-    color:#2a4564;
-    position:relative;
-    display:inline-block;
-    margin-bottom:50px;
-    margin-left: 510px;
-}
-
-.kalpana-title::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    width:70px;
-    height:4px;
-    background:#e76514;
-    transform:translateX(-50%);
-    border-radius:20px;
+/* ========================================
+   KALPANA WRAPPER
+======================================== */
+.kalpana-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 
-
-
-/* GRID */
-.kalpana-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
+/* ========================================
+   HEADER
+======================================== */
+.kalpana-header {
+    width: 100%;
+    text-align: center;
 }
 
-/* CARD */.kalpana-card {
+
+/* ========================================
+   TITLE
+======================================== */
+.kalpana-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin: 0 0 50px 0;
+    text-align: center;
+}
+
+.kalpana-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
+}
+
+
+/* ========================================
+   GRID
+======================================== */
+.kalpana-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   CARD
+======================================== */
+.kalpana-card {
     display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
     text-decoration: none;
     color: inherit;
+
     padding: 20px;
+
     border-radius: 10px;
     border: 1px solid #ddd;
-    transition: 0.3s;
-    cursor: pointer;
+
     background: #fff;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+    cursor: pointer;
 }
 
+
+/* ========================================
+   CARD HOVER
+======================================== */
 .kalpana-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-}
-.kalpana-card h3{
-    margin:0;
-    font-size:20px;
-    color:#23395d;
-    font-weight:600;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.15);
+
+    border-color: #e76514;
 }
 
-/* BUTTON */
-.kalpana-btn{
-    padding:8px 16px;
-    background:#23395d;
-    color:#fff;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-    white-space:nowrap;
-    transition:.3s;
+
+/* ========================================
+   CARD TITLE
+======================================== */
+.kalpana-card h3 {
+    margin: 0;
+
+    font-size: 20px;
+    line-height: 1.5;
+
+    color: #23395d;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
-.kalpana-btn:hover{
-    background:#c9500f;
+
+/* ========================================
+   CARD META
+======================================== */
+.card-meta {
+    margin-top: 10px;
 }
 
-/* TABLET */
-@media(max-width:768px){
-    .kalpana-grid{
-        grid-template-columns:1fr;
+
+/* ========================================
+   BUTTON
+======================================== */
+.kalpana-btn {
+    padding: 8px 16px;
+
+    background: #23395d;
+    color: #fff;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.3s;
+}
+
+.kalpana-btn:hover {
+    background: #c9500f;
+}
+
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+.empty-state {
+    width: 100%;
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+    border: 1px dashed #ccc;
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+.empty-state i {
+    font-size: 40px;
+    color: #e76514;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    margin: 0 0 10px;
+
+    font-size: 22px;
+
+    color: #23395d;
+}
+
+.empty-state p {
+    margin: 0;
+
+    font-size: 15px;
+
+    color: #666;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+@media (max-width: 992px) {
+
+    .kalpana-wrapper {
+        margin: 50px auto;
+        padding: 0 25px;
     }
 
-    .kalpana-card{
-        flex-direction:column;
-        gap:15px;
-        text-align:center;
+    .kalpana-title {
+        font-size: 30px;
+        margin-bottom: 45px;
+    }
+
+    .kalpana-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .kalpana-card {
+        padding: 18px;
+    }
+
+    .kalpana-card h3 {
+        font-size: 18px;
     }
 }
+
+
+/* ========================================
+   MOBILE
+======================================== */
+@media (max-width: 768px) {
+
+    .kalpana-wrapper {
+        width: 100%;
+        margin: 40px auto;
+        padding: 0 18px;
+    }
+
+    /* Center title */
+    .kalpana-header {
+        text-align: center;
+    }
+
+    .kalpana-title {
+        font-size: 27px;
+        margin: 0 0 40px 0;
+    }
+
+    .kalpana-title::after {
+        width: 60px;
+        height: 3px;
+        bottom: -12px;
+    }
+
+    /* One card per row */
+    .kalpana-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .kalpana-card {
+        width: 100%;
+        padding: 17px 16px;
+        border-radius: 9px;
+    }
+
+    .kalpana-card h3 {
+        font-size: 17px;
+        line-height: 1.45;
+    }
+
+    .empty-state {
+        padding: 40px 15px;
+    }
+}
+
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+@media (max-width: 576px) {
+
+    .kalpana-wrapper {
+        margin: 30px auto;
+        padding: 0 14px;
+    }
+
+    .kalpana-title {
+        font-size: 24px;
+        margin-bottom: 38px;
+    }
+
+    .kalpana-title::after {
+        width: 55px;
+        height: 3px;
+        bottom: -11px;
+    }
+
+    .kalpana-grid {
+        gap: 13px;
+    }
+
+    .kalpana-card {
+        padding: 15px 14px;
+        border-radius: 8px;
+    }
+
+    .kalpana-card h3 {
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .empty-state {
+        padding: 35px 12px;
+    }
+
+    .empty-state i {
+        font-size: 32px;
+    }
+
+    .empty-state h3 {
+        font-size: 19px;
+    }
+
+    .empty-state p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+
+/* ========================================
+   VERY SMALL MOBILE
+======================================== */
+@media (max-width: 380px) {
+
+    .kalpana-wrapper {
+        margin: 25px auto;
+        padding: 0 10px;
+    }
+
+    .kalpana-title {
+        font-size: 22px;
+        margin-bottom: 35px;
+    }
+
+    .kalpana-title::after {
+        width: 50px;
+    }
+
+    .kalpana-grid {
+        gap: 11px;
+    }
+
+    .kalpana-card {
+        padding: 13px 12px;
+    }
+
+    .kalpana-card h3 {
+        font-size: 14px;
+    }
+}
+
 </style>
 
+
 <section class="kalpana-wrapper">
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
     <div class="kalpana-header">
-        <h1 class="kalpana-title">Kalpana</h1>
-        <!-- <p class="kalpana-subtitle">Official documents, notices and publications from the Diocese</p>
+
+        <h1 class="kalpana-title">
+            Kalpana
+        </h1>
+
+        <!--
+        <p class="kalpana-subtitle">
+            Official documents, notices and publications from the Diocese
+        </p>
+
         <div class="kalpana-stats">
             <i class="fas fa-file-alt"></i>
-            {{ kalpanas|length }} Kalpana{{ kalpanas|length|pluralize }} available
-        </div> -->
+            {{ kalpanas|length }}
+            Kalpana{{ kalpanas|length|pluralize }} available
+        </div>
+        -->
+
     </div>
 
+
+    <!-- ========================================
+         KALPANA GRID
+    ======================================== -->
     <div class="kalpana-grid">
+
         {% if kalpanas %}
+
             {% for kalpana in kalpanas %}
-                <a href="{% url 'kalpanadetail' kalpana.slug %}" class="kalpana-card">
-                    <!-- <div class="card-icon">
+
+                <a
+                    href="{% url 'kalpanadetail' kalpana.slug %}"
+                    class="kalpana-card"
+                >
+
+                    <!--
+                    <div class="card-icon">
                         <i class="fas fa-scroll"></i>
-                    </div> -->
-                    <h3>{{ kalpana.title }}</h3>
+                    </div>
+                    -->
+
+
+                    <!-- TITLE -->
+                    <h3>
+                        {{ kalpana.title }}
+                    </h3>
+
+
+                    <!-- CARD META -->
                     <div class="card-meta">
-                        <!-- <span>
+
+                        <!--
+                        <span>
                             <i class="fas fa-file-alt"></i>
-                            {{ kalpana.files.count }} document{{ kalpana.files.count|pluralize }}
-                        </span> -->
-                        <!-- <span>
+                            {{ kalpana.files.count }}
+                            document{{ kalpana.files.count|pluralize }}
+                        </span>
+                        -->
+
+
+                        <!--
+                        <span>
                             <i class="far fa-calendar-alt"></i>
                             {{ kalpana.created_at|date:"M d, Y" }}
-                        </span> -->
-                        <!-- {% if kalpana.files.all %}
-                            {% with kalpana.files.all|first as first_file %}
-                                <span class="file-badge">
-                                    <i class="fas fa-{% if first_file.file_type == 'pdf' %}file-pdf{% elif first_file.file_type == 'excel' %}file-excel{% elif first_file.file_type == 'word' %}file-word{% else %}file{% endif %}"></i>
-                                    {{ first_file.file_type|default:'file'|upper }}
-                                </span>
-                            {% endwith %}
-                        {% endif %} -->
-                    </div>
-                    <!-- <span class="card-footer-link">
-                        View Details <i class="fas fa-arrow-right"></i>
-                    </span> -->
-                </a>
-            {% endfor %}
-        {% else %}
-            <div class="empty-state">
-                <i class="fas fa-scroll"></i>
-                <h3>No Kalpana Found</h3>
-                <p>No official documents or notices are available at this time.</p>
-            </div>
-        {% endif %}
-    </div>
-</section>
+                        </span>
+                        -->
 
+
+                        <!--
+                        {% if kalpana.files.all %}
+
+                            {% with kalpana.files.all|first as first_file %}
+
+                                <span class="file-badge">
+
+                                    <i class="fas fa-
+                                    {% if first_file.file_type == 'pdf' %}
+                                        file-pdf
+                                    {% elif first_file.file_type == 'excel' %}
+                                        file-excel
+                                    {% elif first_file.file_type == 'word' %}
+                                        file-word
+                                    {% else %}
+                                        file
+                                    {% endif %}
+                                    "></i>
+
+                                    {{ first_file.file_type|default:'file'|upper }}
+
+                                </span>
+
+                            {% endwith %}
+
+                        {% endif %}
+                        -->
+
+                    </div>
+
+
+                    <!--
+                    <span class="card-footer-link">
+                        View Details
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                    -->
+
+                </a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <!-- ========================================
+                 EMPTY STATE
+            ======================================== -->
+
+            <div class="empty-state">
+
+                <i class="fas fa-scroll"></i>
+
+                <h3>
+                    No Kalpana Found
+                </h3>
+
+                <p>
+                    No official documents or notices are available at this time.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
 </div>
+
 {% include 'footer.html' %}
 
-<!-- JAVASCRIPT -->
+
+<!-- ========================================
+     SIDEBAR JAVASCRIPT
+======================================== -->
 <script>
+
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
 const overlay = document.getElementById('sidebarOverlay');
 
+
 function openSidebar() {
+
+    if (!sidebar || !overlay || !toggleBtn) {
+        return;
+    }
+
     sidebar.classList.add('open');
     overlay.classList.add('active');
     toggleBtn.classList.add('active');
+
     document.body.style.overflow = 'hidden';
 }
 
+
 function closeSidebar() {
+
+    if (!sidebar || !overlay || !toggleBtn) {
+        return;
+    }
+
     sidebar.classList.remove('open');
     overlay.classList.remove('active');
     toggleBtn.classList.remove('active');
+
     document.body.style.overflow = '';
 }
 
-toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
 
-overlay.addEventListener('click', closeSidebar);
+if (toggleBtn) {
+
+    toggleBtn.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        if (sidebar && sidebar.classList.contains('open')) {
+
+            closeSidebar();
+
+        } else {
+
+            openSidebar();
+
+        }
+
+    });
+
+}
+
+
+if (overlay) {
+
+    overlay.addEventListener('click', closeSidebar);
+
+}
+
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+
+    if (
+        e.key === 'Escape' &&
+        sidebar &&
+        sidebar.classList.contains('open')
+    ) {
+
         closeSidebar();
+
     }
+
 });
+
 </script>
 
+
+<!-- ========================================
+     DROPDOWN MENU JAVASCRIPT
+======================================== -->
 <script>
+
 document.querySelectorAll(".menu-link").forEach(link => {
+
     link.addEventListener("click", function () {
+
         const dropdown = this.parentElement;
 
         document.querySelectorAll(".dropdown").forEach(item => {
+
             if (item !== dropdown) {
+
                 item.classList.remove("active");
+
             }
+
         });
 
         dropdown.classList.toggle("active");
+
     });
+
 });
+
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+
+<!-- ========================================
+     HISTORY SCROLL JAVASCRIPT
+======================================== -->
+<script>
+
+const historyBlocks = document.querySelectorAll('.history-block');
+
 
 window.addEventListener('scroll', () => {
+
     historyBlocks.forEach(block => {
+
         const rect = block.getBoundingClientRect();
-        
-        // This check defines the "active" zone (the center of your screen)
-        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        /*
+         * Active when the block crosses
+         * the center of the screen
+         */
+
+        const isMiddle =
+            rect.top < window.innerHeight / 2 &&
+            rect.bottom > window.innerHeight / 2;
+
 
         if (isMiddle) {
-            // Change to active color while scrolling
-            block.style.setProperty('--line-color', '#e76514');
+
+            block.style.setProperty(
+                '--line-color',
+                '#e76514'
+            );
+
         } else {
-            // Reset to inactive color when not scrolling over this block
-            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+
+            block.style.setProperty(
+                '--line-color',
+                'rgba(231, 101, 20, 0.2)'
+            );
+
         }
+
     });
-});</script>
+
+});
+
+</script>
+
+
 </body>
-</html>   
+</html>
