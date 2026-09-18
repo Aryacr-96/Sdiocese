@@ -2009,278 +2009,10 @@
     }
 }
 </style>
-    <style>
-        /* ========================================
-           SECTION WRAPPER (Orange Background)
-        ======================================== */
-        .connect-wrapper {
-            width: 100%;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, #f9b58e 0%, #fcd5c0 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-           
-        }
-
-        /* Inner white card container */
-        .connect-container {
-            width: 100%;
-            max-width: 1100px;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 50px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            box-sizing: border-box;
-        }
-
-        /* ========================================
-           HEADER STYLING (heading right to the icon)
-        ======================================== */
-        .connect-header {
-            display: flex;
-            justify-content: flex-end;      /* align to right */
-            align-items: center;
-            gap: 18px;                      /* space between icon and text */
-            margin-bottom: 40px;
-            padding-right: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* decorative icon beside heading */
-        .header-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
-            background: rgba(249, 181, 142, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
-        }
-
-        .header-icon i {
-            font-size: 2rem;
-            color: #d45d2c;
-        }
-
-        .connect-header-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;          /* right-align text */
-        }
-
-        .connect-subtitle {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #64748b;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .connect-title {
-            margin: 5px 0 0 0;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #0b305c;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        /* ========================================
-           GRID LAYOUT
-        ======================================== */
-        .connect-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        /* ========================================
-           CARD STYLING (curved corners)
-        ======================================== */
-        .connect-card {
-            background: #fff8f3;
-            border: 1px solid rgba(249, 181, 142, 0.3);
-            border-radius: 28px;              /* larger curve */
-            padding: 35px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-align: left;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
-        }
-
-        .connect-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
-            background: #ffffff;
-            border-color: rgba(249, 181, 142, 0.9);
-        }
-
-        /* ========================================
-           CARD TOP ROW (icon + heading side by side)
-        ======================================== */
-        .card-top {
-            display: flex;
-            align-items: center;         /* icon and heading aligned in a row */
-            gap: 15px;
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        /* Icon Container */
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            color: #ffffff;
-            margin-bottom: 0;            /* no bottom margin since heading is beside */
-            flex-shrink: 0;              /* prevents icon from squishing */
-            transition: transform 0.3s ease, border-radius 0.3s ease;
-        }
-
-        .connect-card:hover .icon-box {
-            transform: scale(1.08) rotate(-4deg);
-            border-radius: 22px;
-        }
-
-        /* Icon Specific Colors */
-        .whatsapp-icon {
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.25);
-        }
-        .facebook-icon {
-            background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
-            box-shadow: 0 8px 16px rgba(24, 119, 242, 0.25);
-        }
-        .instagram-icon {
-            background: linear-gradient(135deg, #E1306C 0%, #F56040 50%, #FCAF45 100%);
-            box-shadow: 0 8px 16px rgba(225, 48, 108, 0.25);
-        }
-
-        /* Card Typography */
-        .connect-card h3 {
-            margin: 0;                   /* no bottom margin, it's inside card-top */
-            font-size: 1.3rem;
-            color: #1e293b;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .connect-card p {
-            margin: 0 0 25px 0;
-            font-size: 0.95rem;
-            color: #64748b;
-            line-height: 1.6;
-            flex-grow: 1;
-        }
-
-        /* ========================================
-           BUTTON STYLING (fully rounded)
-        ======================================== */
-        .connect-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 14px 20px;
-            border-radius: 40px;               /* pill-shaped / very curved */
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            color: #ffffff;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            letter-spacing: 0.3px;
-        }
-
-        .connect-btn i {
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-        }
-
-        .connect-btn:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Button Specific Colors */
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-            box-shadow: 0 6px 12px rgba(37, 211, 102, 0.2);
-        }
-        .btn-whatsapp:hover {
-            background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
-            box-shadow: 0 10px 18px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-facebook {
-            background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
-            box-shadow: 0 6px 12px rgba(24, 119, 242, 0.2);
-        }
-        .btn-facebook:hover {
-            background: linear-gradient(135deg, #0d5bbd 0%, #084298 100%);
-            box-shadow: 0 10px 18px rgba(24, 119, 242, 0.3);
-        }
-
-        .btn-instagram {
-            background: linear-gradient(135deg, #E1306C 0%, #F56040 100%);
-            box-shadow: 0 6px 12px rgba(225, 48, 108, 0.2);
-        }
-        .btn-instagram:hover {
-            background: linear-gradient(135deg, #C13584 0%, #E1306C 100%);
-            box-shadow: 0 10px 18px rgba(225, 48, 108, 0.3);
-        }
-
-        /* ========================================
-           RESPONSIVE DESIGN
-        ======================================== */
-        @media (max-width: 992px) {
-            .connect-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .connect-header {
-                justify-content: center;
-                padding-right: 0;
-            }
-            .connect-header-text {
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .connect-container {
-                padding: 30px 20px;
-            }
-            .connect-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .connect-title {
-                font-size: 1.5rem;
-            }
-            .connect-card {
-                padding: 25px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<section class="connect-wrapper">
+    <section class="connect-wrapper">
     <div class="connect-container">
         
         <div class="connect-header">
-           
             <div class="connect-header-text">
                 <p class="connect-subtitle">Connect With</p>
                 <h2 class="connect-title">SBY DIOCESE</h2>
@@ -2310,7 +2042,7 @@
                     <div class="icon-box facebook-icon">
                         <i class="fab fa-facebook-f"></i>
                     </div>
-                    <h3>Facebook<br> Page</h3>
+                    <h3>Facebook</h3>
                 </div>
                 <p>Follow us for updates, photos, and community posts from across the diocese.</p>
                 <a href="https://www.facebook.com/share/1BEWpQkiao/" class="connect-btn btn-facebook">
@@ -2325,7 +2057,7 @@
                     <div class="icon-box instagram-icon">
                         <i class="fab fa-instagram"></i>
                     </div>
-                    <h3>Instagram<br> Page</h3>
+                    <h3>Instagram</h3>
                 </div>
                 <p>Explore moments, events, and visual stories capturing our community's spirit.</p>
                 <a href="https://www.instagram.com/sbydiocese?igsh=MW1jcGRpNm5uY25zZA==" class="connect-btn btn-instagram">
@@ -2334,9 +2066,371 @@
                 </a>
             </div>
 
+            <!-- YouTube Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box youtube-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>YouTube</h3>
+                </div>
+                <p>Watch sermons, events, and inspiring videos from the diocese community.</p>
+                <a href="https://youtube.com/@nirmalagiriorthodoxmedia" class="connect-btn btn-youtube">
+                    Subscribe
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!--  X Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box twitter-icon">
+                        <i class="fab fa-x-twitter"></i>
+                    </div>
+                    <h3>X</h3>
+                </div>
+                <p>Stay updated with quick news, thoughts, and live updates from the diocese.</p>
+                <a href="https://x.com/sbydiocese" class="connect-btn btn-twitter">
+                    Follow Page
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Email Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box email-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                </div>
+                <p>Subscribe to receive weekly bulletins, newsletters, and important notices.</p>
+                <a href="mailto:sbydiocese@gmail.com" class="connect-btn btn-email">
+                    Send Email
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Threads Card -->
+            <div class="connect-card">
+                <div class="card-top">
+                    <div class="icon-box threads-icon">
+                        <i class="fab fa-threads"></i>
+                    </div>
+                    <h3>Threads</h3>
+                </div>
+                <p>Join conversations and share reflections with our growing community.</p>
+                <a href="https://www.threads.com/@sbydiocese" class="connect-btn btn-threads">
+                    Follow Page
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
         </div>
     </div>
 </section>
+
+<style>
+    /* ========================================
+       SECTION WRAPPER (Orange Background)
+    ======================================== */
+    .connect-wrapper {
+        width: 100%;
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #f9b58e 0%, #fcd5c0 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    /* Inner white card container */
+    .connect-container {
+        width: 100%;
+        max-width: 1100px;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 50px 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        box-sizing: border-box;
+    }
+
+    /* ========================================
+       HEADER STYLING
+    ======================================== */
+    .connect-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 40px;
+        padding-right: 20px;
+        flex-wrap: wrap;
+    }
+
+    .connect-header-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .connect-subtitle {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #64748b;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .connect-title {
+        margin: 5px 0 0 0;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #0b305c;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    /* ========================================
+       GRID LAYOUT – 3 columns
+    ======================================== */
+    .connect-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    /* ========================================
+       CARD STYLING
+    ======================================== */
+    .connect-card {
+        background: #fff8f3;
+        border: 1px solid rgba(249, 181, 142, 0.3);
+        border-radius: 28px;
+        padding: 35px 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        text-align: left;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+    }
+
+    .connect-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+        background: #ffffff;
+        border-color: rgba(249, 181, 142, 0.9);
+    }
+
+    /* ========================================
+       CARD TOP ROW (icon + heading)
+    ======================================== */
+    .card-top {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        color: #ffffff;
+        flex-shrink: 0;
+        transition: transform 0.3s ease, border-radius 0.3s ease;
+    }
+
+    .connect-card:hover .icon-box {
+        transform: scale(1.08) rotate(-4deg);
+        border-radius: 22px;
+    }
+
+    /* ========================================
+       ICON BACKGROUNDS (brand colours)
+    ======================================== */
+    .whatsapp-icon {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        box-shadow: 0 8px 16px rgba(37, 211, 102, 0.25);
+    }
+    .facebook-icon {
+        background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
+        box-shadow: 0 8px 16px rgba(24, 119, 242, 0.25);
+    }
+    .instagram-icon {
+        background: linear-gradient(135deg, #E1306C 0%, #F56040 50%, #FCAF45 100%);
+        box-shadow: 0 8px 16px rgba(225, 48, 108, 0.25);
+    }
+    .youtube-icon {
+        background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+        box-shadow: 0 8px 16px rgba(255, 0, 0, 0.25);
+    }
+    .twitter-icon {
+        background: linear-gradient(135deg, #1DA1F2 0%, #1DA1F2 100%);
+        box-shadow: 0 8px 16px rgba(29, 161, 242, 0.25);
+    }
+    .email-icon {
+        background: linear-gradient(135deg, #D44638 0%, #B23121 100%);
+        box-shadow: 0 8px 16px rgba(212, 70, 56, 0.25);
+    }
+    .threads-icon {
+        background: linear-gradient(135deg, #000000 0%, #333333 100%);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ========================================
+       CARD TYPOGRAPHY
+    ======================================== */
+    .connect-card h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #1e293b;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .connect-card p {
+        margin: 0 0 25px 0;
+        font-size: 0.95rem;
+        color: #64748b;
+        line-height: 1.6;
+        flex-grow: 1;
+    }
+
+    /* ========================================
+       BUTTON STYLING
+    ======================================== */
+    .connect-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px 20px;
+        border-radius: 40px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: #ffffff;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.3px;
+    }
+
+    .connect-btn i {
+        font-size: 0.9rem;
+        transition: transform 0.3s ease;
+    }
+
+    .connect-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Button Specific Colours */
+    .btn-whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        box-shadow: 0 6px 12px rgba(37, 211, 102, 0.2);
+    }
+    .btn-whatsapp:hover {
+        background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+        box-shadow: 0 10px 18px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-facebook {
+        background: linear-gradient(135deg, #1877F2 0%, #0d5bbd 100%);
+        box-shadow: 0 6px 12px rgba(24, 119, 242, 0.2);
+    }
+    .btn-facebook:hover {
+        background: linear-gradient(135deg, #0d5bbd 0%, #084298 100%);
+        box-shadow: 0 10px 18px rgba(24, 119, 242, 0.3);
+    }
+
+    .btn-instagram {
+        background: linear-gradient(135deg, #E1306C 0%, #F56040 100%);
+        box-shadow: 0 6px 12px rgba(225, 48, 108, 0.2);
+    }
+    .btn-instagram:hover {
+        background: linear-gradient(135deg, #C13584 0%, #E1306C 100%);
+        box-shadow: 0 10px 18px rgba(225, 48, 108, 0.3);
+    }
+
+    .btn-youtube {
+        background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+        box-shadow: 0 6px 12px rgba(255, 0, 0, 0.2);
+    }
+    .btn-youtube:hover {
+        background: linear-gradient(135deg, #CC0000 0%, #990000 100%);
+        box-shadow: 0 10px 18px rgba(255, 0, 0, 0.3);
+    }
+
+    .btn-twitter {
+        background: linear-gradient(135deg, #1DA1F2 0%, #1DA1F2 0% 100%);
+        box-shadow: 0 6px 12px rgba(29, 161, 242, 0.2);
+    }
+    .btn-twitter:hover {
+        background: linear-gradient(135deg, #0f6ea9 0%, #0f6ea9 0% 100%);
+        box-shadow: 0 10px 18px rgba(29, 161, 242, 0.3);
+    }
+
+    .btn-email {
+        background: linear-gradient(135deg, #D44638 0%, #B23121 100%);
+        box-shadow: 0 6px 12px rgba(212, 70, 56, 0.2);
+    }
+    .btn-email:hover {
+        background: linear-gradient(135deg, #B23121 0%, #8B1A0F 100%);
+        box-shadow: 0 10px 18px rgba(212, 70, 56, 0.3);
+    }
+
+    .btn-threads {
+        background: linear-gradient(135deg, #000000 0%, #333333 100%);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    .btn-threads:hover {
+        background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========================================
+       RESPONSIVE DESIGN
+    ======================================== */
+    @media (max-width: 992px) {
+        .connect-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .connect-header {
+            justify-content: center;
+            padding-right: 0;
+        }
+        .connect-header-text {
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .connect-container {
+            padding: 30px 20px;
+        }
+        .connect-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .connect-title {
+            font-size: 1.5rem;
+        }
+        .connect-card {
+            padding: 25px 20px;
+        }
+    }
+</style>
 <!-- =====================================================
      BACKGROUND GRAPHICS
 ====================================================== -->
