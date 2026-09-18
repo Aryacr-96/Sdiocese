@@ -223,60 +223,32 @@
             ================================================== -->
 
             <div class="dropdown">
-
-
                 <a href="javascript:void(0)"
                    class="menu-link">
-
                     <i class="fa-regular fa-heart menu-icon"></i>
-
                     Spiritual Organisations
-
                     <span class="arrow">
                         ▸
                     </span>
-
                 </a>
-
-
                 <div class="submenu">
-
-
                     {% for spiritual in spirituals %}
-
-
                     <a href="{% url 'spiritual_detail' spiritual.slug %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         {{ spiritual.category_title }}
-
                     </a>
-
-
                     {% empty %}
-
-
                     <a href="javascript:void(0)"
                        style="color:#94a3b8;cursor:default;">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         No spiritual categories available
-
                     </a>
-
-
                     {% endfor %}
-
-
                 </div>
-
-
             </div>
 
 
@@ -286,50 +258,28 @@
             ================================================== -->
 
             <div class="dropdown">
-
-
                 <a href="javascript:void(0)"
                    class="menu-link">
-
                     <i class="fa-solid fa-hands-holding-circle menu-icon"></i>
-
                     Karunya Sparsam
-
                     <span class="arrow">
                         ▸
                     </span>
-
                 </a>
-
-
                 <div class="submenu">
-
-
                     <a href="{% url 'karunyam' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         About
-
                     </a>
-
-
                     <a href="{% url 'projects' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
-                        Projects
-
-                    </a>
-
-
+                            Projects
+                  </a>
                 </div>
-
-
             </div>
 
 
@@ -339,83 +289,48 @@
             ================================================== -->
 
             <div class="dropdown">
-
-
                 <a href="javascript:void(0)"
                    class="menu-link">
-
                     <i class="fa-regular fa-file-video menu-icon"></i>
-
                     Media
-
                     <span class="arrow">
                         ▸
                     </span>
-
                 </a>
-
-
                 <div class="submenu">
-
-
                     <a href="{% url 'publications' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         Publications
-
                     </a>
-
-
                     <a href="{% url 'images' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         Image Gallery
-
                     </a>
-
-
                     <a href="{% url 'videos' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         Video Gallery
-
                     </a>
-
-
                     <a href="{% url 'calendar' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         Calendar
-
                     </a>
 
 
                     <a href="{% url 'events' %}">
-
                         <span class="arrow">
                             ▸
                         </span>
-
                         Upcoming Events
-
                     </a>
-
-
                 </div>
-
-
             </div>
 
 
@@ -944,7 +859,7 @@
 
         <!-- LEFT : IMAGE -->
         <div class="about-image">
-            <img src="{% static 'images/diosb.jpg' %}"
+            <img src="{% static 'images/unnamed.webp' %}"
                  alt="Sulthan Bathery Diocese Church">
         </div>
 
@@ -1008,9 +923,9 @@
 }
 
 .about-image img {
-    width: 100%;
+    width: 500px;
     height: 420px;
-    object-fit: contain;
+    object-fit: fill;
     border-radius: 18px;
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
     display: block;
@@ -1653,7 +1568,7 @@
             <p>Catholicos Of The East &amp; Malankara Metropolitan</p>
         </div>
         <div class="image-card">
-            <img src="{% static 'images/barnabas.png' %}" alt="H.G. Dr. Geevarghese Mar Barnabas">
+            <img src="{% static 'images/priestname.png' %}" alt="H.G. Dr. Geevarghese Mar Barnabas">
             <h4>H.G. Dr. Geevarghese Mar Barnabas</h4>
             <p>Diocesan Metropolitan</p>
         </div>
@@ -1755,8 +1670,8 @@
 
 .image-card img {
     width: 100%;
-    max-width: 200px;
-    height: auto;
+    max-width: 300px;
+    height: 300px;
     border-radius: 4px;
     object-fit: cover;
     margin-bottom: 15px;
