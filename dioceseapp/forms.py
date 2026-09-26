@@ -1727,7 +1727,6 @@ class GalleryForm(forms.ModelForm):
 
 
 #PRAYER BOOKS 
-
 from django import forms
 import os
 
@@ -1830,20 +1829,43 @@ class PrayerBookForm(forms.ModelForm):
 
     def clean_file(self):
 
-        file = self.cleaned_data.get(
+        # -----------------------------------------
+        # IMPORTANT:
+        # Check whether a NEW file was uploaded.
+        # Do not use cleaned_data alone here because
+        # it can contain the existing file while editing.
+        # -----------------------------------------
+
+        uploaded_file = self.files.get(
             'file'
         )
 
-        if not file:
+        # -----------------------------------------
+        # EDITING WITHOUT A NEW PDF
+        # -----------------------------------------
 
-            return file
+        if not uploaded_file:
+
+            # Keep the existing PDF
+            # when editing the Prayer Book.
+            if (
+                self.instance
+                and self.instance.pk
+                and self.instance.file
+            ):
+                return self.instance.file
+
+            # No file uploaded for a new Prayer Book
+            return self.cleaned_data.get(
+                'file'
+            )
 
         # -----------------------------------------
         # CHECK EXTENSION
         # -----------------------------------------
 
         extension = os.path.splitext(
-            file.name
+            uploaded_file.name
         )[1].lower()
 
         if extension != '.pdf':
@@ -1857,7 +1879,7 @@ class PrayerBookForm(forms.ModelForm):
         # -----------------------------------------
 
         content_type = getattr(
-            file,
+            uploaded_file,
             'content_type',
             None
         )
@@ -1874,11 +1896,11 @@ class PrayerBookForm(forms.ModelForm):
 
         try:
 
-            file.seek(0)
+            uploaded_file.seek(0)
 
-            header = file.read(5)
+            header = uploaded_file.read(5)
 
-            file.seek(0)
+            uploaded_file.seek(0)
 
             if header != b'%PDF-':
 
@@ -1896,7 +1918,7 @@ class PrayerBookForm(forms.ModelForm):
                 "Unable to validate the uploaded PDF file."
             )
 
-        return file
+        return uploaded_file
 
 
 

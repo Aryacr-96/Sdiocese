@@ -746,14 +746,14 @@
                                     <div class="file-upload-area" id="fileDropZone">
                                         <i class="fas fa-cloud-upload-alt"></i>
                                         <p><strong>Click to upload</strong> or drag and drop</p>
-                                        <small>PDF, Word (.doc, .docx), Excel (.xls, .xlsx)</small>
+                                        <small>PDF</small>
                                         {{ form.file }}
                                     </div>
                                     {% if form.file.errors %}
                                     <ul class="errorlist">{{ form.file.errors }}</ul>
                                     {% endif %}
                                     <div class="help-text">
-                                        <i class="fas fa-info-circle"></i> Upload the prayer book file (PDF, Word, or Excel)
+                                        <i class="fas fa-info-circle"></i> Upload the prayer book file (PDF)
                                     </div>
                                     <div class="file-info" id="fileInfoContainer">
                                         <i class="fas fa-check-circle"></i>
