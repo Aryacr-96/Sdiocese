@@ -1,243 +1,857 @@
 {% load static %}
+
 {% include 'header.html' %}
 
 <style>
 
-/* WRAPPER */
-.prayer-wrapper{
-    max-width:1200px;
-    margin:60px auto;
-    padding:0 20px;
+/* =========================================================
+   WRAPPER
+========================================================= */
+
+.prayer-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
 }
 
-/* TITLE */
-.prayer-title{
-    font-size:32px;
-    font-weight:600;
-    color:#2a4564;
-    position:relative;
-    display:inline-block;
-    margin-bottom:50px;
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.prayer-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2a4564;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
     margin-left: 400px;
 }
-.prayer-title::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    width:70px;
-    height:4px;
-    background:#e76514;
-    transform:translateX(-50%);
-    border-radius:20px;
+
+.prayer-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -15px;
+    width: 70px;
+    height: 4px;
+    background: #e76514;
+    transform: translateX(-50%);
+    border-radius: 20px;
 }
 
-/* GRID */
-.prayer-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.prayer-search {
+    width: 100%;
+    max-width: 500px;
+    margin: -20px auto 35px;
+    position: relative;
 }
-.prayer-grid a{
+
+.prayer-search input {
+    width: 100%;
+    height: 50px;
+
+    padding: 0 50px 0 20px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+    border-radius: 30px;
+
+    background: #ffffff;
+    color: #2a4564;
+
+    font-size: 15px;
+
+    outline: none;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+
+    transition: 0.3s ease;
+}
+
+.prayer-search input:focus {
+    border-color: #e76514;
+
+    box-shadow:
+        0 0 0 3px rgba(231, 101, 20, 0.12),
+        0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+.prayer-search input::placeholder {
+    color: #999;
+}
+
+.prayer-search-icon {
+    position: absolute;
+
+    right: 20px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #e76514;
+
+    font-size: 18px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.prayer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.prayer-grid a {
     text-decoration: none;
 }
-/* PRAYER CARD */
-.prayer-card{
-    background:#fff;
-    border-radius:18px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition:all .3s ease;
+
+
+/* =========================================================
+   PRAYER CARD
+========================================================= */
+
+.prayer-card {
+    background: #fff;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.3s ease;
 }
 
-.prayer-card:hover{
-    transform:translateY(-6px);
+.prayer-card:hover {
+    transform: translateY(-6px);
 }
 
-/* IMAGE */
-.prayer-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    border-radius:12px;
-    margin-bottom:15px;
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.prayer-card img {
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    margin-bottom: 15px;
 }
 
-/* TITLE INSIDE CARD */
-.prayer-card h3{
-    font-size:18px;
-    color:#23395d;
-    margin-bottom:15px;
+
+/* =========================================================
+   ATTRACTIVE IMAGE PLACEHOLDER
+========================================================= */
+
+.prayer-placeholder {
+    width: 100%;
+    height: 220px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(231,101,20,0.10) 0, rgba(231,101,20,0) 32%),
+        radial-gradient(circle at 85% 80%, rgba(42,69,100,0.12) 0, rgba(42,69,100,0) 35%),
+        linear-gradient(135deg, #f8f5ef 0%, #eef2f5 100%);
+
+    border: 1px solid rgba(42, 69, 100, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    color: #2a4564;
 }
 
-/* BUTTON */
-.prayer-btn{
-    display:inline-block;
-    padding:10px 20px;
-    background:#e76514;
-    color:#fff;
-    text-decoration:none;
-    border-radius:8px;
-    font-weight:600;
-    transition:.3s;
+.prayer-placeholder::before {
+    content: "";
+    position: absolute;
+
+    width: 105px;
+    height: 105px;
+
+    border: 1px solid rgba(231, 101, 20, 0.18);
+    border-radius: 50%;
+
+    top: -42px;
+    right: -35px;
 }
 
-.prayer-btn:hover{
-    background:#c9500f;
-    color:#fff;
+.prayer-placeholder::after {
+    content: "";
+    position: absolute;
+
+    width: 85px;
+    height: 85px;
+
+    border: 1px solid rgba(42, 69, 100, 0.12);
+    border-radius: 50%;
+
+    bottom: -35px;
+    left: -30px;
 }
 
-/* RESPONSIVE */
-@media(max-width:992px){
-    .prayer-grid{
-        grid-template-columns:repeat(2,1fr);
+.prayer-placeholder-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    box-shadow:
+        0 8px 20px rgba(42, 69, 100, 0.10),
+        inset 0 0 0 1px rgba(231, 101, 20, 0.10);
+
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: 12px;
+}
+
+.prayer-placeholder-icon i {
+    font-size: 25px;
+    color: #e76514;
+}
+
+.prayer-placeholder-title {
+    position: relative;
+    z-index: 1;
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    color: #2a4564;
+
+    margin: 0 0 4px;
+}
+
+.prayer-placeholder-text {
+    position: relative;
+    z-index: 1;
+
+    font-size: 12px;
+    color: #7a7a7a;
+
+    margin: 0;
+}
+
+@media (max-width: 576px) {
+
+    .prayer-placeholder {
+        height: 200px;
+    }
+
+    .prayer-placeholder-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .prayer-placeholder-icon i {
+        font-size: 23px;
     }
 }
 
-@media(max-width:576px){
-    .prayer-grid{
-        grid-template-columns:1fr;
+
+/* =========================================================
+   TITLE INSIDE CARD
+========================================================= */
+
+.prayer-card h3 {
+    font-size: 18px;
+
+    color: #23395d;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.prayer-btn {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    background: #e76514;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.prayer-btn:hover {
+    background: #c9500f;
+    color: #fff;
+}
+
+
+/* =========================================================
+   NO SEARCH RESULTS
+========================================================= */
+
+.prayer-no-results {
+    display: none;
+
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+    color: #2a4564;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+}
+
+.prayer-no-results i {
+    font-size: 30px;
+
+    color: #e76514;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .prayer-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .prayer-title{
-        font-size:26px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .prayer-wrapper {
+        margin: 40px auto;
+        padding: 0 15px;
     }
+
+    .prayer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prayer-title {
+        font-size: 26px;
+
+        margin-left: 0;
+
+        display: block;
+
+        text-align: center;
+
+        margin-bottom: 45px;
+    }
+
+    .prayer-search {
+        max-width: 100%;
+
+        margin: -15px auto 30px;
+    }
+
+    .prayer-search input {
+        height: 48px;
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .prayer-title {
+        font-size: 24px;
+    }
+
+    .prayer-card {
+        padding: 15px;
+    }
+
+    .prayer-card img {
+        height: 200px;
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY PRAYER BOOKS
+========================================================= */
+
+.empty-prayer {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    color: #2a4564;
+}
+
+.empty-prayer i {
+    font-size: 40px;
+
+    color: #e76514;
+
+    margin-bottom: 15px;
+}
+
+.empty-prayer h3 {
+    margin-bottom: 10px;
+}
+
+.empty-prayer p {
+    margin: 0;
+
+    color: #777;
 }
 
 </style>
+
+
 <section class="prayer-wrapper">
 
+
+    <!-- =====================================================
+         TITLE
+    ====================================================== -->
+
     <div class="prayer-title">
+
         Church Prayer Books
-        <!-- {% if total_books %}
-            <br><span><i class="fas fa-book"></i> {{ total_books }} books available</span>
-        {% endif %} -->
+
+        <!--
+        {% if total_books %}
+            <br>
+            <span>
+                <i class="fas fa-book"></i>
+                {{ total_books }} books available
+            </span>
+        {% endif %}
+        -->
+
     </div>
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <div class="prayer-search">
+
+        <input
+            type="text"
+            id="prayerSearch"
+            placeholder="Search prayer books..."
+            autocomplete="off"
+        >
+
+        <i class="fas fa-search prayer-search-icon"></i>
+
+    </div>
+
+
+    <!-- =====================================================
+         PRAYER BOOK GRID
+    ====================================================== -->
 
     <div class="prayer-grid">
+
         {% if books %}
+
             {% for book in books %}
-                <a href="{% url 'prayerbook_view_file' book.id %}" target="_blank" class="prayer-card">
+
+                <a
+                    href="{% url 'prayerbook_view_file' book.id %}"
+                    target="_blank"
+                    class="prayer-card prayer-book-item"
+                >
+
                     {% if book.image %}
-                        <img src="{{ book.image.url }}" alt="{{ book.title }}" loading="lazy">
+
+                        <img
+                            src="{{ book.image.url }}"
+                            alt="{{ book.title }}"
+                            loading="lazy"
+                        >
+
                     {% else %}
-                        <img src="{% static 'images/default-book.jpg' %}" alt="{{ book.title }}" loading="lazy">
+
+                        <div class="prayer-placeholder">
+
+                            <div class="prayer-placeholder-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+
+                            <h4 class="prayer-placeholder-title">
+                                Prayer Book
+                            </h4>
+
+                            <p class="prayer-placeholder-text">
+                                Image not available
+                            </p>
+
+                        </div>
+
                     {% endif %}
+
+
                     <div class="card-content">
+
                         <h3>{{ book.title }}</h3>
+
                     </div>
+
                 </a>
+
             {% endfor %}
-        {% else %}
-            <div class="empty-prayer">
+
+
+            <!-- SEARCH NO RESULTS -->
+
+            <div
+                class="prayer-no-results"
+                id="prayerNoResults"
+            >
+
                 <i class="fas fa-book-open"></i>
-                <h3>No prayer books found</h3>
-                <p>Check back later for new prayer resources.</p>
+
+                <br>
+
+                No prayer books found.
+
             </div>
+
+
+        {% else %}
+
+            <div class="empty-prayer">
+
+                <i class="fas fa-book-open"></i>
+
+                <h3>No prayer books found</h3>
+
+                <p>
+                    Check back later for new prayer resources.
+                </p>
+
+            </div>
+
         {% endif %}
+
     </div>
-
-    <!-- Pagination -->
-    {% if books.has_other_pages %}
-    <div class="prayer-pagination">
-        {% if books.has_previous %}
-            <a href="?page={{ books.previous_page_number }}" class="page-link">
-                <i class="fas fa-chevron-left"></i> Previous
-            </a>
-        {% endif %}
-
-        {% for num in books.paginator.page_range %}
-            {% if books.number == num %}
-                <span class="page-link active">{{ num }}</span>
-            {% elif num > books.number|add:'-3' and num < books.number|add:'3' %}
-                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
-
-        {% if books.has_next %}
-            <a href="?page={{ books.next_page_number }}" class="page-link">
-                Next <i class="fas fa-chevron-right"></i>
-            </a>
-        {% endif %}
-    </div>
-    {% endif %}
 
 </section>
+
+
 </div>
+
+
 {% include 'footer.html' %}
 
 
-<!-- JAVASCRIPT -->
+
+<!-- =========================================================
+     SIDEBAR JAVASCRIPT
+========================================================= -->
+
 <script>
+
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
 const overlay = document.getElementById('sidebarOverlay');
 
+
 function openSidebar() {
+
     sidebar.classList.add('open');
+
     overlay.classList.add('active');
+
     toggleBtn.classList.add('active');
+
     document.body.style.overflow = 'hidden';
+
 }
+
 
 function closeSidebar() {
+
     sidebar.classList.remove('open');
+
     overlay.classList.remove('active');
+
     toggleBtn.classList.remove('active');
+
     document.body.style.overflow = '';
+
 }
 
-toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (sidebar.classList.contains('open')) {
-        closeSidebar();
-    } else {
-        openSidebar();
-    }
-});
 
-overlay.addEventListener('click', closeSidebar);
+if (toggleBtn && sidebar && overlay) {
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-        closeSidebar();
-    }
-});
+    toggleBtn.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        if (sidebar.classList.contains('open')) {
+
+            closeSidebar();
+
+        } else {
+
+            openSidebar();
+
+        }
+
+    });
+
+
+    overlay.addEventListener('click', closeSidebar);
+
+
+    document.addEventListener('keydown', (e) => {
+
+        if (
+            e.key === 'Escape' &&
+            sidebar.classList.contains('open')
+        ) {
+
+            closeSidebar();
+
+        }
+
+    });
+
+}
+
 </script>
 
+
+
+<!-- =========================================================
+     DROPDOWN JAVASCRIPT
+========================================================= -->
+
 <script>
+
 document.querySelectorAll(".menu-link").forEach(link => {
+
     link.addEventListener("click", function () {
+
         const dropdown = this.parentElement;
 
         document.querySelectorAll(".dropdown").forEach(item => {
+
             if (item !== dropdown) {
+
                 item.classList.remove("active");
+
             }
+
         });
 
         dropdown.classList.toggle("active");
+
     });
+
 });
+
 </script>
-<script>const historyBlocks = document.querySelectorAll('.history-block');
+
+
+
+<!-- =========================================================
+     HISTORY SCROLL JAVASCRIPT
+========================================================= -->
+
+<script>
+
+const historyBlocks =
+    document.querySelectorAll('.history-block');
+
 
 window.addEventListener('scroll', () => {
+
     historyBlocks.forEach(block => {
-        const rect = block.getBoundingClientRect();
-        
-        // This check defines the "active" zone (the center of your screen)
-        const isMiddle = rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+
+        const rect =
+            block.getBoundingClientRect();
+
+
+        const isMiddle =
+            rect.top < window.innerHeight / 2 &&
+            rect.bottom > window.innerHeight / 2;
+
 
         if (isMiddle) {
-            // Change to active color while scrolling
-            block.style.setProperty('--line-color', '#e76514');
+
+            block.style.setProperty(
+                '--line-color',
+                '#e76514'
+            );
+
         } else {
-            // Reset to inactive color when not scrolling over this block
-            block.style.setProperty('--line-color', 'rgba(231, 101, 20, 0.2)');
+
+            block.style.setProperty(
+                '--line-color',
+                'rgba(231, 101, 20, 0.2)'
+            );
+
         }
+
     });
-});</script>
+
+});
+
+</script>
+
+
+
+<!-- =========================================================
+     PRAYER BOOK SEARCH JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput =
+        document.getElementById("prayerSearch");
+
+    const prayerBooks =
+        document.querySelectorAll(".prayer-book-item");
+
+    const noResults =
+        document.getElementById("prayerNoResults");
+
+
+    if (!searchInput) {
+        return;
+    }
+
+
+    searchInput.addEventListener("input", function () {
+
+        const searchValue =
+            this.value.toLowerCase().trim();
+
+
+        let visibleBooks = 0;
+
+
+        prayerBooks.forEach(function (book) {
+
+            const titleElement =
+                book.querySelector("h3");
+
+
+            if (!titleElement) {
+                return;
+            }
+
+
+            const title =
+                titleElement.textContent
+                    .toLowerCase()
+                    .trim();
+
+
+            if (title.includes(searchValue)) {
+
+                book.style.display = "";
+
+                visibleBooks++;
+
+            } else {
+
+                book.style.display = "none";
+
+            }
+
+        });
+
+
+        if (
+            searchValue !== "" &&
+            visibleBooks === 0
+        ) {
+
+            if (noResults) {
+                noResults.style.display = "block";
+            }
+
+        } else {
+
+            if (noResults) {
+                noResults.style.display = "none";
+            }
+
+        }
+
+    });
+
+});
+
+</script>
+
+
 </body>
-</html>   
+
+</html>

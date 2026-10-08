@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Diocese</title>
-
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 
@@ -42,7 +42,7 @@
 
             <div class="logo-circle">
 
-   <img src="{% static 'images/logo.png' %}" style="height:55px;width:180px;">
+   <img src="{% static 'images/sbylogo.png' %}" style="height:55px;width:250px;">
 
 
             </div>
@@ -457,7 +457,7 @@
 
         <!-- RIGHT SIDE IMAGE --> 
          <div class="hero-image"> 
-            <img src="{% static 'images/im.png' %}" alt="Diocese of Sulthan Bathery"> 
+            <img src="{% static 'images/image.png' %}" alt="Diocese of Sulthan Bathery"> 
         </div>
     </div>
 
@@ -490,7 +490,7 @@
     height: 430px;
     display: block;
     object-fit: cover;
-   border-radius: 28px; 
+   /* border-radius: 28px;  */
    margin-left: -80px;
 }
 
@@ -846,7 +846,541 @@
 }
 </style>
 
+<!-- =====================================================
+     DIOCESE QUICK LINKS SECTION
+     ===================================================== -->
 
+<section class="diocese-quick-section">
+
+    <div class="diocese-quick-container">
+
+        <!-- PARISHES -->
+        <a href="{% url 'parish' %}" class="diocese-quick-item">
+
+            <div class="diocese-quick-icon">
+                <i class="fa-solid fa-church"></i>
+            </div>
+
+            <div class="diocese-quick-content">
+
+                <h3>Parishes</h3>
+
+                <p>Find your parish</p>
+
+            </div>
+
+        </a>
+
+
+        <!-- PRIESTS -->
+        <a href="{% url 'priest' %}" class="diocese-quick-item">
+
+            <div class="diocese-quick-icon">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+
+            <div class="diocese-quick-content">
+
+                <h3>Priests</h3>
+
+                <p>Our spiritual leaders</p>
+
+            </div>
+
+        </a>
+
+
+        <!-- EVENTS -->
+        <a href="{% url 'events' %}" class="diocese-quick-item">
+
+            <div class="diocese-quick-icon">
+                <i class="fa-regular fa-calendar-days"></i>
+            </div>
+
+            <div class="diocese-quick-content">
+
+                <h3>Events</h3>
+
+                <p>Upcoming programs</p>
+
+            </div>
+
+        </a>
+
+
+        <!-- MEDIA -->
+        <a href="{% url 'images' %}" class="diocese-quick-item">
+
+            <div class="diocese-quick-icon">
+                <i class="fa-regular fa-image"></i>
+            </div>
+
+            <div class="diocese-quick-content">
+
+                <h3>Media</h3>
+
+                <p>Photos &amp; videos</p>
+
+            </div>
+
+        </a>
+
+
+        <!-- PRAYER REQUEST -->
+        <a href="{% url 'contact' %}" class="diocese-quick-item">
+
+            <div class="diocese-quick-icon">
+                <i class="fa-solid fa-hands-praying"></i>
+            </div>
+
+            <div class="diocese-quick-content">
+
+                <h3>Prayer Request</h3>
+
+                <p>Submit your request</p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+<style>
+
+/* =====================================================
+   DIOCESE QUICK LINKS SECTION
+===================================================== */
+
+.diocese-quick-section {
+    width: 1200px;
+
+    padding: 0 20px 40px;
+
+    margin-top: 80px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
+
+    background: transparent;
+}
+
+
+/* =====================================================
+   QUICK LINKS CONTAINER
+===================================================== */
+
+.diocese-quick-container {
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding: 20px 25px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   EACH QUICK LINK
+===================================================== */
+
+.diocese-quick-item {
+    flex: 1 1 0;
+
+    min-width: 0;
+
+    height: 65px;
+
+    padding: 5px 15px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+    border-right: 1px solid #dddddd;
+
+    transition: transform 0.25s ease;
+}
+
+
+/* Remove border from last item */
+
+.diocese-quick-item:last-child {
+    border-right: none;
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.diocese-quick-icon {
+    width: 52px;
+
+    min-width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+.diocese-quick-icon i {
+    color: #e99a17;
+
+    font-size: 40px;
+
+    line-height: 1;
+
+    transition: transform 0.25s ease;
+}
+
+
+/* =====================================================
+   TEXT CONTENT
+===================================================== */
+
+.diocese-quick-content {
+    min-width: 0;
+
+    flex: 1;
+
+    text-align: left;
+}
+
+
+/* Heading */
+
+.diocese-quick-content h3 {
+    margin: 0 0 5px;
+
+    padding: 0;
+
+    color: #142846;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* Description */
+
+.diocese-quick-content p {
+    margin: 0;
+
+    padding: 0;
+
+    color: #5d6570;
+
+    font-size: 13px;
+
+    font-weight: 400;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   HOVER EFFECT
+===================================================== */
+
+.diocese-quick-item:hover {
+    transform: translateY(-2px);
+}
+
+
+.diocese-quick-item:hover .diocese-quick-icon i {
+    transform: scale(1.08);
+}
+
+
+/* =====================================================
+   LARGE TABLET
+===================================================== */
+
+@media (max-width: 1250px) {
+
+    .diocese-quick-section {
+        width: 94%;
+
+        padding-left: 15px;
+        padding-right: 15px;
+
+        margin-top: 110px;
+    }
+
+
+    .diocese-quick-container {
+        width: 100%;
+
+        padding: 18px 15px;
+    }
+
+
+    .diocese-quick-item {
+        padding: 5px 10px;
+
+        gap: 8px;
+    }
+
+
+    .diocese-quick-icon {
+        width: 46px;
+
+        min-width: 46px;
+
+        height: 46px;
+    }
+
+
+    .diocese-quick-icon i {
+        font-size: 35px;
+    }
+
+
+    .diocese-quick-content h3 {
+        font-size: 16px;
+    }
+
+
+    .diocese-quick-content p {
+        font-size: 12px;
+    }
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .diocese-quick-section {
+        width: 94%;
+
+        margin-top: 80px;
+
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .diocese-quick-container {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        padding: 15px;
+
+        border-radius: 30px;
+    }
+
+
+    .diocese-quick-item {
+        height: 70px;
+
+        justify-content: flex-start;
+
+        padding: 8px 12px;
+
+        border-right: 1px solid #dddddd;
+
+        border-bottom: 1px solid #dddddd;
+    }
+
+
+    .diocese-quick-item:nth-child(2n) {
+        border-right: none;
+    }
+
+
+    .diocese-quick-item:nth-last-child(-n + 2) {
+        border-bottom: none;
+    }
+
+
+    .diocese-quick-icon {
+        width: 45px;
+
+        min-width: 45px;
+
+        height: 45px;
+    }
+
+
+    .diocese-quick-icon i {
+        font-size: 32px;
+    }
+
+
+    .diocese-quick-content h3 {
+        font-size: 16px;
+    }
+
+
+    .diocese-quick-content p {
+        font-size: 12px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .diocese-quick-section {
+        width: 92%;
+
+        margin-top: 55px;
+
+        padding: 0 0 25px;
+    }
+
+
+    .diocese-quick-container {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        padding: 10px 15px;
+
+        border-radius: 25px;
+    }
+
+
+    .diocese-quick-item {
+        width: 100%;
+
+        height: 65px;
+
+        padding: 8px 5px;
+
+        justify-content: flex-start;
+
+        border-right: none;
+
+        border-bottom: 1px solid #dddddd;
+    }
+
+
+    .diocese-quick-item:last-child {
+        border-bottom: none;
+    }
+
+
+    .diocese-quick-icon {
+        width: 45px;
+
+        min-width: 45px;
+
+        height: 45px;
+    }
+
+
+    .diocese-quick-icon i {
+        font-size: 30px;
+    }
+
+
+    .diocese-quick-content h3 {
+        font-size: 16px;
+    }
+
+
+    .diocese-quick-content p {
+        font-size: 12px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .diocese-quick-section {
+        width: 94%;
+    }
+
+
+    .diocese-quick-container {
+        padding: 8px 12px;
+    }
+
+
+    .diocese-quick-item {
+        height: 60px;
+    }
+
+
+    .diocese-quick-icon {
+        width: 40px;
+
+        min-width: 40px;
+
+        height: 40px;
+    }
+
+
+    .diocese-quick-icon i {
+        font-size: 27px;
+    }
+
+
+    .diocese-quick-content h3 {
+        font-size: 15px;
+    }
+
+
+    .diocese-quick-content p {
+        font-size: 11px;
+    }
+}
+
+</style>
 
 <!-- =====================================================
      ABOUT / WELCOME SECTION
@@ -1073,160 +1607,661 @@
 }
     </style>
 
+<!-- =====================================================
+     METROPOLITAN MESSAGE SECTION
+===================================================== -->
+<section class="metropolitan-message-section">
 
+    <!-- =========================================================
+         MAIN CONTAINER: Full width, split top (orange) and bottom (blue)
+    ========================================================= -->
+    <div class="metropolitan-banner-container">
+        
+        <!-- LEFT: METROPOLITAN IMAGE (Sits on the left, overlapping both backgrounds) -->
+        <div class="metropolitan-person">
+            <img src="{% static 'images/barnabas.png' %}" 
+                 alt="Our Metropolitan">
+        </div>
 
-<section class="parish-directory-section">
-  <div class="directory-content">
-    <p class="directory-subtitle">THE GREAT PARISHES OF SBY DIOCESE</p>
-    <h1 class="directory-title">PARISH DIRECTORY</h1>
-    
-    <form class="directory-search-form" action="{% url 'parish' %}" method="get">
-      <input 
-        type="text" 
-        name="q" 
-        class="directory-search-input" 
-        placeholder="Parish Name..."
-        autocomplete="off"
-        required
-      >
-      <button type="submit" class="directory-search-btn">
-        SEARCH PARISH
-        <!-- Inline SVG for the magnifying glass icon -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </button>
-    </form>
-  </div>
+        <!-- RIGHT: CONTENT (Aligned to the right side of the banner) -->
+        <div class="metropolitan-content">
+
+            <!-- TOP RIGHT: ORANGE AREA TEXT -->
+            <div class="metropolitan-orange-text-area">
+
+                <div class="metropolitan-label">
+                    OUR METROPOLITAN
+                </div>
+
+                <div class="metropolitan-diocese">
+                    SBY DIOCESE
+                </div>
+
+                <h2 class="metropolitan-title">
+                    A Message of Faith<br>
+                    and Hope
+                </h2>
+
+            </div>
+
+            <!-- BOTTOM RIGHT: BLUE AREA TEXT -->
+            <div class="metropolitan-blue-text-area">
+
+                <p class="metropolitan-description">
+                    Guiding our diocese with wisdom, love and a vision
+                    for a stronger, Christ-centred community
+                </p>
+
+                <div class="metropolitan-malayalam-box">
+                    അഭി. ഡോ. ഗീവർഗീസ് മാർ ബർണബാസ് മെത്രാപ്പോലീത്ത<br>
+                    സുൽത്താൻ ബത്തേരി ഭദ്രാസനാധിപൻ
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         PARISH DIRECTORY (BOTTOM SECTION)
+    ========================================================= -->
+    <div class="parish-directory-part">
+        <div class="directory-content">
+            <p class="directory-subtitle">THE GREAT PARISHES OF SBY DIOCESE</p>
+            <h1 class="directory-title">PARISH DIRECTORY</h1>
+            
+            <form class="directory-search-form" action="{% url 'parish' %}" method="get">
+                <input 
+                    type="text" 
+                    name="q" 
+                    class="directory-search-input" 
+                    placeholder="Parish Name..."
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit" class="directory-search-btn">
+                    SEARCH PARISH
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
 </section>
+
 <style>
-    /* Section Wrapper - Handles the orange top/bottom bands */
-.parish-directory-section {
-  width: 100%;
-  /* Creates the peach/orange bands on top and bottom */
-  background: linear-gradient(
-    to bottom,
-    #f9b58e 0%, 
-    #f9b58e 12%,    /* End of top orange band */
-    #0b305c 12%,    /* Start of dark blue */
-    #0b305c 88%,    /* End of dark blue */
-    #f9b58e 88%,    /* Start of bottom orange band */
-    #f9b58e 100%
-  );
-  /* Vertical padding to give the orange bands their height */
-  padding: 35px 0; 
+    /* =========================================================
+       GLOBAL SETTINGS
+    ========================================================= */
+    .metropolitan-message-section,
+    .metropolitan-message-section * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================================================
+       MAIN SECTION WRAPPER
+       This is the outer orange background, full width
+    ========================================================= */
+    .metropolitan-message-section {
+        width: 100%;
+        background: #f9b58e;
+        padding: 35px 0 0; /* Top padding only, bottom connects to directory */
+    }
+
+    /* =========================================================
+       BANNER CONTAINER
+       This handles the split background: Orange on top, Blue on bottom.
+       It spans the full width of the screen.
+    ========================================================= */
+    .metropolitan-banner-container {
+        width: 100%;
+        min-height: 515px;
+        position: relative;
+        display: flex;
+        
+        /* THE KEY: Linear gradient creates the split background */
+        /* 55% orange, 45% blue */
+        background: linear-gradient(
+            to bottom,
+            #f9b58e 0%,
+            #f9b58e 55%,
+            #2a4564 55%,
+            #2a4564 100%
+        );
+    }
+
+    /* =========================================================
+       LEFT: METROPOLITAN IMAGE
+       Absolute positioned to sit on the left edge, bottom aligned.
+    ========================================================= */
+    .metropolitan-person {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        /* We use a fixed width to ensure the image doesn't stretch */
+        width: 500px; 
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+
+    .metropolitan-person img {
+        display: block;
+        width: 100%;
+        height: auto;
+        /* This ensures the image sits at the bottom */
+        position: relative;
+        z-index: 10;
+    }
+
+    /* =========================================================
+       RIGHT: CONTENT
+       This is the text side. It sits to the right of the image.
+    ========================================================= */
+    .metropolitan-content {
+        /* Push content to the right side of the screen, next to the image */
+        margin-left: 500px; 
+        width: calc(100% - 500px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 5%; /* Keep text away from the very edge */
+    }
+
+    /* =========================================================
+       TOP RIGHT: ORANGE TEXT AREA
+       (Text sits on the orange background)
+    ========================================================= */
+    .metropolitan-orange-text-area {
+        /* This area aligns the text vertically within the orange section */
+        padding: 40px 80px 25px 60px;
+        margin-bottom: auto; /* Pushes it to the top of the flex container */
+        margin-top: 20px;
+    }
+
+    .metropolitan-label {
+        text-align: right; 
+        color: #0b305c;
+        font-size: 14px; 
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        margin-bottom: 2px;
+    }
+
+    .metropolitan-diocese {
+        text-align: right; 
+        color: #ffffff;
+        font-size: 18px; 
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 75px; 
+    }
+
+    .metropolitan-title {
+        margin-top: -20px;
+        color: #0b305c;
+        font-size: 46px; 
+        line-height: 1.15;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    /* =========================================================
+       BOTTOM RIGHT: BLUE TEXT AREA
+       (Text sits on the blue background)
+    ========================================================= */
+    .metropolitan-blue-text-area {
+        padding: 25px 80px 30px 60px; 
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-top: auto; /* Pushes it to the bottom of the flex container */
+    }
+
+    .metropolitan-description {
+        margin: 0 0 25px 0;
+        max-width: 700px; 
+        color: #ffffff;
+        font-size: 17px; 
+        line-height: 1.6;
+        font-weight: 400;
+        text-align: left;
+    }
+
+    /* MALAYALAM WHITE BOX */
+    .metropolitan-malayalam-box {
+        width: 100%;
+        max-width: 700px; 
+        min-height: 75px;
+        margin: 0; 
+        background: #ffffff;
+        border-radius: 50px;
+        padding: 12px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #0b305c;
+        font-size: 17px; 
+        line-height: 1.5;
+        font-weight: 600;
+    }
+
+    /* =========================================================
+       BOTTOM PART: PARISH DIRECTORY
+    ========================================================= */
+    .parish-directory-part {
+        width: 100%;
+        /* Reset padding because the banner above connects directly */
+        margin-top: 0;
+    }
+
+    .directory-content {
+        width: 100%;
+        background-color: #2a4564;
+        background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1.5'%3E%3Cpath d='M60 20v80M20 60h80M35 35l50 50M35 85l50-50'/%3E%3Ccircle cx='60' cy='60' r='25'/%3E%3C/g%3E%3C/svg%3E");
+        padding: 85px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .directory-subtitle {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+
+    .directory-title {
+        color: #ffffff;
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 45px;
+        text-transform: uppercase;
+    }
+
+    .directory-search-form {
+        display: flex;
+        width: 100%;
+        max-width: 680px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .directory-search-input {
+        flex: 1;
+        padding: 18px 22px;
+        font-size: 1rem;
+        border: none;
+        outline: none;
+        color: #333;
+        font-family: inherit;
+    }
+
+    .directory-search-input::placeholder {
+        color: #999;
+    }
+
+    .directory-search-btn {
+        background-color: #e76514;
+        color: #ffffff;
+        border: none;
+        padding: 0 35px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: background-color 0.3s ease;
+        font-family: inherit;
+    }
+
+    .directory-search-btn:hover {
+        background-color: #e76514;
+    }
+
+    /* =========================================================
+       RESPONSIVE (TABLET & MOBILE)
+    ========================================================= */
+    @media (max-width: 1200px) {
+        .metropolitan-person {
+            width: 400px;
+        }
+        .metropolitan-content {
+            margin-left: 400px;
+            width: calc(100% - 400px);
+        }
+        .metropolitan-title { font-size: 38px; }
+        .metropolitan-orange-text-area { padding: 30px 40px 20px 40px; }
+        .metropolitan-blue-text-area { padding: 20px 40px 25px 40px; }
+    }
+/* =========================================================
+   TABLET & MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* ---------------------------------------------------------
+       MAIN BANNER
+    --------------------------------------------------------- */
+
+    .metropolitan-banner-container {
+        width: 100%;
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        background: #f9b58e;
+    }
+
+
+    /* ---------------------------------------------------------
+       METROPOLITAN IMAGE
+    --------------------------------------------------------- */
+
+    .metropolitan-person {
+        position: relative;
+        left: auto;
+        bottom: auto;
+
+        width: 100%;
+        height: auto;
+        min-height: 0;
+
+        margin: 0;
+        padding: 0;
+
+        display: block;
+
+        background: #f9b58e;
+
+        overflow: hidden;
+    }
+
+    .metropolitan-person img {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+
+        height: auto;
+        min-height: 0;
+
+        margin: 0;
+        padding: 0;
+
+        object-fit: contain;
+        object-position: center center;
+    }
+
+
+    /* ---------------------------------------------------------
+       CONTENT
+    --------------------------------------------------------- */
+
+    .metropolitan-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        background: #2a4564;
+    }
+
+
+    /* ---------------------------------------------------------
+       ORANGE TEXT AREA
+    --------------------------------------------------------- */
+
+    .metropolitan-orange-text-area {
+        width: 100%;
+
+        margin: 0;
+        padding: 30px 20px 35px;
+
+        background: #f9b58e;
+
+        text-align: center;
+    }
+
+    .metropolitan-label {
+        text-align: center;
+
+        font-size: 14px;
+        line-height: 1.4;
+
+        margin: 0 0 8px;
+    }
+
+    .metropolitan-diocese {
+        text-align: center;
+
+        font-size: 18px;
+        line-height: 1.4;
+
+        margin: 0 0 25px;
+    }
+
+    .metropolitan-title {
+        margin: 0;
+
+        color: #0b305c;
+
+        font-size: 38px;
+        line-height: 1.15;
+        font-weight: 600;
+
+        text-align: center;
+    }
+
+
+    /* ---------------------------------------------------------
+       BLUE TEXT AREA
+    --------------------------------------------------------- */
+
+    .metropolitan-blue-text-area {
+        width: 100%;
+
+        margin: 0;
+        padding: 35px 20px 40px;
+
+        background-color: #2a4564;
+
+        background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1.5'%3E%3Cpath d='M60 20v80M20 60h80M35 35l50 50M35 85l50-50'/%3E%3Ccircle cx='60' cy='60' r='25'/%3E%3C/g%3E%3C/svg%3E");
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .metropolitan-description {
+        width: 100%;
+        max-width: 600px;
+
+        margin: 0 0 25px;
+
+        color: #ffffff;
+
+        font-size: 17px;
+        line-height: 1.6;
+
+        text-align: center;
+    }
+
+
+    /* ---------------------------------------------------------
+       MALAYALAM BOX
+    --------------------------------------------------------- */
+
+    .metropolitan-malayalam-box {
+        width: 100%;
+        max-width: 600px;
+
+        min-height: 75px;
+
+        margin: 0;
+
+        padding: 14px 20px;
+
+        background: #ffffff;
+
+        border-radius: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        color: #0b305c;
+
+        font-size: 16px;
+        line-height: 1.6;
+        font-weight: 600;
+    }
+
+
+    /* ---------------------------------------------------------
+       PARISH DIRECTORY
+    --------------------------------------------------------- */
+
+    .parish-directory-part {
+        width: 100%;
+        margin: 0;
+    }
+
+    .directory-content {
+        width: 100%;
+
+        padding: 60px 20px;
+    }
+
+    .directory-subtitle {
+        font-size: 0.85rem;
+        line-height: 1.5;
+
+        margin-bottom: 10px;
+    }
+
+    .directory-title {
+        font-size: 1.8rem;
+        line-height: 1.2;
+
+        margin-bottom: 35px;
+    }
+
+    .directory-search-form {
+        width: 100%;
+        max-width: 600px;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+
+        box-shadow: none;
+    }
+
+    .directory-search-input {
+        width: 100%;
+
+        min-height: 52px;
+
+        padding: 15px 18px;
+
+        box-sizing: border-box;
+
+        border: none;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .directory-search-btn {
+        width: 100%;
+
+        min-height: 52px;
+
+        padding: 15px 18px;
+
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 }
 
-/* Inner Content - Handles the dark blue background and pattern */
-.directory-content {
-  /* Fallback solid color */
-  background-color: #2a4564;
-  
-  /* Subtle SVG pattern to mimic the background texture in the image */
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1.5'%3E%3Cpath d='M60 20v80M20 60h80M35 35l50 50M35 85l50-50'/%3E%3Ccircle cx='60' cy='60' r='25'/%3E%3C/g%3E%3C/svg%3E");
-  
-  padding: 85px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .metropolitan-orange-text-area {
+        padding: 28px 18px 32px;
+    }
+
+    .metropolitan-label {
+        font-size: 13px;
+    }
+
+    .metropolitan-diocese {
+        font-size: 17px;
+        margin-bottom: 22px;
+    }
+
+    .metropolitan-title {
+        font-size: 34px;
+        line-height: 1.15;
+    }
+
+    .metropolitan-blue-text-area {
+        padding: 30px 18px 35px;
+    }
+
+    .metropolitan-description {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .metropolitan-malayalam-box {
+        min-height: 70px;
+        padding: 12px 16px;
+
+        font-size: 15px;
+        line-height: 1.6;
+
+        border-radius: 35px;
+    }
+
+    .directory-content {
+        padding: 50px 18px;
+    }
+
+    .directory-subtitle {
+        font-size: 0.78rem;
+    }
+
+    .directory-title {
+        font-size: 1.6rem;
+    }
 }
-
-/* Subtitle Text */
-.directory-subtitle {
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-/* Main Title Text */
-.directory-title {
-  color: #ffffff;
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 45px;
-  text-transform: uppercase;
-}
-
-/* Search Bar Form Container */
-.directory-search-form {
-  display: flex;
-  width: 100%;
-  max-width: 680px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Search Input Field */
-.directory-search-input {
-  flex: 1;
-  padding: 18px 22px;
-  font-size: 1rem;
-  border: none;
-  outline: none;
-  color: #333;
-  font-family: inherit;
-}
-
-.directory-search-input::placeholder {
-  color: #999;
-}
-
-/* Search Button */
-.directory-search-btn {
-  background-color:#e76514;  /*#9b0a1a; Deep red */
-  color: #ffffff;
-  border: none;
-  padding: 0 35px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  transition: background-color 0.3s ease;
-  font-family: inherit;
-}
-
-.directory-search-btn:hover {
-  background-color: #e76514;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .directory-content {
-    padding: 60px 20px;
-  }
-  
-  .directory-title {
-    font-size: 1.8rem;
-  }
-
-  .directory-search-form {
-    flex-direction: column;
-    box-shadow: none;
-    gap: 12px;
-  }
-
-  .directory-search-input {
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  .directory-search-btn {
-    width: 100%;
-    padding: 18px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-}</style>
+</style>
 
 
 
@@ -4861,7 +5896,7 @@ document
 
                 <p>
           <i class="fas fa-envelope"></i>
-         sbydiocese@gmail.com, Info@sbydiocese.com,   Admin@sbydiocese.com
+         sbydiocese@gmail.com, Info@sbydiocese.com
         </p>
         <!-- <p>
           <i class="fas fa-envelope"></i>
@@ -4992,13 +6027,15 @@ document
         }
 
 
-        .ftr-brand img {
-            height: 80px;
-            width: 100px;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
-
+     .ftr-brand img {
+    width: 110px;
+    height: 110px;
+    padding: 2px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #ffffff;
+}
 
         .ftr-brand-name {
             flex: 1;

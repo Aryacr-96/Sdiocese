@@ -3,567 +3,1240 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parish Directory</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ========================================
-           ROOT VARIABLES
-        ======================================== */
-       
-        /* ========================================
-           PARISH SEARCH BOX
-        ======================================== */
-        .parish-search-box {
-            max-width: 700px;
-            margin: 40px auto 45px;
-            padding: 20px 22px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 
-            display: flex;
-            gap: 12px;
-            align-items: center;
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parish Directory</title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+
+    <style>
+
+
+        /* =========================================================
+           PARISH SEARCH BOX
+           SAME STYLE AS PRIEST SEARCH
+        ========================================================= */
+
+        .parish-search-box {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            margin: 40px auto 45px;
+
+            padding: 0;
+
+            background: transparent;
+
+            border: none;
+
+            border-radius: 0;
+
+            box-shadow: none;
+
+            display: block;
+
         }
+
 
         .parish-search-field {
-            flex: 1;
-            display: flex;
-            align-items: center;
+
+            width: 100%;
+
             position: relative;
+
+            display: block;
+
         }
+
 
         .parish-search-field i {
+
             position: absolute;
-            left: 15px;
-            color: #94a3b8;
-            font-size: 15px;
+
+            right: 20px;
+
+            left: auto;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #e76514;
+
+            font-size: 18px;
+
             pointer-events: none;
+
+            z-index: 2;
+
         }
+
 
         .parish-search-field input {
+
             width: 100%;
-            height: 46px;
-            padding: 0 15px 0 42px;
-            border: 1px solid #d7dee7;
-            border-radius: 10px;
-            background: #ffffff;
-            color: #334155;
-            font-size: 14px;
-            outline: none;
+
+            height: 50px;
+
+            padding: 0 52px 0 20px;
+
             box-sizing: border-box;
+
+            border: 1px solid #ddd;
+
+            border-radius: 30px;
+
+            background: #ffffff;
+
+            color: #2a4564;
+
+            font-size: 15px;
+
+            outline: none;
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+
+            transition: 0.3s ease;
+
         }
+
 
         .parish-search-field input:focus {
-            border-color: #2a4564;
-            box-shadow: 0 0 0 3px rgba(42, 69, 100, 0.10);
+
+            border-color: #e76514;
+
+            box-shadow:
+                0 0 0 3px rgba(231, 101, 20, 0.12),
+                0 8px 20px rgba(0, 0, 0, 0.07);
+
         }
+
 
         .parish-search-field input::placeholder {
-            color: #94a3b8;
+
+            color: #999;
+
         }
+
+
+        /* =========================================================
+           RESET BUTTON
+           HIDDEN - SAME AS PRIEST SEARCH
+        ========================================================= */
 
         .parish-search-reset {
-            height: 46px;
-            padding: 0 18px;
-            border: none;
-            border-radius: 10px;
-            background: #2a4564;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            white-space: nowrap;
+
+            display: none;
+
         }
 
-        .parish-search-reset:hover {
-            background: #e76514;
-            transform: translateY(-1px);
-        }
 
-        /* Hide section header + list when filter yields nothing */
+        /* =========================================================
+           HIDE SECTION WHEN NO SEARCH RESULT
+        ========================================================= */
+
         .church-section.is-empty {
+
             display: none;
+
         }
 
-        /* No-results message (only shown when there were cards but none match) */
+
+        /* =========================================================
+           NO RESULTS MESSAGE
+        ========================================================= */
+
         .parish-no-results {
+
             display: none;
+
             text-align: center;
+
             padding: 40px 20px;
+
             color: #64748b;
+
             font-size: 15px;
+
         }
+
 
         .parish-no-results.visible {
+
             display: block;
+
         }
+
 
         .parish-no-results i {
+
             font-size: 32px;
+
             color: #cbd5e1;
+
             margin-bottom: 12px;
+
             display: block;
+
         }
+
+
+        /* =========================================================
+           MOBILE SEARCH
+        ========================================================= */
 
         @media (max-width: 768px) {
+
             .parish-search-box {
-                flex-direction: column;
-                align-items: stretch;
-                margin: 25px 15px 35px;
-                padding: 18px;
-            }
-            .parish-search-reset {
+
                 width: 100%;
-                height: 48px;
+
+                max-width: calc(100% - 30px);
+
+                margin: 25px auto 35px;
+
+                padding: 0;
+
             }
+
+
             .parish-search-field input {
+
                 height: 48px;
+
+                padding: 0 48px 0 18px;
+
+                font-size: 14px;
+
             }
+
+
+            .parish-search-field i {
+
+                right: 18px;
+
+                font-size: 17px;
+
+            }
+
         }
+
+
     </style>
+
 </head>
+
+
 <body>
 
-<!-- =========================
+
+<!-- ============================================================
      SINGLE PARISH SEARCH
-========================= -->
+============================================================ -->
+
 <div class="parish-search-box">
 
+
     <div class="parish-search-field">
+
+
         <i class="fas fa-search"></i>
-        <input type="text" id="parishSearchInput"
-               placeholder="Search by name, location or district..."
-               value="{{ request.GET.q|default:'' }}"
-               autocomplete="off">
+
+
+        <input
+            type="text"
+            id="parishSearchInput"
+            placeholder="Search by name, location or district..."
+            value="{{ request.GET.q|default:'' }}"
+            autocomplete="off"
+        >
+
+
     </div>
 
-   <button type="button" class="parish-search-reset" id="parishSearchReset" title="Reset Search">
-    <i class="fas fa-rotate-right"></i>
-</button>
+
+    <!--
+        Kept for existing JavaScript functionality.
+        Hidden visually to keep the search design clean.
+    -->
+
+    <button
+        type="button"
+        class="parish-search-reset"
+        id="parishSearchReset"
+        title="Reset Search"
+    >
+
+        <i class="fas fa-rotate-right"></i>
+
+    </button>
+
+
 </div>
 
-<!-- =========================
+
+
+<!-- ============================================================
      CHURCH DIRECTORY
-========================= -->
-<section class="church-section" data-section="parishes">
+============================================================ -->
+
+<section
+    class="church-section"
+    data-section="parishes"
+>
+
+
     <div class="church-section-header">
+
+
         <h1 class="church-section-title">
+
             <i class="fas fa-church"></i>
+
             Parishes
+
         </h1>
+
+
         <p class="church-section-subtitle">
+
             Explore our parishes and connect with their communities
+
         </p>
+
+
     </div>
+
+
 
     <div class="church-list">
 
-        {% for parish in parishes %}
-        <div class="church-card parish-search-card"
-             data-name="{{ parish.name|default:''|lower }}"
-             data-location="{{ parish.location|default:''|lower }}"
-             data-district="{{ parish.district|default:''|lower }}">
 
-            <!-- Image -->
+        {% for parish in parishes %}
+
+
+        <div
+            class="church-card parish-search-card"
+
+            data-name="{{ parish.name|default:''|lower }}"
+
+            data-location="{{ parish.location|default:''|lower }}"
+
+            data-district="{{ parish.district|default:''|lower }}"
+        >
+
+
+            <!-- =================================================
+                 IMAGE
+            ================================================== -->
+
             <div class="church-image-box">
+
+
                 {% if parish.image %}
-                    <img src="{{ parish.image.url }}" alt="{{ parish.name }}" loading="lazy">
+
+
+                    <img
+                        src="{{ parish.image.url }}"
+                        alt="{{ parish.name }}"
+                        loading="lazy"
+                    >
+
+
                 {% else %}
+
+
                     <div class="fallback-image">
+
                         <i class="fas fa-church"></i>
-                        <span class="fallback-text">{{ parish.name }}</span>
+
+                        <span class="fallback-text">
+
+                            {{ parish.name }}
+
+                        </span>
+
                     </div>
+
+
                 {% endif %}
+
+
                 <div class="image-overlay">
+
+
                     <span class="church-badge">
-                        <i class="fas fa-calendar-alt"></i> Est. {{ parish.established_year|default:"N/A" }}
+
+                        <i class="fas fa-calendar-alt"></i>
+
+                        Est.
+                        {{ parish.established_year|default:"N/A" }}
+
                     </span>
+
+
                 </div>
+
+
             </div>
 
-            <!-- Info -->
+
+
+            <!-- =================================================
+                 PARISH INFORMATION
+            ================================================== -->
+
             <div class="church-info-box">
+
 
                 <div class="church-content-area">
 
-                    <!-- Name -->
+
+                    <!-- NAME -->
+
                     <div class="header-row">
+
+
                         <h1 class="church-name">
+
+
                             {% if parish.slug %}
-                                <a href="{% url 'parish_details' parish.slug %}">{{ parish.name }}</a>
+
+
+                                <a
+                                    href="{% url 'parish_details' parish.slug %}"
+                                >
+
+                                    {{ parish.name }}
+
+                                </a>
+
+
                             {% else %}
+
+
                                 {{ parish.name }}
+
+
                             {% endif %}
+
+
                         </h1>
+
+
                     </div>
 
-                    <!-- Location -->
+
+
+                    <!-- LOCATION -->
+
                     <p class="location-text">
+
+
                         <i class="fas fa-location-dot"></i>
-                        <span class="location-address" title="{{ parish.location|default:'' }}">
+
+
+                        <span
+                            class="location-address"
+                            title="{{ parish.location|default:'' }}"
+                        >
+
                             {{ parish.location|default:"Location not specified" }}
+
                         </span>
+
+
                     </p>
 
-                    <!-- Vicar -->
+
+
+                    <!-- VICAR -->
+
                     <p class="vicar-text">
+
+
                         <i class="fas fa-user-priest"></i>
+
+
                         {% if parish.vicar %}
-                            {{ parish.vicar.first_name }} {{ parish.vicar.last_name }}
+
+
+                            {{ parish.vicar.first_name }}
+                            {{ parish.vicar.last_name }}
+
+
                         {% elif parish.vicar_name %}
+
+
                             {{ parish.vicar_name }}
+
+
                         {% else %}
-                            <span class="no-vicar">No vicar assigned</span>
+
+
+                            <span class="no-vicar">
+
+                                No vicar assigned
+
+                            </span>
+
+
                         {% endif %}
+
+
                     </p>
 
-                    <!-- Details Row -->
+
+
+                    <!-- DETAILS -->
+
                     <div class="church-details-row">
+
+
                         <div class="detail-item">
-                            <span>Established</span>
-                            <strong>{{ parish.established_year|default:"N/A" }}</strong>
+
+                            <span>
+
+                                Established
+
+                            </span>
+
+
+                            <strong>
+
+                                {{ parish.established_year|default:"N/A" }}
+
+                            </strong>
+
                         </div>
+
+
+
                         <div class="detail-item">
-                            <span>District</span>
-                            <strong>{{ parish.district|default:"N/A"|truncatechars:12 }}</strong>
+
+                            <span>
+
+                                District
+
+                            </span>
+
+
+                            <strong>
+
+                                {{ parish.district|default:"N/A"|truncatechars:12 }}
+
+                            </strong>
+
                         </div>
+
+
+
                         <div class="detail-item">
-                            <span>Phone</span>
-                            <strong>{{ parish.phone|default:"N/A" }}</strong>
+
+                            <span>
+
+                                Phone
+
+                            </span>
+
+
+                            <strong>
+
+                                {{ parish.phone|default:"N/A" }}
+
+                            </strong>
+
                         </div>
+
+
                     </div>
 
+
                 </div>
 
-                <!-- Button -->
+
+
+                <!-- =================================================
+                     VIEW DETAILS BUTTON
+                ================================================== -->
+
                 <div class="btn-row">
+
+
                     {% if parish.slug and parish.slug != '' %}
-                        <a href="{% url 'parish_details' parish.slug %}" class="btn-main">
-                            <i class="fas fa-arrow-right"></i> View Details
+
+
+                        <a
+                            href="{% url 'parish_details' parish.slug %}"
+                            class="btn-main"
+                        >
+
+                            <i class="fas fa-arrow-right"></i>
+
+                            View Details
+
                         </a>
+
+
                     {% else %}
-                        <a href="#" class="btn-main">
-                            <i class="fas fa-arrow-right"></i> View Details
+
+
+                        <a
+                            href="#"
+                            class="btn-main"
+                        >
+
+                            <i class="fas fa-arrow-right"></i>
+
+                            View Details
+
                         </a>
+
+
                     {% endif %}
+
+
                 </div>
+
 
             </div>
 
+
         </div>
+
+
         {% empty %}
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
         <div class="empty-state">
+
+
             <i class="fas fa-church"></i>
-            <h4>No Parishes Available</h4>
-            <p>Please check back later for parish listings.</p>
+
+
+            <h4>
+
+                No Parishes Available
+
+            </h4>
+
+
+            <p>
+
+                Please check back later for parish listings.
+
+            </p>
+
+
         </div>
+
+
         {% endfor %}
 
-        <!-- No-results message (shown only when cards exist but none match) -->
-        <div class="parish-no-results" id="parishNoResults">
+
+
+        <!-- =================================================
+             NO SEARCH RESULTS
+        ================================================== -->
+
+        <div
+            class="parish-no-results"
+            id="parishNoResults"
+        >
+
             <i class="fas fa-search"></i>
+
             No parishes match your search.
+
         </div>
 
+
     </div>
+
+
 </section>
+
+
 </div>
+
+
 {% include 'footer.html' %}
 
-<!-- ========================================
-   JAVASCRIPT
-======================================== -->
+
+
+<!-- ============================================================
+     SIDEBAR TOGGLE SCRIPT
+============================================================ -->
+
 <script>
-// Sidebar toggle
-const toggleBtn = document.getElementById('sidebarToggleBtn');
-const sidebar = document.getElementById('sidebarPanel');
-const overlay = document.getElementById('sidebarOverlay');
+
+const toggleBtn =
+    document.getElementById('sidebarToggleBtn');
+
+const sidebar =
+    document.getElementById('sidebarPanel');
+
+const overlay =
+    document.getElementById('sidebarOverlay');
+
 
 function openSidebar() {
-    if (sidebar) sidebar.classList.add('open');
-    if (overlay) overlay.classList.add('active');
-    if (toggleBtn) toggleBtn.classList.add('active');
+
+    if (sidebar) {
+
+        sidebar.classList.add('open');
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.add('active');
+
+    }
+
+
+    if (toggleBtn) {
+
+        toggleBtn.classList.add('active');
+
+    }
+
+
     document.body.style.overflow = 'hidden';
+
 }
+
+
 
 function closeSidebar() {
-    if (sidebar) sidebar.classList.remove('open');
-    if (overlay) overlay.classList.remove('active');
-    if (toggleBtn) toggleBtn.classList.remove('active');
+
+    if (sidebar) {
+
+        sidebar.classList.remove('open');
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove('active');
+
+    }
+
+
+    if (toggleBtn) {
+
+        toggleBtn.classList.remove('active');
+
+    }
+
+
     document.body.style.overflow = '';
+
 }
+
+
 
 if (toggleBtn) {
-    toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        if (sidebar && sidebar.classList.contains('open')) {
-            closeSidebar();
-        } else {
-            openSidebar();
+
+
+    toggleBtn.addEventListener(
+        'click',
+        function(e) {
+
+            e.stopPropagation();
+
+
+            if (
+                sidebar &&
+                sidebar.classList.contains('open')
+            ) {
+
+                closeSidebar();
+
+            }
+
+            else {
+
+                openSidebar();
+
+            }
+
         }
-    });
+    );
+
 }
+
+
 
 if (overlay) {
-    overlay.addEventListener('click', closeSidebar);
+
+    overlay.addEventListener(
+        'click',
+        closeSidebar
+    );
+
 }
 
-document.addEventListener('click', function (e) {
-    if (
-        sidebar && sidebar.classList.contains('open') &&
-        !sidebar.contains(e.target) &&
-        toggleBtn && !toggleBtn.contains(e.target)
-    ) {
-        closeSidebar();
+
+
+document.addEventListener(
+    'keydown',
+    function(e) {
+
+        if (
+            e.key === 'Escape' &&
+            sidebar &&
+            sidebar.classList.contains('open')
+        ) {
+
+            closeSidebar();
+
+        }
+
     }
-});
+);
 
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-        closeSidebar();
+
+
+/* ============================================================
+   CLOSE SIDEBAR WHEN CLICKING OUTSIDE
+============================================================ */
+
+document.addEventListener(
+    'click',
+    function(e) {
+
+        if (
+            sidebar &&
+            sidebar.classList.contains('open') &&
+
+            !sidebar.contains(e.target) &&
+
+            toggleBtn &&
+            !toggleBtn.contains(e.target)
+        ) {
+
+            closeSidebar();
+
+        }
+
     }
-});
+);
 
-// Dropdown menu
-document.querySelectorAll(".menu-link").forEach(link => {
-    link.addEventListener("click", function () {
-        const dropdown = this.parentElement;
-        document.querySelectorAll(".dropdown").forEach(item => {
-            if (item !== dropdown) {
-                item.classList.remove("active");
-            }
-        });
-        dropdown.classList.toggle("active");
-    });
-});
-
-// Image error handling
-document.querySelectorAll('.church-image-box img').forEach(img => {
-    img.addEventListener('error', function() {
-        const parent = this.parentElement;
-        const parishName = this.alt || 'Parish';
-        
-        const fallback = document.createElement('div');
-        fallback.className = 'fallback-image';
-        fallback.innerHTML = `
-            <i class="fas fa-church"></i>
-            <span class="fallback-text">${parishName}</span>
-        `;
-        parent.replaceChild(fallback, this);
-    });
-});
 </script>
 
+
+
+<!-- ============================================================
+     DROPDOWN MENU
+============================================================ -->
+
 <script>
-/* ============================================================
-   PARISH SEARCH / FILTER
-   Single input matches: name, location, district (combined)
-   Hides the whole section (heading + list) when nothing matches.
-   Also reads ?q= from the URL so index.html search works.
-============================================================ */
+
+document
+    .querySelectorAll(".menu-link")
+    .forEach(function(link) {
+
+
+        link.addEventListener(
+            "click",
+            function() {
+
+
+                const dropdown =
+                    this.parentElement;
+
+
+
+                document
+                    .querySelectorAll(".dropdown")
+                    .forEach(function(item) {
+
+
+                        if (item !== dropdown) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+
+                    });
+
+
+
+                dropdown.classList.toggle(
+                    "active"
+                );
+
+
+            }
+        );
+
+
+    });
+
+</script>
+
+
+
+<!-- ============================================================
+     IMAGE ERROR HANDLING
+============================================================ -->
+
+<script>
+
+document
+    .querySelectorAll(
+        '.church-image-box img'
+    )
+    .forEach(function(img) {
+
+
+        img.addEventListener(
+            'error',
+            function() {
+
+
+                const parent =
+                    this.parentElement;
+
+
+                const parishName =
+                    this.alt || 'Parish';
+
+
+
+                const fallback =
+                    document.createElement('div');
+
+
+                fallback.className =
+                    'fallback-image';
+
+
+
+                fallback.innerHTML = `
+
+                    <i class="fas fa-church"></i>
+
+                    <span class="fallback-text">
+
+                        ${parishName}
+
+                    </span>
+
+                `;
+
+
+
+                parent.replaceChild(
+                    fallback,
+                    this
+                );
+
+
+            }
+        );
+
+
+    });
+
+</script>
+
+
+
+<!-- ============================================================
+     PARISH SEARCH / FILTER
+============================================================ -->
+
+<script>
+
 (function () {
 
-    const searchInput = document.getElementById("parishSearchInput");
-    const resetBtn    = document.getElementById("parishSearchReset");
-    const section     = document.querySelector(".church-section");
-    const noResults   = document.getElementById("parishNoResults");
 
-    if (!searchInput || !section) return;
+    const searchInput =
+        document.getElementById(
+            "parishSearchInput"
+        );
 
-    const cards = section.querySelectorAll(".parish-search-card");
+
+    const resetBtn =
+        document.getElementById(
+            "parishSearchReset"
+        );
+
+
+    const section =
+        document.querySelector(
+            ".church-section"
+        );
+
+
+    const noResults =
+        document.getElementById(
+            "parishNoResults"
+        );
+
+
+    if (
+        !searchInput ||
+        !section
+    ) {
+
+        return;
+
+    }
+
+
+
+    const cards =
+        section.querySelectorAll(
+            ".parish-search-card"
+        );
+
+
 
     function filterParishes() {
 
-        const query = searchInput.value.toLowerCase().trim();
+
+        const query =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+
+
         let visibleCount = 0;
 
-        cards.forEach(function (card) {
 
-            const haystack = [
-                card.dataset.name     || "",
-                card.dataset.location || "",
-                card.dataset.district || ""
-            ].join(" ");
 
-            const match = !query || haystack.includes(query);
+        cards.forEach(
+            function(card) {
 
-            if (match) {
-                card.style.display = "";
-                visibleCount++;
-            } else {
-                card.style.display = "none";
+
+                const haystack = [
+
+                    card.dataset.name || "",
+
+                    card.dataset.location || "",
+
+                    card.dataset.district || ""
+
+                ].join(" ");
+
+
+
+                const match =
+                    !query ||
+                    haystack.includes(query);
+
+
+
+                if (match) {
+
+
+                    card.style.display = "";
+
+                    visibleCount++;
+
+
+                }
+
+                else {
+
+
+                    card.style.display = "none";
+
+
+                }
+
+
+            }
+        );
+
+
+
+        /*
+           If there are cards but
+           nothing matches the search,
+           hide the entire section.
+        */
+
+        if (
+            cards.length > 0 &&
+            visibleCount === 0
+        ) {
+
+
+            section.classList.add(
+                "is-empty"
+            );
+
+
+            if (noResults) {
+
+                noResults.classList.add(
+                    "visible"
+                );
+
             }
 
-        });
 
-        // If there were cards but none match → hide whole section + show message
-        if (cards.length > 0 && visibleCount === 0) {
-            section.classList.add("is-empty");
-            if (noResults) noResults.classList.add("visible");
-        } else {
-            section.classList.remove("is-empty");
-            if (noResults) noResults.classList.remove("visible");
         }
 
+        else {
+
+
+            section.classList.remove(
+                "is-empty"
+            );
+
+
+            if (noResults) {
+
+                noResults.classList.remove(
+                    "visible"
+                );
+
+            }
+
+
+        }
+
+
     }
 
-    // ---- NEW: read ?q= from URL (arriving from index.html) ----
-    const params  = new URLSearchParams(window.location.search);
-    const initial = params.get("q");
+
+
+    /* ========================================================
+       READ ?q= FROM URL
+    ======================================================== */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const initial =
+        params.get("q");
+
+
+
     if (initial) {
-        searchInput.value = initial;
+
+        searchInput.value =
+            initial;
+
     }
 
-    // Run filter once on load so ?q=... filters immediately
+
+
+    /* ========================================================
+       RUN SEARCH ON PAGE LOAD
+    ======================================================== */
+
     filterParishes();
 
-    searchInput.addEventListener("input", filterParishes);
+
+
+    /* ========================================================
+       LIVE SEARCH
+    ======================================================== */
+
+    searchInput.addEventListener(
+        "input",
+        filterParishes
+    );
+
+
+
+    /* ========================================================
+       RESET SEARCH
+    ======================================================== */
 
     if (resetBtn) {
-        resetBtn.addEventListener("click", function () {
-            searchInput.value = "";
-            // Remove ?q= from URL so refresh doesn't refilter
-            if (window.history.replaceState) {
-                window.history.replaceState({}, "", window.location.pathname);
+
+
+        resetBtn.addEventListener(
+            "click",
+            function() {
+
+
+                searchInput.value = "";
+
+
+
+                /*
+                   Remove ?q= from URL
+                   without refreshing page.
+                */
+
+                if (
+                    window.history.replaceState
+                ) {
+
+
+                    window.history.replaceState(
+                        {},
+                        "",
+                        window.location.pathname
+                    );
+
+
+                }
+
+
+
+                filterParishes();
+
+
             }
-            filterParishes();
-        });
+        );
+
+
     }
 
+
 })();
-</script>
-
-
-<script>
-
-const toggleBtn = document.getElementById('sidebarToggleBtn');
-
-const sidebar = document.getElementById('sidebarPanel');
-
-const overlay = document.getElementById('sidebarOverlay');
-
-
-
-function openSidebar(){
-
-    sidebar.classList.add('open');
-
-    overlay.classList.add('active');
-
-    toggleBtn.classList.add('active');
-
-    document.body.style.overflow='hidden';
-
-}
-
-
-
-function closeSidebar(){
-
-    sidebar.classList.remove('open');
-
-    overlay.classList.remove('active');
-
-    toggleBtn.classList.remove('active');
-
-    document.body.style.overflow='';
-
-}
-
-
-
-toggleBtn.addEventListener('click',(e)=>{
-
-e.stopPropagation();
-
-if(sidebar.classList.contains('open')){
-
-closeSidebar();
-
-}
-
-else{
-
-openSidebar();
-
-}
-
-});
-
-
-
-overlay.addEventListener('click',closeSidebar);
-
-
-
-document.addEventListener('keydown',(e)=>{
-
-if(e.key==="Escape" && sidebar.classList.contains('open')){
-
-closeSidebar();
-
-}
-
-});
-
 
 </script>
 
 
-
-
-
-<script>
-
-
-document.querySelectorAll(".menu-link").forEach(link=>{
-
-
-link.addEventListener("click",function(){
-
-
-const dropdown=this.parentElement;
-
-
-
-document.querySelectorAll(".dropdown").forEach(item=>{
-
-
-if(item!==dropdown){
-
-item.classList.remove("active");
-
-}
-
-
-});
-
-
-
-dropdown.classList.toggle("active");
-
-
-
-});
-
-
-});
-
-
-</script>
 </body>
+
 </html>
