@@ -1338,162 +1338,285 @@ def add_spiritual(request):
         'designations': designations,
         'editing': False
     })
+
 def edit_spiritual(request, id):
     spiritual = get_object_or_404(Spiritual, id=id)
-    
+
     if request.method == "POST":
         form = SpiritualForm(request.POST, request.FILES, instance=spiritual)
-        
+
         if form.is_valid():
             spiritual = form.save()
-            
-            # Clear existing associations
-            SpiritualOfficeBearer.objects.filter(spiritual=spiritual).delete()
-            SpiritualCoordinator.objects.filter(spiritual=spiritual).delete()
-            
-            # Handle selected existing office bearers
+
+            # ============================================
+            # CLEAR EXISTING ASSOCIATIONS
+            # ============================================
+            SpiritualOfficeBearer.objects.filter(
+                spiritual=spiritual
+            ).delete()
+
+            SpiritualCoordinator.objects.filter(
+                spiritual=spiritual
+            ).delete()
+
+            # ============================================
+            # HANDLE SELECTED EXISTING OFFICE BEARERS
+            # Preserve the order received from the form
+            # ============================================
             selected_bearers = request.POST.getlist('selected_bearers')
+
+            bearer_order = 0
+
             for ob_id in selected_bearers:
                 if ob_id:
                     try:
                         officebearer = Officebearer.objects.get(id=ob_id)
+
                         SpiritualOfficeBearer.objects.create(
                             spiritual=spiritual,
-                            officebearer=officebearer
+                            officebearer=officebearer,
+                            order=bearer_order
                         )
+
+                        bearer_order += 1
+
                     except Officebearer.DoesNotExist:
                         pass
-            
-            # Handle selected existing coordinators
-            selected_coordinators = request.POST.getlist('selected_coordinators')
+
+            # ============================================
+            # HANDLE SELECTED EXISTING COORDINATORS
+            # Preserve the order received from the form
+            # ============================================
+            selected_coordinators = request.POST.getlist(
+                'selected_coordinators'
+            )
+
+            coordinator_order = 0
+
             for coord_id in selected_coordinators:
                 if coord_id:
                     try:
                         coordinator = Coordinator.objects.get(id=coord_id)
+
                         SpiritualCoordinator.objects.create(
                             spiritual=spiritual,
-                            coordinator=coordinator
+                            coordinator=coordinator,
+                            order=coordinator_order
                         )
+
+                        coordinator_order += 1
+
                     except Coordinator.DoesNotExist:
                         pass
-            
-            # Handle new office bearers
+
+            # ============================================
+            # HANDLE NEW OFFICE BEARERS
+            # ============================================
             new_names = request.POST.getlist('new_officebearer_name[]')
-            new_designations = request.POST.getlist('new_officebearer_designation[]')
+            new_designations = request.POST.getlist(
+                'new_officebearer_designation[]'
+            )
             new_phones = request.POST.getlist('new_officebearer_phone[]')
             new_emails = request.POST.getlist('new_officebearer_email[]')
-            new_districts = request.POST.getlist('new_officebearer_district[]')
+            new_districts = request.POST.getlist(
+                'new_officebearer_district[]'
+            )
             new_images = request.FILES.getlist('new_officebearer_image[]')
-            
+
             for i in range(len(new_names)):
                 name = new_names[i].strip()
+
                 if name:
-                    designation_id = new_designations[i] if i < len(new_designations) else None
+                    designation_id = (
+                        new_designations[i]
+                        if i < len(new_designations)
+                        else None
+                    )
+
                     designation = None
+
                     if designation_id:
                         try:
-                            designation = Designation.objects.get(id=designation_id)
+                            designation = Designation.objects.get(
+                                id=designation_id
+                            )
                         except Designation.DoesNotExist:
                             pass
-                    
+
                     officebearer = Officebearer(
                         name=name,
                         designation=designation,
-                        phone=new_phones[i].strip() if i < len(new_phones) else '',
-                        email=new_emails[i].strip() if i < len(new_emails) else '',
-                        district=new_districts[i].strip() if i < len(new_districts) else '',
+                        phone=(
+                            new_phones[i].strip()
+                            if i < len(new_phones)
+                            else ''
+                        ),
+                        email=(
+                            new_emails[i].strip()
+                            if i < len(new_emails)
+                            else ''
+                        ),
+                        district=(
+                            new_districts[i].strip()
+                            if i < len(new_districts)
+                            else ''
+                        ),
                     )
-                    
+
                     if i < len(new_images) and new_images[i]:
                         officebearer.image = new_images[i]
-                    
+
                     officebearer.save()
-                    
+
                     SpiritualOfficeBearer.objects.create(
                         spiritual=spiritual,
-                        officebearer=officebearer
+                        officebearer=officebearer,
+                        order=bearer_order
                     )
-            
-            # Handle new coordinators
-            new_coord_names = request.POST.getlist('new_coordinator_name[]')
-            new_coord_designations = request.POST.getlist('new_coordinator_designation[]')
-            new_coord_districts = request.POST.getlist('new_coordinator_district[]')
-            new_coord_phones = request.POST.getlist('new_coordinator_phone[]')
-            new_coord_emails = request.POST.getlist('new_coordinator_email[]')
-            new_coord_images = request.FILES.getlist('new_coordinator_image[]')
-            
+
+                    bearer_order += 1
+
+            # ============================================
+            # HANDLE NEW COORDINATORS
+            # ============================================
+            new_coord_names = request.POST.getlist(
+                'new_coordinator_name[]'
+            )
+            new_coord_designations = request.POST.getlist(
+                'new_coordinator_designation[]'
+            )
+            new_coord_districts = request.POST.getlist(
+                'new_coordinator_district[]'
+            )
+            new_coord_phones = request.POST.getlist(
+                'new_coordinator_phone[]'
+            )
+            new_coord_emails = request.POST.getlist(
+                'new_coordinator_email[]'
+            )
+            new_coord_images = request.FILES.getlist(
+                'new_coordinator_image[]'
+            )
+
             for i in range(len(new_coord_names)):
                 name = new_coord_names[i].strip()
+
                 if name:
-                    designation_id = new_coord_designations[i] if i < len(new_coord_designations) else None
+                    designation_id = (
+                        new_coord_designations[i]
+                        if i < len(new_coord_designations)
+                        else None
+                    )
+
                     designation = None
+
                     if designation_id:
                         try:
-                            designation = Designation.objects.get(id=designation_id)
+                            designation = Designation.objects.get(
+                                id=designation_id
+                            )
                         except Designation.DoesNotExist:
                             pass
-                    
+
                     coordinator = Coordinator(
                         name=name,
                         designation=designation,
-                        district=new_coord_districts[i].strip() if i < len(new_coord_districts) else '',
-                        phone=new_coord_phones[i].strip() if i < len(new_coord_phones) else '',
-                        email=new_coord_emails[i].strip() if i < len(new_coord_emails) else '',
+                        district=(
+                            new_coord_districts[i].strip()
+                            if i < len(new_coord_districts)
+                            else ''
+                        ),
+                        phone=(
+                            new_coord_phones[i].strip()
+                            if i < len(new_coord_phones)
+                            else ''
+                        ),
+                        email=(
+                            new_coord_emails[i].strip()
+                            if i < len(new_coord_emails)
+                            else ''
+                        ),
                     )
-                    
+
                     if i < len(new_coord_images) and new_coord_images[i]:
                         coordinator.image = new_coord_images[i]
-                    
+
                     coordinator.save()
-                    
+
                     SpiritualCoordinator.objects.create(
                         spiritual=spiritual,
-                        coordinator=coordinator
+                        coordinator=coordinator,
+                        order=coordinator_order
                     )
-            
-            messages.success(request, "Spiritual category updated successfully!")
+
+                    coordinator_order += 1
+
+            messages.success(
+                request,
+                "Spiritual category updated successfully!"
+            )
+
             return redirect('spiritual')
+
         else:
             messages.error(request, "Please correct the errors below.")
             print("Form errors:", form.errors)
+
     else:
         form = SpiritualForm(instance=spiritual)
-    
-    # ===== GET ALL DATA FOR TEMPLATE =====
-    # Get all office bearers
-    existing_bearers = Officebearer.objects.select_related('designation').all().order_by('name')
-    
-    # Get all coordinators
-    existing_coordinators = Coordinator.objects.select_related('designation').all().order_by('name')
-    
-    # Get selected office bearer IDs for this spiritual
+
+    # ============================================
+    # GET ALL DATA FOR TEMPLATE
+    # ============================================
+
+    # Get all office bearers without alphabetical ordering
+    existing_bearers = Officebearer.objects.select_related(
+        'designation'
+    ).all().order_by('id')
+
+    # Get all coordinators without alphabetical ordering
+    existing_coordinators = Coordinator.objects.select_related(
+        'designation'
+    ).all().order_by('id')
+
+    # Get selected office bearer IDs in saved association order
     selected_bearers = SpiritualOfficeBearer.objects.filter(
         spiritual=spiritual
-    ).values_list('officebearer_id', flat=True)
-    
-    # Get selected coordinator IDs for this spiritual
+    ).order_by('order', 'id').values_list(
+        'officebearer_id',
+        flat=True
+    )
+
+    # Get selected coordinator IDs in saved association order
     selected_coordinators = SpiritualCoordinator.objects.filter(
         spiritual=spiritual
-    ).values_list('coordinator_id', flat=True)
-    
+    ).order_by('order', 'id').values_list(
+        'coordinator_id',
+        flat=True
+    )
+
     # Get all designations for dropdowns
     designations = Designation.objects.all().order_by('name')
-    
+
     # Debug prints
     print(f"Spiritual ID: {spiritual.id}")
     print(f"Selected Bearers: {list(selected_bearers)}")
     print(f"Selected Coordinators: {list(selected_coordinators)}")
-    
-    return render(request, 'admin/spiritual/editspiritual.html', {
-        'form': form,
-        'spiritual': spiritual,
-        'existing_bearers': existing_bearers,
-        'existing_coordinators': existing_coordinators,
-        'selected_bearers': list(selected_bearers),
-        'selected_coordinators': list(selected_coordinators),
-        'designations': designations,
-        'editing': True,
-    })
+
+    return render(
+        request,
+        'admin/spiritual/editspiritual.html',
+        {
+            'form': form,
+            'spiritual': spiritual,
+            'existing_bearers': existing_bearers,
+            'existing_coordinators': existing_coordinators,
+            'selected_bearers': list(selected_bearers),
+            'selected_coordinators': list(selected_coordinators),
+            'designations': designations,
+            'editing': True,
+        }
+    )
 
 def view_spiritual(request, id):
     """View Spiritual Category"""
@@ -1744,7 +1867,6 @@ def coordinator_detail(request, id):
 #         return JsonResponse(data, safe=False)
 #     return JsonResponse([], safe=False)
 
-
 from django.shortcuts import render, get_object_or_404
 from .models import Spiritual
 
@@ -1753,9 +1875,20 @@ def spiritual_detail(request, slug):
     Display detailed view of a specific spiritual category
     """
     spiritual = get_object_or_404(Spiritual, slug=slug)
-    officebearers = spiritual.officebearers.select_related('designation').all().order_by('name')
-    coordinators = spiritual.coordinators.select_related('designation').all().order_by('name')
-    
+
+    # Office bearers in saved custom order
+    officebearers = spiritual.officebearers.select_related(
+        'designation'
+    ).order_by(
+        'officebearer_spirituals__order',
+        'officebearer_spirituals__id'
+    )
+
+    # Keep existing coordinator ordering unchanged
+    coordinators = spiritual.coordinators.select_related(
+        'designation'
+    ).all().order_by('name')
+
     context = {
         'spiritual': spiritual,
         'officebearers': officebearers,
@@ -1765,6 +1898,7 @@ def spiritual_detail(request, slug):
         'page_title': spiritual.category_title,
         'active_page': 'spiritual'
     }
+
     return render(request, 'spiritual/detail.html', context)
 
 

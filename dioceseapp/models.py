@@ -337,6 +337,7 @@ class Officebearer(models.Model):
         max_length=150,
         help_text="Full name of the office bearer"
     )
+
     designation = models.ForeignKey(
         'Designation',
         on_delete=models.SET_NULL,
@@ -345,46 +346,45 @@ class Officebearer(models.Model):
         related_name='officebearers',
         help_text="Designation/position of the office bearer"
     )
-    
-    
+
     image = models.ImageField(
         upload_to="officebearers/",
         blank=True,
         null=True,
         help_text="Profile photo of the office bearer"
     )
-    
+
     phone = models.CharField(
         max_length=10,
         validators=[phone_validator],
         help_text="10-digit phone number"
     )
-    
+
     email = models.EmailField(
         blank=True,
         null=True,
         help_text="Email address (optional)"
     )
-    
+
     district = models.CharField(
         max_length=100,
         blank=True,
         null=True,
         help_text="District (optional)"
     )
-    
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date and time when this record was created"
     )
-    
+
     updated_at = models.DateTimeField(
         auto_now=True,
         help_text="Date and time when this record was last updated"
     )
 
     class Meta:
-        ordering = ['name']
+        ordering = ['id']
         verbose_name = "Office Bearer"
         verbose_name_plural = "Office Bearers"
 
@@ -413,21 +413,20 @@ class Spiritual(models.Model):
         max_length=200,
         help_text="Title of the spiritual category"
     )
-    
+
     content = RichTextUploadingField(
         blank=True,
         null=True,
         help_text="Detailed content/description of the spiritual category"
     )
-    
+
     slug = models.SlugField(
         max_length=200,
         unique=True,
         blank=True,
         help_text="URL-friendly version of the category title (auto-generated)"
     )
-    
-    # Many-to-Many relationship with Officebearer through SpiritualOfficeBearer
+
     officebearers = models.ManyToManyField(
         'Officebearer',
         through='SpiritualOfficeBearer',
@@ -435,8 +434,7 @@ class Spiritual(models.Model):
         blank=True,
         help_text="Office bearers associated with this spiritual category"
     )
-    
-    # ✅ NEW: Many-to-Many relationship with Coordinator through SpiritualCoordinator
+
     coordinators = models.ManyToManyField(
         'Coordinator',
         through='SpiritualCoordinator',
@@ -444,12 +442,12 @@ class Spiritual(models.Model):
         blank=True,
         help_text="Coordinators associated with this spiritual category"
     )
-    
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date and time when this record was created"
     )
-    
+
     updated_at = models.DateTimeField(
         auto_now=True,
         help_text="Date and time when this record was last updated"
@@ -474,26 +472,35 @@ class Spiritual(models.Model):
         return self.officebearers.count()
 
     def get_office_bearers_list(self):
-        """Returns a list of all office bearers associated with this category"""
-        return self.officebearers.all().order_by('name')
-    
-    # ✅ NEW: Helper methods for coordinators
+        """Returns office bearers in the saved association order"""
+        return Officebearer.objects.filter(
+            officebearer_spirituals__spiritual=self
+        ).order_by(
+            'officebearer_spirituals__order',
+            'officebearer_spirituals__id'
+        )
+
     def get_coordinators_count(self):
         """Returns the count of coordinators associated with this category"""
         return self.coordinators.count()
 
     def get_coordinators_list(self):
-        """Returns a list of all coordinators associated with this category"""
-        return self.coordinators.all().order_by('name')
+        """Returns coordinators in the saved association order"""
+        return Coordinator.objects.filter(
+            coordinator_spirituals__spiritual=self
+        ).order_by(
+            'coordinator_spirituals__order',
+            'coordinator_spirituals__id'
+        )
 
 
 # ============================================
-# SPIRITUAL OFFICE BEARER (Through Model)
+# SPIRITUAL OFFICE BEARER (THROUGH MODEL)
 # ============================================
 class SpiritualOfficeBearer(models.Model):
     """
     Through model for Many-to-Many relationship between Spiritual and Officebearer.
-    This allows additional fields like added_date, notes, etc.
+    Stores the display order for each category.
     """
     spiritual = models.ForeignKey(
         Spiritual,
@@ -501,24 +508,29 @@ class SpiritualOfficeBearer(models.Model):
         related_name='spiritual_officebearers',
         help_text="Spiritual category"
     )
-    
+
     officebearer = models.ForeignKey(
         Officebearer,
         on_delete=models.CASCADE,
         related_name='officebearer_spirituals',
         help_text="Office bearer"
     )
-    
+
+    order = models.PositiveIntegerField(
+        default=0,
+        help_text="Display order of the office bearer"
+    )
+
     added_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date and time when this office bearer was added to this category"
     )
-    
+
     is_active = models.BooleanField(
         default=True,
         help_text="Whether this association is currently active"
     )
-    
+
     notes = models.TextField(
         blank=True,
         null=True,
@@ -527,7 +539,7 @@ class SpiritualOfficeBearer(models.Model):
 
     class Meta:
         unique_together = ['spiritual', 'officebearer']
-        ordering = ['spiritual', 'officebearer']
+        ordering = ['order', 'id']
         verbose_name = "Spiritual Office Bearer"
         verbose_name_plural = "Spiritual Office Bearers"
 
@@ -547,12 +559,12 @@ class SpiritualOfficeBearer(models.Model):
 
 
 # ============================================
-# SPIRITUAL COORDINATOR (Through Model) - NEW
+# SPIRITUAL COORDINATOR (THROUGH MODEL)
 # ============================================
 class SpiritualCoordinator(models.Model):
     """
     Through model for Many-to-Many relationship between Spiritual and Coordinator.
-    This allows additional fields like added_date, notes, etc.
+    Stores the display order for each category.
     """
     spiritual = models.ForeignKey(
         Spiritual,
@@ -560,24 +572,29 @@ class SpiritualCoordinator(models.Model):
         related_name='spiritual_coordinators',
         help_text="Spiritual category"
     )
-    
+
     coordinator = models.ForeignKey(
         'Coordinator',
         on_delete=models.CASCADE,
         related_name='coordinator_spirituals',
         help_text="Coordinator"
     )
-    
+
+    order = models.PositiveIntegerField(
+        default=0,
+        help_text="Display order of the coordinator"
+    )
+
     added_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date and time when this coordinator was added to this category"
     )
-    
+
     is_active = models.BooleanField(
         default=True,
         help_text="Whether this association is currently active"
     )
-    
+
     notes = models.TextField(
         blank=True,
         null=True,
@@ -586,7 +603,7 @@ class SpiritualCoordinator(models.Model):
 
     class Meta:
         unique_together = ['spiritual', 'coordinator']
-        ordering = ['spiritual', 'coordinator']
+        ordering = ['order', 'id']
         verbose_name = "Spiritual Coordinator"
         verbose_name_plural = "Spiritual Coordinators"
 
@@ -604,7 +621,7 @@ class SpiritualCoordinator(models.Model):
 
 
 # ============================================
-# COORDINATOR MODEL - UPDATED (Removed FK to Spiritual)
+# COORDINATOR MODEL
 # ============================================
 class Coordinator(models.Model):
     """
@@ -615,8 +632,7 @@ class Coordinator(models.Model):
         max_length=150,
         help_text="Coordinator name"
     )
-    
-    # ✅ FK to Designation (Dropdown support)
+
     designation = models.ForeignKey(
         'Designation',
         on_delete=models.SET_NULL,
@@ -625,53 +641,50 @@ class Coordinator(models.Model):
         related_name='coordinators',
         help_text="Coordinator designation/position"
     )
-    
-    # ✅ NEW: Added image field
+
     image = models.ImageField(
         upload_to="coordinators/",
         blank=True,
         null=True,
         help_text="Profile photo of the coordinator"
     )
-    
+
     district = models.CharField(
         max_length=100,
         help_text="Coordinator district"
     )
-    
+
     phone = models.CharField(
         max_length=10,
         validators=[phone_validator],
         help_text="10-digit phone number"
     )
-    
-    # ✅ NEW: Added email field
+
     email = models.EmailField(
         blank=True,
         null=True,
         help_text="Email address (optional)"
     )
-    
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date and time when this record was created"
     )
-    
+
     updated_at = models.DateTimeField(
         auto_now=True,
         help_text="Date and time when this record was last updated"
     )
 
     class Meta:
-        ordering = ['name']
+        ordering = ['id']
         verbose_name = "Coordinator"
         verbose_name_plural = "Coordinators"
 
     def __str__(self):
         designation_name = self.designation.name if self.designation else "No Designation"
         return f"{self.name} - {designation_name}"
-    
-    # ✅ NEW: Helper methods
+
     def get_full_info(self):
         """Returns a string with full information about the coordinator"""
         info = f"{self.name}"
@@ -682,15 +695,15 @@ class Coordinator(models.Model):
         if self.email:
             info += f" - {self.email}"
         return info
-    
+
     def get_spiritual_categories(self):
         """Returns all spiritual categories this coordinator belongs to"""
         return self.spiritual_categories.all()
-    
+
     def get_spiritual_categories_count(self):
         """Returns count of spiritual categories this coordinator belongs to"""
         return self.spiritual_categories.count()
-    
+
 
 
 

@@ -596,9 +596,9 @@ body{
     }
 
     .about-info {
-        margin-left: 0;
+        margin-left: ;
     }
-
+    
     .about-content-believe {
         width: 100%;
         padding-top: 0;
@@ -3127,6 +3127,7 @@ body{
 
     .about-info h3{
         font-size:30px;
+        
     }
 
 }
@@ -3164,12 +3165,13 @@ body{
     .about-info h3{
         font-size:28px;
         margin-bottom:30px;
+        margin-left:20px;
     }
 
     .about-info p{
         font-size:15px;
         line-height:1.8;
-        text-align:left;
+        text-align:justify;
     }
 
     .about-content h2{
@@ -3196,12 +3198,13 @@ body{
     .history-card h3{
         font-size:18px;
         line-height:1.4;
+        text-align:center;
     }
 
     .history-card p{
         font-size:15px;
         line-height:1.8;
-        text-align:left;
+        text-align:justify;
     }
 }
 

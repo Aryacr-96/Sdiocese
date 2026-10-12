@@ -18,7 +18,6 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import Priest, Parish
 import re
 
-
 class PriestForm(forms.ModelForm):
 
     # Phone number validator - exactly 10 digits
@@ -81,7 +80,6 @@ class PriestForm(forms.ModelForm):
         ]
 
         widgets = {
-
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control-modern',
                 'placeholder': 'Enter first name'
@@ -146,7 +144,7 @@ class PriestForm(forms.ModelForm):
         help_texts = {
             'phone': 'Enter exactly 10 digits (numbers only)',
             'email': 'Enter a valid email address',
-            'ordained_on': 'Date of ordination (Required)',
+            'ordained_on': 'Date of ordination (Required except for seminary students)',
             'retired_on': 'Retirement date (Required for retired priests)',
             'address': 'Address is required',
         }
@@ -193,9 +191,7 @@ class PriestForm(forms.ModelForm):
 
         if instance and instance.pk:
             if instance.pk in all_assigned_ids:
-                all_assigned_ids.remove(
-                    instance.pk
-                )
+                all_assigned_ids.remove(instance.pk)
 
         priest_queryset = Priest.objects.all().order_by(
             'first_name',
@@ -207,21 +203,15 @@ class PriestForm(forms.ModelForm):
         )
 
         if instance and instance.pk:
-
             available_priests = (
                 available_priests |
-                Priest.objects.filter(
-                    pk=instance.pk
-                )
+                Priest.objects.filter(pk=instance.pk)
             )
 
             available_priests = (
                 available_priests
                 .distinct()
-                .order_by(
-                    'first_name',
-                    'last_name'
-                )
+                .order_by('first_name', 'last_name')
             )
 
         self.available_priests = available_priests
@@ -230,12 +220,24 @@ class PriestForm(forms.ModelForm):
         # FIELD REQUIREMENTS
         # ========================================
 
-        # Make ordained_on required
-        self.fields['ordained_on'].required = True
+        # Ordination date is optional for seminary students
+        if self.is_bound:
+            position = self.data.get(
+                self.add_prefix('position')
+            )
+        elif instance and instance.pk:
+            position = instance.position
+        else:
+            position = None
 
-        self.fields[
-            'ordained_on'
-        ].widget.attrs['required'] = 'required'
+        if position == 'seminary_student':
+            self.fields['ordained_on'].required = False
+            self.fields['ordained_on'].widget.attrs.pop(
+                'required', None
+            )
+        else:
+            self.fields['ordained_on'].required = True
+            self.fields['ordained_on'].widget.attrs['required'] = 'required'
 
         # Make address required
         self.fields['address'].required = True
@@ -272,9 +274,7 @@ class PriestForm(forms.ModelForm):
     # ========================================
 
     def clean_first_name(self):
-        first_name = self.cleaned_data.get(
-            'first_name'
-        )
+        first_name = self.cleaned_data.get('first_name')
 
         if first_name:
             first_name = first_name.strip()
@@ -284,10 +284,7 @@ class PriestForm(forms.ModelForm):
                     "First name must be at least 2 characters long."
                 )
 
-            if not first_name.replace(
-                ' ',
-                ''
-            ).isalpha():
+            if not first_name.replace(' ', '').isalpha():
                 raise forms.ValidationError(
                     "First name should contain only letters and spaces."
                 )
@@ -295,9 +292,7 @@ class PriestForm(forms.ModelForm):
         return first_name
 
     def clean_last_name(self):
-        last_name = self.cleaned_data.get(
-            'last_name'
-        )
+        last_name = self.cleaned_data.get('last_name')
 
         if last_name:
             last_name = last_name.strip()
@@ -307,10 +302,7 @@ class PriestForm(forms.ModelForm):
                     "Last name must be at least 2 characters long."
                 )
 
-            if not last_name.replace(
-                ' ',
-                ''
-            ).isalpha():
+            if not last_name.replace(' ', '').isalpha():
                 raise forms.ValidationError(
                     "Last name should contain only letters and spaces."
                 )
@@ -318,19 +310,12 @@ class PriestForm(forms.ModelForm):
         return last_name
 
     def clean_phone(self):
-        phone = self.cleaned_data.get(
-            'phone'
-        )
+        phone = self.cleaned_data.get('phone')
 
         if phone:
-            cleaned = re.sub(
-                r'[^0-9]',
-                '',
-                phone
-            )
+            cleaned = re.sub(r'[^0-9]', '', phone)
 
             if cleaned:
-
                 if len(cleaned) != 10:
                     raise forms.ValidationError(
                         "Phone number must be exactly 10 digits."
@@ -341,21 +326,15 @@ class PriestForm(forms.ModelForm):
         return phone
 
     def clean_email(self):
-        email = self.cleaned_data.get(
-            'email'
-        )
+        email = self.cleaned_data.get('email')
 
         if email:
             email = email.strip().lower()
 
-            queryset = Priest.objects.filter(
-                email=email
-            )
+            queryset = Priest.objects.filter(email=email)
 
             if self.instance.pk:
-                queryset = queryset.exclude(
-                    pk=self.instance.pk
-                )
+                queryset = queryset.exclude(pk=self.instance.pk)
 
             if queryset.exists():
                 raise forms.ValidationError(
@@ -365,9 +344,7 @@ class PriestForm(forms.ModelForm):
         return email
 
     def clean_home_parish(self):
-        home_parish = self.cleaned_data.get(
-            'home_parish'
-        )
+        home_parish = self.cleaned_data.get('home_parish')
 
         # Allow null/empty values
         if not home_parish:
@@ -376,21 +353,12 @@ class PriestForm(forms.ModelForm):
         return home_parish
 
     def clean_blood_group(self):
-        blood_group = self.cleaned_data.get(
-            'blood_group'
-        )
+        blood_group = self.cleaned_data.get('blood_group')
 
         if blood_group:
-
             valid_blood_groups = [
-                'A+',
-                'A-',
-                'B+',
-                'B-',
-                'AB+',
-                'AB-',
-                'O+',
-                'O-'
+                'A+', 'A-', 'B+', 'B-',
+                'AB+', 'AB-', 'O+', 'O-'
             ]
 
             if blood_group not in valid_blood_groups:
@@ -404,10 +372,14 @@ class PriestForm(forms.ModelForm):
         return blood_group
 
     def clean_ordained_on(self):
-        ordained_on = self.cleaned_data.get(
-            'ordained_on'
-        )
+        ordained_on = self.cleaned_data.get('ordained_on')
+        position = self.cleaned_data.get('position')
 
+        # Ordination date is optional for seminary students
+        if position == 'seminary_student' and not ordained_on:
+            return None
+
+        # Required for priests and retired priests
         if not ordained_on:
             raise forms.ValidationError(
                 "Ordination date is required."
@@ -425,17 +397,9 @@ class PriestForm(forms.ModelForm):
     def clean_retired_on(self):
         """Validate retired date - Only required for retired priests"""
 
-        retired_on = self.cleaned_data.get(
-            'retired_on'
-        )
-
-        position = self.cleaned_data.get(
-            'position'
-        )
-
-        ordained_on = self.cleaned_data.get(
-            'ordained_on'
-        )
+        retired_on = self.cleaned_data.get('retired_on')
+        position = self.cleaned_data.get('position')
+        ordained_on = self.cleaned_data.get('ordained_on')
 
         # Only validate if position is retired_priest
         if position == 'retired_priest':
@@ -453,7 +417,6 @@ class PriestForm(forms.ModelForm):
                 )
 
             if retired_on and ordained_on:
-
                 if retired_on < ordained_on:
                     raise forms.ValidationError(
                         "Retirement date must be after ordination date."
@@ -466,9 +429,7 @@ class PriestForm(forms.ModelForm):
     # ========================================
 
     def clean_address(self):
-        address = self.cleaned_data.get(
-            'address'
-        )
+        address = self.cleaned_data.get('address')
 
         if not address:
             raise forms.ValidationError(
@@ -496,9 +457,7 @@ class PriestForm(forms.ModelForm):
         by clean_ordained_on() and clean_retired_on().
         Keeping this empty prevents duplicate error messages.
         """
-
         cleaned_data = super().clean()
-
         return cleaned_data
 
     # ========================================
@@ -506,19 +465,13 @@ class PriestForm(forms.ModelForm):
     # ========================================
 
     def save(self, commit=True):
-
-        instance = super().save(
-            commit=False
-        )
+        instance = super().save(commit=False)
 
         if commit:
-
             instance.save()
-
             self.save_m2m()
 
         return instance
-
 
     
 from django import forms
@@ -1033,7 +986,7 @@ class OfficebearerForm(forms.ModelForm):
     """
     Form for creating/editing Office Bearers (used in office bearer management)
     """
-    
+
     class Meta:
         model = Officebearer
         fields = ['name', 'designation', 'image', 'phone', 'email', 'district']
@@ -1086,7 +1039,7 @@ class CoordinatorForm(forms.ModelForm):
     """
     Form for creating/editing Coordinators
     """
-    
+
     class Meta:
         model = Coordinator
         fields = ['name', 'designation', 'image', 'phone', 'email', 'district']
@@ -1140,14 +1093,14 @@ class SpiritualOfficeBearerForm(forms.ModelForm):
     Form for associating office bearers with spiritual categories
     """
     officebearer = forms.ModelChoiceField(
-        queryset=Officebearer.objects.all().order_by('name'),
+        queryset=Officebearer.objects.all(),
         required=False,
         label="Select Existing Office Bearer",
         widget=forms.Select(attrs={
             'class': 'form-control office-bearer-select',
         })
     )
-    
+
     class Meta:
         model = SpiritualOfficeBearer
         fields = ['officebearer']
@@ -1165,14 +1118,14 @@ class SpiritualCoordinatorForm(forms.ModelForm):
     Form for associating coordinators with spiritual categories
     """
     coordinator = forms.ModelChoiceField(
-        queryset=Coordinator.objects.all().order_by('name'),
+        queryset=Coordinator.objects.all(),
         required=False,
         label="Select Existing Coordinator",
         widget=forms.Select(attrs={
             'class': 'form-control coordinator-select',
         })
     )
-    
+
     class Meta:
         model = SpiritualCoordinator
         fields = ['coordinator']
@@ -1301,6 +1254,7 @@ class NewCoordinatorForm(forms.ModelForm):
 # ============================================
 # INLINE FORMSETS
 # ============================================
+
 # Formset for editing spiritual office bearer associations
 SpiritualOfficeBearerFormSet = inlineformset_factory(
     Spiritual,
@@ -1358,7 +1312,6 @@ NewCoordinatorFormSet = modelformset_factory(
     can_delete=False,
     can_order=False,
 )
-
 
 # ============================================
 # DESIGNATION FORM

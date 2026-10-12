@@ -1610,7 +1610,6 @@
 <!-- =====================================================
      METROPOLITAN MESSAGE SECTION
 ===================================================== -->
-
 <section class="metropolitan-message-section">
 
     <!-- =========================================================
@@ -1725,8 +1724,6 @@
 
 /* =========================================================
    BANNER CONTAINER
-   Orange top and shared background image on blue bottom
-   ADDED: ORANGE BOTTOM BORDER
 ========================================================= */
 
 .metropolitan-banner-container {
@@ -1749,7 +1746,6 @@
     background-position: center;
     background-repeat: no-repeat;
 
-    /* Bottom separator between message banner and parish directory */
     border-bottom: 1px solid #e76514;
 }
 
@@ -2006,23 +2002,70 @@
 
 /* =========================================================
    TABLET & MOBILE
+   (EDITED: Labels on right side first, then heading, then
+   image touching the blue container)
 ========================================================= */
 
 @media (max-width: 900px) {
 
     /* MAIN BANNER */
-
     .metropolitan-banner-container {
         width: 100%;
         min-height: auto;
         display: flex;
         flex-direction: column;
         background: #f9b58e;
+        position: relative;
+        padding-top: 0;
     }
 
-    /* METROPOLITAN IMAGE */
+    /* Make .metropolitan-content behave as a normal flow container */
+    .metropolitan-content {
+        display: contents;
+    }
 
+    /* ORANGE TEXT AREA - Contains labels AND heading, shown first */
+    .metropolitan-orange-text-area {
+        order: 1;
+        width: 100%;
+        margin: 0;
+        padding: 25px 20px 20px;
+        background: #f9b58e;
+        text-align: right; /* Labels align to the right */
+        position: relative;
+        z-index: 5;
+    }
+
+    /* Labels at the top-right */
+    .metropolitan-label {
+        text-align: right;
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 0 0 4px;
+        color: #0b305c;
+    }
+
+    .metropolitan-diocese {
+        text-align: right;
+        font-size: 16px;
+        line-height: 1.4;
+        margin: 0 0 20px;
+        color: #ffffff;
+    }
+
+    /* Heading below the labels */
+    .metropolitan-title {
+        margin: 0;
+        color: #0b305c;
+        font-size: 34px;
+        line-height: 1.15;
+        font-weight: 600;
+        text-align: left; /* Heading on the left */
+    }
+
+    /* IMAGE - Below the heading, touching the blue container */
     .metropolitan-person {
+        order: 2;
         position: relative;
         left: auto;
         bottom: auto;
@@ -2034,6 +2077,7 @@
         display: block;
         background: #f9b58e;
         overflow: hidden;
+        z-index: 4;
     }
 
     .metropolitan-person img {
@@ -2045,56 +2089,12 @@
         margin: 0;
         padding: 0;
         object-fit: contain;
-        object-position: center center;
+        object-position: center bottom;
     }
 
-    /* CONTENT */
-
-    .metropolitan-content {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        background: #2a4564;
-    }
-
-    /* ORANGE TEXT AREA */
-
-    .metropolitan-orange-text-area {
-        width: 100%;
-        margin: 0;
-        padding: 30px 20px 35px;
-        background: #f9b58e;
-        text-align: center;
-    }
-
-    .metropolitan-label {
-        text-align: center;
-        font-size: 14px;
-        line-height: 1.4;
-        margin: 0 0 8px;
-    }
-
-    .metropolitan-diocese {
-        text-align: center;
-        font-size: 18px;
-        line-height: 1.4;
-        margin: 0 0 25px;
-    }
-
-    .metropolitan-title {
-        margin: 0;
-        color: #0b305c;
-        font-size: 38px;
-        line-height: 1.15;
-        font-weight: 600;
-        text-align: center;
-    }
-
-    /* BLUE TEXT AREA */
-
+    /* BLUE CONTAINER - Directly after the image, no gap */
     .metropolitan-blue-text-area {
+        order: 3;
         width: 100%;
         margin: 0;
         padding: 35px 20px 40px;
@@ -2115,6 +2115,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+        z-index: 3;
     }
 
     .metropolitan-description {
@@ -2128,7 +2129,6 @@
     }
 
     /* MALAYALAM BOX */
-
     .metropolitan-malayalam-box {
         width: 100%;
         max-width: 600px;
@@ -2148,7 +2148,6 @@
     }
 
     /* PARISH DIRECTORY */
-
     .parish-directory-part {
         width: 100%;
         margin: 0;
@@ -2204,20 +2203,21 @@
 @media (max-width: 480px) {
 
     .metropolitan-orange-text-area {
-        padding: 28px 18px 32px;
+        padding: 22px 18px 18px;
     }
 
     .metropolitan-label {
-        font-size: 13px;
+        font-size: 12px;
+        margin-bottom: 3px;
     }
 
     .metropolitan-diocese {
-        font-size: 17px;
-        margin-bottom: 22px;
+        font-size: 15px;
+        margin-bottom: 18px;
     }
 
     .metropolitan-title {
-        font-size: 34px;
+        font-size: 30px;
         line-height: 1.15;
     }
 
