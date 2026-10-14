@@ -1,0 +1,876 @@
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glance · Admin</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #f0f4f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: #eef2ff;
+            --success: #22c55e;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-hover: #b91c1c;
+            --info: #06b6d4;
+            --info-light: #ecfeff;
+            --border-color: #e2e8f0;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --radius-pill: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto !important;
+            padding: 16px 24px 40px !important;
+            background: #f0f4f9;
+            min-height: calc(100vh - 70px);
+        }
+
+        .wrapper .content-wrapper {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            padding-top: 16px !important;
+            margin-top: -10px !important;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .page-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .greeting-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .page-header .header-left h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .page-header .header-left h1 small {
+            font-weight: 400;
+            font-size: 14px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+            letter-spacing: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            font-size: 13px;
+            color: #64748b;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-badge i {
+            color: #6366f1;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+            color: #ffffff;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #6366f1;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* DASHBOARD CARD */
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .dashboard-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-card .card-body {
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        /* TABLE */
+        .table {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            min-width: 650px;
+        }
+
+        .table thead {
+            background: #f8fafc;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .table thead th {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 1rem 1.5rem;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            vertical-align: middle;
+            border: none;
+        }
+
+        /* NAME */
+        .glance-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .name-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .name-details small {
+            display: block;
+            font-weight: 400;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-top: 2px;
+        }
+
+        /* DEPARTMENT AND ROLE BADGES */
+        .info-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.78rem;
+            font-weight: 600;
+            max-width: 260px;
+            overflow-wrap: anywhere;
+        }
+
+        .info-badge.department {
+            background: var(--primary-light);
+            color: var(--primary-hover);
+        }
+
+        .info-badge.role {
+            background: var(--info-light);
+            color: #0891b2;
+        }
+
+        /* ACTION BUTTONS */
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-btn i {
+            font-size: 0.8rem;
+        }
+
+        .action-btn.edit {
+            background: var(--warning-light);
+            color: #b45309;
+        }
+
+        .action-btn.edit:hover {
+            background: #b45309;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.delete {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--danger);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .empty-state > i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 400px;
+            margin: 0.5rem auto 1.5rem;
+        }
+
+        /* TABLE FOOTER */
+        .table-footer {
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .table-footer .info-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* DELETE MODAL */
+        .modal-content {
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .modal-header {
+            border-bottom: 2px solid var(--danger-light);
+            padding: 1.5rem 2rem;
+        }
+
+        .modal-header .modal-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #0f172a;
+        }
+
+        .modal-header .modal-title i {
+            color: var(--danger);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .delete-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--danger-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+        }
+
+        .delete-icon-wrapper i {
+            font-size: 2.5rem;
+            color: var(--danger);
+        }
+
+        .modal-body h5 {
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .glance-name-display {
+            font-weight: 700;
+            color: var(--danger);
+            background: var(--danger-light);
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+            font-size: 1.1rem;
+            overflow-wrap: anywhere;
+        }
+
+        .modal-body p {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.2rem 2rem;
+            gap: 12px;
+        }
+
+        .modal-footer .btn {
+            border-radius: var(--radius-pill);
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .modal-footer .btn-secondary {
+            background: #e2e8f0;
+            border: none;
+            color: var(--text-main);
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .modal-footer .btn-danger {
+            background: var(--danger);
+            border: none;
+            color: #ffffff;
+        }
+
+        .modal-footer .btn-danger:hover {
+            background: var(--danger-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                padding: 12px 16px 30px !important;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .page-header .header-left h1 {
+                font-size: 20px;
+            }
+
+            .header-right {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 12px 16px 30px !important;
+            }
+
+            .greeting-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+
+            .table tbody td {
+                padding: 0.8rem 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .action-btn {
+                width: 100%;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .table-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 0.8rem 1rem;
+            }
+
+            .modal-footer {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content-wrapper {
+                padding: 10px 12px 24px !important;
+            }
+
+            .page-header .header-left h1 {
+                font-size: 18px;
+            }
+
+            .greeting-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+
+            .table thead th {
+                font-size: 0.65rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            .table tbody td {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .info-badge {
+                font-size: 0.68rem;
+                padding: 0.3rem 0.7rem;
+            }
+
+            .glance-name {
+                font-size: 0.85rem;
+            }
+
+            .name-avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-footer .btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 1.5rem;
+            }
+
+            .delete-icon-wrapper {
+                width: 60px;
+                height: 60px;
+            }
+
+            .delete-icon-wrapper i {
+                font-size: 2rem;
+            }
+
+            .btn-primary-custom {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div class="header-left">
+            <div class="greeting-icon">
+                <i class="fas fa-building"></i>
+            </div>
+
+            <div>
+                <h1>
+                    Glance
+                    <small>Manage departments, roles, and names</small>
+                </h1>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <span class="stat-badge">
+                <i class="fas fa-list"></i>
+                {{ glances|length }} Record{{ glances|length|pluralize }}
+            </span>
+
+            <a href="{% url 'add_glance' %}" class="btn-primary-custom">
+                <i class="fas fa-plus-circle"></i>
+                Add Glance
+            </a>
+        </div>
+    </div>
+
+    <!-- SECTION TITLE -->
+    <div class="section-title">
+        <i class="fas fa-list"></i>
+        All Glance Records
+        <span class="section-line"></span>
+    </div>
+
+    <!-- GLANCE TABLE -->
+    <div class="dashboard-card">
+        <div class="card-body">
+
+            {% if glances %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">No.</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th style="width: 190px;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for glance in glances %}
+                        <tr>
+                            <!-- Number -->
+                            <td>
+                                <span class="info-badge">
+                                    {{ forloop.counter }}
+                                </span>
+                            </td>
+
+                            <!-- Name -->
+                            <td>
+                                <div class="glance-name">
+                                    <div class="name-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+
+                                    <div class="name-details">
+                                        {{ glance.name }}
+                                        <small>Glance record</small>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Department -->
+                            <td>
+                                <span class="info-badge department">
+                                    <i class="fas fa-building"></i>
+                                    {{ glance.department }}
+                                </span>
+                            </td>
+
+                            <!-- Role -->
+                            <td>
+                                <span class="info-badge role">
+                                    <i class="fas fa-user-tag"></i>
+                                    {{ glance.role }}
+                                </span>
+                            </td>
+
+                            <!-- Actions -->
+                            <td>
+                                <div class="action-buttons">
+
+                                    <a href="{% url 'edit_glance' glance.id %}"
+                                       class="action-btn edit"
+                                       title="Edit Glance">
+                                        <i class="fas fa-edit"></i>
+                                        Edit
+                                    </a>
+
+                                    <button type="button"
+                                            class="action-btn delete"
+                                            title="Delete Glance"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-glance-id="{{ glance.id }}"
+                                            data-glance-name="{{ glance.name }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                        Delete
+                                    </button>
+
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- TABLE FOOTER -->
+                <div class="table-footer">
+                    <span class="info-text">
+                        <i class="fas fa-info-circle"></i>
+                        Showing {{ glances|length }} record{{ glances|length|pluralize }}
+                    </span>
+
+                    <span class="info-text">
+                        <i class="fas fa-clock"></i>
+                        {% now "M j, Y" %}
+                    </span>
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+                <div class="empty-state">
+                    <i class="fas fa-building"></i>
+                    <h5>No Glance Records Found</h5>
+                    <p>Add your first record to get started.</p>
+
+                    <a href="{% url 'add_glance' %}" class="btn-primary-custom">
+                        <i class="fas fa-plus-circle"></i>
+                        Add First Glance
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+<!-- DELETE CONFIRMATION MODAL -->
+<div class="modal fade"
+     id="deleteModal"
+     tabindex="-1"
+     aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Confirm Deletion
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+
+                <div class="delete-icon-wrapper">
+                    <i class="fas fa-building"></i>
+                </div>
+
+                <h5>Are you sure you want to delete</h5>
+
+                <h5 class="glance-name-display mt-2" id="modalGlanceName">
+                    Glance Name
+                </h5>
+
+                <p class="mt-3">
+                    This action cannot be undone. This Glance record will be permanently removed.
+                </p>
+
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+
+                <form id="deleteForm" method="POST" action="">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                        Yes, Delete Glance
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DELETE MODAL SCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteModal = document.getElementById('deleteModal');
+    const modalGlanceName = document.getElementById('modalGlanceName');
+    const deleteForm = document.getElementById('deleteForm');
+
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+
+            const glanceId = button.getAttribute('data-glance-id');
+            const glanceName = button.getAttribute('data-glance-name');
+
+            modalGlanceName.textContent = glanceName;
+
+            deleteForm.action = "{% url 'delete_glance' 0 %}".replace('/0/', '/' + glanceId + '/');
+        });
+    }
+});
+</script>
+
+</body>
+</html>

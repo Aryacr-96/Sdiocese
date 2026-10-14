@@ -113,7 +113,15 @@ def throne(request):
 # ABOUT DIOCESE
 
 def batherydiocese(request):
-    return render(request,'diocese/batherydiocese.html')
+    glances = Glance.objects.all().order_by('id')
+
+    return render(
+        request,
+        'diocese/batherydiocese.html',
+        {
+            'glances': glances,
+        }
+    )
 def committe(request):
     return render(request,'diocese/committe.html')
 def council(request):
@@ -3648,3 +3656,68 @@ def delete_synod(request, slug):
             'synod': synod
         }
     )
+
+
+
+#AT A GLANCE
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Glance
+from .forms import GlanceForm
+
+
+# Display all Glance records
+def glance_list(request):
+    glances = Glance.objects.all()
+    return render(request, 'admin/glance/glance_list.html', {
+        'glances': glances
+    })
+
+
+# Add a new Glance record
+def add_glance(request):
+    if request.method == 'POST':
+        form = GlanceForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('glance_list')
+    else:
+        form = GlanceForm()
+
+    return render(request, 'admin/glance/add_glance.html', {
+        'form': form,
+        'title': 'Add Glance'
+    })
+
+
+# Edit a Glance record
+def edit_glance(request, id):
+    glance = get_object_or_404(Glance, id=id)
+
+    if request.method == 'POST':
+        form = GlanceForm(request.POST, instance=glance)
+
+        if form.is_valid():
+            form.save()
+            return redirect('glance_list')
+    else:
+        form = GlanceForm(instance=glance)
+
+    return render(request, 'admin/glance/edit_glance.html', {
+        'form': form,
+        'title': 'Edit Glance'
+    })
+
+
+# Delete a Glance record
+def delete_glance(request, id):
+    glance = get_object_or_404(Glance, id=id)
+
+    if request.method == 'POST':
+        glance.delete()
+        return redirect('glance_list')
+
+    return render(request, 'admin/glance/delete_glance.html', {
+        'glance': glance
+    })

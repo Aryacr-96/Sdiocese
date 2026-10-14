@@ -630,6 +630,7 @@
         <h2>Leadership Directory</h2>
         <p>Current ministry and committee assignments</p>
     </div>
+
     <div class="org-directory-wrapper">
         <table class="org-directory-table">
             <thead>
@@ -639,99 +640,35 @@
                     <th>Name</th>
                 </tr>
             </thead>
+
             <tbody>
+                {% for glance in glances %}
                 <tr>
-                    <td>Diocean Choir</td>
-                    <td><span class="role-tag">Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
+                    <td>{{ glance.department }}</td>
 
-                <tr>
-                    <td>Environment Protection Ministry</td>
-                    <td><span class="role-tag">Vice-President</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
+                    <td>
+                        <span class="role-tag">
+                            {{ glance.role }}
+                        </span>
+                    </td>
 
-                <tr>
-                    <td rowspan="2">Human Development</td>
-                    <td><span class="role-tag">Vice-President</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
+                    <td>
+                        <span class="leader-name">
+                            {{ glance.name }}
+                        </span>
+                    </td>
                 </tr>
+                {% empty %}
                 <tr>
-                    <td><span class="role-tag">PRO</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
+                    <td colspan="3" style="text-align: center; padding: 25px;">
+                        No leadership records available.
+                    </td>
                 </tr>
-
-                <tr>
-                    <td rowspan="3">Nirmalasandhesam News Bulletin</td>
-                    <td><span class="role-tag">Chief Editor</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Managing Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Treasurer</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-
-                <tr>
-                    <td rowspan="4">Media Wing</td>
-                    <td><span class="role-tag">Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Chief Editor</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Managing Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Treasurer</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-
-                <tr>
-                    <td rowspan="4">Digital Media Wing</td>
-                    <td><span class="role-tag">Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Chief Editor</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Managing Director</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-                <tr>
-                    <td><span class="role-tag">Treasurer</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-
-                <tr>
-                    <td>Icon Charity</td>
-                    <td><span class="role-tag">Co-ordinator</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-
-                <tr>
-                    <td>Wayanad Meghala Convention</td>
-                    <td><span class="role-tag">Chief Editor</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
-
-                <tr>
-                    <td>Iritty Meghala Convention</td>
-                    <td><span class="role-tag">Vice-President</span></td>
-                    <td><span class="leader-name">Rev. Fr. Moncy Jacob</span></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
+</div>
 </div>
 <style>
 

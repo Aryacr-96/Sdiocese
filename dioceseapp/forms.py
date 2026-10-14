@@ -2328,3 +2328,31 @@ class SynodForm(forms.ModelForm):
                 )
 
         return phone_numbers
+
+
+
+# AT A GLANCE
+
+from django import forms
+from .models import Glance
+
+
+class GlanceForm(forms.ModelForm):
+    class Meta:
+        model = Glance
+        fields = ['department', 'role', 'name']
+
+        widgets = {
+            'department': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Department'
+            }),
+            'role': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Role'
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Name'
+            }),
+        }

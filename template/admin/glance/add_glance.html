@@ -1,0 +1,549 @@
+
+{% load static %}
+{% include 'admin/adminheader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Glance · Diocese</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* PAGE HEADER */
+        .content-header-custom {
+            padding: 1.5rem 0 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9edf4;
+        }
+
+        .content-header-custom .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #0f172a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title h1 i {
+            color: #4f46e5;
+            font-size: 1.8rem;
+        }
+
+        .breadcrumb-custom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-custom a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb-custom a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+
+        .breadcrumb-custom .separator {
+            color: #94a3b8;
+        }
+
+        /* MAIN CARD */
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03),
+                        0 2px 8px rgba(0, 0, 0, 0.02);
+            background: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .card-premium .card-header {
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            padding: 1.25rem 2rem;
+            border-radius: 20px 20px 0 0;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1e293b;
+        }
+
+        .header-left i {
+            color: #4f46e5;
+        }
+
+        .badge-new {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-premium .card-body {
+            padding: 2.2rem 2rem;
+        }
+
+        /* SECTION HEADING */
+        .section-heading-modern {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin: 0 0 1.5rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-heading-modern i {
+            color: #4f46e5;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .section-heading-modern .line-spacer {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        /* FORM */
+        .form-group-modern {
+            margin-bottom: 1.6rem;
+        }
+
+        .form-group-modern label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group-modern label i {
+            color: #4f46e5;
+            width: 20px;
+            font-size: 0.9rem;
+        }
+
+        .required-star {
+            color: #ef4444;
+        }
+
+        .form-control-modern {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 0.75rem 1.2rem !important;
+            font-size: 0.9rem !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            width: 100% !important;
+            min-height: 46px !important;
+            color: #1e293b !important;
+            background: #fff !important;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .form-control-modern:focus {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08) !important;
+            outline: none;
+        }
+
+        .form-control-modern::placeholder {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .help-text-modern {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.4rem;
+        }
+
+        .help-text-modern i {
+            color: #4f46e5;
+            margin-right: 4px;
+        }
+
+        /* ERRORS */
+        .errorlist-modern {
+            color: #ef4444;
+            font-size: 0.8rem;
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 0;
+        }
+
+        .errorlist-modern li {
+            padding: 8px 12px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            margin-bottom: 5px;
+        }
+
+        .form-errors {
+            padding: 12px 16px;
+            background: #fef2f2;
+            color: #b91c1c;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* BUTTONS */
+        .card-footer-modern {
+            padding: 1.5rem 0 0;
+            border-top: 1px solid #eef2f6;
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline-modern,
+        .btn-primary-modern {
+            border-radius: 50px;
+            padding: 0.7rem 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-modern {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-outline-modern:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border: none;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .content-header-custom .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-title h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-premium .card-body {
+                padding: 1.5rem;
+            }
+
+            .card-premium .card-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .card-footer-modern {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+
+            .btn-outline-modern,
+            .btn-primary-modern {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-title h1 {
+                font-size: 1.2rem;
+            }
+
+            .card-premium .card-body {
+                padding: 1.2rem;
+            }
+
+            .breadcrumb-custom {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-wrapper">
+
+    <!-- PAGE HEADER -->
+    <section class="content-header-custom">
+        <div class="header-row">
+
+            <div class="header-title">
+                <h1>
+                    <i class="fas fa-eye"></i>
+                    {% if glance %}Edit Glance{% else %}Add Glance{% endif %}
+                </h1>
+            </div>
+
+            <nav class="breadcrumb-custom" aria-label="breadcrumb">
+                <a href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <span class="separator">›</span>
+
+                <a href="{% url 'glance_list' %}">
+                    <i class="fas fa-eye"></i> Glance
+                </a>
+
+                <span class="separator">›</span>
+
+                <span>
+                    <i class="fas fa-plus-circle"></i>
+                    {% if glance %}Edit Entry{% else %}Add New{% endif %}
+                </span>
+            </nav>
+
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card card-premium">
+
+                        <!-- CARD HEADER -->
+                        <div class="card-header">
+                            <div class="header-left">
+                                <i class="fas fa-clipboard-list"></i>
+                                Glance Information —
+                                <span class="text-muted font-weight-normal">
+                                    Complete all required fields
+                                </span>
+                            </div>
+
+                            <span class="badge-new">
+                                <i class="fas fa-plus-circle"></i>
+                                {% if glance %}Edit Entry{% else %}New Entry{% endif %}
+                            </span>
+                        </div>
+
+                        <!-- CARD BODY -->
+                        <div class="card-body">
+
+                            <form method="POST" id="glanceForm">
+                                {% csrf_token %}
+
+                                {% if form.non_field_errors %}
+                                    <div class="form-errors">
+                                        {{ form.non_field_errors }}
+                                    </div>
+                                {% endif %}
+
+                                <!-- BASIC INFORMATION -->
+                                <div class="section-heading-modern">
+                                    <i class="fas fa-info-circle"></i>
+                                    Basic Information
+                                    <span class="line-spacer"></span>
+                                </div>
+
+                                <div class="row">
+
+                                    <!-- DEPARTMENT -->
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+
+                                            <label for="{{ form.department.id_for_label }}">
+                                                <i class="fas fa-building"></i>
+                                                Department
+                                                <span class="required-star">*</span>
+                                            </label>
+
+                                            {{ form.department }}
+
+                                            {% if form.department.errors %}
+                                                <ul class="errorlist-modern">
+                                                    {% for error in form.department.errors %}
+                                                        <li>{{ error }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Enter the department name.
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- ROLE -->
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+
+                                            <label for="{{ form.role.id_for_label }}">
+                                                <i class="fas fa-user-tie"></i>
+                                                Role
+                                                <span class="required-star">*</span>
+                                            </label>
+
+                                            {{ form.role }}
+
+                                            {% if form.role.errors %}
+                                                <ul class="errorlist-modern">
+                                                    {% for error in form.role.errors %}
+                                                        <li>{{ error }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Enter the person's role or designation.
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <!-- NAME -->
+                                    <div class="col-md-6">
+                                        <div class="form-group-modern">
+
+                                            <label for="{{ form.name.id_for_label }}">
+                                                <i class="fas fa-user"></i>
+                                                Name
+                                                <span class="required-star">*</span>
+                                            </label>
+
+                                            {{ form.name }}
+
+                                            {% if form.name.errors %}
+                                                <ul class="errorlist-modern">
+                                                    {% for error in form.name.errors %}
+                                                        <li>{{ error }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+
+                                            <div class="help-text-modern">
+                                                <i class="fas fa-info-circle"></i>
+                                                Enter the person's full name.
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- FORM FOOTER -->
+                                <div class="card-footer-modern">
+
+                                    <a href="{% url 'glance_list' %}"
+                                       class="btn-outline-modern">
+                                        <i class="fas fa-times"></i>
+                                        Cancel
+                                    </a>
+
+                                    <button type="submit"
+                                            class="btn-primary-modern">
+                                        <i class="fas fa-save"></i>
+                                        {% if glance %}Update Glance{% else %}Save Glance{% endif %}
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+{% include 'admin/adminfooter.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const formFields = document.querySelectorAll(
+            '#glanceForm input, #glanceForm select, #glanceForm textarea'
+        );
+
+        formFields.forEach(function (field) {
+            field.classList.add('form-control-modern');
+        });
+    });
+</script>
+
+</body>
+</html>

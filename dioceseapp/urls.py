@@ -317,5 +317,12 @@ path(
         views.delete_synod,
         name='delete_synod'
     ), 
+
+
+
+    path('glance/', views.glance_list, name='glance_list'),
+    path('glance/add/', views.add_glance, name='add_glance'),
+    path('glance/edit/<int:id>/', views.edit_glance, name='edit_glance'),
+    path('glance/delete/<int:id>/', views.delete_glance, name='delete_glance'),
 ]
     

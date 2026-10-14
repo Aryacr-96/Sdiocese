@@ -421,7 +421,7 @@
      <div class="hero-text"> 
         <h1> Sulthan Bathery Diocese </h1>
          <h2> My Lord and My God </h2>
-          <p> Welcom to Sulthan Bathery Diocese. A community united in faith, committed to spiritual growth, and dedicated to serving people with love and compassion.<br> "Growing Together in Christ" </p>
+          <p> Welcome to Sulthan Bathery Diocese. A community united in faith, committed to spiritual growth, and dedicated to serving people with love and compassion.<br> "Growing Together in Christ" </p>
            <div class="ring-container">
              <div class="ring"></div> 
              <div class="ring"></div> 
@@ -470,136 +470,94 @@
 /* ========================================
    HERO RIGHT SIDE IMAGE
 ======================================== */
-
-.hero-image {
-    position: absolute;
-    margin-left: 900px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 42%;
-    max-width: 520px;
-    padding: 10px;
-    border-radius: 35px;
-    z-index: 1;
+/* ========================================
+   HERO CONTAINER
+======================================== */
+.hero {
+    width: 100%;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    gap: 40px;
 }
 
-
-/* IMAGE */
-
-.hero-image img {
-    height: 430px;
-    display: block;
-    object-fit: cover;
-   /* border-radius: 28px;  */
-   margin-left: -80px;
+/* ========================================
+   HERO CONTENT (TEXT)
+======================================== */
+.hero-text {
+    padding: 30px 20px;
+    max-width: 600px;
+    flex: 1;
+    /* animation: heroSideScroll 7s ease-in-out infinite alternate; */
 }
 
+/* ========================================
+   HERO HEADING
+======================================== */
+.hero-text h1 {
+    margin: 0;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -1px;
+    color: #2a4564;
+}
 
+.hero-text h1 span {
+    display: inline-block;
+}
 
-    .hero {
-        width: 100%;
-        min-height: 420px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-    }
+/* ========================================
+   HERO SUBTITLE
+======================================== */
+.hero-text h3 {
+    margin: 14px 0 22px;
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.85;
+}
 
+/* ========================================
+   RING CONTAINER
+======================================== */
+.ring-container {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 18px 0 25px;
+}
 
-    /* ========================================
-       HERO CONTENT
-    ======================================== */
+/* ========================================
+   RINGS
+======================================== */
+.ring {
+    width: 9px;
+    height: 9px;
+    border: 2px;
+    border-radius: 50%;
+    animation: ringPulse 1.8s ease-in-out infinite;
+}
 
-    .hero-text {
-        padding: 30px 20px;
-        margin-left: -550px;
-        /* animation: heroSideScroll 7s ease-in-out infinite alternate; */
-    }
+.ring:nth-child(1) { animation-delay: 0s; }
+.ring:nth-child(2) { animation-delay: 0.15s; }
+.ring:nth-child(3) { animation-delay: 0.3s; }
+.ring:nth-child(4) { animation-delay: 0.45s; }
 
+/* ========================================
+   HERO BUTTONS
+======================================== */
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+}
 
-    /* ========================================
-       HERO HEADING
-    ======================================== */
-
-    .hero-text h1 {
-        margin: 0;
-        font-size: 52px;
-        font-weight: 700;
-        line-height: 1.08;
-        letter-spacing: -1px;
-        color:#2a4564;
-
-    }
-
-    .hero-text h1 span {
-        display: inline-block;
-    }
-
-
-    /* ========================================
-       HERO SUBTITLE
-    ======================================== */
-
-    .hero-text h3 {
-        margin: 14px 0 22px;
-        font-size: 18px;
-        font-weight: 400;
-        opacity: 0.85;
-    }
-
-
-    /* ========================================
-       RING CONTAINER
-    ======================================== */
-
-    .ring-container {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        margin: 18px 0 25px;
-    }
-
-
-    /* ========================================
-       RINGS
-    ======================================== */
-
-    .ring {
-        width: 9px;
-        height: 9px;
-        border: 2px;
-        border-radius: 50%;
-        animation: ringPulse 1.8s ease-in-out infinite;
-    }
-
-    .ring:nth-child(1) {
-        animation-delay: 0s;
-    }
-
-    .ring:nth-child(2) {
-        animation-delay: 0.15s;
-    }
-
-    .ring:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .ring:nth-child(4) {
-        animation-delay: 0.45s;
-    }
-
-
-    /* ========================================
-       HERO BUTTONS
-    ======================================== */
-
-    .hero-buttons {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-top: 25px;
-    }
 .hero-explore {
     margin-top: 28px;
 }
@@ -608,242 +566,230 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     padding: 10px 18px;
-
     background: #f2ad7e;
     color: #3f4145;
-
     border-radius: 30px;
-
     text-decoration: none;
-
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.2px;
-
     box-shadow: 0 5px 15px rgba(180, 100, 55, 0.12);
-
     transition: all 0.3s ease;
 }
 
 .explore-diocese-btn:hover {
     background: #e76514;
     color: #ffffff;
-
     transform: translateY(-2px);
-
     box-shadow: 0 8px 20px rgba(231, 101, 20, 0.22);
 }
 
+/* ========================================
+   SOCIAL ICON
+======================================== */
+.social-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e76514;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 21px;
+    /* 3D glass effect */
+    box-shadow:
+        0 8px 20px rgba(120, 70, 40, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+/* ========================================
+   SOCIAL ICON HOVER
+======================================== */
+.social-icon:hover {
+    color: #ffffff;
+    background: #e76514;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow:
+        0 12px 25px rgba(231, 101, 20, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+/* ========================================
+   SAME STYLE FOR ALL ICONS
+======================================== */
+.whatsapp,
+.instagram,
+.facebook,
+.email {
+    color: #e76514;
+    background: transparent;
+}
+
+/* ========================================
+   SAME HOVER FOR ALL
+======================================== */
+.whatsapp:hover,
+.instagram:hover,
+.facebook:hover,
+.email:hover {
+    color: #ffffff;
+    background: #e76514;
+}
+
+/* ========================================
+   HERO IMAGE (DESKTOP)
+======================================== */
+.hero-image {
+    position: relative;
+    width: 42%;
+    max-width: 520px;
+    padding: 10px;
+    border-radius: 35px;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    max-height: 430px;
+    display: block;
+    object-fit: contain;
+}
+
+/* ========================================
+   SIDE-TO-SIDE ANIMATION
+======================================== */
+@keyframes heroSideScroll {
+    0% { transform: translateX(-18px); }
+    50% { transform: translateX(18px); }
+    100% { transform: translateX(-18px); }
+}
+
+/* ========================================
+   RING PULSE ANIMATION
+======================================== */
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.45;
+    }
+    50% {
+        transform: scale(1.25);
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   MOBILE VIEW
+======================================== */
+@media (max-width: 600px) {
+    .hero {
+        min-height: 350px;
+        width: 100%;
+        flex-direction: column; /* Stacks text and image vertically */
+        padding: 20px 15px;
+        gap: 10px;
+    }
+
+    /* Hero content */
+    .hero-text {
+        padding: 25px 0;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center; /* Optional: Centers text on mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers items horizontally in the column */
+    }
+
+    /* Heading */
+    .hero-text h1 {
+        font-size: 32px;
+        line-height: 1.15;
+        letter-spacing: -1px;
+    }
+
+    /* Subtitle */
+    .hero-text h3 {
+        margin-top: 12px;
+        font-size: 15px;
+    }
+
     /* ========================================
-       SOCIAL ICON
+       RING
     ======================================== */
-
-    .social-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-
+    .ring-container {
         display: flex;
         align-items: center;
-        justify-content: center;
-
-        color: #e76514;
-        background: transparent;
-
-        border: 1px solid rgba(255, 255, 255, 0.8);
-
-        text-decoration: none;
-        font-size: 21px;
-
-        /* 3D glass effect */
-        box-shadow:
-            0 8px 20px rgba(120, 70, 40, 0.18),
-            inset 0 1px 2px rgba(255, 255, 255, 0.7);
-
-        backdrop-filter: blur(8px);
-
-        transition: all 0.3s ease;
+        justify-content: center; /* Centers rings */
+        gap: 7px;
+        margin: 18px 0 25px;
     }
 
-
     /* ========================================
-       SOCIAL ICON HOVER
+       SOCIAL ICONS
     ======================================== */
-
-    .social-icon:hover {
-        color: #ffffff;
-        background: #e76514;
-
-        transform: translateY(-5px) scale(1.05);
-
-        box-shadow:
-            0 12px 25px rgba(231, 101, 20, 0.35),
-            inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    .hero-buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center; /* Centers icons */
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: nowrap;
     }
 
-
-    /* ========================================
-       SAME STYLE FOR ALL ICONS
-    ======================================== */
-
-    .whatsapp,
-    .instagram,
-    .facebook,
-    .email {
-        color: #e76514;
-        background: transparent;
+    .social-icon {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        flex-shrink: 0;
+        font-size: 18px;
     }
 
-
     /* ========================================
-       SAME HOVER FOR ALL
+       BUTTON
     ======================================== */
-
-    .whatsapp:hover,
-    .instagram:hover,
-    .facebook:hover,
-    .email:hover {
-        color: #ffffff;
-        background: #e76514;
+    .btn {
+        padding: 9px 20px;
+        font-size: 14px;
     }
 
-
     /* ========================================
-       SIDE-TO-SIDE ANIMATION
+       HERO IMAGE (MOBILE FIX)
     ======================================== */
-
-    @keyframes heroSideScroll {
-        0% {
-            transform: translateX(-18px);
-        }
-
-        50% {
-            transform: translateX(18px);
-        }
-
-        100% {
-            transform: translateX(-18px);
-        }
+    .hero-image {
+        display: block;
+        position: relative;
+        width: 100%;
+        max-width: 320px;
+        margin: 20px auto 0;
+        padding: 0;
+        top: auto;
+        left: auto;
+        transform: none;
+        box-sizing: border-box;
+        z-index: 1;
     }
 
-
-    /* ========================================
-       RING PULSE ANIMATION
-    ======================================== */
-
-    @keyframes ringPulse {
-        0%,
-        100% {
-            transform: scale(0.8);
-            opacity: 0.45;
-        }
-
-        50% {
-            transform: scale(1.25);
-            opacity: 1;
-        }
+    .hero-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-fit: contain;
+        margin-left: 0;
+        border-radius: 0;
     }
-
-
-    /* ========================================
-       MOBILE VIEW
-       ONLY MOBILE IS CHANGED
-    ======================================== */
-
-    @media (max-width: 600px) {
-
-        .hero {
-            min-height: 350px;
-            width: 100%;
-        }
-
-
-        /* Hero content */
-
-        .hero-text {
-            padding: 25px 15px;
-            margin-left: 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-
-        /* Heading */
-
-        .hero-text h1 {
-            font-size: 32px;
-            line-height: 1.15;
-            letter-spacing: -1px;
-        }
-
-
-        /* Subtitle */
-
-        .hero-text h3 {
-            margin-top: 12px;
-            font-size: 15px;
-        }
-
-
-        /* ========================================
-           RING
-           SAME STYLE AS DESKTOP
-        ======================================== */
-
-        .ring-container {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            margin: 18px 0 25px;
-        }
-
-
-        /*
-           Do NOT change .ring here.
-           Desktop .ring style is automatically used.
-        */
-
-
-        /* ========================================
-           SOCIAL ICONS
-           ONE ROW
-        ======================================== */
-
-        .hero-buttons {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: nowrap;
-        }
-
-
-        .social-icon {
-            width: 45px;
-            height: 45px;
-            min-width: 45px;
-            flex-shrink: 0;
-            font-size: 18px;
-        }
-
-
-        /* ========================================
-           BUTTON
-        ======================================== */
-
-        .btn {
-            padding: 9px 20px;
-            font-size: 14px;
-        }
-
-
-.hero-image {
-    display: none;
 }
+
 </style>
 
 <!-- =====================================================

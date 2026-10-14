@@ -480,6 +480,15 @@ class Spiritual(models.Model):
             'officebearer_spirituals__id'
         )
 
+    def get_office_bearers_in_added_order(self):
+         """
+         Returns office bearers exactly in the order they were added
+            (by SpiritualOfficeBearer.id, oldest first).
+          """
+         return self.spiritual_officebearers.select_related(
+        'officebearer', 'officebearer__designation'
+    ).order_by('id')
+
     def get_coordinators_count(self):
         """Returns the count of coordinators associated with this category"""
         return self.coordinators.count()
@@ -1814,3 +1823,24 @@ class Synod(models.Model):
         verbose_name = "Synod"
         verbose_name_plural = "Synods"
         ordering = ['name']
+
+
+
+
+#MODEL AT A GLANCE
+
+from django.db import models
+
+
+class Glance(models.Model):
+    department = models.CharField(max_length=150)
+    role = models.CharField(max_length=150)
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f"{self.department} - {self.role} - {self.name}"
+
+    class Meta:
+        verbose_name = "Glance"
+        verbose_name_plural = "Glance"
+        ordering = ['id']
