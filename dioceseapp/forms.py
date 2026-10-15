@@ -2056,14 +2056,26 @@ class KalpanaFileUpdateForm(forms.ModelForm):
 
 # EVENTS FORM
 
+
 from django import forms
 from django.utils import timezone
 from .models import Event
+import datetime
+
 
 class EventForm(forms.ModelForm):
+
     class Meta:
         model = Event
-        fields = ['title', 'description', 'event_date', 'event_time', 'location', 'image']
+        fields = [
+            'title',
+            'description',
+            'event_date',
+            'event_time',
+            'location',
+            'image'
+        ]
+
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -2096,6 +2108,7 @@ class EventForm(forms.ModelForm):
                 'accept': 'image/*',
             }),
         }
+
         labels = {
             'title': 'Event Title',
             'description': 'Description',
@@ -2104,45 +2117,68 @@ class EventForm(forms.ModelForm):
             'location': 'Location',
             'image': 'Event Image',
         }
+
         help_texts = {
             'image': 'Recommended: 800×600 pixels. Max 5MB.',
         }
 
     def clean(self):
         cleaned_data = super().clean()
+
         event_date = cleaned_data.get('event_date')
         event_time = cleaned_data.get('event_time')
-        
-        if event_date and event_time:
-            import datetime
-            # Combine date and time
-            event_datetime = datetime.datetime.combine(event_date, event_time)
-            
-            # Make it timezone-aware using Django's timezone
-            event_datetime = timezone.make_aware(event_datetime)
-            
-            # Now compare with timezone.now() which is also aware
-            if event_datetime < timezone.now():
-                raise forms.ValidationError(
-                    "Event date and time cannot be in the past. Please select a future date and time."
+
+        today = timezone.localdate()
+
+        # Validate the event date
+        if event_date and event_date < today:
+            self.add_error(
+                'event_date',
+                "Invalid event date: Past dates are not allowed. "
+                "Please select today’s date or a future date."
+            )
+
+        # Validate the event time when the date is today
+        elif event_date and event_time and event_date == today:
+            current_time = timezone.localtime().time().replace(
+                second=0,
+                microsecond=0
+            )
+
+            selected_time = event_time.replace(
+                second=0,
+                microsecond=0
+            )
+
+            if selected_time < current_time:
+                self.add_error(
+                    'event_time',
+                    "Invalid event time: The selected time has already "
+                    "passed. Please select a future time."
                 )
-        
+
         return cleaned_data
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
+
         if image:
             # Check file size (max 5MB)
             if image.size > 5 * 1024 * 1024:
-                raise forms.ValidationError("Image file size must be less than 5MB.")
-            
+                raise forms.ValidationError(
+                    "Image file size must be less than 5MB."
+                )
+
             # Check file extension
             valid_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
             extension = image.name.split('.')[-1].lower()
+
             if extension not in valid_extensions:
                 raise forms.ValidationError(
-                    f"Unsupported file format. Please use: {', '.join(valid_extensions)}"
+                    f"Unsupported file format. Please use: "
+                    f"{', '.join(valid_extensions)}"
                 )
+
         return image
 
 

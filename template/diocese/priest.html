@@ -1,11 +1,10 @@
+
 {% load static %}
 {% include 'header.html' %}
 
 <style>
-
 /* =========================================
    PRIEST SEARCH BOX
-   SAME STYLE AS PARISH / PRAYER BOOK SEARCH
 ========================================= */
 
 .priest-search-box {
@@ -13,12 +12,10 @@
     max-width: 500px;
     margin: 40px auto 45px;
     padding: 0;
-
     background: transparent;
     border: none;
     border-radius: 0;
     box-shadow: none;
-
     display: block;
 }
 
@@ -34,10 +31,8 @@
     left: auto;
     top: 50%;
     transform: translateY(-50%);
-
     color: #e76514;
     font-size: 18px;
-
     pointer-events: none;
     z-index: 2;
 }
@@ -45,29 +40,20 @@
 .priest-search-field input {
     width: 100%;
     height: 50px;
-
     padding: 0 52px 0 20px;
-
     box-sizing: border-box;
-
     border: 1px solid #ddd;
     border-radius: 30px;
-
     background: #ffffff;
     color: #2a4564;
-
     font-size: 15px;
-
     outline: none;
-
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
-
     transition: 0.3s ease;
 }
 
 .priest-search-field input:focus {
     border-color: #e76514;
-
     box-shadow:
         0 0 0 3px rgba(231, 101, 20, 0.12),
         0 8px 20px rgba(0, 0, 0, 0.07);
@@ -77,33 +63,29 @@
     color: #999;
 }
 
-
-/* =========================================
-   RESET BUTTON
-   HIDDEN - SEARCH DESIGN REMAINS CLEAN
-========================================= */
-
 .priest-search-reset {
     display: none;
 }
 
-
 /* =========================================
-   WHEN FILTERING RETURNS NO RESULTS
+   HIDE EMPTY SECTIONS
 ========================================= */
 
 .priest-section.is-empty {
-    display: none;
+    display: none !important;
 }
 
+.priest-empty-state,
+.priest-empty-card {
+    display: none !important;
+}
 
 /* =========================================
-   MOBILE SEARCH
+   MOBILE RESPONSIVE
 ========================================= */
 
 @media (max-width: 768px) {
 
-    /* --- FORCE PROPER SPACING FOR SEARCH BOX --- */
     .priest-search-box {
         width: calc(100% - 40px) !important;
         max-width: calc(100% - 40px) !important;
@@ -136,7 +118,6 @@
         font-size: 17px !important;
     }
 
-    /* --- FORCE PROPER SPACING AND BACKGROUND FOR SECTIONS --- */
     .priest-section {
         width: calc(100% - 40px) !important;
         max-width: calc(100% - 40px) !important;
@@ -144,7 +125,7 @@
         margin-right: auto !important;
         margin-top: 30px !important;
         margin-bottom: 30px !important;
-        padding: 20px 20px 0 20px !important;
+        padding: 20px 20px 0 !important;
         box-sizing: border-box !important;
         background-color: #ffffff !important;
         border-radius: 10px !important;
@@ -153,20 +134,18 @@
         height: auto !important;
     }
 
-    /* --- FIX: Force hidden sections to stay hidden on mobile --- */
+    /* Empty sections must remain hidden on mobile */
     .priest-section.is-empty {
         display: none !important;
     }
 
-    /* --- Keep clean space between cards and footer --- */
     body .container,
     body div.container {
-        padding: 0 15px 40px 15px !important;
+        padding: 0 15px 40px !important;
         background-color: #f9f9f9 !important;
         margin-bottom: 0 !important;
     }
 
-    /* Section titles adjust for small screens */
     .section-title-priest,
     .section-title-retired,
     .section-title-students {
@@ -177,7 +156,6 @@
         color: #2a4564 !important;
     }
 
-    /* Grid becomes single column on mobile - shrinks to content */
     .priest-dir-grid {
         display: grid !important;
         grid-template-columns: 1fr !important;
@@ -190,12 +168,11 @@
         height: auto !important;
     }
 
-    /* --- INCREASED: Card width and height --- */
     .priest-dir-card {
-        width: 95% !important;          /* wider than before */
-        max-width: 95% !important;      /* wider than before */
+        width: 95% !important;
+        max-width: 95% !important;
         height: auto !important;
-        max-height: 450px !important;   /* taller than before */
+        max-height: 450px !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
         background-color: #ffffff !important;
@@ -204,9 +181,8 @@
         overflow: hidden !important;
     }
 
-    /* --- INCREASED: Image box height inside the card --- */
     .priest-dir-card .priest-dir-img-box {
-        height: 180px !important;       /* taller image area */
+        height: 180px !important;
         min-height: 180px !important;
         max-height: 180px !important;
         overflow: hidden !important;
@@ -219,12 +195,10 @@
         object-fit: cover !important;
     }
 
-    /* --- Slightly more padding inside the info box --- */
     .priest-dir-card .priest-dir-info-box {
         padding: 14px 16px !important;
     }
 
-    /* --- Slightly larger text inside the card --- */
     .priest-dir-card .priest-dir-name {
         font-size: 17px !important;
         margin-bottom: 8px !important;
@@ -240,32 +214,25 @@
         margin-bottom: 6px !important;
         line-height: 1.4 !important;
     }
-
 }
-
 </style>
 
-
-<!-- ============================================================
+<!-- =========================================
      SINGLE GLOBAL PRIEST SEARCH
-============================================================ -->
+========================================= -->
 
 <div class="priest-search-box">
-
     <div class="priest-search-field">
-
         <i class="fas fa-search"></i>
 
         <input
             type="text"
             id="priestSearchInput"
             placeholder="Search by name, parish, address or position..."
+            aria-label="Search priests"
         >
-
     </div>
 
-
-    <!-- Kept for existing JavaScript functionality -->
     <button
         type="button"
         class="priest-search-reset"
@@ -274,103 +241,63 @@
     >
         <i class="fas fa-rotate-right"></i>
     </button>
-
 </div>
 
-
-<!-- ============================================================
+<!-- =========================================
      CURRENT PRIESTS
-============================================================ -->
+========================================= -->
 
+{% if priests %}
 <section class="priest-section" data-section="current">
-
-    <h1 class="section-title-priest">
-        Priests Directory
-    </h1>
-
+    <h1 class="section-title-priest">Priests Directory</h1>
 
     <div class="priest-dir-grid">
-
         {% for priest in priests %}
-
         <div
             class="priest-dir-card priest-search-card"
-
             data-first-name="{{ priest.first_name|lower }}"
             data-last-name="{{ priest.last_name|lower }}"
             data-address="{{ priest.address|default:''|lower }}"
             data-home-parish="{{ priest.home_parish|default:''|lower }}"
             data-position="{{ priest.get_position_display|lower }}"
         >
-
             <div class="priest-dir-img-box">
-
                 {% if priest.image %}
-
                     <img
                         src="{{ priest.image.url }}"
                         alt="{{ priest.first_name }}"
                     >
-
                 {% else %}
-
                     <div class="priest-initial">
                         {{ priest.first_name|first|upper }}
                     </div>
-
                 {% endif %}
-
             </div>
 
-
             <div class="priest-dir-info-box">
-
                 <h2 class="priest-dir-name">
                     Rev. {{ priest.first_name }} {{ priest.last_name }}
                 </h2>
 
-
                 <p class="priest-dir-role">
-
                     <i class="fas fa-cross"></i>
-
                     {{ priest.get_position_display }}
-
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-church church-icon"></i>
-
-                    <span>
-                        {{ priest.home_parish }}
-                    </span>
-
+                    <span>{{ priest.home_parish }}</span>
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-location-dot location-icon"></i>
-
-                    <span>
-                        {{ priest.address }}
-                    </span>
-
+                    <span>{{ priest.address }}</span>
                 </p>
-
 
                 <p class="priest-dir-text">
-
                     <i class="fas fa-phone phone-icon"></i>
-
-                    <span>
-                        {{ priest.phone }}
-                    </span>
-
+                    <span>{{ priest.phone }}</span>
                 </p>
-
 
                 <a
                     href="{% url 'priest_details' priest.slug %}"
@@ -378,137 +305,68 @@
                 >
                     PROFILE
                 </a>
-
             </div>
-
         </div>
-
-
-        {% empty %}
-
-        <div class="priest-empty-state">
-
-            <div class="priest-empty-card">
-
-                <div class="priest-empty-icon">
-                    <i class="fas fa-cross"></i>
-                </div>
-
-
-                <h3 class="priest-empty-title">
-                    No Current Priests
-                </h3>
-
-
-                <div class="priest-empty-divider"></div>
-
-
-                <p class="priest-empty-text">
-
-                    There are currently no priests available in the directory.
-                    Please check back later for updated information.
-
-                </p>
-
-            </div>
-
-        </div>
-
         {% endfor %}
-
     </div>
-
 </section>
+{% endif %}
 
-
-
-<!-- ============================================================
+<!-- =========================================
      RETIRED PRIESTS
-============================================================ -->
+========================================= -->
 
+{% if retired_priests %}
 <section class="priest-section" data-section="retired">
-
-    <h2 class="section-title-retired">
-        Retired Priests
-    </h2>
-
+    <h2 class="section-title-retired">Retired Priests</h2>
 
     <div class="priest-dir-grid">
-
         {% for priest in retired_priests %}
-
         <div
             class="priest-dir-card priest-search-card"
-
             data-first-name="{{ priest.first_name|lower }}"
             data-last-name="{{ priest.last_name|lower }}"
             data-address="{{ priest.address|default:''|lower }}"
             data-home-parish="{{ priest.home_parish|default:''|lower }}"
             data-position="{{ priest.get_position_display|lower }}"
         >
-
             <div class="priest-dir-img-box">
-
                 {% if priest.image %}
-
                     <img
                         src="{{ priest.image.url }}"
                         alt="{{ priest.first_name }}"
                     >
-
                 {% else %}
-
                     <div class="priest-initial">
                         {{ priest.first_name|first|upper }}
                     </div>
-
                 {% endif %}
-
             </div>
 
-
             <div class="priest-dir-info-box">
-
                 <h2 class="priest-dir-name">
                     Rev. {{ priest.first_name }} {{ priest.last_name }}
                 </h2>
 
-
                 <p class="priest-dir-role">
-
                     <i class="fas fa-cross"></i>
-
                     {{ priest.get_position_display }}
-
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-church church-icon"></i>
-
                     {{ priest.home_parish }}
-
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-location-dot location-icon"></i>
-
                     {{ priest.address }}
-
                 </p>
-
 
                 <p class="priest-dir-text">
-
                     <i class="fas fa-phone phone-icon"></i>
-
                     {{ priest.phone }}
-
                 </p>
-
 
                 <a
                     href="{% url 'priestretired_details' priest.slug %}"
@@ -516,439 +374,354 @@
                 >
                     PROFILE
                 </a>
-
             </div>
-
         </div>
-
-
-        {% empty %}
-
-        <div class="priest-empty-state">
-
-            <div class="priest-empty-card">
-
-                <div class="priest-empty-icon">
-                    <i class="fas fa-user-clock"></i>
-                </div>
-
-
-                <h3 class="priest-empty-title">
-                    No Retired Priests
-                </h3>
-
-
-                <div class="priest-empty-divider"></div>
-
-
-                <p class="priest-empty-text">
-
-                    No retired priests are currently listed in the directory.
-                    Please check back later for updated information.
-
-                </p>
-
-            </div>
-
-        </div>
-
         {% endfor %}
-
     </div>
-
 </section>
 
+{% endif %}
 
-
-<!-- ============================================================
+<!-- =========================================
      DEACONS / SEMINARIANS
-============================================================ -->
+========================================= -->
 
+{% if students %}
 <section class="priest-section" data-section="students">
-
-    <h2 class="section-title-students">
-        Deacons and Seminarians
-    </h2>
-
+    <h2 class="section-title-students">Deacons and Seminarians</h2>
 
     <div class="priest-dir-grid">
-
         {% for priest in students %}
-
         <div
             class="priest-dir-card priest-search-card"
-
             data-first-name="{{ priest.first_name|lower }}"
             data-last-name="{{ priest.last_name|lower }}"
             data-address="{{ priest.address|default:''|lower }}"
             data-home-parish="{{ priest.home_parish|default:''|lower }}"
             data-position="{{ priest.get_position_display|lower }}"
         >
-
             <div class="priest-dir-img-box">
-
                 {% if priest.image %}
-
                     <img
                         src="{{ priest.image.url }}"
                         alt="{{ priest.first_name }}"
                     >
-
                 {% else %}
-
                     <div class="priest-initial">
                         {{ priest.first_name|first|upper }}
                     </div>
-
                 {% endif %}
-
             </div>
-
 
             <div class="priest-dir-info-box">
-
                 <h2 class="priest-dir-name">
-                 {{ priest.first_name }} {{ priest.last_name }}
+                    {{ priest.first_name }} {{ priest.last_name }}
                 </h2>
 
-
                 <p class="priest-dir-role">
-
                     <i class="fas fa-cross"></i>
-
                     {{ priest.get_position_display }}
-
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-church church-icon"></i>
-
                     {{ priest.home_parish }}
-
                 </p>
 
-
                 <p class="priest-dir-text">
-
                     <i class="fas fa-location-dot location-icon"></i>
-
                     {{ priest.address }}
-
                 </p>
-
 
                 <p class="priest-dir-text">
-
                     <i class="fas fa-phone phone-icon"></i>
-
                     {{ priest.phone }}
-
                 </p>
 
-
-                <!-- PROFILE BUTTON INTENTIONALLY REMAINS COMMENTED -->
-                <!--
-                <a
-                    href="{% url 'priest_details' priest.slug %}"
-                    class="priest-dir-profile-btn"
-                >
-                    PROFILE
-                </a>
-                -->
-
+                <!-- Profile button intentionally omitted -->
             </div>
-
         </div>
-
-
-        {% empty %}
-
-        <div class="priest-empty-state">
-
-            <div class="priest-empty-card">
-
-                <div class="priest-empty-icon">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
-
-
-                <h3 class="priest-empty-title">
-                    No Deacons or Seminarians
-                </h3>
-
-
-                <div class="priest-empty-divider"></div>
-
-
-                <p class="priest-empty-text">
-
-                    There are currently no deacons or seminarians listed
-                    in the directory.
-
-                </p>
-
-            </div>
-
-        </div>
-
         {% endfor %}
-
     </div>
-
 </section>
-
-
+{% endif %}
 </div>
-
-
 {% include 'footer.html' %}
 
-
-
 <!-- ============================================================
-     SIDEBAR SCRIPT
+     SIDEBAR TOGGLE SCRIPT
 ============================================================ -->
 
 <script>
 
-const toggleBtn = document.getElementById('sidebarToggleBtn');
+const toggleBtn =
+    document.getElementById('sidebarToggleBtn');
 
-const sidebar = document.getElementById('sidebarPanel');
+const sidebar =
+    document.getElementById('sidebarPanel');
 
-const overlay = document.getElementById('sidebarOverlay');
+const overlay =
+    document.getElementById('sidebarOverlay');
 
 
-function openSidebar(){
+function openSidebar() {
 
-    sidebar.classList.add('open');
+    if (sidebar) {
 
-    overlay.classList.add('active');
+        sidebar.classList.add('open');
 
-    toggleBtn.classList.add('active');
+    }
 
-    document.body.style.overflow='hidden';
+
+    if (overlay) {
+
+        overlay.classList.add('active');
+
+    }
+
+
+    if (toggleBtn) {
+
+        toggleBtn.classList.add('active');
+
+    }
+
+
+    document.body.style.overflow = 'hidden';
 
 }
 
 
-function closeSidebar(){
 
-    sidebar.classList.remove('open');
+function closeSidebar() {
 
-    overlay.classList.remove('active');
+    if (sidebar) {
 
-    toggleBtn.classList.remove('active');
+        sidebar.classList.remove('open');
 
-    document.body.style.overflow='';
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove('active');
+
+    }
+
+
+    if (toggleBtn) {
+
+        toggleBtn.classList.remove('active');
+
+    }
+
+
+    document.body.style.overflow = '';
 
 }
 
 
-toggleBtn.addEventListener('click',(e)=>{
 
-    e.stopPropagation();
+if (toggleBtn) {
 
-    if(sidebar.classList.contains('open')){
 
-        closeSidebar();
+    toggleBtn.addEventListener(
+        'click',
+        function(e) {
 
-    }
+            e.stopPropagation();
 
-    else{
-
-        openSidebar();
-
-    }
-
-});
-
-
-overlay.addEventListener('click',closeSidebar);
-
-
-document.addEventListener('keydown',(e)=>{
-
-    if(e.key==="Escape" && sidebar.classList.contains('open')){
-
-        closeSidebar();
-
-    }
-
-});
-
-</script>
-
-
-
-<!-- ============================================================
-     DROPDOWN SCRIPT
-============================================================ -->
-
-<script>
-
-document.querySelectorAll(".menu-link").forEach(link=>{
-
-    link.addEventListener("click",function(){
-
-        const dropdown=this.parentElement;
-
-
-        document.querySelectorAll(".dropdown").forEach(item=>{
-
-            if(item!==dropdown){
-
-                item.classList.remove("active");
-
-            }
-
-        });
-
-
-        dropdown.classList.toggle("active");
-
-    });
-
-});
-
-</script>
-
-
-
-<!-- ============================================================
-     PRIEST SEARCH / FILTER
-============================================================ -->
-
-<script>
-
-(function () {
-
-    const searchInput =
-        document.getElementById("priestSearchInput");
-
-    const resetBtn =
-        document.getElementById("priestSearchReset");
-
-
-    if (!searchInput) return;
-
-
-    const sections =
-        document.querySelectorAll(".priest-section");
-
-
-    function filterPriests() {
-
-        const query =
-            searchInput.value.toLowerCase().trim();
-
-
-        sections.forEach(function (section) {
-
-            const cards =
-                section.querySelectorAll(".priest-search-card");
-
-
-            let visibleCount = 0;
-
-
-            cards.forEach(function (card) {
-
-                const haystack = [
-
-                    card.dataset.firstName || "",
-
-                    card.dataset.lastName || "",
-
-                    card.dataset.address || "",
-
-                    card.dataset.homeParish || "",
-
-                    card.dataset.position || ""
-
-                ].join(" ");
-
-
-                const match =
-                    !query || haystack.includes(query);
-
-
-                if (match) {
-
-                    card.style.display = "";
-
-                    visibleCount++;
-
-                }
-
-                else {
-
-                    card.style.display = "none";
-
-                }
-
-            });
-
-
-            /*
-               Hide complete section when
-               no priest matches the search.
-            */
 
             if (
-
-                cards.length > 0 &&
-                visibleCount === 0
-
+                sidebar &&
+                sidebar.classList.contains('open')
             ) {
 
-                section.classList.add("is-empty");
+                closeSidebar();
 
             }
 
             else {
 
-                section.classList.remove("is-empty");
+                openSidebar();
 
             }
 
-        });
-
-    }
-
-
-    searchInput.addEventListener(
-        "input",
-        filterPriests
+        }
     );
 
+}
 
-    /*
-       Existing reset functionality retained.
-       Reset button is visually hidden.
-    */
 
-    if (resetBtn) {
 
-        resetBtn.addEventListener(
-            "click",
-            function () {
+if (overlay) {
 
-                searchInput.value = "";
+    overlay.addEventListener(
+        'click',
+        closeSidebar
+    );
 
-                filterPriests();
+}
 
-            }
-        );
+
+
+document.addEventListener(
+    'keydown',
+    function(e) {
+
+        if (
+            e.key === 'Escape' &&
+            sidebar &&
+            sidebar.classList.contains('open')
+        ) {
+
+            closeSidebar();
+
+        }
 
     }
+);
 
-})();
+
+
+/* ============================================================
+   CLOSE SIDEBAR WHEN CLICKING OUTSIDE
+============================================================ */
+
+document.addEventListener(
+    'click',
+    function(e) {
+
+        if (
+            sidebar &&
+            sidebar.classList.contains('open') &&
+
+            !sidebar.contains(e.target) &&
+
+            toggleBtn &&
+            !toggleBtn.contains(e.target)
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
 
 </script>
 
 
-</body>
 
+<!-- ============================================================
+     DROPDOWN MENU
+============================================================ -->
+
+<script>
+
+document
+    .querySelectorAll(".menu-link")
+    .forEach(function(link) {
+
+
+        link.addEventListener(
+            "click",
+            function() {
+
+
+                const dropdown =
+                    this.parentElement;
+
+
+
+                document
+                    .querySelectorAll(".dropdown")
+                    .forEach(function(item) {
+
+
+                        if (item !== dropdown) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+
+                    });
+
+
+
+                dropdown.classList.toggle(
+                    "active"
+                );
+
+
+            }
+        );
+
+
+    });
+
+</script>
+
+<script>
+/* ============================================================
+   GLOBAL PRIEST SEARCH
+   Original styling and layout remain unchanged.
+============================================================ */
+
+(function () {
+    const searchInput = document.getElementById('priestSearchInput');
+    const resetButton = document.getElementById('priestSearchReset');
+
+    if (!searchInput) return;
+
+    function filterPriests() {
+        const query = searchInput.value.trim().toLowerCase();
+
+        document.querySelectorAll('.priest-section').forEach(function (section) {
+            const cards = section.querySelectorAll('.priest-search-card');
+            let visibleCount = 0;
+
+            cards.forEach(function (card) {
+                const searchableText = [
+                    card.dataset.firstName || '',
+                    card.dataset.lastName || '',
+                    card.dataset.address || '',
+                    card.dataset.homeParish || '',
+                    card.dataset.position || ''
+                ].join(' ').toLowerCase();
+
+                const matches = searchableText.includes(query);
+
+                card.style.display = matches ? '' : 'none';
+
+                if (matches) visibleCount++;
+            });
+
+            /* Hide the heading and entire section if no cards match. */
+            section.classList.toggle('is-empty', visibleCount === 0);
+        });
+
+        if (resetButton) {
+            resetButton.style.display = query ? 'block' : 'none';
+        }
+    }
+
+    searchInput.addEventListener('input', filterPriests);
+
+    if (resetButton) {
+        resetButton.addEventListener('click', function () {
+            searchInput.value = '';
+            filterPriests();
+            searchInput.focus();
+        });
+    }
+
+    filterPriests();
+})();
+</script>
+
+</body>
 </html>

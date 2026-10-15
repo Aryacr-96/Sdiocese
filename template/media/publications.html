@@ -1,3 +1,4 @@
+
 {% load static %}
 {% include 'header.html' %}
 
@@ -62,7 +63,85 @@
     width:100%;
     height:100%;
     object-fit:cover;
+    display:block;
 }
+
+
+/* IMAGE PLACEHOLDER */
+.no-image{
+    width:100%;
+    height:260px;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, #f8f1e9, #e5e9ed);
+    border:1px solid #e0e2e5;
+    border-radius:13px;
+    position:relative;
+    overflow:hidden;
+}
+
+/* DECORATIVE CIRCLES */
+.no-image::before{
+    content:"";
+    position:absolute;
+    width:110px;
+    height:110px;
+    border:1px solid rgba(221,126,67,.2);
+    border-radius:50%;
+    top:-35px;
+    right:-35px;
+}
+
+.no-image::after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    border:1px solid rgba(42,69,100,.12);
+    border-radius:50%;
+    bottom:-35px;
+    left:-35px;
+}
+
+/* PLACEHOLDER ICON */
+.no-image-icon{
+    width:66px;
+    height:66px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border-radius:50%;
+    margin-bottom:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    z-index:1;
+}
+
+.no-image-icon i{
+    font-size:28px;
+    color:#e76514;
+}
+
+/* PLACEHOLDER TITLE */
+.no-image h4{
+    font-size:15px;
+    font-weight:700;
+    color:#2a4564;
+    margin:0 0 8px;
+    z-index:1;
+}
+
+/* PLACEHOLDER DESCRIPTION */
+.no-image p{
+    font-size:13px;
+    color:#777;
+    margin:0;
+    z-index:1;
+}
+
 
 .publication-content{
     padding:12px;
@@ -235,135 +314,134 @@
 }
 </style>
 
-<!-- Font Awesome -->
-
+<!-- FONT AWESOME -->
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <section class="publications-section">
 
+    <div class="section-title-publication">
+        <h2>
+            <i class="fas fa-book-open"></i>
+            Publications
+        </h2>
 
-<div class="section-title-publication">
-    <h2>
-        <i class="fas fa-book-open"></i>
-        Publications
-    </h2>
+        <!-- <div class="publication-count">
+            <i class="fas fa-file-alt"></i>
+            {{ publications|length }}
+        </div> -->
+    </div>
 
-    <!-- <div class="publication-count">
-        <i class="fas fa-file-alt"></i>
-        {{ publications|length }}
-    </div> -->
-</div>
+    <div class="publication-grid">
 
+        {% if publications %}
 
-<div class="publication-grid">
+            {% for publication in publications %}
 
-    {% if publications %}
+            <div class="publication-card">
 
-        {% for publication in publications %}
+                <div class="publication-image">
 
-        <div class="publication-card">
+                    {% if publication.image %}
 
-            <div class="publication-image">
-
-                {% if publication.image %}
-
-                    <img src="{{ publication.image.url }}"
-                         alt="{{ publication.title }}">
-
-                {% else %}
-
-                    <div class="no-image">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-
-                {% endif %}
-
-            </div>
-
-
-            <div class="publication-content">
-
-                <h3>{{ publication.title }}</h3>
-
-
-                <!-- File type badge -->
-                {% with file_ext=publication.file.name|slice:"-3:"|lower %}
-
-                    {% if file_ext == 'pdf' %}
-
-                        <!--
-                        <span class="file-type-badge pdf">
-                            <i class="fas fa-file-pdf"></i> PDF
-                        </span>
-                        -->
-
-                    {% elif file_ext == 'doc' or file_ext == 'docx' %}
-
-                        <span class="file-type-badge doc">
-                            <i class="fas fa-file-word"></i> DOC
-                        </span>
-
-                    {% elif file_ext == 'jpg' or file_ext == 'jpeg' or file_ext == 'png' or file_ext == 'gif' %}
-
-                        <span class="file-type-badge image">
-                            <i class="fas fa-file-image"></i> Image
-                        </span>
+                        <img src="{{ publication.image.url }}"
+                             alt="{{ publication.title }}">
 
                     {% else %}
 
-                        <span class="file-type-badge other">
-                            <i class="fas fa-file"></i>
-                            {{ file_ext|upper }}
-                        </span>
+                        <div class="no-image">
+
+                            <div class="no-image-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+
+                            <h4>{{ publication.title }}</h4>
+
+                            <p>Image not available</p>
+
+                        </div>
 
                     {% endif %}
 
-                {% endwith %}
-
-
-                <!--
-                <div class="publication-meta">
-                    <i class="fas fa-calendar-alt"></i>
-                    {{ publication.uploaded_at|date:"M d, Y" }}
                 </div>
-                -->
 
+                <div class="publication-content">
 
-                <a href="{{ publication.file.url }}"
-                   class="download-btn"
-                   download>
+                    <h3>{{ publication.title }}</h3>
 
-                    <i class="fas fa-download"></i>
-                    Download
+                    <!-- FILE TYPE BADGE -->
+                    {% with file_ext=publication.file.name|slice:"-3:"|lower %}
 
-                </a>
+                        {% if file_ext == 'pdf' %}
+
+                            <!--
+                            <span class="file-type-badge pdf">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </span>
+                            -->
+
+                        {% elif file_ext == 'doc' or file_ext == 'docx' %}
+
+                            <span class="file-type-badge doc">
+                                <i class="fas fa-file-word"></i> DOC
+                            </span>
+
+                        {% elif file_ext == 'jpg' or file_ext == 'jpeg' or file_ext == 'png' or file_ext == 'gif' %}
+
+                            <span class="file-type-badge image">
+                                <i class="fas fa-file-image"></i> Image
+                            </span>
+
+                        {% else %}
+
+                            <span class="file-type-badge other">
+                                <i class="fas fa-file"></i>
+                                {{ file_ext|upper }}
+                            </span>
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                    <!--
+                    <div class="publication-meta">
+                        <i class="fas fa-calendar-alt"></i>
+                        {{ publication.uploaded_at|date:"M d, Y" }}
+                    </div>
+                    -->
+
+                    <a href="{{ publication.file.url }}"
+                       class="download-btn"
+                       download>
+
+                        <i class="fas fa-download"></i>
+                        Download
+
+                    </a>
+
+                </div>
 
             </div>
 
-        </div>
+            {% endfor %}
 
-        {% endfor %}
+        {% else %}
 
+            <!-- NO PUBLICATIONS STATE -->
 
-    {% else %}
+            <div class="no-publications">
 
-        <!-- NO PUBLICATIONS STATE -->
+                <i class="fas fa-book-open"></i>
 
-        <div class="no-publications">
+                <h4>No Publications Available</h4>
 
-            <i class="fas fa-book-open"></i>
+                <p>Check back later for new publications.</p>
 
-            <h4>No Publications Available</h4>
+            </div>
 
-            <p>Check back later for new publications.</p>
+        {% endif %}
 
-        </div>
-
-    {% endif %}
-
-</div>
-
+    </div>
 
 </section>
 
@@ -372,13 +450,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 {% include 'footer.html' %}
 
 <!-- JAVASCRIPT -->
-
 <script>
-
 const toggleBtn = document.getElementById('sidebarToggleBtn');
 const sidebar = document.getElementById('sidebarPanel');
 const overlay = document.getElementById('sidebarOverlay');
-
 
 function openSidebar() {
 
@@ -389,7 +464,6 @@ function openSidebar() {
     document.body.style.overflow = 'hidden';
 }
 
-
 function closeSidebar() {
 
     sidebar.classList.remove('open');
@@ -398,7 +472,6 @@ function closeSidebar() {
 
     document.body.style.overflow = '';
 }
-
 
 toggleBtn.addEventListener('click', (e) => {
 
@@ -416,9 +489,7 @@ toggleBtn.addEventListener('click', (e) => {
 
 });
 
-
 overlay.addEventListener('click', closeSidebar);
-
 
 document.addEventListener('keydown', (e) => {
 
@@ -430,11 +501,9 @@ document.addEventListener('keydown', (e) => {
     }
 
 });
-
 </script>
 
 <script>
-
 document.querySelectorAll(".menu-link").forEach(link => {
 
     link.addEventListener("click", function () {
@@ -456,14 +525,11 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 
 });
-
 </script>
 
 <script>
-
 const historyBlocks =
     document.querySelectorAll('.history-block');
-
 
 window.addEventListener('scroll', () => {
 
@@ -472,14 +538,12 @@ window.addEventListener('scroll', () => {
         const rect =
             block.getBoundingClientRect();
 
-
-        // This check defines the "active" zone
+        // This check defines the active zone
         // (the center of your screen)
 
         const isMiddle =
             rect.top < window.innerHeight / 2 &&
             rect.bottom > window.innerHeight / 2;
-
 
         if (isMiddle) {
 
@@ -504,5 +568,4 @@ window.addEventListener('scroll', () => {
     });
 
 });
-
 </script>

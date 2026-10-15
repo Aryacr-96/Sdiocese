@@ -13,13 +13,13 @@
             {% if synod.image %}
                 <img src="{{ synod.image.url }}"
                      alt="{{ synod.name }}">
-            {% else %}
-                <img src="{% static 'images/holy29.png' %}"
-                     alt="{{ synod.name }}">
-            {% endif %}
+           {% else %}
+                    <div class="priest-initial">
+                        {{ synod.name|first|upper }}
+                    </div>
+                {% endif %}
 
         </div>
-
 
         <div class="card-details-wrapper">
 
@@ -113,5 +113,12 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
+
+
+<style>.priest-initial {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }</style>
 </body>
 </html>

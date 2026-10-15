@@ -1,7 +1,4 @@
 {% load static %}
-{% include 'admin/adminheader.html' %}
-{{ form.media }}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Edit Synod · Diocese</title>
+
+    {{ form.media }}
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
@@ -568,6 +567,264 @@
         }
 
         /* ========================================
+           FILE UPLOAD (for image)
+        ======================================== */
+
+        .file-upload-area {
+            border: 2px dashed #e2e8f0;
+
+            border-radius: 12px;
+
+            padding: 2rem 1.5rem;
+
+            text-align: center;
+
+            background: #fafcfd;
+
+            transition: all 0.2s ease;
+
+            position: relative;
+
+            min-height: 140px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .file-upload-area:hover {
+            border-color: #f59e0b;
+
+            background: #fff7ed;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #f59e0b;
+
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .file-upload-area > i {
+            font-size: 2.5rem;
+
+            color: #94a3b8;
+
+            display: block;
+
+            margin-bottom: 0.5rem;
+
+            transition: all 0.2s ease;
+
+            pointer-events: none;
+        }
+
+        .file-upload-area:hover > i {
+            color: #f59e0b;
+        }
+
+        .file-upload-area p {
+            font-size: 0.9rem;
+
+            color: #64748b;
+
+            margin: 0;
+
+            font-weight: 500;
+
+            pointer-events: none;
+        }
+
+        .file-upload-area p strong {
+            color: #f59e0b;
+        }
+
+        .file-upload-area small {
+            font-size: 0.75rem;
+
+            color: #94a3b8;
+
+            margin-top: 4px;
+
+            pointer-events: none;
+        }
+
+        .file-upload-area input[type="file"] {
+            position: absolute;
+
+            inset: 0;
+
+            opacity: 0;
+
+            cursor: pointer;
+
+            z-index: 10;
+
+            width: 100%;
+
+            height: 100%;
+        }
+
+        /* ========================================
+           IMAGE PREVIEW
+        ======================================== */
+
+        .image-preview {
+            display: none;
+
+            margin-top: 1rem;
+
+            padding: 1rem;
+
+            border: 2px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            background: #fafcfd;
+
+            text-align: center;
+        }
+
+        .image-preview.active {
+            display: block;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+
+            max-height: 250px;
+
+            border-radius: 12px;
+
+            object-fit: contain;
+        }
+
+        /* ========================================
+           GRID (replaces Bootstrap row/col)
+        ======================================== */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 1.6rem;
+        }
+
+        .form-row.two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .form-row.two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========================================
+           PHONE NUMBER ROWS
+        ======================================== */
+
+        .phone-numbers-container {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+        }
+
+        .phone-row {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .phone-row input {
+            flex: 1;
+        }
+
+        .remove-phone {
+            width: 50px;
+
+            height: 50px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #fef2f2;
+
+            color: #ef4444;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: 0.2s ease;
+
+            flex-shrink: 0;
+        }
+
+        .remove-phone:hover {
+            background: #ef4444;
+
+            color: #fff;
+        }
+
+        .add-phone-btn {
+            margin-top: 10px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            border: 1px dashed #f59e0b;
+
+            background: #fff7ed;
+
+            color: #f59e0b;
+
+            padding: 10px 18px;
+
+            border-radius: 10px;
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .add-phone-btn:hover {
+            background: #f59e0b;
+
+            color: #fff;
+        }
+
+        .phone-error {
+            color: #ef4444;
+
+            font-size: 0.8rem;
+
+            margin-top: 5px;
+
+            display: none;
+        }
+
+        /* ========================================
            FOOTER
         ======================================== */
 
@@ -683,6 +940,8 @@
 
 <body>
 
+{% include 'admin/adminheader.html' %}
+
 <div class="content-wrapper">
 
     <!-- ========================================
@@ -701,7 +960,7 @@
                 <h1>
                     Edit Synod
                     <small>
-                        {{ synod.name }}
+                        {{ form.instance.name|default:"Synod" }}
                     </small>
                 </h1>
             </div>
@@ -778,7 +1037,7 @@
                 Edit Synod —
 
                 <span style="color:#64748b;font-weight:400;">
-                    {{ synod.name }}
+                    {{ form.instance.name|default:"Update entry" }}
                 </span>
 
             </div>
@@ -818,41 +1077,37 @@
                 </div>
 
 
-                <div class="row">
+                <div class="form-row two-col">
 
-                    <div class="col-md-6">
+                    <div class="form-group-modern">
 
-                        <div class="form-group-modern">
+                        <label for="{{ form.name.id_for_label }}">
 
-                            <label for="{{ form.name.id_for_label }}">
+                            <i class="fas fa-heading"></i>
 
-                                <i class="fas fa-heading"></i>
+                            Name
 
-                                Name
-
-                                {% if form.name.field.required %}
-                                    <span class="required-star">*</span>
-                                {% endif %}
-
-                            </label>
-
-                            {{ form.name }}
-
-                            {% if form.name.errors %}
-
-                                <ul class="errorlist-modern">
-                                    {{ form.name.errors }}
-                                </ul>
-
+                            {% if form.name.field.required %}
+                                <span class="required-star">*</span>
                             {% endif %}
 
-                            <div class="help-text-modern">
+                        </label>
 
-                                <i class="fas fa-info-circle"></i>
+                        {{ form.name }}
 
-                                Enter the Synod name.
+                        {% if form.name.errors %}
 
-                            </div>
+                            <ul class="errorlist-modern">
+                                {{ form.name.errors }}
+                            </ul>
+
+                        {% endif %}
+
+                        <div class="help-text-modern">
+
+                            <i class="fas fa-info-circle"></i>
+
+                            Enter the Synod name.
 
                         </div>
 
@@ -861,29 +1116,25 @@
 
                     {% if form.slug %}
 
-                    <div class="col-md-6">
+                    <div class="form-group-modern">
 
-                        <div class="form-group-modern">
+                        <label for="{{ form.slug.id_for_label }}">
 
-                            <label for="{{ form.slug.id_for_label }}">
+                            <i class="fas fa-link"></i>
 
-                                <i class="fas fa-link"></i>
+                            Slug
 
-                                Slug
+                        </label>
 
-                            </label>
+                        {{ form.slug }}
 
-                            {{ form.slug }}
+                        {% if form.slug.errors %}
 
-                            {% if form.slug.errors %}
+                            <ul class="errorlist-modern">
+                                {{ form.slug.errors }}
+                            </ul>
 
-                                <ul class="errorlist-modern">
-                                    {{ form.slug.errors }}
-                                </ul>
-
-                            {% endif %}
-
-                        </div>
+                        {% endif %}
 
                     </div>
 
@@ -944,8 +1195,179 @@
 
 
                 <!-- ========================================
-                     CURRENT FILE
+                     CONTENT (CKEditor)
                 ======================================== -->
+
+                {% if form.content %}
+
+                <div class="section-heading-modern">
+
+                    <i class="fas fa-file-alt"></i>
+
+                    Synod Content
+
+                    <span class="line-spacer"></span>
+
+                </div>
+
+
+                <div class="form-group-modern">
+
+                    <label for="{{ form.content.id_for_label }}">
+
+                        <i class="fas fa-edit"></i>
+
+                        Content
+
+                    </label>
+
+                    {{ form.content }}
+
+                    {% if form.content.errors %}
+
+                        <ul class="errorlist-modern">
+                            {{ form.content.errors }}
+                        </ul>
+
+                    {% endif %}
+
+                    <div class="help-text-modern">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        Add detailed Synod information here.
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ========================================
+                     IMAGE
+                ======================================== -->
+
+                {% if form.image %}
+
+                <div class="section-heading-modern">
+
+                    <i class="fas fa-image"></i>
+
+                    Synod Image
+
+                    <span class="line-spacer"></span>
+
+                </div>
+
+
+                {% if form.instance.image %}
+
+                <div class="current-file-box">
+
+                    <div class="current-file-icon">
+
+                        <i class="fas fa-image"></i>
+
+                    </div>
+
+                    <div class="current-file-info">
+
+                        <span class="current-file-title">
+                            Current Image
+                        </span>
+
+                        <span class="current-file-name">
+                            {{ form.instance.image.name }}
+                        </span>
+
+                    </div>
+
+                    <a href="{{ form.instance.image.url }}"
+                       target="_blank"
+                       class="current-file-link">
+
+                        <i class="fas fa-eye"></i>
+                        View
+
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+
+                <div class="form-group-modern">
+
+                    <label for="{{ form.image.id_for_label }}">
+
+                        <i class="fas fa-image"></i>
+
+                        {% if form.instance.image %}Replace Image{% else %}Upload Image{% endif %}
+
+                    </label>
+
+
+                    <div class="file-upload-area" id="imageDropZone">
+
+                        <i class="fas fa-cloud-upload-alt"></i>
+
+                        <p>
+
+                            <strong>Click to upload</strong>
+                            or drag and drop
+
+                        </p>
+
+                        <small>
+                            JPEG, PNG, WebP
+                        </small>
+
+
+                        {{ form.image }}
+
+                    </div>
+
+
+                    {% if form.image.errors %}
+
+                        <ul class="errorlist-modern">
+                            {{ form.image.errors }}
+                        </ul>
+
+                    {% endif %}
+
+                    <div class="help-text-modern">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        {% if form.instance.image %}
+                            Leave empty to keep current image.
+                        {% else %}
+                            Upload an image for the Synod.
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="image-preview" id="imagePreviewContainer">
+
+                        <img id="imagePreview"
+                             src="#"
+                             alt="Image Preview">
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ========================================
+                     FILE
+                ======================================== -->
+
+                {% if form.file %}
 
                 <div class="section-heading-modern">
 
@@ -958,7 +1380,7 @@
                 </div>
 
 
-                {% if synod.file %}
+                {% if form.instance.file %}
 
                 <div class="current-file-box">
 
@@ -975,12 +1397,12 @@
                         </span>
 
                         <span class="current-file-name">
-                            {{ synod.file.name }}
+                            {{ form.instance.file.name }}
                         </span>
 
                     </div>
 
-                    <a href="{{ synod.file.url }}"
+                    <a href="{{ form.instance.file.url }}"
                        target="_blank"
                        class="current-file-link">
 
@@ -994,15 +1416,13 @@
                 {% endif %}
 
 
-                {% if form.file %}
-
                 <div class="form-group-modern">
 
                     <label for="{{ form.file.id_for_label }}">
 
                         <i class="fas fa-upload"></i>
 
-                        Replace Document
+                        {% if form.instance.file %}Replace Document{% else %}Upload Document{% endif %}
 
                     </label>
 
@@ -1020,7 +1440,11 @@
 
                         <i class="fas fa-info-circle"></i>
 
-                        Leave empty to keep the current document.
+                        {% if form.instance.file %}
+                            Leave empty to keep the current document.
+                        {% else %}
+                            Upload a document for the Synod.
+                        {% endif %}
 
                     </div>
 
@@ -1030,12 +1454,237 @@
 
 
                 <!-- ========================================
-                     OTHER FORM FIELDS
+                     CONTACT INFORMATION
+                ======================================== -->
+
+                <div class="section-heading-modern">
+
+                    <i class="fas fa-address-card"></i>
+
+                    Contact Information
+
+                    <span class="line-spacer"></span>
+
+                </div>
+
+
+                {% if form.address %}
+
+                <div class="form-group-modern">
+
+                    <label for="{{ form.address.id_for_label }}">
+
+                        <i class="fas fa-location-dot"></i>
+
+                        Address
+
+                    </label>
+
+                    {{ form.address }}
+
+                    {% if form.address.errors %}
+
+                        <ul class="errorlist-modern">
+                            {{ form.address.errors }}
+                        </ul>
+
+                    {% endif %}
+
+                </div>
+
+                {% endif %}
+
+
+                {% if form.phone_numbers %}
+
+                <div class="form-group-modern">
+
+                    <label>
+
+                        <i class="fas fa-phone"></i>
+
+                        Phone Numbers
+
+                    </label>
+
+
+                    <div id="phoneNumbersContainer"
+                         class="phone-numbers-container">
+
+                    </div>
+
+
+                    <button type="button"
+                            class="add-phone-btn"
+                            id="addPhoneBtn">
+
+                        <i class="fas fa-plus"></i>
+
+                        Add Phone Number
+
+                    </button>
+
+
+                    <!-- Hidden JSON field -->
+
+                    {{ form.phone_numbers }}
+
+
+                    {% if form.phone_numbers.errors %}
+
+                        <ul class="errorlist-modern">
+                            {{ form.phone_numbers.errors }}
+                        </ul>
+
+                    {% endif %}
+
+                    <div class="help-text-modern">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        Enter 10-digit Indian mobile numbers only.
+
+                    </div>
+
+
+                    <div id="phoneError"
+                         class="phone-error">
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+                {% if form.email %}
+
+                <div class="form-group-modern">
+
+                    <label for="{{ form.email.id_for_label }}">
+
+                        <i class="fas fa-envelope"></i>
+
+                        Email
+
+                    </label>
+
+                    {{ form.email }}
+
+                    {% if form.email.errors %}
+
+                        <ul class="errorlist-modern">
+                            {{ form.email.errors }}
+                        </ul>
+
+                    {% endif %}
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ========================================
+                     SOCIAL MEDIA
+                ======================================== -->
+
+                {% if form.facebook or form.instagram %}
+
+                <div class="section-heading-modern">
+
+                    <i class="fas fa-share-nodes"></i>
+
+                    Social Media
+
+                    <span class="line-spacer"></span>
+
+                </div>
+
+
+                <div class="form-row two-col">
+
+                    {% if form.facebook %}
+
+                    <div class="form-group-modern">
+
+                        <label for="{{ form.facebook.id_for_label }}">
+
+                            <i class="fab fa-facebook"></i>
+
+                            Facebook
+
+                        </label>
+
+                        {{ form.facebook }}
+
+                        {% if form.facebook.errors %}
+
+                            <ul class="errorlist-modern">
+                                {{ form.facebook.errors }}
+                            </ul>
+
+                        {% endif %}
+
+                        <div class="help-text-modern">
+
+                            <i class="fas fa-link"></i>
+
+                            Enter Facebook page URL
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    {% if form.instagram %}
+
+                    <div class="form-group-modern">
+
+                        <label for="{{ form.instagram.id_for_label }}">
+
+                            <i class="fab fa-instagram"></i>
+
+                            Instagram
+
+                        </label>
+
+                        {{ form.instagram }}
+
+                        {% if form.instagram.errors %}
+
+                            <ul class="errorlist-modern">
+                                {{ form.instagram.errors }}
+                            </ul>
+
+                        {% endif %}
+
+                        <div class="help-text-modern">
+
+                            <i class="fas fa-link"></i>
+
+                            Enter Instagram profile URL
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endif %}
+
+
+                <!-- ========================================
+                     REMAINING FIELDS (fallback for any
+                     custom fields not covered above)
                 ======================================== -->
 
                 {% for field in form %}
 
-                    {% if field.name != 'name' and field.name != 'slug' and field.name != 'description' and field.name != 'file' %}
+                    {% if field.name != 'name' and field.name != 'slug' and field.name != 'description' and field.name != 'content' and field.name != 'image' and field.name != 'file' and field.name != 'address' and field.name != 'phone_numbers' and field.name != 'email' and field.name != 'facebook' and field.name != 'instagram' %}
 
                     <div class="form-group-modern">
 
@@ -1119,7 +1768,7 @@
 
 
 <!-- ========================================
-     FORM FIELD STYLING
+     FORM FIELD STYLING + JS
 ======================================== -->
 
 <script>
@@ -1127,6 +1776,10 @@
 document.addEventListener(
     'DOMContentLoaded',
     function () {
+
+        /* ========================================
+           ADD FORM CONTROL CLASS (skip CKEditor)
+        ======================================== */
 
         document.querySelectorAll(
             '#synodForm input, #synodForm select, #synodForm textarea'
@@ -1136,17 +1789,498 @@ document.addEventListener(
              * Do not interfere with CKEditor
              */
             if (
-                !el.classList.contains('django-ckeditor-widget') &&
-                !el.closest('.django-ckeditor-widget')
+                el.classList.contains('ck-editor__editable') ||
+                el.closest('.ck-editor') ||
+                el.closest('.django-ckeditor-widget') ||
+                el.id === 'id_content'
             ) {
 
-                el.classList.add(
-                    'form-control-modern-django'
-                );
+                return;
 
             }
 
+            el.classList.add(
+                'form-control-modern-django'
+            );
+
         });
+
+
+        /* ========================================
+           IMAGE UPLOAD + PREVIEW
+        ======================================== */
+
+        const imageInput =
+            document.getElementById('id_image');
+
+        const imageDropZone =
+            document.getElementById('imageDropZone');
+
+        const imagePreviewContainer =
+            document.getElementById('imagePreviewContainer');
+
+        const imagePreview =
+            document.getElementById('imagePreview');
+
+
+        if (imageInput && imageDropZone) {
+
+            imageInput.addEventListener(
+                'change',
+                function () {
+
+                    if (this.files && this.files[0]) {
+
+                        const file = this.files[0];
+
+                        const fileName = file.name;
+
+                        const fileSize = (
+                            file.size / 1024 / 1024
+                        ).toFixed(2);
+
+
+                        const pTag =
+                            imageDropZone.querySelector('p');
+
+
+                        if (pTag) {
+
+                            pTag.innerHTML =
+                                `<strong>${fileName}</strong>
+                                <span style="color:#94a3b8;font-size:.85rem;">
+                                (${fileSize} MB)
+                                </span>`;
+
+                        }
+
+
+                        const icon =
+                            imageDropZone.querySelector(':scope > i');
+
+
+                        if (icon) {
+
+                            icon.className =
+                                'fas fa-check-circle';
+
+                            icon.style.color =
+                                '#f59e0b';
+
+                        }
+
+
+                        const reader = new FileReader();
+
+
+                        reader.onload =
+                            function (e) {
+
+                                imagePreview.src =
+                                    e.target.result;
+
+                                imagePreviewContainer
+                                    .classList
+                                    .add('active');
+
+                            };
+
+
+                        reader.readAsDataURL(file);
+
+                    }
+
+                }
+            );
+
+
+            imageDropZone.addEventListener(
+                'dragover',
+                function (e) {
+
+                    e.preventDefault();
+
+                    imageDropZone
+                        .classList
+                        .add('dragover');
+
+                }
+            );
+
+
+            imageDropZone.addEventListener(
+                'dragleave',
+                function () {
+
+                    imageDropZone
+                        .classList
+                        .remove('dragover');
+
+                }
+            );
+
+
+            imageDropZone.addEventListener(
+                'drop',
+                function (e) {
+
+                    e.preventDefault();
+
+                    imageDropZone
+                        .classList
+                        .remove('dragover');
+
+
+                    if (e.dataTransfer.files.length) {
+
+                        imageInput.files =
+                            e.dataTransfer.files;
+
+
+                        imageInput.dispatchEvent(
+                            new Event(
+                                'change',
+                                {bubbles:true}
+                            )
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           PHONE NUMBERS
+        ======================================== */
+
+        const phoneContainer =
+            document.getElementById('phoneNumbersContainer');
+
+        const addPhoneBtn =
+            document.getElementById('addPhoneBtn');
+
+        const phoneHiddenInput =
+            document.getElementById('id_phone_numbers');
+
+        const phoneError =
+            document.getElementById('phoneError');
+
+
+        function createPhoneRow(value) {
+
+            if (!phoneContainer) return;
+
+            const row = document.createElement('div');
+
+            row.className = 'phone-row';
+
+
+            row.innerHTML = `
+
+                <input
+                    type="tel"
+                    name="phone_number_input"
+                    class="form-control-modern-django phone-number-input"
+                    maxlength="10"
+                    minlength="10"
+                    inputmode="numeric"
+                    pattern="[6-9][0-9]{9}"
+                    placeholder="Enter 10-digit phone number"
+                    value="${value || ''}">
+
+                <button
+                    type="button"
+                    class="remove-phone"
+                    title="Remove phone number">
+
+                    <i class="fas fa-trash"></i>
+
+                </button>
+
+            `;
+
+
+            const input =
+                row.querySelector('.phone-number-input');
+
+
+            input.addEventListener(
+                'input',
+                function () {
+
+                    this.value =
+                        this.value
+                        .replace(/\D/g, '')
+                        .slice(0, 10);
+
+                    updatePhoneNumbers();
+
+                }
+            );
+
+
+            const removeBtn =
+                row.querySelector('.remove-phone');
+
+
+            removeBtn.addEventListener(
+                'click',
+                function () {
+
+                    row.remove();
+
+                    updatePhoneNumbers();
+
+                }
+            );
+
+
+            phoneContainer.appendChild(row);
+
+        }
+
+
+        /* ========================================
+           LOAD EXISTING PHONE NUMBERS
+        ======================================== */
+
+        if (phoneContainer && phoneHiddenInput) {
+
+            let initialNumbers = [];
+
+
+            try {
+
+                initialNumbers = JSON.parse(
+                    phoneHiddenInput.value || '[]'
+                );
+
+            } catch (e) {
+
+                initialNumbers = [];
+
+            }
+
+
+            if (!Array.isArray(initialNumbers)) {
+
+                initialNumbers = [];
+
+            }
+
+
+            if (initialNumbers.length === 0) {
+
+                createPhoneRow('');
+
+            } else {
+
+                initialNumbers.forEach(function (num) {
+
+                    createPhoneRow(num);
+
+                });
+
+            }
+
+        }
+
+
+        /* ========================================
+           ADD PHONE BTN
+        ======================================== */
+
+        if (addPhoneBtn) {
+
+            addPhoneBtn.addEventListener(
+                'click',
+                function () {
+
+                    createPhoneRow('');
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           UPDATE JSON FIELD
+        ======================================== */
+
+        function updatePhoneNumbers() {
+
+            if (!phoneHiddenInput) return;
+
+
+            const inputs =
+                document.querySelectorAll('.phone-number-input');
+
+
+            const numbers = [];
+
+
+            inputs.forEach(function (input) {
+
+                const value = input.value.trim();
+
+
+                if (value) {
+
+                    numbers.push(value);
+
+                }
+
+            });
+
+
+            phoneHiddenInput.value =
+                JSON.stringify(numbers);
+
+        }
+
+
+        /* ========================================
+           FORM VALIDATION
+        ======================================== */
+
+        const synodForm =
+            document.getElementById('synodForm');
+
+
+        if (synodForm) {
+
+            synodForm.addEventListener(
+                'submit',
+                function (e) {
+
+                    updatePhoneNumbers();
+
+
+                    const inputs =
+                        document.querySelectorAll('.phone-number-input');
+
+
+                    let valid = true;
+
+
+                    inputs.forEach(function (input) {
+
+                        const value = input.value.trim();
+
+
+                        if (!value) return;
+
+
+                        if (!/^[6-9][0-9]{9}$/.test(value)) {
+
+                            valid = false;
+
+                            input.style.borderColor =
+                                '#ef4444';
+
+                        }
+
+                        else {
+
+                            input.style.borderColor =
+                                '';
+
+                        }
+
+                    });
+
+
+                    if (!valid) {
+
+                        e.preventDefault();
+
+                        if (phoneError) {
+
+                            phoneError.textContent =
+                                'Please enter valid 10-digit Indian mobile numbers.';
+
+                            phoneError.style.display =
+                                'block';
+
+                        }
+
+                    }
+
+                    else {
+
+                        if (phoneError) {
+
+                            phoneError.style.display =
+                                'none';
+
+                        }
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           SLUG AUTO GENERATION
+           (only if slug is untouched)
+        ======================================== */
+
+        const nameInput =
+            document.getElementById('id_name');
+
+        const slugInput =
+            document.getElementById('id_slug');
+
+
+        if (nameInput && slugInput) {
+
+            let slugTouched =
+                slugInput.value.trim() !== '';
+
+
+            slugInput.addEventListener(
+                'input',
+                function () {
+
+                    slugTouched =
+                        slugInput.value.trim() !== '';
+
+                }
+            );
+
+
+            nameInput.addEventListener(
+                'input',
+                function () {
+
+                    if (slugTouched) return;
+
+
+                    const name =
+                        nameInput.value.trim();
+
+
+                    if (name) {
+
+                        slugInput.value =
+                            name
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]+/g, '-')
+                            .replace(/^-+|-+$/g, '');
+
+                    }
+
+                }
+            );
+
+        }
 
     }
 );

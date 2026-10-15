@@ -11,9 +11,10 @@
             {% if synod.image %}
                 <img src="{{ synod.image.url }}"
                      alt="{{ synod.name }}">
-            {% else %}
-                <img src="{% static 'images/priest.jpg' %}"
-                     alt="{{ synod.name }}">
+           {% else %}
+                <div class="priest-initial">
+                    {{ synod.name|first|upper }}
+                </div>
             {% endif %}
 
         </div>
@@ -227,5 +228,12 @@ document.querySelectorAll(".menu-link").forEach(link => {
     });
 });
 </script>
+
+
+<style>.priest-initial {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }</style>
 </body>
 </html>
