@@ -1,3 +1,4 @@
+
 {% load static %}
 {% include 'admin/adminheader.html' %}
 
@@ -7,14 +8,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Designation · Diocese</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         /* ========================================
            ADD DESIGNATION STYLES - EXPANDED
         ======================================== */
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -323,7 +325,7 @@
             .page-header .header-left h1 {
                 font-size: 22px;
             }
-            
+
             .page-header .header-left h1 small {
                 font-size: 13px;
             }
@@ -391,7 +393,7 @@
                 padding: 0 0.8rem;
                 margin: 0.8rem auto;
             }
-            
+
             .page-header .header-left .icon-circle {
                 width: 40px;
                 height: 40px;
@@ -481,6 +483,7 @@
 <body>
 
 <div class="content-wrapper">
+
     <!-- ===== PAGE HEADER ===== -->
     <div class="page-header">
         <div class="header-left">
@@ -494,6 +497,7 @@
                 </h1>
             </div>
         </div>
+
         <div class="header-actions">
             <a href="{% url 'designation' %}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back
@@ -512,6 +516,7 @@
         </div>
 
         <div class="card-body">
+
             <!-- Info Box -->
             <div class="info-box">
                 <div class="info-icon">
@@ -536,13 +541,16 @@
                         Designation Name
                         <span class="required">*</span>
                     </label>
+
                     {{ form.name }}
+
                     {% if form.name.errors %}
                         <div class="error-message">
                             <i class="fas fa-exclamation-circle"></i>
                             {{ form.name.errors|join:", " }}
                         </div>
                     {% endif %}
+
                     <div class="form-hint">
                         <i class="fas fa-info-circle"></i>
                         Enter a unique designation name (e.g., Bishop, Secretary, Treasurer)
@@ -554,6 +562,7 @@
                     <a href="{% url 'designation' %}" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancel
                     </a>
+
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Save Designation
                     </button>
@@ -567,6 +576,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+
         // ===== ADD FORM CONTROL CLASS =====
         document.querySelectorAll("input, select, textarea").forEach(function(el) {
             if (!el.closest('.file-upload-wrapper')) {
@@ -578,7 +588,7 @@
         document.querySelectorAll('.form-group').forEach(function(group) {
             const input = group.querySelector('input, select, textarea');
             const label = group.querySelector('label');
-            
+
             if (input && input.hasAttribute('required') && label) {
                 if (!label.querySelector('.required')) {
                     const star = document.createElement('span');
@@ -589,14 +599,24 @@
             }
         });
 
-        // ===== AUTO-CAPITALIZE FIRST LETTER OF EACH WORD =====
+        // ===== CAPITALIZATION FIX =====
         const nameInput = document.querySelector('#{{ form.name.id_for_label }}');
+
         if (nameInput) {
             nameInput.addEventListener('blur', function() {
                 if (this.value) {
                     this.value = this.value
-                        .split(' ')
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                        .trim()
+                        .split(/\s+/)
+                        .map(function(word) {
+                            // Preserve uppercase abbreviations such as IT, HR, CEO.
+                            if (/^[A-Z]{2,}$/.test(word)) {
+                                return word;
+                            }
+
+                            // Capitalize the first letter without lowercasing the rest.
+                            return word.charAt(0).toUpperCase() + word.slice(1);
+                        })
                         .join(' ');
                 }
             });
